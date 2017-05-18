@@ -1,14 +1,15 @@
 Package: rODE
 Title: Ordinary Differential Equation Solvers Written in R with S4 classes
 Version: 0.0.0.9000
-Authors: Alfonso Reyes <alfonso.reyes@oilgainsanalytics.com>
-Description: Ordinary Differential Equation (ODE) Solvers Written in R with S4 
-classes. Based in OpenSourcePhysics project.
+Author: Alfonso Reyes <alfonso.reyes@oilgainsanalytics.com>
+Maintainer: Alfonso Reyes <alfonso.reyes@oilgainsanalytics.com>
+Description: ODE Solvers Written in R with S4 classes.
 Depends: R (>= 3.4.0)
+Imports: methods
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
-Suggests: knitr
-
-
+Suggests: knitr,
+    testthat
+RoxygenNote: 6.0.1
