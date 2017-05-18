@@ -5,11 +5,13 @@ Author: Alfonso Reyes <alfonso.reyes@oilgainsanalytics.com>
 Maintainer: Alfonso Reyes <alfonso.reyes@oilgainsanalytics.com>
 Description: ODE Solvers Written in R with S4 classes.
 Depends: R (>= 3.4.0)
-Imports: methods
+Imports: methods,
+    dplyr
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 Suggests: knitr,
-    testthat
+    testthat,
+    rmarkdown
 RoxygenNote: 6.0.1
