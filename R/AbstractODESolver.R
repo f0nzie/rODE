@@ -14,7 +14,7 @@
 #' @rdname AbstractODESolver
 #' @name AbstractODESolver
 #'
-#' @include ODESolver.R ODE.R
+#' @include ODESolver.R ODE.R ode_generics.R
 #' @export
 setClass("AbstractODESolver", slots = c(
     stepSize = "numeric",
@@ -27,7 +27,7 @@ setClass("AbstractODESolver", slots = c(
 )
 
 
-setGeneric("initialize", function(.Object, ...) standardGeneric("initialize"))
+
 
 setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
     .Object <- init(.Object, 0.1)
@@ -44,13 +44,21 @@ setMethod("step", "AbstractODESolver", function(object, ...) {
 
 #' setStepSize():
 #' @rdname AbstractODESolver
+#' @export
 setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize = stepSize
     object
 })
 
-#' init(): not the same as initialize
-#' @rdname AbstractODESolver
+
+#' Sets the values of the ODE solver and gets ready to start
+#'
+#' @param object the main class binder
+#' @param stepSize how much the solver should move
+#' @param ... additional parameters
+#'
+#' @rdname init
+#' @export
 setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     state <- getState(object@ode)
@@ -63,9 +71,8 @@ setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
 })
 
 
-#' getStepSize()
-#' @rdname ODESolver
-#' @aliases getStepSize,AbstractODESolver-class
+#' @rdname AbstractODESolver
+#' @export
 setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
     return(object@stepSize)
 })
