@@ -8,6 +8,12 @@ Depends: R (>= 3.4.0)
 Imports: methods,
     dplyr
 License: GPL-2
+Collate: 
+    'ode_generics.R'
+    'ODE.R'
+    'fbind.R'
+    'freq_out.R'
+    'rODE-package.r'
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
