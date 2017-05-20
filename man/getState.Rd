@@ -15,6 +15,9 @@ getState(object, ...)
 
 \item{...}{additional parameters}
 }
+\value{
+a vector
+}
 \description{
-A state must be supplied to calculate the rate
+A vector representing the state of the system
 }

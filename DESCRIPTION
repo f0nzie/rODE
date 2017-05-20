@@ -20,6 +20,7 @@ Collate:
     'ODE.R'
     'ODESolver.R'
     'AbstractODESolver.R'
+    'Euler.R'
     'ODEAdaptiveSolver.R'
     'fbind.R'
     'freq_out.R'

@@ -1,27 +1,29 @@
+#' @export
 setClass("ODESolver")
 
 
-#' @rdname AbstractODESolver
+#' @rdname init
 setMethod("init", "ODESolver", function(object, stepSize, ...) {
     object
 })
 
+#' @rdname step
+setMethod("step", "ODESolver", function(object, ...) {
+    object
+})
 
-#' @rdname AbstractODESolver
+
+#' @rdname setStepSize
 setMethod("setStepSize", "ODESolver", function(object, stepSize, ...) {
     object
 })
 
 
-#' @rdname AbstractODESolver
+#' @rdname getStepSize
 setMethod("getStepSize", "ODESolver", function(object, ...) {
     object@stepSize
 })
 
 
-#' @rdname AbstractODESolver
-setMethod("step", "ODESolver", function(object, ...) {
-    object
-})
 
 

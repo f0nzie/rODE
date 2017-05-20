@@ -13,9 +13,9 @@ getRate(object, state, rate, ...)
 \arguments{
 \item{object}{the class object}
 
-\item{state}{state of the ODE}
+\item{state}{a vector holding the state of the ODE}
 
-\item{rate}{rate of the ODE}
+\item{rate}{a vector holding the rate}
 
 \item{...}{additional parameters}
 }

@@ -4,12 +4,6 @@
 #' @slot numEqn numeric.
 #' @slot ode ODE.
 #'
-#' @param object the main class binder
-#' @param .ode    the ODE object
-#' @param stepSize how much the solver should move
-#' @param ... additional parameters
-#'
-#'
 #' @aliases AbstractODESolver-class
 #' @rdname AbstractODESolver
 #' @name AbstractODESolver
@@ -28,27 +22,42 @@ setClass("AbstractODESolver", slots = c(
 
 
 
-
+#' @export
 setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
     .Object <- init(.Object, 0.1)
     return(.Object)
 })
 
-#' step(): advance the solver one step at a time
-#' @rdname AbstractODESolver
-#' @aliases step,AbstractODESolver-methods
+
+
+
+#' Advance the solver one step at a time
+#'
+#' @param object the main class binder
+#' @param ... additional parameters
+#'
+#' @rdname step
 setMethod("step", "AbstractODESolver", function(object, ...) {
     object
 })
 
 
-#' setStepSize():
-#' @rdname AbstractODESolver
+
+
+#' Set the size of step to move each step of the solver
+#'
+#' @param object the main class binder
+#' @param stepSize how much the solver should move
+#' @param ... additional parameters
+#'
+#' @rdname setStepSize
 #' @export
 setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize = stepSize
     object
 })
+
+
 
 
 #' Sets the values of the ODE solver and gets ready to start
@@ -71,7 +80,15 @@ setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
 })
 
 
-#' @rdname AbstractODESolver
+
+
+
+#' Get the current size of the step
+#'
+#' @param object the main class binder
+#' @param ... additional parameters
+#'
+#' @rdname getStepSize
 #' @export
 setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
     return(object@stepSize)
@@ -79,7 +96,11 @@ setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
 
 
 
+
+
 #' AbstractODESolver constructor
+#'
+#' @param .ode an ODE object
 #'
 #' @importFrom methods new
 #' @export

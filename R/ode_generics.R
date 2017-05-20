@@ -7,20 +7,35 @@ setGeneric("initialize", function(.Object, ...) standardGeneric("initialize"))
 #' @aliases init-method
 setGeneric("init", function(object, stepSize, ...) standardGeneric("init"))
 
-#' @rdname AbstractODESolver
+#' @rdname setStepSize
 #' @export
 #' @aliases setStepSize,AbstractODESolver-method,,ODESolver-method
 setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 
 
-#' @rdname AbstractODESolver
+#' @rdname getStepSize
 #' @export
 setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 
 
-#' @rdname AbstractODESolver
+#' @rdname step
 #' @export
 setGeneric("step", function(object, ...) standardGeneric("step"))
+
+
+
+#' Set a new for the ODE solver
+#'
+#' New setState that should work with different methods
+#'
+#'  "theta", "thetaDot":  used in PendulumApp
+#'  "x", "vx", "y", "vy": used in ProjectileApp
+#' @rdname setState
+#' @export
+setGeneric("setState", function(object, ...) standardGeneric("setState"))
+
+
+
 
 
 
@@ -41,10 +56,7 @@ setGeneric("step", function(object, ...) standardGeneric("step"))
 
 #
 #
-# # New setState that should work with different methods
-# #  "theta", "thetaDot":  used in PendulumApp
-# #  "x", "vx", "y", "vy": used in ProjectileApp
-# setGeneric("setState", function(object, ...) standardGeneric("setState"))
+
 #
 #
 # setGeneric("getExactSolution", function(object, t, ...) standardGeneric("getExactSolution"))
