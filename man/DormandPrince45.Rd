@@ -6,6 +6,9 @@
 \usage{
 DormandPrince45(.ode)
 }
+\arguments{
+\item{.ode}{an ODE object}
+}
 \description{
 DormandPrince45 constructor
 }

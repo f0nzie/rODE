@@ -12,6 +12,13 @@
 # */
 
 
+#' Euler class
+#'
+#' @param ode an ODE object
+#' @param ... additional parameters
+#'
+#' @rdname Euler-class
+#'
 .Euler <- setClass("Euler",
             contains = c("AbstractODESolver")
         )
@@ -35,7 +42,7 @@ setMethod("init", "Euler", function(object, stepSize, ...) {
     invisible(object)                                               #   right dimensions
 })
 
-
+#' @rdname step-method
 setMethod("step", signature(object = "Euler"), function(object, ...) {
     # step through the differential equation
     state <- getState(object@ode)                         # get the state
@@ -58,14 +65,17 @@ setMethod("setStepSize", "Euler", function(object, stepSize, ...) {
     invisible(object)
 })
 
-
+#' @rdname setStepSize-method
 setMethod("getStepSize", "Euler", function(object, ...) {
     return(object@stepSize)
 })
 
 
-#' # constructor ODE solver using Euler method
+#' Euler constructor ODE
 #'
+#' @rdname Euler-class
+#'
+#' @importFrom methods new
 #' @export
 setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
     .euler <- .Euler(ode = ode)
@@ -73,6 +83,11 @@ setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
     return(.euler)
 })
 
+#' Euler constructor missing
+#'
+#' @rdname Euler-class
+#'
+#' @importFrom methods new
 setMethod("Euler", signature(ode = "missing"), function(ode, ...) {
     if (missing(ode)) {
         ode <- new("ODE")

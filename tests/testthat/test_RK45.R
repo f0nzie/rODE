@@ -6,7 +6,7 @@
 # source("./R/RK45.R")
 
 
-source("./inst/examples/ODETest.R")
+source(paste(system.file("examples", package = "rODE"), "ODETest.R", sep = "/"))
 
 # cat("\014")
 

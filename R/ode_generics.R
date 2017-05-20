@@ -1,21 +1,25 @@
 # Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
-
+#' @rdname AbstractODESolver-class
 #' @export
 setGeneric("AbstractODESolver", function(ode, ...)
     standardGeneric("AbstractODESolver"))
 
+#' @rdname EulerRichardson-class
 #' @export
 setGeneric("EulerRichardson", function(ode, ...)
     standardGeneric("EulerRichardson"))
 
+#' @rdname RK4-class
 #' @export
 setGeneric("RK4", function(ode, ...)
     standardGeneric("RK4"))
 
+#' @rdname Verlet-class
 #' @export
 setGeneric("Verlet", function(ode, ...)
     standardGeneric("Verlet"))
 
+#' @rdname Euler-class
 #' @export
 setGeneric("Euler", function(ode, ...)
     standardGeneric("Euler"))
@@ -28,8 +32,17 @@ setGeneric("getRate", function(object, state, rate, ...) standardGeneric("getRat
 #' @export
 setGeneric("getState", function(object, ...) standardGeneric("getState"))
 
+
+#' Advances a step in the ODE solver
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname step-method
 #' @export
 setGeneric("step", function(object, ...) standardGeneric("step"))
+
+
 
 #' @export
 setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
@@ -39,6 +52,14 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 # setGeneric("setState", function(object, x, vx, y, vy, ...) standardGeneric("setState"))
 # setGeneric("setState", function(object, theta, thetaDot, ...) standardGeneric("setState"))
 
+
+
+#' Set initial values before starting the ODE solver
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname init-method
 #' @export
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
@@ -53,6 +74,10 @@ setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 #' New setState that should work with different methods
 #'  "theta", "thetaDot":  used in PendulumApp
 #'  "x", "vx", "y", "vy": used in ProjectileApp
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
 #' @export
 setGeneric("setState", function(object, ...) standardGeneric("setState"))
 

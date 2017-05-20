@@ -9,9 +9,15 @@ AbstractODESolver <- function(.ode) {
     odesolver <- new("AbstractODESolver", .ode)
     odesolver@ode <- .ode
     odesolver
-}}
+}
+AbstractODESolver constructor missing}
 \usage{
 \S4method{AbstractODESolver}{missing}(ode, ...)
+}
+\arguments{
+\item{ode}{an ODE object}
+
+\item{...}{additional parameters}
 }
 \description{
 # constructor
@@ -21,4 +27,5 @@ AbstractODESolver <- function(.ode) {
     odesolver@ode <- .ode
     odesolver
 }
+AbstractODESolver constructor missing
 }

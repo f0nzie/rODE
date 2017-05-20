@@ -3,7 +3,16 @@
 \docType{class}
 \name{DormandPrince45-class}
 \alias{DormandPrince45-class}
+\alias{enableRuntimeExceptions,DormandPrince45-method}
 \title{DormandPrince45 class}
+\usage{
+\S4method{enableRuntimeExceptions}{DormandPrince45}(object, enable)
+}
+\arguments{
+\item{object}{a class object}
+
+\item{enable}{a logical flag}
+}
 \description{
 DormandPrince45 class
 }

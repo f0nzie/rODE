@@ -1,7 +1,8 @@
+#' @importFrom methods showMethods
 #' @export
 showMethods2 <- function(myClass) {
     # get the method printout
-    mtext <-  showMethods(class=myClass, printTo = FALSE )
+    mtext <-  showMethods(classes=myClass, printTo = FALSE )
 
     # extract only what is between "Function :" and " (pack ... .GlobalEnv)"
     fvec  <- gsub( "Function(\\:\\s|\\s\\\")(.+)(\\s\\(|\\\")(.+$)",

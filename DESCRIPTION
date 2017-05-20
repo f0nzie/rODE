@@ -29,5 +29,6 @@ Collate:
     'RK4.R'
     'RK45.R'
     'Verlet.R'
+    'data.R'
     'hello.R'
     'utils.R'

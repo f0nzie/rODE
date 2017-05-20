@@ -3,6 +3,11 @@
 
 #' DormandPrince45 class
 #'
+#' @param object a class object
+#' @param enable a logical flag
+#'
+#' @rdname DormandPrince45-class
+#'
 #' @include ODEAdaptiveSolver.R ODE.R
 setClass("DormandPrince45", slots = c(
     error_code       = "numeric",
@@ -61,7 +66,7 @@ setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     object
 })
 
-
+#' @rdname step-method
 setMethod("step", "DormandPrince45", function(object, ...) {
     object@error_code <- object@NO_ERROR
     iterations        <- 10
@@ -133,10 +138,12 @@ setMethod("step", "DormandPrince45", function(object, ...) {
 }
 )
 
+#' @rdname DormandPrince45-class
 setMethod("enableRuntimeExceptions", "DormandPrince45", function(object, enable) {
     object@enableExceptions <- enable
 })
 
+#' @rdname setStepSize-method
 setMethod("setStepSize", "DormandPrince45", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     object
@@ -170,6 +177,8 @@ setMethod("getErrorCode", "DormandPrince45", function(object) {
 
 #' DormandPrince45 constructor
 #'
+#' @param .ode an ODE object
+#' @importFrom methods new
 #' @export
 DormandPrince45 <- function(.ode) {
     dormandPrince45 <- new("DormandPrince45", .ode)

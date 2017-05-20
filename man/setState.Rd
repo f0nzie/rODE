@@ -8,6 +8,11 @@
 \usage{
 setState(object, ...)
 }
+\arguments{
+\item{object}{a class object}
+
+\item{...}{additional parameters}
+}
 \description{
 New setState that should work with different methods
  "theta", "thetaDot":  used in PendulumApp

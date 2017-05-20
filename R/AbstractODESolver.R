@@ -3,6 +3,11 @@
 
 #' AbstractODESolver class
 #'
+#' @param ode an ODE object
+#' @param ... additional parameters
+#'
+#' @rdname AbstractODESolver-class
+#'
 #' @include ODE.R ODESolver.R ode_generics.R
 .AbstractODESolver <- setClass("AbstractODESolver", slots = c(
                     stepSize = "numeric",
@@ -20,15 +25,18 @@ setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
     return(.Object)
 })
 
+#' @rdname step-method
 setMethod("step", "AbstractODESolver", function(object, ...) {
-    # object
+    NULL
 })
 
+#' @rdname setStepSize-method
 setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize = stepSize
     object
 })
 
+#' @rdname init-method
 setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     state <- getState(object@ode)
@@ -53,6 +61,14 @@ setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
 #'     odesolver
 #' }
 
+# constructor methods
+
+#' AbstractODESolver constructor missing
+#'
+#' @param ode an ODE object
+#' @param ...  additional parameters
+#'
+#' @importFrom methods new
 #' @export
 setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
     if (missing(ode)) {
@@ -64,6 +80,12 @@ setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
     odesolver
 })
 
+#' AbstractODESolver constructor ODE
+#'
+#' @param ode an ODE object
+#' @param ...  additional parameters
+#'
+#' @importFrom methods new
 setMethod("AbstractODESolver", signature(ode = "ODE"), function(ode, ...) {
     odesolver <- .AbstractODESolver(ode = ode)
     odesolver@ode <- ode
