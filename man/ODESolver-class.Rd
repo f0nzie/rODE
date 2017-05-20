@@ -4,6 +4,13 @@
 \name{ODESolver-class}
 \alias{ODESolver-class}
 \title{ODESolver class}
+\arguments{
+\item{object}{a class object}
+
+\item{stepSize}{size of the step}
+
+\item{stepSize}{size of the step}
+}
 \description{
 ODESolver class
 }

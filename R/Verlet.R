@@ -30,6 +30,7 @@ setMethod("initialize", "Verlet", function(.Object, ode, ...) {
     return(.Object)
 })
 
+#' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "Verlet", function(object, stepSize, ...) {
     # inititalize the solver

@@ -33,6 +33,7 @@ setMethod("initialize", "EulerRichardson", function(.Object, ode, ...) {
                 return(.Object)
             })
 
+#' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
     # inititalize the solver

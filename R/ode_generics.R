@@ -26,9 +26,24 @@ setGeneric("Euler", function(ode, ...)
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+#' Get a new rate given a state
+#'
+#' @rdname getRate-method
+#'
+#' @param object a class object
+#' @param state current state
+#' @param rate new rate
+#' @param ... additional parameters
+#'
 #' @export
 setGeneric("getRate", function(object, state, rate, ...) standardGeneric("getRate"))
 
+#' Get current state of the system
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getState-method
 #' @export
 setGeneric("getState", function(object, ...) standardGeneric("getState"))
 
@@ -64,9 +79,15 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
 
-# setStepSize uses either of two step parameters: stepSize and dt
-# `stepSize`` works for most of the applications
-# `dt`` is used in Pendulum
+#' setStepSize uses either of two step parameters: stepSize and dt
+#' `stepSize`` works for most of the applications
+#' `dt`` is used in Pendulum
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname setStepSize-method
+#'
 #' @export
 setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 
@@ -90,6 +111,8 @@ setGeneric("setTolerance", function(object, tol, ...) standardGeneric("setTolera
 #' @export
 setGeneric("getTolerance", function(object, ...) standardGeneric("getTolerance"))
 
+
+#' @rdname getErrorCode-method
 #' @export
 setGeneric("getErrorCode", function(object, tol, ...) standardGeneric("getErrorCode"))
 

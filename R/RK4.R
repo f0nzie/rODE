@@ -31,6 +31,7 @@ setMethod("initialize", "RK4", function(.Object, ode, ...) {
     return(.Object)
 })
 
+#' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "RK4", function(object, stepSize, ...) {
     # inititalize the solver

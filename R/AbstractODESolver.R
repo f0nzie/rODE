@@ -30,6 +30,7 @@ setMethod("step", "AbstractODESolver", function(object, ...) {
     NULL
 })
 
+
 #' @rdname setStepSize-method
 setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize = stepSize

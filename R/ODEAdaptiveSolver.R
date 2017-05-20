@@ -23,5 +23,6 @@ setMethod("setTolerance", "ODEAdaptiveSolver", function(object, tol) {
 setMethod("getTolerance", "ODEAdaptiveSolver", function(object) {
 })
 
+#' @rdname getErrorCode-method
 setMethod("getErrorCode", "ODEAdaptiveSolver", function(object) {
 })

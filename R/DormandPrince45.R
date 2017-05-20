@@ -48,7 +48,7 @@ setMethod("initialize", "DormandPrince45", function(.Object, ode, ...) {
     return(.Object)
 })
 
-
+#' @rdname init-method
 setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     # inititalize the solver
     object@stepSize <- stepSize
@@ -170,7 +170,7 @@ setMethod("getTolerance", "DormandPrince45", function(object) {
     return(object@tol)
 })
 
-
+#' @rdname getErrorCode-method
 setMethod("getErrorCode", "DormandPrince45", function(object) {
     return(object@error_code)
 })
