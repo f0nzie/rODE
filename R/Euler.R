@@ -66,17 +66,6 @@ setMethod("getStepSize", "Euler", function(object, ...) {
 
 #' # constructor ODE solver using Euler method
 #'
-#' #' Euler constructor
-#' #'
-#' #' @export
-#' euler <- function(.ode) {
-#'     # Euler constructor
-#'     .euler <- new("Euler", .ode)                     # create the Euler object
-#'     .euler <- init(.euler, .euler@stepSize)            # iniialize Euler
-#'     return(.euler)
-#' }
-
-
 #' @export
 setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
     .euler <- .Euler(ode = ode)
@@ -87,7 +76,7 @@ setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
 setMethod("Euler", signature(ode = "missing"), function(ode, ...) {
     if (missing(ode)) {
         ode <- new("ODE")
-        warning("No ODE supplied. Taking an empty one!")
+        warning("No ODE supplied. Using an empty one!")
     }
     .euler <- .Euler(ode = ode)
     .euler <- init(.euler, .euler@stepSize)

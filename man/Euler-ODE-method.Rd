@@ -8,13 +8,5 @@
 \S4method{Euler}{ODE}(ode, ...)
 }
 \description{
-#' Euler constructor
-#'
-#' @export
-euler <- function(.ode) {
-    # Euler constructor
-    .euler <- new("Euler", .ode)                     # create the Euler object
-    .euler <- init(.euler, .euler@stepSize)            # iniialize Euler
-    return(.euler)
-}
+# constructor ODE solver using Euler method
 }

@@ -18,21 +18,21 @@ library(testthat)
 
 
 
-test_that("Class is correct", {
-    ode <- new("ODE")
-    odesolver <- AbstractODESolver(ode)
-    expect_true(class(odesolver) == "AbstractODESolver")
-})
+# test_that("Class is correct", {
+#     ode <- new("ODE")
+#     odesolver <- AbstractODESolver(ode)
+#     expect_true(class(odesolver) == "AbstractODESolver")
+# })
 
 
 
 
-test_that("Have correct slot names", {
-    ode <- new("ODE")
-    odesolver <- AbstractODESolver(ode)
-    expect_equal(slotNames(odesolver), c("stepSize", "numEqn", "ode"))
-    expect_equal(slotNames(odesolver@ode), c("state", "rate"))
-})
+# test_that("Have correct slot names", {
+#     ode <- new("ODE")
+#     odesolver <- AbstractODESolver(ode)
+#     expect_equal(slotNames(odesolver), c("stepSize", "numEqn", "ode"))
+#     expect_equal(slotNames(odesolver@ode), c("state", "rate"))
+# })
 
 
 

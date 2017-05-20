@@ -7,11 +7,10 @@ library(testthat)
 ode <- new("ODE")
 
 
-# test_that("Constructor needs ODE parameter", {
-#     expect_error(Euler(), 'argument ".ode" is missing, with no default')
-# })
+test_that("No ODE parameter supplied", {
+    expect_warning(Euler(), 'No ODE supplied. Using an empty one!')
+})
 
-eu <- Euler()
 
 euler <- Euler(ode)
 
