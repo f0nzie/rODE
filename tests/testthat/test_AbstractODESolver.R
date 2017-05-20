@@ -5,34 +5,32 @@ library(testthat)
 
 
 
-# abstract <- AbstractODESolver()
+test_that("there are no constructor for ODE", {
+    expect_error(ode <- ODE(), 'could not find function "ODE"')
+})
 
-# test_that("there are no constructor for ODE", {
-#     expect_error(ode <- ODE(), 'could not find function "ODE"')
-# })
-
-# test_that("Constructor needs ODE parameter", {
-#     expect_error(AbstractODESolver(), 'argument ".ode" is missing, with no default')
-# })
+test_that("Constructor needs ODE parameter", {
+    expect_warning(AbstractODESolver(), 'No ODE supplied. Using an empty one!')
+})
 
 
 
 
-# test_that("Class is correct", {
-#     ode <- new("ODE")
-#     odesolver <- AbstractODESolver(ode)
-#     expect_true(class(odesolver) == "AbstractODESolver")
-# })
+test_that("Class is correct", {
+    ode <- new("ODE")
+    odesolver <- AbstractODESolver(ode)
+    expect_true(class(odesolver) == "AbstractODESolver")
+})
 
 
 
 
-# test_that("Have correct slot names", {
-#     ode <- new("ODE")
-#     odesolver <- AbstractODESolver(ode)
-#     expect_equal(slotNames(odesolver), c("stepSize", "numEqn", "ode"))
-#     expect_equal(slotNames(odesolver@ode), c("state", "rate"))
-# })
+test_that("Have correct slot names", {
+    ode <- new("ODE")
+    odesolver <- AbstractODESolver(ode)
+    expect_equal(slotNames(odesolver), c("stepSize", "numEqn", "ode"))
+    expect_equal(slotNames(odesolver@ode), c("state", "rate"))
+})
 
 
 

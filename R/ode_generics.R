@@ -1,4 +1,9 @@
 # Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
+
+#' @export
+setGeneric("AbstractODESolver", function(ode, ...)
+    standardGeneric("AbstractODESolver"))
+
 #' @export
 setGeneric("EulerRichardson", function(ode, ...)
     standardGeneric("EulerRichardson"))

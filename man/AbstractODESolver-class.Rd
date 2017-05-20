@@ -3,6 +3,7 @@
 \docType{class}
 \name{AbstractODESolver-class}
 \alias{AbstractODESolver-class}
+\alias{.AbstractODESolver}
 \title{AbstractODESolver class}
 \description{
 AbstractODESolver class

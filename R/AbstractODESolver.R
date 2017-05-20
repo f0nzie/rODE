@@ -4,15 +4,15 @@
 #' AbstractODESolver class
 #'
 #' @include ODE.R ODESolver.R ode_generics.R
-setClass("AbstractODESolver", slots = c(
-    stepSize = "numeric",
-    numEqn   = "numeric",
-    ode      = "ODE"
-), prototype = prototype(
-    stepSize = 0.1,
-    numEqn = 0
-), contains = c("ODESolver")
-)
+.AbstractODESolver <- setClass("AbstractODESolver", slots = c(
+                    stepSize = "numeric",
+                    numEqn   = "numeric",
+                    ode      = "ODE"
+                ), prototype = prototype(
+                    stepSize = 0.1,
+                    numEqn = 0
+                ), contains = c("ODESolver")
+                )
 
 
 setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
@@ -45,10 +45,27 @@ setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
 })
 
 
-# constructor
-#' @importFrom methods new
-AbstractODESolver <- function(.ode) {
-    odesolver <- new("AbstractODESolver", .ode)
-    odesolver@ode <- .ode
+#' # constructor
+#' #' @importFrom methods new
+#' AbstractODESolver <- function(.ode) {
+#'     odesolver <- new("AbstractODESolver", .ode)
+#'     odesolver@ode <- .ode
+#'     odesolver
+#' }
+
+#' @export
+setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
+    if (missing(ode)) {
+        ode <- new("ODE")
+        warning("No ODE supplied. Using an empty one!")
+    }
+    odesolver <- .AbstractODESolver(ode = ode)
+    odesolver@ode <- ode
     odesolver
-}
+})
+
+setMethod("AbstractODESolver", signature(ode = "ODE"), function(ode, ...) {
+    odesolver <- .AbstractODESolver(ode = ode)
+    odesolver@ode <- ode
+    odesolver
+})
