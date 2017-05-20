@@ -73,6 +73,7 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #'
 #' @param object a class object
 #' @param ... additional parameters
+#' @param stepSize size of the step
 #'
 #' @rdname init-method
 #' @export
@@ -85,9 +86,9 @@ setGeneric("init", function(object, ...) standardGeneric("init"))
 #'
 #' @param object a class object
 #' @param ... additional parameters
+#' @param stepSize size of the step
 #'
 #' @rdname setStepSize-method
-#'
 #' @export
 setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 

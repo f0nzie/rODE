@@ -29,6 +29,8 @@ setStepSize(object, ...)
 \item{object}{a class object}
 
 \item{...}{additional parameters}
+
+\item{stepSize}{size of the step}
 }
 \description{
 setStepSize uses either of two step parameters: stepSize and dt

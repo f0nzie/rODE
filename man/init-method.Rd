@@ -34,6 +34,8 @@ init(object, ...)
 \item{object}{a class object}
 
 \item{...}{additional parameters}
+
+\item{stepSize}{size of the step}
 }
 \description{
 Set initial values before starting the ODE solver
