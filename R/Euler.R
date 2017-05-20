@@ -17,6 +17,10 @@
         )
 
 setMethod("initialize", "Euler", function(.Object, ode, ...) {
+    tryCatch({
+        if (missing(ode)) stop("ode param not supplied")
+    }, error = "No ode param")
+
     # initialized the Euler ODE solver
     .Object@ode <- ode                          # set the ode to ODESolver slot
     .Object@ode@rate <- vector("numeric")       # create vector for the rate
@@ -75,6 +79,16 @@ setMethod("getStepSize", "Euler", function(object, ...) {
 
 #' @export
 setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
+    .euler <- .Euler(ode = ode)
+    .euler <- init(.euler, .euler@stepSize)
+    return(.euler)
+})
+
+setMethod("Euler", signature(ode = "missing"), function(ode, ...) {
+    if (missing(ode)) {
+        ode <- new("ODE")
+        warning("No ODE supplied. Taking an empty one!")
+    }
     .euler <- .Euler(ode = ode)
     .euler <- init(.euler, .euler@stepSize)
     return(.euler)
