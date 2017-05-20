@@ -1,4 +1,4 @@
-Package: odeR
+Package: rODE
 Type: Package
 Title: Ordinary Differential Equation Solvers Written in R using S4 classes
 Version: 0.1.0
@@ -30,4 +30,3 @@ Collate:
     'RK45.R'
     'Verlet.R'
     'hello.R'
-    'odeR-package.r'

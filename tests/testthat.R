@@ -1,4 +1,4 @@
 library(testthat)
-library(odeR)
+library(rODE)
 
-test_check("odeR")
+test_check("rODE")

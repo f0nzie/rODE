@@ -1,3 +1,4 @@
+# Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
 #' @export
 setGeneric("EulerRichardson", function(ode, ...)
     standardGeneric("EulerRichardson"))
@@ -13,6 +14,8 @@ setGeneric("Verlet", function(ode, ...)
 #' @export
 setGeneric("Euler", function(ode, ...)
     standardGeneric("Euler"))
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #' @export
 setGeneric("getRate", function(object, state, rate, ...) standardGeneric("getRate"))
