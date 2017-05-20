@@ -32,6 +32,8 @@ while (pendulum@state[3] <= 1000)    {
     rowvec[[i]] <- list(state1 = pendulum@state[1], # angle
                         state2 = pendulum@state[2],      # derivative of the angle
                         state3 = pendulum@state[3])       # time
+    cat(sprintf("state1=%12f state2=%12f state3=%12f \n", pendulum@state[1],
+                pendulum@state[2], pendulum@state[3]))
     i <- i + 1
     pendulum <- step(pendulum)
 }
