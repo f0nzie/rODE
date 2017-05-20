@@ -58,6 +58,7 @@ setGeneric("getState", function(object, ...) standardGeneric("getState"))
 setGeneric("step", function(object, ...) standardGeneric("step"))
 
 
+
 #' Get the step size
 #'
 #' @param object a class object
@@ -67,6 +68,14 @@ setGeneric("step", function(object, ...) standardGeneric("step"))
 #' @export
 setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 
+
+
+#' Perform a step
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname doStep-method
 #' @export
 setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 # setGeneric("setState", function(object, x, vx, y, vy, ...) standardGeneric("setState"))
@@ -143,6 +152,9 @@ setGeneric("getTolerance", function(object, ...) standardGeneric("getTolerance")
 #' @export
 setGeneric("getErrorCode", function(object, tol, ...) standardGeneric("getErrorCode"))
 
+#' Enable Runtime Exceptions
+#'
+#' @rdname DormandPrince45-class
 #' @export
 setGeneric("enableRuntimeExceptions", function(object, enable, ...)
     standardGeneric("enableRuntimeExceptions"))

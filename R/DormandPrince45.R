@@ -5,6 +5,7 @@
 #'
 #' @param object a class object
 #' @param enable a logical flag
+#' @param ... additional parameters
 #'
 #' @rdname DormandPrince45-class
 #'
