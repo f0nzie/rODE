@@ -49,6 +49,7 @@ setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
     object
 })
 
+#' @rdname getStepSize-method
 setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
     return(object@stepSize)
 })

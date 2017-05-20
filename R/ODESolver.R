@@ -5,7 +5,6 @@
 #'
 #' @param object a class object
 #' @param stepSize size of the step
-#' @param stepSize size of the step
 #'
 #' @include ode_generics.R
 setClass("ODESolver")
@@ -29,5 +28,7 @@ setMethod("step", "ODESolver", function(object, ...) {
 setMethod("setStepSize", "ODESolver", function(object, stepSize, ...) {
 })
 
+#' @rdname getStepSize-method
 setMethod("getStepSize", "ODESolver", function(object, ...) {
+    NULL
 })

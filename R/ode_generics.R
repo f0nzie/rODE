@@ -58,7 +58,12 @@ setGeneric("getState", function(object, ...) standardGeneric("getState"))
 setGeneric("step", function(object, ...) standardGeneric("step"))
 
 
-
+#' Get the step size
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getStepSize-method
 #' @export
 setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 
@@ -106,9 +111,25 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 #' @export
 setGeneric("getExactSolution", function(object, t, ...) standardGeneric("getExactSolution"))
 
+
+#' Set the tolerance for the solver
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#' @param tol tolerance
+#'
+#' @rdname setTolerance-method
+#'
 #' @export
 setGeneric("setTolerance", function(object, tol, ...) standardGeneric("setTolerance"))
 
+
+#' Get the tolerance for the3 solver
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getTolerance-method
 #' @export
 setGeneric("getTolerance", function(object, ...) standardGeneric("getTolerance"))
 

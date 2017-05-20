@@ -149,10 +149,13 @@ setMethod("setStepSize", "DormandPrince45", function(object, stepSize, ...) {
     object
 })
 
+#' @rdname getStepSize-method
 setMethod("getStepSize", "DormandPrince45", function(object, ...) {
     return(object@stepSize)
 })
 
+
+#' @rdname setTolerance-method
 setMethod("setTolerance", "DormandPrince45", function(object, tol) {
     object@tol <- abs(tol)
     if (object@tol < 1.0E-12) {
@@ -166,6 +169,7 @@ setMethod("setTolerance", "DormandPrince45", function(object, tol) {
     return(object)
 })
 
+#' @rdname getTolerance-method
 setMethod("getTolerance", "DormandPrince45", function(object) {
     return(object@tol)
 })

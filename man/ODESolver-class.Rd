@@ -8,8 +8,6 @@
 \item{object}{a class object}
 
 \item{stepSize}{size of the step}
-
-\item{stepSize}{size of the step}
 }
 \description{
 ODESolver class
