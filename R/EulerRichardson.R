@@ -14,6 +14,12 @@
 #     * converted to R by   Alfonso R. Reyes
 
 
+#' EulerRichardson class
+#'
+#' @param ode an ODE object
+#' @param ... additional parameters
+#'
+#' @rdname EulerRichardson-class
 .EulerRichardson <- setClass("EulerRichardson", slots = c(
                       midstate = "numeric"          # this is the midpoint slot
                     ),
@@ -27,6 +33,7 @@ setMethod("initialize", "EulerRichardson", function(.Object, ode, ...) {
                 return(.Object)
             })
 
+#' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
     # inititalize the solver
@@ -36,7 +43,7 @@ setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
     object
 })
 
-
+#' @rdname step-method
 setMethod("step", "EulerRichardson", function(object, ...) {
     # step through the diffrential equation
     state <- getState(object@ode)                         # get the state vector
@@ -66,7 +73,12 @@ setMethod("step", "EulerRichardson", function(object, ...) {
 
 
 
-# constructor
+#' EulerRichardson constructor ODE
+#'
+#' @param ode an ODE object
+#' @param ...  additional parameters
+#'
+#' @importFrom methods new
 #' @export
 setMethod("EulerRichardson", signature(ode = "ODE"), function(ode, ...) {
     # constructor for Euler-Richardson ODE solver

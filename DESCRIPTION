@@ -1,4 +1,4 @@
-Package: odeR
+Package: rODE
 Type: Package
 Title: Ordinary Differential Equation Solvers Written in R using S4 classes
 Version: 0.1.0
@@ -17,7 +17,7 @@ Suggests: knitr,
     rmarkdown,
     ggplot2
 RoxygenNote: 6.0.1
-Collate:
+Collate: 
     'ode_generics.R'
     'ODESolver.R'
     'ODE.R'
@@ -30,4 +30,4 @@ Collate:
     'RK45.R'
     'Verlet.R'
     'hello.R'
-    'odeR-package.r'
+    'utils.R'

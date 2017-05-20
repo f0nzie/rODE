@@ -8,7 +8,14 @@
 
 # source("./R/AbstractODESolver.R")
 
-
+#' Verlet class
+#'
+#' @param ode an ODE object
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname Verlet-class
+#'
 .Verlet <- setClass("Verlet", slots = c(
               rate1 = "numeric",
               rate2 = "numeric",
@@ -24,8 +31,7 @@ setMethod("initialize", "Verlet", function(.Object, ode, ...) {
     return(.Object)
 })
 
-#' Start Verlet
-#'
+#' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "Verlet", function(object, stepSize, ...) {
     # inititalize the solver
@@ -38,11 +44,12 @@ setMethod("init", "Verlet", function(object, stepSize, ...) {
     object
 })
 
+#' @rdname Verlet-class
 setMethod("getRateCounter", "Verlet", function(object, ...) {
     return(object@rateCounter)
 })
 
-
+#' @rdname step-method
 setMethod("step", "Verlet", function(object, ...) {
     # state[]: x1, d x1/dt, x2, d x2/dt .... xN, d xN/dt, t
     state <- getState(object@ode)                         # get the state vector
@@ -100,6 +107,10 @@ setMethod("step", "Verlet", function(object, ...) {
 # }
 
 
+#' Verlet class constructor ODE
+#'
+#' @rdname Verlet-class
+#'
 #' @export
 setMethod("Verlet", signature(ode = "ODE"), function(ode, ...) {
     .verlet <- .Verlet(ode = ode)

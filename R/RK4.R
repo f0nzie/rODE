@@ -12,9 +12,7 @@
 
 #' RK4 class
 #'
-#' @rdname RK4
-#' @name RK4
-#' @aliases RK4-class
+#' @rdname RK4-class
 #' @include AbstractODESolver.R
 #' @export
 .RK4 <- setClass("RK4", slots = c(
@@ -27,18 +25,13 @@
             contains = c("AbstractODESolver")
         )
 
-#' RK4 Initializer
-#'
-#' @name RK4
-#' @rdname RK4-class
 setMethod("initialize", "RK4", function(.Object, ode, ...) {
     # initialize the class
     .Object@ode <- ode
     return(.Object)
 })
 
-#' Start RK4
-#'
+#' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "RK4", function(object, stepSize, ...) {
     # inititalize the solver
@@ -56,6 +49,7 @@ setMethod("init", "RK4", function(object, stepSize, ...) {
 })
 
 
+#' @rdname step-method
 setMethod("step", "RK4", function(object, ...) {
     # step through the differential equation solver
     state <- getState(object@ode)                         # get the state vector
@@ -98,20 +92,16 @@ setMethod("step", "RK4", function(object, ...) {
     object                          # use this object to reassign in R
 })
 
+
+
+#' RK4 class constructor
 #'
-#' #' RK4 constructor
-#' #'
-#' #' @rdname RK4
-#' #' @importFrom methods new
-#' #' @export
-#' rk4 <- function(.ode) {
-#'     # constructor for RK4 ODE solver
-#'     .rk4 <- new("RK4", .ode)
-#'     .rk4 <- init(.rk4, .rk4@stepSize)
-#'     return(.rk4)
-#' }
-
-
+#' @rdname RK4-class
+#'
+#' @param ode an ODE object
+#' @param ... additional parameters
+#'
+#' @importFrom methods new
 #' @export
 setMethod("RK4", signature(ode = "ODE"), function(ode, ...) {
     # constructor for RK4 ODE solver

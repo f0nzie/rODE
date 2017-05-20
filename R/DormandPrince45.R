@@ -3,6 +3,12 @@
 
 #' DormandPrince45 class
 #'
+#' @param object a class object
+#' @param enable a logical flag
+#' @param ... additional parameters
+#'
+#' @rdname DormandPrince45-class
+#'
 #' @include ODEAdaptiveSolver.R ODE.R
 setClass("DormandPrince45", slots = c(
     error_code       = "numeric",
@@ -43,7 +49,7 @@ setMethod("initialize", "DormandPrince45", function(.Object, ode, ...) {
     return(.Object)
 })
 
-
+#' @rdname init-method
 setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     # inititalize the solver
     object@stepSize <- stepSize
@@ -61,7 +67,7 @@ setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     object
 })
 
-
+#' @rdname step-method
 setMethod("step", "DormandPrince45", function(object, ...) {
     object@error_code <- object@NO_ERROR
     iterations        <- 10
@@ -133,19 +139,24 @@ setMethod("step", "DormandPrince45", function(object, ...) {
 }
 )
 
+#' @rdname DormandPrince45-class
 setMethod("enableRuntimeExceptions", "DormandPrince45", function(object, enable) {
     object@enableExceptions <- enable
 })
 
+#' @rdname setStepSize-method
 setMethod("setStepSize", "DormandPrince45", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     object
 })
 
+#' @rdname getStepSize-method
 setMethod("getStepSize", "DormandPrince45", function(object, ...) {
     return(object@stepSize)
 })
 
+
+#' @rdname setTolerance-method
 setMethod("setTolerance", "DormandPrince45", function(object, tol) {
     object@tol <- abs(tol)
     if (object@tol < 1.0E-12) {
@@ -159,17 +170,20 @@ setMethod("setTolerance", "DormandPrince45", function(object, tol) {
     return(object)
 })
 
+#' @rdname getTolerance-method
 setMethod("getTolerance", "DormandPrince45", function(object) {
     return(object@tol)
 })
 
-
+#' @rdname getErrorCode-method
 setMethod("getErrorCode", "DormandPrince45", function(object) {
     return(object@error_code)
 })
 
 #' DormandPrince45 constructor
 #'
+#' @param .ode an ODE object
+#' @importFrom methods new
 #' @export
 DormandPrince45 <- function(.ode) {
     dormandPrince45 <- new("DormandPrince45", .ode)
