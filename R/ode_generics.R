@@ -94,6 +94,7 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
 
+
 #' setStepSize uses either of two step parameters: stepSize and dt
 #' `stepSize`` works for most of the applications
 #' `dt`` is used in Pendulum
@@ -107,6 +108,7 @@ setGeneric("init", function(object, ...) standardGeneric("init"))
 setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 
 
+
 #' New setState that should work with different methods
 #'  "theta", "thetaDot":  used in PendulumApp
 #'  "x", "vx", "y", "vy": used in ProjectileApp
@@ -117,8 +119,6 @@ setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 #' @export
 setGeneric("setState", function(object, ...) standardGeneric("setState"))
 
-#' @export
-setGeneric("getExactSolution", function(object, t, ...) standardGeneric("getExactSolution"))
 
 
 #' Set the tolerance for the solver
@@ -161,26 +161,42 @@ setGeneric("enableRuntimeExceptions", function(object, enable, ...)
 
 #' Get the rate counter
 #'
-#' How many time the rate has changed with step
+#' How many time the rate has changed with a step
 #'
 #' @rdname Verlet-class
 #' @export
 setGeneric("getRateCounter", function(object, ...) standardGeneric("getRateCounter"))
 
+
+#' Get the elapsed time
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getTime-method
 #' @export
 setGeneric("getTime", function(object, ...) standardGeneric("getTime"))
 
+
+
+#' Get the calculated energy level
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getEnergy-method
 #' @export
 setGeneric("getEnergy", function(object, ...) standardGeneric("getEnergy"))
 
 
-# setState
-# setGeneric("setState", function(object, x, vx, y, vy, theta, thetaDot, ...)
-#     standardGeneric("setState"),
-#     signature = c("object", "x", "vx", "y", "vy", "theta", "thetaDot"))
 
+#' Compare analytical and calculated solutions
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#' @param t time ath what we are performing the evaluation
+#'
+#' @rdname getExactSolution-method
+#' @export
+setGeneric("getExactSolution", function(object, t, ...) standardGeneric("getExactSolution"))
 
-
-# setGeneric("setStepSize", function(object, stepSize, dt, ...)
-#     standardGeneric("setStepSize"),
-#     signature = c("object", "stepSize", "dt"))

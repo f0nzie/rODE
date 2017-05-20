@@ -1,8 +1,14 @@
+#' Get the methods in a class
+#'
+#' But only those specific to the class
+#'
+#' @param theClass class to analyze
+#'
 #' @importFrom methods showMethods
 #' @export
-showMethods2 <- function(myClass) {
+showMethods2 <- function(theClass) {
     # get the method printout
-    mtext <-  showMethods(classes=myClass, printTo = FALSE )
+    mtext <-  showMethods(classes=theClass, printTo = FALSE )
 
     # extract only what is between "Function :" and " (pack ... .GlobalEnv)"
     fvec  <- gsub( "Function(\\:\\s|\\s\\\")(.+)(\\s\\(|\\\")(.+$)",

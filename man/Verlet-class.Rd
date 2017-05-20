@@ -26,7 +26,7 @@ getRateCounter(object, ...)
 \item{object}{a class object}
 }
 \description{
-How many time the rate has changed with step
+How many time the rate has changed with a step
 
 Verlet.R
 
