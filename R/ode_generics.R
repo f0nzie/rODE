@@ -113,6 +113,11 @@ setGeneric("setTolerance", function(object, tol, ...) standardGeneric("setTolera
 setGeneric("getTolerance", function(object, ...) standardGeneric("getTolerance"))
 
 
+#' Get an error code
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#' @param tol tolerance
 #' @rdname getErrorCode-method
 #' @export
 setGeneric("getErrorCode", function(object, tol, ...) standardGeneric("getErrorCode"))
