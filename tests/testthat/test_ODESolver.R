@@ -1,8 +1,7 @@
 library(testthat)
 
-# source("./R/ode_generics.R")
-# source("./R/ODESolver.R")
-# source("./R/ODE.R")
+
+# source(paste(system.file("R", package = "rODE"), "utils.R", sep = "/"))
 
 
 
@@ -15,33 +14,35 @@ test_that("ODESolver cannot be instantiated because it is virtual", {
 
 
 test_that("ODESolver has methods implemented", {
-    # get the method printout
-    mtext <-  showMethods(class="ODESolver", printTo = FALSE )
-    
-    # extract only what is between "Function :" and " (pack ... .GlobalEnv)"
-    fvec  <- gsub( "Function(\\:\\s|\\s\\\")(.+)(\\s\\(|\\\")(.+$)",
-                  "\\2", mtext[grep("^Function", mtext)] )
-    
-    # vector comparison of methods
-    expect_equal(fvec, c("getStepSize", "init", "setStepSize", "step"))
+    # # get the method printout
+    # mtext <-  showMethods(class="ODESolver", printTo = FALSE )
+    #
+    # # extract only what is between "Function :" and " (pack ... .GlobalEnv)"
+    # fvec  <- gsub( "Function(\\:\\s|\\s\\\")(.+)(\\s\\(|\\\")(.+$)",
+    #               "\\2", mtext[grep("^Function", mtext)] )
+    #
+    # # vector comparison of methods
+    expect_equal(showMethods2("ODESolver"),
+                 c("getStepSize", "init", "setStepSize", "step"))
 })
 
 
 
 test_that("a subclass of ODESolver works", {
 
-    
+
     # build a class out of ODESolver
     setClass("AbstractSolver", slots = c(
         stepSize = "numeric",
         numEqn   = "numeric",
         ode = "ODE"
-    ), 
+    ),
     contains = c("ODESolver")
     )
-    
+
     AbstractSolver <- new("AbstractSolver")
     expect_true(is(AbstractSolver, "ODESolver"))
     expect_true(class(AbstractSolver) == "AbstractSolver")
     expect_equal(slotNames("AbstractSolver"), c("stepSize", "numEqn",   "ode" ))
 })
+
