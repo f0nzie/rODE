@@ -3,12 +3,18 @@
 \docType{class}
 \name{Verlet}
 \alias{Verlet}
+\alias{getRateCounter}
 \alias{Verlet-class}
 \alias{.Verlet}
+\alias{getRateCounter,Verlet-method}
 \alias{Verlet,ODE-method}
-\title{############################################################################}
+\title{Get the rate counter}
 \usage{
 Verlet(ode, ...)
+
+getRateCounter(object, ...)
+
+\S4method{getRateCounter}{Verlet}(object, ...)
 
 \S4method{Verlet}{ODE}(ode, ...)
 }
@@ -16,8 +22,12 @@ Verlet(ode, ...)
 \item{ode}{an ODE object}
 
 \item{...}{additional parameters}
+
+\item{object}{a class object}
 }
 \description{
+How many time the rate has changed with step
+
 Verlet.R
 
 Verlet class constructor ODE

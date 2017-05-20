@@ -126,6 +126,11 @@ setGeneric("getErrorCode", function(object, tol, ...) standardGeneric("getErrorC
 setGeneric("enableRuntimeExceptions", function(object, enable, ...)
     standardGeneric("enableRuntimeExceptions"))
 
+#' Get the rate counter
+#'
+#' How many time the rate has changed with step
+#'
+#' @rdname Verlet-class
 #' @export
 setGeneric("getRateCounter", function(object, ...) standardGeneric("getRateCounter"))
 

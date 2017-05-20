@@ -11,6 +11,7 @@
 #' Verlet class
 #'
 #' @param ode an ODE object
+#' @param object a class object
 #' @param ... additional parameters
 #'
 #' @rdname Verlet-class
@@ -43,6 +44,7 @@ setMethod("init", "Verlet", function(object, stepSize, ...) {
     object
 })
 
+#' @rdname Verlet-class
 setMethod("getRateCounter", "Verlet", function(object, ...) {
     return(object@rateCounter)
 })
