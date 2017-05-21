@@ -5,8 +5,6 @@
 library(ggplot2)
 
 # ####################################################  Test Pendulum with Euler
-# source("./R/ode_generics.R")
-# source("./R/Euler.R")
 
 
 source("./inst/examples/PendulumEuler.R")       # Pendulum script with ODE EUler

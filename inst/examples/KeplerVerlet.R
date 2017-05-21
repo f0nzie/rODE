@@ -1,7 +1,6 @@
-#' KeplerVerlet.R
-#'
-# source("./R/ODE.R")
-# source("./R/Verlet.R")
+# KeplerVerlet.R
+#
+
 
 
 setClass("KeplerVerlet", slots = c(
@@ -15,7 +14,8 @@ setClass("KeplerVerlet", slots = c(
 setMethod("initialize", "KeplerVerlet", function(.Object, ...) {
     .Object@GM <- 4 * pi * pi                # gravitation constant times combined mass
     .Object@state <- vector("numeric", 5)  # x, vx, y, vy, t
-    .Object@odeSolver <- Verlet(ode = .Object)
+    # .Object@odeSolver <- Verlet(ode = .Object)
+    .Object@odeSolver <- Verlet(.Object)
     .Object@counter <- 0
     return(.Object)
 })

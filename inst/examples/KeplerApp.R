@@ -1,9 +1,8 @@
-#'
-#' KeplerApp.R
-#'
-#'
-source("./R/ode_generics.R")
-source("./R/RK45.R")
+#
+# KeplerApp.R
+#
+#
+
 source("./inst/examples/Kepler.R")
 
 # set the orbit into a predefined state.

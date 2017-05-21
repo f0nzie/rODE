@@ -1,11 +1,8 @@
-#'
-#' PendulumRK4App.R
-#'
+#
+# PendulumRK4App.R
+#
 
 library(ggplot2)
-#                                                                   PendulumApp
-# source("./R/ode_generics.R")
-# source("./R/RK4.R")
 
 
 source("./inst/examples/PendulumRK4.R")                   # this script uses Euler-Richardson

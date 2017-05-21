@@ -28,12 +28,7 @@ getRateCounter(object, ...)
 \description{
 How many time the rate has changed with a step
 
-Verlet.R
+Verlet class
 
 Verlet class constructor ODE
-}
-\details{
-Verlet ODE solver
-
-Verlet class
 }
