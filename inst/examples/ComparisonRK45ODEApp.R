@@ -1,10 +1,9 @@
-#' ComparisonRK45ODEApp.R
-#'
-#' Updates ODE state instead of using internal state in the ODE solver
-#' File ComparisonRK45App.R does npt makde ode abstraction
-#'
-# source("./R/ode_generics.R")
-# source("./R/RK45.R")
+# ComparisonRK45ODEApp.R
+#
+# Updates ODE state instead of using internal state in the ODE solver
+# File ComparisonRK45App.R does npt makde ode abstraction
+#
+
 source("./inst/examples//ODETest.R")
 
 ode <- new("ODETest")

@@ -2,7 +2,6 @@
 # PlanetApp.R
 #
 #
-# source("./R/ode_generics.R")
 
 source("./inst/examples/Planet.R")
 

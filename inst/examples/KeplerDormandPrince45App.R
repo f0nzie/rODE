@@ -1,9 +1,10 @@
-#' KeplerDormandPrince45App.R
-#'
-#' Demostration of the use of ODE solver RK45
-#' Brought from original routine for testing Verlet ODE solver
-#'
-#'
+# KeplerDormandPrince45App.R
+#
+# Demostration of the use of ODE solver RK45
+# Brought from original routine for testing Verlet ODE solver
+#
+#
+
 source("./inst/examples/KeplerDormandPrince45.R")
 
 cat("\014")
