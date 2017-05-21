@@ -1,6 +1,6 @@
-#'
-#' PendulumEulerApp.R
-#'
+#
+# PendulumEulerApp.R
+#
 
 library(ggplot2)
 

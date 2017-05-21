@@ -1,9 +1,6 @@
 # KeplerVerlet.R
 
 
-# source("./R/ODE.R")
-# source("./R/Euler.R")
-
 
 setClass("Kepler", slots = c(
     GM = "numeric",

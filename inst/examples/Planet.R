@@ -1,5 +1,3 @@
-# source("./R/ODE.R")
-# source("./R/Euler.R")
 
 
 setClass("Planet", slots = c(

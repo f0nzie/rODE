@@ -1,14 +1,12 @@
 #' KeplerVerlet.R
-#' 
-source("./R/ODE.R")
-source("./R/DormandPrince45.R")
+#'
 
 
 setClass("Kepler", slots = c(
     GM = "numeric",
     odeSolver = "DormandPrince45",
     counter = "numeric"
-    ), 
+    ),
     contains = c("ODE")
 )
 
@@ -23,9 +21,9 @@ setMethod("initialize", "Kepler", function(.Object, ...) {
 setMethod("doStep", "Kepler", function(object, ...) {
     # cat("state@doStep=", object@state, "\n")
     object@odeSolver <- step(object@odeSolver)
-    
+
     object@state <- object@odeSolver@ode@state
-    
+
     # object@rate <- object@odeSolver@ode@rate
     # cat("\t", object@odeSolver@ode@state)
     object
@@ -36,7 +34,7 @@ setMethod("getTime", "Kepler", function(object, ...) {
 })
 
 setMethod("getEnergy", "Kepler", function(object, ...) {
-    ke <- 0.5 * (object@state[2] * object@state[2] + 
+    ke <- 0.5 * (object@state[2] * object@state[2] +
                      object@state[4] * object@state[4])
     pe <- -object@GM / sqrt(object@state[1] * object@state[1] +
                                 object@state[3] * object@state[3])
@@ -46,10 +44,10 @@ setMethod("getEnergy", "Kepler", function(object, ...) {
 setMethod("init", "Kepler", function(object, initState, ...) {
     object@state <- initState
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
-    
+
     # object@rate  <- object@odeSolver@ode@rate
     # object@state <- object@odeSolver@ode@state
-    
+
     object@counter <- 0
     object
 })
@@ -63,12 +61,12 @@ setMethod("getRate", "Kepler", function(object, state, rate, ...) {
     object@rate[3] <- state[4]
     object@rate[4] <- (- object@GM * state[3]) / r3
     object@rate[5] <- 1   # time derivative
-    
+
     # object@state <- object@odeSolver@ode@state <- state
     # object@state <- state
     object@counter <- object@counter + 1
     object
-    
+
 })
 
 setMethod("getState", "Kepler", function(object, ...) {
