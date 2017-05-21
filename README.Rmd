@@ -14,7 +14,18 @@ knitr::opts_chunk$set(
 
 # rODE
 
-The goal of rODE is to ...
+The goal of rODE is to explore R and its S4 classes and their differences with Java and Python while exploring simulations by solving differential equations.
+
+`rODE` is based in the extraordinary physics library for computer simulations OpenSourcePhyisics. Tae a look at http://opensourcephysics.org.
+
+The ODE solvers implemented in R so far:
+
+* Euler
+* Euler-Richardson
+* RK4
+* RK45, Dormand-Prince45
+* Verlet
+
 
 ## Installation
 
