@@ -1,9 +1,7 @@
-#' Pendulum.R
-#'
-#' Original Pendulum class uses Euler-Richardson solver
+# Pendulum.R
+#
+# Original Pendulum class uses Euler-Richardson solver
 
-# source("./R/ODE.R")
-# source("./R/EulerRichardson.R")
 
 
 

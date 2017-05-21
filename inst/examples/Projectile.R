@@ -5,10 +5,6 @@
 #
 ######################
 
-# source("./R/ODE.R")
-# source("./R/RK4.R")
-
-# setGeneric("setState", function(object, x, vx, y, vy, ...) standardGeneric("setState"))
 
 setClass("Projectile", slots = c(
     g = "numeric",

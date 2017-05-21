@@ -1,11 +1,10 @@
-#' Kepler.R
-#' 
-source("./R/ODE.R")
+# Kepler.R
+#
 
 
 setClass("Kepler", slots = c(
     GM = "numeric"
-    ), 
+    ),
     contains = c("ODE")
 )
 
@@ -31,11 +30,11 @@ setMethod("getRate", "Kepler", function(object, state, rate, ...) {
     object@rate[3] <- state[4]
     object@rate[4] <- (- object@GM * state[3]) / r3
     object@rate[5] <- 1   # time derivative
-    
+
     object@state <- state
-    # object@rate  
+    # object@rate
     invisible(object)
-    
+
 })
 
 

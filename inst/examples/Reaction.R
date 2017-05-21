@@ -1,16 +1,14 @@
 # Reaction.R
 
-#' /**
-#' * Reaction models an autocatalytic oscillating chemical reaction
-#' * (Brusselator model) by implementing the ODE interface.
-#' * @author Wolfgang Christian
-#' * @version 1.0
-#' * Converted to R by: Alfonso R. Reyes
-#'
+# /**
+# * Reaction models an autocatalytic oscillating chemical reaction
+# * (Brusselator model) by implementing the ODE interface.
+# * @author Wolfgang Christian
+# * @version 1.0
+# * Converted to R by: Alfonso R. Reyes
+#
 # */
 
-# source("./R/ODE.R")
-# source("./R/RK4.R")
 
 
 

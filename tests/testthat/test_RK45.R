@@ -1,10 +1,6 @@
 # library(testthat)
 
 
-# source("./R/ode_generics.R")
-# source("./R/ODE.R")
-# source("./R/RK45.R")
-
 
 source(paste(system.file("examples", package = "rODE"), "ODETest.R", sep = "/"))
 

@@ -10,7 +10,7 @@ AbstractODESolver <- function(.ode) {
     odesolver@ode <- .ode
     odesolver
 }
-AbstractODESolver constructor missing}
+AbstractODESolver constructor `missing``}
 \usage{
 \S4method{AbstractODESolver}{missing}(ode, ...)
 }
@@ -27,5 +27,5 @@ AbstractODESolver <- function(.ode) {
     odesolver@ode <- .ode
     odesolver
 }
-AbstractODESolver constructor missing
+AbstractODESolver constructor `missing``
 }
