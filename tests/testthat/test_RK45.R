@@ -2,11 +2,6 @@ library(testthat)
 
 
 
-# source(paste(system.file("examples", package = "rODE"), "ODETest.R", sep = "/"))
-
-# ODETest.R
-
-
 setClass("ODETest", slots = c(
     n     = "numeric"           # counts the number of getRate evaluations
     ),
@@ -45,7 +40,6 @@ setMethod("getRate", "ODETest", function(object, state, rate, ...) {
 
 
 # constructor
-
 ODETest <- function() {
     odetest <- new("ODETest")
     odetest
