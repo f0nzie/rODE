@@ -9,14 +9,14 @@ source("./inst/examples/KeplerVerlet.R")
 
 cat("\014")
 
-particle <- KeplerVerlet()
-
 x  <- 1
 vx <- 0
 y  <- 0
 vy <- 2 * pi
 dt <- 0.01
 tol <- 1e-3
+
+particle <- KeplerVerlet()
 
 particle <- init(particle, c(x, vx, y, vy, 0))
 
@@ -37,7 +37,8 @@ while (getTime(particle) <= 1.20) {
     particle <- doStep(particle)
     # odeSolver <- particle@odeSolver
     energy <- getEnergy(particle)
-    cat(sprintf("time=%12f energy=%12f state[5]=%12f \n", getTime(particle), energy, particle@state[5]))
+    cat(sprintf("time=%12f energy=%12f state[5]=%12f \n", getTime(particle),
+                energy, particle@state[5]))
     i <- i + 1
 }
 
