@@ -16,8 +16,8 @@ eusolver <- setStepSize(eusolver, dt)
 
 # stop loop when the ball hits the ground
 while (ball@state[1] > 0) {
-    eusolver <- step(eusolver)
-    ball <- eusolver@ode
+    solver <- step(solver)
+    ball <- solver@ode
     cat(sprintf("%12f %12f ",  ball@state[1], ball@rate[1] ))
     cat(sprintf("%12f %12f ",  ball@state[2], ball@rate[2] ))
     cat(sprintf("%12f %12f\n", ball@state[3], ball@rate[3] ))

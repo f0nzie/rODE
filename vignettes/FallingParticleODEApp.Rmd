@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Falling Particle ODE"
+author: "Wolfgang Christian / Alfonso R. Reyes"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -11,13 +11,59 @@ vignette: >
 
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
+```{r}
+library(rODE)
+library(ggplot2)
+
+# load the R class that sets up the solver for this application
+# source("./inst/examples/FallingParticleODE.R")
+
+source(paste(system.file("examples", package = "rODE"), "FallingParticleODE.R", sep = "/"))
+
+
+initial_y <- 10   # initial y position
+initial_v <- 0    # initial x position
+dt        <- 0.01 # delta time for step
+```
+
+
+## Set up the ODE and the solver
+
+```{r}
+ball <- FallingParticleODE(initial_y, initial_v)
+
+solver <- Euler(ball)
+solver <- setStepSize(solver, dt)
+```
+
+
 - Never uses retina figures
 - Has a smaller default figure size
 - Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
 
-## Vignette Info
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+## Start the simulation
+
+```{r}
+rowVector <- vector("list")
+i <- 1
+# stop loop when the ball hits the ground
+while (ball@state[1] >= 0) {
+    rowVector[[i]] <- list(state1 = ball@state[1], 
+                           state2 = ball@state[2], 
+                           state3 = ball@state[3])
+    solver <- step(solver)
+    ball <- solver@ode
+    # cat(sprintf("%12f %12f ",  ball@state[1], ball@rate[1] ))
+    # cat(sprintf("%12f %12f ",  ball@state[2], ball@rate[2] ))
+    # cat(sprintf("%12f %12f\n", ball@state[3], ball@rate[3] ))
+    i <- i + 1
+}
+
+DT <- data.table::rbindlist(rowVector)
+```
+
+
 
 ## Styles
 
@@ -32,8 +78,8 @@ The `html_vignette` template includes a basic CSS theme. To override this theme 
 The figure sizes have been customised so that you can easily put two images side-by-side. 
 
 ```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+ggplot(DT, aes(x = state3, y = state1)) + geom_line(col = "blue")
+ggplot(DT, aes(x = state3, y = state2)) + geom_line(col = "red")
 ```
 
 You can enable figure captions by `fig_caption: yes` in YAML:
@@ -42,6 +88,7 @@ You can enable figure captions by `fig_caption: yes` in YAML:
       rmarkdown::html_vignette:
         fig_caption: yes
 
+
 Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
 
 ## More Examples
@@ -49,10 +96,58 @@ Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr*
 You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
 
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+knitr::kable(head(DT, 10))
 ```
 
 Also a quote using `>`:
 
 > "He who gives up [code] safety for [code] speed deserves neither."
 ([via](https://twitter.com/hadleywickham/status/504368538874703872))
+
+
+
+```{r eval=FALSE}
+# #####################
+# FallingParticleODE.R
+#
+
+setClass("FallingParticleODE", slots = c(
+    g = "numeric"
+),
+    prototype = prototype(
+        g = 9.8
+    ),
+    contains = c("ODE")
+    )
+
+
+setMethod("initialize", "FallingParticleODE", function(.Object, ...) {
+    .Object@state <- vector("numeric", 3)
+    return(.Object)
+})
+
+setMethod("getState", "FallingParticleODE", function(object, ...) {
+    # Gets the state variables.
+    return(object@state)
+})
+
+setMethod("getRate", "FallingParticleODE", function(object, state, rate, ...) {
+    # Gets the rate of change using the argument's state variables.
+    object@rate[1] <- state[2]
+    object@rate[2] <- - object@g
+    object@rate[3] <- 1
+    invisible(object)
+
+})
+
+# constructor
+FallingParticleODE <- function(y, v) {
+    .FallingParticleODE <- new("FallingParticleODE")
+    .FallingParticleODE@state[1] <- y
+    .FallingParticleODE@state[2] <- v
+    .FallingParticleODE@state[3] <- 0
+    .FallingParticleODE
+}
+
+```
+
