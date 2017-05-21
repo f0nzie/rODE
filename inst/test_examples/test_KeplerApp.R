@@ -1,12 +1,12 @@
 library(testthat)
-#' test_KeplerApp.R
-#'
-#' Demostration of the use of ODE solver RK45
-#'
-#'
-# source("./R/ode_generics.R")
+
+# test_KeplerApp.R
+#
+# Demostration of the use of ODE solver RK45
+#
+#
+
 source("./inst/examples/Kepler.R")
-# source("./R/RK45.R")
 
 # set the orbit into a predefined state.
 r <- c(2, 0)

@@ -4,8 +4,6 @@ library(testthat)
 
 source("./inst/examples/Pendulum.R")                   # this script uses Euler-Richardson
 
-# setGeneric("setState", function(object, theta, thetaDot, ...)
-#     standardGeneric("setState"))
 
 ode <- new("ODE")
 pendulum <- Pendulum()

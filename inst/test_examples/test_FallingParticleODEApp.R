@@ -1,8 +1,6 @@
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  + + unit tests
 library(testthat)
 
-# source("./R/ode_generics.R")
-# source("./R/Euler.R")
 
 source("./inst/examples/FallingParticleODE.R")
 
