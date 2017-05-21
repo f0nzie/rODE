@@ -1,12 +1,10 @@
-#'
-#' ReactionApp.R
-#'
+#
+# ReactionApp.R
+#
 # ReactionApp solves an autocatalytic oscillating chemical
 # reaction (Brusselator model) using
 # a fouth-order Runge-Kutta algorithm.
 
-# source("./R/ode_generics.R")
-# source("./R/RK4.R")
 
 source("./inst/examples/Reaction.R")
 

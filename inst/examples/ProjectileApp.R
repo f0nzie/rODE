@@ -1,7 +1,8 @@
-#'
-#' ProjectileApp.R
+#
+# ProjectileApp.R
 #                                                      test Projectile with RK4
 #                                                      originally uses Euler
+
 library(data.table)
 
 source("./inst/examples/Projectile.R")

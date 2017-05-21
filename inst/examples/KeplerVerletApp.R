@@ -1,10 +1,9 @@
-#' KeplerVerletApp.R
-#'
-#' Demostration of the use of ODE solver RK45
-#'
-#'
-# source("./R/ode_generics.R")
-# source("./R/Verlet.R")
+# KeplerVerletApp.R
+#
+# Demostration of the use of ODE solver RK45
+#
+#
+
 
 source("./inst/examples/KeplerVerlet.R")
 
