@@ -17,7 +17,7 @@ Suggests: knitr,
     rmarkdown,
     ggplot2
 RoxygenNote: 6.0.1
-Collate: 
+Collate:
     'ode_generics.R'
     'ODESolver.R'
     'ODE.R'
@@ -31,3 +31,4 @@ Collate:
     'Verlet.R'
     'hello.R'
     'utils.R'
+VignetteBuilder: knitr
