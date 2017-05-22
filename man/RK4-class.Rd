@@ -6,7 +6,7 @@
 \alias{RK4-class}
 \alias{.RK4}
 \alias{RK4,ODE-method}
-\title{############################################################################}
+\title{RK4.R}
 \usage{
 RK4(ode, ...)
 
@@ -18,12 +18,10 @@ RK4(ode, ...)
 \item{...}{additional parameters}
 }
 \description{
-RK4.R
+RK4 ODE solver
 
 RK4 class constructor
 }
 \details{
-RK4 ODE solver
-
 RK4 class
 }

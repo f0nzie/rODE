@@ -30,4 +30,6 @@ Collate:
     'RK45.R'
     'Verlet.R'
     'hello.R'
+    'rODE-package.r'
     'utils.R'
+VignetteBuilder: knitr

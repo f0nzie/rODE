@@ -63,9 +63,11 @@ setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
 #'     odesolver
 #' }
 
+
+
 # constructor methods
 
-#' AbstractODESolver constructor missing
+#' AbstractODESolver constructor `missing``
 #'
 #' @param ode an ODE object
 #' @param ...  additional parameters
@@ -82,7 +84,7 @@ setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
     odesolver
 })
 
-#' AbstractODESolver constructor ODE
+#' AbstractODESolver constructor `ODE``
 #'
 #' @param ode an ODE object
 #' @param ...  additional parameters

@@ -1,8 +1,9 @@
-#' ComparisonRK45App.R
-#'
-#' Compares the solution by the RK45 ODE solver versus the analytical solution
-#'
-#'
+# ComparisonRK45App.R
+#
+# Compares the solution by the RK45 ODE solver versus the analytical solution
+#
+#
+
 source("./inst/examples/ODETest.R")           # hold the step and rate
 
 ode <- new("ODETest")
