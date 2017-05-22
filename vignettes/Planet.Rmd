@@ -9,50 +9,112 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+## Planet with EUler ODE solver
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+```{r}
 
-## Vignette Info
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+setClass("Planet", slots = c(
+    odeSolver = "Euler",
+    GM = "numeric"
+    ),
+    contains = c("ODE")
+)
 
-## Styles
+setMethod("initialize", "Planet", function(.Object, ...) {
+    .Object@GM <- 4 * pi * pi
+    .Object@state <- vector("numeric", 5)
+    .Object@odeSolver <- Euler(.Object)
+    return(.Object)
+})
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+setMethod("doStep", "Planet", function(object, ...) {
+    # Gets the state variables.
+    object@odeSolver <- step(object@odeSolver)
+    # object@odeSolver <- setStepSize(object@odeSolver, stepSize)
+    object@state <- object@odeSolver@ode@state
+    object@rate  <- object@odeSolver@ode@rate
+    invisible(object)
+})
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+setMethod("init", "Planet", function(object, initState, ...) {
+    object@state <- object@odeSolver@ode@state <- initState
+    # callNextMethod(object@odeSolver, getStepSize(object@odeSolver))
+    # initialize providing the step size
+    object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
+    # object@odeSolver <- callNextMethod(object, object@odeSolver@stepSize)
+    # object@odeSolver <- callNextMethod(object@odeSolver, getStepSize(object@odeSolver))
 
-## Figures
+    object@rate <- object@odeSolver@ode@rate
+    object@state <- object@odeSolver@ode@state
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+    object
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+})
+
+setMethod("getRate", "Planet", function(object, state, rate, ...) {
+    # Gets the rate of change using the argument's state variables.
+    r2 <- state[1] * state[1] + state[3] * state[3]
+    r3 <- r2 * sqrt(r2)
+    object@rate[1] <- state[2]
+    object@rate[2] <- (- object@GM * state[1]) / r3
+    object@rate[3] <- state[4]
+    object@rate[4] <- (- object@GM * state[3]) / r3
+    object@rate[5] <- 1
+
+    object@state <- object@odeSolver@ode@state <- state
+    object@odeSolver@ode@rate <- object@rate
+    # object@rate
+    invisible(object)
+
+})
+
+setMethod("getState", "Planet", function(object, ...) {
+    # Gets the state variables.
+    invisible(object@state)
+})
+
+# constructor
+Planet <- function() {
+    new("Planet")
+}
+
+
+
+# #################
+# PlanetApp.R
+#
+#
+PlanetApp <- function(verbose = FALSE) {
+        
+    # x =  1, AU or Astronomical Units. 
+    # Length of semimajor axis or the orbit of the Earth around the Sun.
+    
+    x <- 1; vx <- 0; y <- 0; vy <- 6.28; t <- 0
+    state <- c(x, vx, y, vy, t)
+    dt <-  0.01
+    
+    planet <- Planet()
+    
+    planet@odeSolver <- setStepSize(planet@odeSolver, dt)
+    planet <- init(planet, initState = state)
+    
+    # run infinite loop. stop with ESCAPE.
+    while (planet@state[5] <= 365) {  # Earth orbit is 365 days around the sun
+        for (i in 1:5) {               # advances time
+            planet <- doStep(planet)
+        }
+        if (verbose) 
+            cat(sprintf("%12f %12f %12f %12f %12f \n",
+                    planet@state[1], planet@state[2], planet@state[3],
+                    planet@state[4], planet@state[5]))
+    }
+
+}
+
+
+
+PlanetApp()
+
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))

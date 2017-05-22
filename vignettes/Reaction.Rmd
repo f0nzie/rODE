@@ -9,50 +9,92 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+## Reaction with RK4 solver
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+```{r}
+# Reaction.R
 
-## Vignette Info
+# /**
+# * Reaction models an autocatalytic oscillating chemical reaction
+# * (Brusselator model) by implementing the ODE interface.
+# * @author Wolfgang Christian
+# * @version 1.0
+# * Converted to R by: Alfonso R. Reyes
+#
+# */
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
 
-## Styles
+setClass("Reaction", slots = c(
+    k1 = "numeric",
+    k2 = "numeric",
+    k3 = "numeric",
+    k4 = "numeric",
+    A  = "numeric",
+    B  = "numeric",
+    state     = "numeric",
+    odeSolver = "RK4"
+    ),
+    prototype = prototype(
+        k1 = 1.0, k2 = 2.5, k3 = 1.0, k4 = 1.0,      # reaction rates
+        A = 1, B = 1,                                # reactant concenterations
+        state = c(0, 0, 0)      # X, Y, t
+    ),
+    contains = c("ODE")
+    )
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+setMethod("getState", "Reaction", function(object) {
+    object@state
+})
 
-## Figures
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+setMethod("getRate", "Reaction", function(object, state, rate) {
+    xxy <- state[1] * state[1] *state[2]
+    rate[1] <- object@k1 * object@A - object@k2 * object@B * state[1] +
+        object@k3 * xxy - object@k4 * state[1]                          # X rate
+    rate[2] <- object@k2 * object@B * state[1] - object@k3 * xxy        # Y rate
+    rate[3] <- 1                                 # rate of change of time, dt/dt
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+    object@state <- object@odeSolver@ode@state <- state
+    object@rate  <- object@odeSolver@ode@rate  <- rate
+    # object@rate                                                # time derivative
+    invisible(object)
+})
+
+
+# constructor
+Reaction <- function(initialConditions) {
+    .Reaction <- new("Reaction")
+    .Reaction@state <- initialConditions
+    .Reaction
+}
+
+
+
+#
+# ReactionApp.R
+#
+# ReactionApp solves an autocatalytic oscillating chemical
+# reaction (Brusselator model) using
+# a fouth-order Runge-Kutta algorithm.
+ReactionApp <- function(verbose = FALSE) {
+    
+    X <- 1; Y <- 5;
+    dt <- 0.1
+    
+    reaction <- Reaction(c(X, Y, 0))
+    
+    solver <- RK4(reaction)
+    
+    while (solver@ode@state[3] < 100) {
+        if (verbose)
+            cat(sprintf("%12f %12f %12f \n", solver@ode@state[1],
+                    solver@ode@state[2], solver@ode@state[3]))
+        solver <- step(solver)
+    }
+    # at t=100, dt=0.1,  c(2.131958,     1.105316,   100.000000)
+}
+
+ReactionApp()
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
