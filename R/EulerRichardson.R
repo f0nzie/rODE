@@ -47,8 +47,11 @@ setMethod("step", "EulerRichardson", function(object, ...) {
     # step through the diffrential equation
     state <- getState(object@ode)                         # get the state vector
     # rate  <- getRate(object@ode, state, object@ode@rate)  # get the rate vector
+
     object@ode <- getRate(object@ode, state, object@ode@rate)  # get the rate vector
     rate <- object@ode@rate
+
+    rate <- getRate(object@ode, state)
 
     dt2 <- object@stepSize / 2                            # divide stepSize
 
@@ -58,8 +61,8 @@ setMethod("step", "EulerRichardson", function(object, ...) {
     }
 
     # rate  <- getRate(object@ode, object@midstate, rate) # rate based on midpoint
-    object@ode <- getRate(object@ode, object@midstate, rate) # rate based on midpoint
-    rate <- object@ode@rate
+    rate <- getRate(object@ode, object@midstate) # rate based on midpoint
+    # rate <- object@ode@rate
 
     for (i in 1:object@numEqn) {
         state[i] <- state[i] + object@stepSize * rate[i] # calc new state
