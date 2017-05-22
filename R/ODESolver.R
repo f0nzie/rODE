@@ -3,6 +3,8 @@
 
 #' ODESolver class
 #'
+#' A virtual class
+#'
 #' @param object a class object
 #' @param stepSize size of the step
 #'

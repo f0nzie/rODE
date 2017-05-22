@@ -79,6 +79,8 @@ Reaction <- function(initialConditions) {
 # ReactionApp solves an autocatalytic oscillating chemical
 # reaction (Brusselator model) using
 # a fouth-order Runge-Kutta algorithm.
+#
+#
 ReactionApp <- function(verbose = FALSE) {
     
     X <- 1; Y <- 5;
