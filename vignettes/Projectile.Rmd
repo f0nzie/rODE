@@ -13,12 +13,12 @@ vignette: >
 
 ```{r}
 ####################
+# This code can also be found in the `examples` folder under this name:
+# 
 # Projectile.R
 #
 # Projectile class to be solved with Euler method
 #
-######################
-
 
 setClass("Projectile", slots = c(
     g = "numeric",
@@ -86,6 +86,7 @@ setMethod("getRate", "Projectile", function(object, state, rate) {
 Projectile <- function()  new("Projectile")
 
 
+# This code can also be found in the `examples` folder under this name:
 #
 # ProjectileApp.R
 #                                                      test Projectile with RK4

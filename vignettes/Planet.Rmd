@@ -12,8 +12,10 @@ vignette: >
 ## Planet with EUler ODE solver
 
 ```{r}
-
-
+# This code can also be found in the `examples` folder under this name:
+# 
+# Planet.R
+#
 setClass("Planet", slots = c(
     odeSolver = "Euler",
     GM = "numeric"
@@ -82,6 +84,7 @@ Planet <- function() {
 
 
 # #################
+# This code can also be found in the `examples` folder under this name:
 # PlanetApp.R
 #
 #

@@ -12,6 +12,8 @@ vignette: >
 ## The Kepler class
 
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # Kepler.R
 #
 
@@ -62,9 +64,9 @@ Kepler <- function(r, v) {
     return(kepler)
 }
 
+# This code can also be found in the `examples` folder under this name:
 #
 # KeplerApp.R
-#
 #
 KeplerApp <- function(verbose = FALSE) {
     
@@ -103,11 +105,11 @@ KeplerApp()
 ## The Kepler class using the the3 DormandPrice45 ODE solver
 
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+# 
 # KeplerDormandPrince45.R
 #
-# Examples folder
 #
-
 
 setClass("Kepler", slots = c(
     GM = "numeric",
@@ -187,6 +189,9 @@ Kepler <- function() {
     return(kepler)
 }
 
+# #########
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerDormandPrince45App.R
 #
 # Demostration of the use of ODE solver RK45
@@ -244,10 +249,10 @@ KeplerDormandPrince45App()
 
 ## Kepler using the Euler ODE solver
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerEuler.R
 #
-# Examples
-
 
 
 setClass("Kepler", slots = c(
@@ -328,11 +333,13 @@ Kepler <- function() {
     return(kepler)
 }
 
+
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerApp.R
 #
 # Demostration of the use of ODE solver RK45
 #
-# Examples folder
 
 KeplerApp <- function(verbose = FALSE) {
     
@@ -381,9 +388,10 @@ KeplerApp()
 
 ## Kepler using the Verlet ODE solver
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerVerlet.R
 #
-
 
 setClass("KeplerVerlet", slots = c(
     GM = "numeric",
@@ -465,7 +473,8 @@ KeplerVerlet <- function() {
 }
 
 
-
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerVerletApp.R
 #
 # Demostration of the use of ODE solver RK45

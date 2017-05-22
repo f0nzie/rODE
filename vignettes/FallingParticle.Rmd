@@ -12,7 +12,7 @@ vignette: >
 ## The FallingParticleODE class using the EUler ODE solver
 
 ```{r eval=FALSE}
-# #####################
+# This code can also be found in the `examples` folder under this name:
 # FallingParticleODE.R
 #
 
@@ -54,7 +54,10 @@ FallingParticleODE <- function(y, v) {
     .FallingParticleODE
 }
 
-
+# This code can also be found in the `examples` folder under this name:
+# 
+# FallingParticleODEApp.R
+#
 
 FallingParticleODEApp <- function(verbose = FALSE) {
     library(ggplot2)

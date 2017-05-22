@@ -12,11 +12,12 @@ vignette: >
 ## Pendulum with Euler-Richardson ODE solver
 
 ```{r}
-library(rODE)
+# This code can also be found in the `examples` folder under this name:
+#
 # Pendulum.R
 #
 # Original Pendulum class uses Euler-Richardson solver
-
+#
 
 setClass("Pendulum", slots = c(
     omega0Squared = "numeric",
@@ -81,8 +82,10 @@ Pendulum <- function()  new("Pendulum")
 
 
 # #############
+# This code can also be found in the `examples` folder under this name:
 #
 # PendulumApp.R
+#
 PendulumApp <- function(verbose = FALSE) {
     
     library(ggplot2)
@@ -132,11 +135,13 @@ PendulumApp()
 
 ```{r}
 # ###################
+# This code can also be found in the `examples` folder under this name:
+#
 # PendulumEuler.R
 #
 # The original Pendulum uses Euler-Richardson solver
 #
-
+#
 setClass("PendulumEuler", slots = c(
     omega0Squared = "numeric",
     state = "numeric",
@@ -198,7 +203,7 @@ setMethod("getRate", "PendulumEuler", function(object, state, rate) {
 PendulumEuler <- function()  new("PendulumEuler")
 
 
-
+# This code can also be found in the `examples` folder under this name:
 #
 # PendulumEulerApp.R
 #
@@ -249,10 +254,12 @@ PendulumEulerApp()
 ## Pendulum with RK4
 ```{r}
 # ###################
+# This code can also be found in the `examples` folder under this name:
+#
 # PendulumRK4.R
 #
 # The original Pendulum uses Euler-Richardson solver
-
+#
 
 
 setClass("PendulumRK4", slots = c(
@@ -317,7 +324,7 @@ PendulumRK4 <- function()  new("PendulumRK4")
 
 
 
-
+# This code can also be found in the `examples` folder under this name:
 #
 # PendulumRK4App.R
 #

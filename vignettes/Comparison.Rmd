@@ -32,6 +32,7 @@ setMethod("initialize", "ODETest", function(.Object, ...) {
 
 
 setMethod("getExactSolution", "ODETest", function(object, t, ...) {
+    # analytical solution
     return(5.0 * exp(-t))
 })
 
@@ -56,15 +57,14 @@ setMethod("getRate", "ODETest", function(object, state, rate, ...) {
 
 
 # constructor
-
 ODETest <- function() {
     odetest <- new("ODETest")
     odetest
 }
 
-
+# This script can also be found in:
 # ComparisonRK45App.R
-#
+# 
 # Compares the solution by the RK45 ODE solver versus the analytical solution
 
 ComparisonRK45App <- function(verbose = FALSE) {

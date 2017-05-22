@@ -12,6 +12,8 @@ vignette: >
 ## Reaction with RK4 solver
 
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # Reaction.R
 
 # /**
@@ -70,7 +72,7 @@ Reaction <- function(initialConditions) {
 }
 
 
-
+# This code can also be found in the `examples` folder under this name:
 #
 # ReactionApp.R
 #
