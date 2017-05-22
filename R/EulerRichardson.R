@@ -1,4 +1,3 @@
-# source("./R/AbstractODESolver.R")
 
 # * An Euler-Richardson (midpoint) method ODE solver.
 # *

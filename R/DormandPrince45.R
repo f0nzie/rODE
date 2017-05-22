@@ -1,5 +1,3 @@
-# source("./R/ODEAdaptiveSolver.R")
-# source("./R/ODE.R")
 
 #' DormandPrince45 class
 #'

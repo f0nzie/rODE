@@ -1,5 +1,3 @@
-# source("./R/ode_generics.R")
-# source("./R/ODESolver.R")
 
 #' @include ODESolver.R
 setClass("ODEAdaptiveSolver", slots = c(

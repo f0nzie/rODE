@@ -1,4 +1,3 @@
-# source("./R/DormandPrince45.R")
 
 #' RK45 class
 #'
