@@ -25,7 +25,7 @@ setMethod("getState", "ODETest", function(object, ...) {
     object@state
 })
 
-setMethod("getRate", "ODETest", function(object, state, rate, ...) {
+setMethod("getRate", "ODETest", function(object, state, ...) {
     rate[1] <- - state[1]
     rate[2] <-  1            # rate of change of time, dt/dt
 
@@ -35,7 +35,7 @@ setMethod("getRate", "ODETest", function(object, state, rate, ...) {
     object@rate  <- rate
 
     # object@rate
-    return(object)
+    return(object@rate)
 })
 
 

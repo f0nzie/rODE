@@ -42,7 +42,7 @@ setMethod("init", "Kepler", function(object, initState, ...) {
     object
 })
 
-setMethod("getRate", "Kepler", function(object, state, rate, ...) {
+setMethod("getRate", "Kepler", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
     r3 <- r2 * sqrt(r2)   # distance cubed
@@ -52,7 +52,7 @@ setMethod("getRate", "Kepler", function(object, state, rate, ...) {
     object@rate[4] <- (- object@GM * state[3]) / r3
     object@rate[5] <- 1   # time derivative
     object@counter <- object@counter + 1
-    object
+    object@rate
 
 })
 
@@ -86,7 +86,7 @@ test_that("ODE enhanced object has been created", {
     expect_equal(getState(particle), c(0,0,0,0,0))
     expect_true(getTime(particle) == 0)
     expect_true(getEnergy(particle) == -Inf)
-    expect_equal(getRate(particle, c(0,0,0,0,0))@rate, c(0, NaN,   0, NaN,   1))
+    expect_equal(getRate(particle, c(0,0,0,0,0)), c(0, NaN,   0, NaN,   1))
 })
 
 
@@ -145,7 +145,7 @@ test_that("Solver state has been copied to ODE object", {
 
     expect_equal(slotNames(particle), c("GM", "odeSolver", "counter", "state", "rate"))
     expect_equal(particle@state, c(1.000000, 0.000000, 0.000000, 6.283185, 0.000000), tolerance = 1e-6)
-    expect_equal(getRate(particle, c(0,0,0,0,0))@rate, c(0, NaN,   0, NaN,   1))
+    expect_equal(getRate(particle, c(0,0,0,0,0)), c(0, NaN,   0, NaN,   1))
 })
 
 

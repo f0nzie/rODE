@@ -3,14 +3,7 @@
 \docType{methods}
 \name{AbstractODESolver,missing-method}
 \alias{AbstractODESolver,missing-method}
-\title{# constructor
-#' @importFrom methods new
-AbstractODESolver <- function(.ode) {
-    odesolver <- new("AbstractODESolver", .ode)
-    odesolver@ode <- .ode
-    odesolver
-}
-AbstractODESolver constructor `missing``}
+\title{AbstractODESolver constructor `missing``}
 \usage{
 \S4method{AbstractODESolver}{missing}(ode, ...)
 }
@@ -20,12 +13,5 @@ AbstractODESolver constructor `missing``}
 \item{...}{additional parameters}
 }
 \description{
-# constructor
-#' @importFrom methods new
-AbstractODESolver <- function(.ode) {
-    odesolver <- new("AbstractODESolver", .ode)
-    odesolver@ode <- .ode
-    odesolver
-}
 AbstractODESolver constructor `missing``
 }
