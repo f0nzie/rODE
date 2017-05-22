@@ -32,11 +32,11 @@ setGeneric("Euler", function(ode, ...)
 #'
 #' @param object a class object
 #' @param state current state
-#' @param rate new rate
 #' @param ... additional parameters
 #'
 #' @export
-setGeneric("getRate", function(object, state, rate, ...) standardGeneric("getRate"))
+setGeneric("getRate", function(object, state, ...) standardGeneric("getRate"))
+
 
 #' Get current state of the system
 #'
