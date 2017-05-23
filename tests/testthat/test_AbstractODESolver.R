@@ -28,7 +28,7 @@ test_that("Class is correct", {
 test_that("Have correct slot names", {
     ode <- new("ODE")
     odesolver <- AbstractODESolver(ode)
-    expect_equal(slotNames(odesolver), c("stepSize", "numEqn", "ode"))
+    expect_equal(slotNames(odesolver), c("stepSize", "numEqn", "ode", "rateEvals"))
     expect_equal(slotNames(odesolver@ode), c("state", "rate"))
 })
 

@@ -12,7 +12,8 @@
 .AbstractODESolver <- setClass("AbstractODESolver", slots = c(
                     stepSize = "numeric",
                     numEqn   = "numeric",
-                    ode      = "ODE"
+                    ode      = "ODE",
+                    rateEvals =  "numeric"
                 ), prototype = prototype(
                     stepSize = 0.1,
                     numEqn = 0
