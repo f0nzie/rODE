@@ -1,3 +1,5 @@
+# test_RK45.R
+
 library(testthat)
 
 
@@ -115,7 +117,7 @@ test_that("after before/after init values match", {
 })
 
 
-test_that("Solver loop passes test", {
+test_that("Solver loop to test time, rateCounts, state[] and getSolution", {
     # ode <- new("ODETest")
     ode <- ODETest()
     ode_solver <- RK45(ode)
@@ -134,15 +136,9 @@ test_that("Solver loop passes test", {
         # cat("time =", time, "\t xl =", state[1], "\t error =",
         #     (state[1] - getExactSolution(ode, time)), "\t n =", ode@n, "\n")
     }
-    # test that `time`` and `n` match
-
-
-    # FIX the rate counter
-    # >>>>>>>>
+    # test that `time`` and `rateCounts` match
     expect_equal(c(time, getRateCounts(ode)), c(53.25075, 604), tolerance = 0.00001)
-    # <<<<<<<<
-
-
+    # `n` is zero because is not using stack environment
     expect_equal(c(time, ode@n), c(53.25075, 0), tolerance = 0.00001)
 
     # test that `state[1]` and `getExactSolution` match
