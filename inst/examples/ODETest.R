@@ -13,7 +13,6 @@ setClass("ODETest", slots = c(
 
 
 setMethod("initialize", "ODETest", function(.Object, ...) {
-    .Object@stack$cntr <-  0
     .Object@stack$rateCounts <-  0
     .Object@n <-  0
     .Object@state <- c(5.0, 0.0)
@@ -36,11 +35,7 @@ setMethod("getRate", "ODETest", function(object, state, ...) {
     object@rate[1] <- - state[1]
     object@rate[2] <-  1            # rate of change of time, dt/dt
 
-    object@stack$cntr <-  object@stack$cntr + 1
     object@stack$rateCounts <- object@stack$rateCounts + 1
-
-    object@n <- object@stack$cntr
-    # object@rateEvals <- object@stack$cntr
 
     object@state <- state
     object@rate
