@@ -27,4 +27,4 @@ while (time < 50) {
                 (state[1] - getExactSolution(ode_solver@ode, time)),
                 getRateCounts(ode)))
 }
-cat("rate evaluated #", ode@n)
+cat("Number of rates evaluated #", getRateCounts(ode))
