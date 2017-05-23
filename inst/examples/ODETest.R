@@ -1,25 +1,19 @@
 # ODETest.R
 
-idSource <- function() {
-    nextId <- 1
-    list(nextID = function() {
-        r <- nextId
-        nextId <<- nextId + 1
-        r
-    })
-}
+
+setGeneric("getRateCounter", function(object) standardGeneric("getRateCounter"))
+
 
 setClass("ODETest", slots = c(
     n     = "numeric",           # counts the number of getRate evaluations
     stack = "environment",
-    kfunc = "list"
+    rateEvals = "numeric"
     ),
     contains = c("ODE")
     )
 
 
 setMethod("initialize", "ODETest", function(.Object, ...) {
-    .Object@kfunc <- idSource()
     .Object@stack$cntr <-  0
     .Object@n <-  0
     .Object@state <- c(5.0, 0.0)
@@ -50,10 +44,12 @@ setMethod("getRate", "ODETest", function(object, state, ...) {
     object@rate[2] <-  1            # rate of change of time, dt/dt
 
     object@stack$cntr <-  object@stack$cntr + 1
-    object@n <- object@stack$cntr
-    # cat(object@stack$cntr, "\t")
 
-    # object@n <- object@kfunc$nextID()
+
+    object@n <- object@stack$cntr
+    object@rateEvals <- object@stack$cntr
+
+    # object@rateEvals <- object@kfunc$nextID()
 
     # cat(object@n, "\t")
 
@@ -64,9 +60,17 @@ setMethod("getRate", "ODETest", function(object, state, ...) {
     # return(object)
 })
 
+setMethod("getRateCounter", "ODETest", function(object, ...) {
+    # object@n <- object@stack$cntr
+    # object@n <- object@rateEvals
+    # object@n
+    # object@rateEvals <- object@stack$cntr
+    # object@rateEvals
+    object@stack$cntr
+})
+
 
 # constructor
-
 ODETest <- function() {
     odetest <- new("ODETest")
     odetest
