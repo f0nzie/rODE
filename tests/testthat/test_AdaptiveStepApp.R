@@ -1,7 +1,5 @@
 library(testthat)
 
-# source("./R/ode_generics.R")
-# source("./R/RK45.R")
 
 
 setClass("Impulse", contains = c("ODE"),
