@@ -48,8 +48,6 @@ setMethod("getRate", "Planet", function(object, state, ...) {
     object@rate[4] <- (- object@GM * state[3]) / r3
     object@rate[5] <- 1
 
-    object@state <- object@odeSolver@ode@state <- state
-    object@odeSolver@ode@rate <- object@rate
     object@rate
 })
 
