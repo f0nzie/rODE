@@ -35,6 +35,7 @@ setMethod("step", "Pendulum", function(object) {
     object
 })
 
+
 setMethod("setState", signature("Pendulum"), function(object, theta, thetaDot, ...) {
     object@state[1] <- theta     # angle
     object@state[2] <- thetaDot  # derivative of angle
@@ -42,6 +43,7 @@ setMethod("setState", signature("Pendulum"), function(object, theta, thetaDot, .
     object@odeSolver@ode@state <- object@state
     object
 })
+
 
 setMethod("getState", "Pendulum", function(object) {
     object@state
@@ -53,7 +55,6 @@ setMethod("getRate", "Pendulum", function(object, state, ...) {
     object@rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
     object@rate[3] <- 1            # rate of change of time, dt/dt
 
-    object@state <- object@odeSolver@ode@state <- state
     object@rate
 })
 
