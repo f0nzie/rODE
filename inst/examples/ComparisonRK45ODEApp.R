@@ -21,10 +21,10 @@ while (time < 50) {
     time <- time + stepSize
     ode <- ode_solver@ode
     state <- getState(ode)
-    cat(sprintf("time=%10f xl=%14e error=%14e n=%5d %5d %5d \n",
+    cat(sprintf("time=%10f xl=%14e error=%14e n=%5d \n",
                 time,
                 state[1],
                 (state[1] - getExactSolution(ode_solver@ode, time)),
-                ode_solver@ode@n, ode@n, getRateCounter(ode)))
+                getRateCounts(ode)))
 }
 cat("rate evaluated #", ode@n)
