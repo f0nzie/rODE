@@ -1,7 +1,5 @@
 # ODETest.R
 
-
-
 setClass("ODETest", slots = c(
     n     = "numeric",           # counts the number of getRate evaluations
     stack = "environment"        # environnment to keep stack
@@ -11,7 +9,7 @@ setClass("ODETest", slots = c(
 
 
 setMethod("initialize", "ODETest", function(.Object, ...) {
-    .Object@stack$rateCounts <-  0     # counter for rate calculations
+    .Object@stack$rateCounts <-  0              # counter for rate calculations
     .Object@state <- c(5.0, 0.0)
     return(.Object)
 })
@@ -40,7 +38,7 @@ setMethod("getRate", "ODETest", function(object, state, ...) {
 })
 
 
-setGeneric("getRateCounts", function(object, ...) standardGeneric("getRateCounts"))
+
 setMethod("getRateCounts", "ODETest", function(object, ...) {
     # use environment stack to accumulate rate counts
     object@stack$rateCounts
