@@ -54,7 +54,7 @@ setMethod("step", "Verlet", function(object, ...) {
     }
 
     object@rateCounter <- 0     #  getRate has not been called
-    object@rate1 <- getRate(object@ode, state, object@rate1)@rate
+    object@rate1 <- getRate(object@ode, state)
     # cat("rate1="); print(object@rate1)
 
     dt2 <- object@stepSize * object@stepSize  # the step size squared
@@ -67,7 +67,7 @@ setMethod("step", "Verlet", function(object, ...) {
         # cat(sprintf("i1=%3d, state1=%12f, rate1=%11f\n", i-1, state[i], object@rate1[i]))
     }
     object@rateCounter <- 1  # getRate has been called once
-    object@rate2 <- getRate(object@ode, state, object@rate2)@rate
+    object@rate2 <- getRate(object@ode, state)
     # cat("rate2="); print(object@rate2)
 
     object@rateCounter <- 2  # getRate has been called twice

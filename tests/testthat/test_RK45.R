@@ -1,15 +1,19 @@
+# test_RK45.R
+
 library(testthat)
 
 
 
 setClass("ODETest", slots = c(
-    n     = "numeric"           # counts the number of getRate evaluations
+    n     = "numeric",           # counts the number of getRate evaluations
+    stack = "environment"        # environnment to keep stack
     ),
     contains = c("ODE")
     )
 
 
 setMethod("initialize", "ODETest", function(.Object, ...) {
+    .Object@stack$rateCounts <-  0              # counter for rate calculations
     .Object@n <-  0
     .Object@state <- c(5.0, 0.0)
     return(.Object)
@@ -25,19 +29,21 @@ setMethod("getState", "ODETest", function(object, ...) {
     object@state
 })
 
-setMethod("getRate", "ODETest", function(object, state, rate, ...) {
-    rate[1] <- - state[1]
-    rate[2] <-  1            # rate of change of time, dt/dt
+setMethod("getRate", "ODETest", function(object, state, ...) {
+    object@rate[1] <- - state[1]
+    object@rate[2] <-  1            # rate of change of time, dt/dt
 
-    object@n <- object@n + 1
+    object@stack$rateCounts <- object@stack$rateCounts + 1
 
     object@state <- state
-    object@rate  <- rate
-
-    # object@rate
-    return(object)
+    object@rate
 })
 
+
+setMethod("getRateCounts", "ODETest", function(object, ...) {
+    # use environment stack to accumulate rate counts
+    object@stack$rateCounts
+})
 
 # constructor
 ODETest <- function() {
@@ -104,14 +110,16 @@ test_that("after before/after init values match", {
     solver <- init(solver, dt)
     # test after setting the state
     expect_equal(getState(solver@ode),  c(2.00, 0.00, 0.00, 0.25, 0.00))
-    expect_s4_class(getRate(solver@ode), "ODE")     # returns an object
+    # expect_s4_class(getRate(solver@ode), "ODE")     # returns an object
     expect_equal(getStepSize(solver), 0.01)
+    cat(getRate(solver@ode, state))     # returns an object
 
 })
 
 
-test_that("ODETest passes test", {
-    ode <- new("ODETest")
+test_that("Solver loop to test time, rateCounts, state[] and getSolution", {
+    # ode <- new("ODETest")
+    ode <- ODETest()
     ode_solver <- RK45(ode)
 
     ode_solver <- setStepSize(ode_solver, 1)
@@ -128,8 +136,10 @@ test_that("ODETest passes test", {
         # cat("time =", time, "\t xl =", state[1], "\t error =",
         #     (state[1] - getExactSolution(ode, time)), "\t n =", ode@n, "\n")
     }
-    # test that `time`` and `n` match
-    expect_equal(c(time, ode@n), c(53.25075, 604), tolerance = 0.00001)
+    # test that `time`` and `rateCounts` match
+    expect_equal(c(time, getRateCounts(ode)), c(53.25075, 604), tolerance = 0.00001)
+    # `n` is zero because is not using stack environment
+    expect_equal(c(time, ode@n), c(53.25075, 0), tolerance = 0.00001)
 
     # test that `state[1]` and `getExactSolution` match
     expect_equal(c(state[1], state[1] - getExactSolution(ode, time)),

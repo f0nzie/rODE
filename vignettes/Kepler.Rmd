@@ -12,6 +12,8 @@ vignette: >
 ## The Kepler class
 
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # Kepler.R
 #
 
@@ -35,7 +37,7 @@ setMethod("getState", "Kepler", function(object, ...) {
 })
 
 
-setMethod("getRate", "Kepler", function(object, state, rate, ...) {
+setMethod("getRate", "Kepler", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
     r3 <- r2 * sqrt(r2)   # distance cubed
@@ -46,8 +48,7 @@ setMethod("getRate", "Kepler", function(object, state, rate, ...) {
     object@rate[5] <- 1   # time derivative
 
     object@state <- state
-    # object@rate
-    invisible(object)
+    object@rate
 
 })
 
@@ -62,9 +63,9 @@ Kepler <- function(r, v) {
     return(kepler)
 }
 
+# This code can also be found in the `examples` folder under this name:
 #
 # KeplerApp.R
-#
 #
 KeplerApp <- function(verbose = FALSE) {
     
@@ -103,11 +104,11 @@ KeplerApp()
 ## The Kepler class using the the3 DormandPrice45 ODE solver
 
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+# 
 # KeplerDormandPrince45.R
 #
-# Examples folder
 #
-
 
 setClass("Kepler", slots = c(
     GM = "numeric",
@@ -159,7 +160,7 @@ setMethod("init", "Kepler", function(object, initState, ...) {
     object
 })
 
-setMethod("getRate", "Kepler", function(object, state, rate, ...) {
+setMethod("getRate", "Kepler", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
     r3 <- r2 * sqrt(r2)   # distance cubed
@@ -172,7 +173,7 @@ setMethod("getRate", "Kepler", function(object, state, rate, ...) {
     # object@state <- object@odeSolver@ode@state <- state
     # object@state <- state
     object@counter <- object@counter + 1
-    object
+    object@rate
 
 })
 
@@ -187,6 +188,9 @@ Kepler <- function() {
     return(kepler)
 }
 
+# #########
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerDormandPrince45App.R
 #
 # Demostration of the use of ODE solver RK45
@@ -244,10 +248,10 @@ KeplerDormandPrince45App()
 
 ## Kepler using the Euler ODE solver
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerEuler.R
 #
-# Examples
-
 
 
 setClass("Kepler", slots = c(
@@ -300,7 +304,7 @@ setMethod("init", "Kepler", function(object, initState, ...) {
     object
 })
 
-setMethod("getRate", "Kepler", function(object, state, rate, ...) {
+setMethod("getRate", "Kepler", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
     r3 <- r2 * sqrt(r2)   # distance cubed
@@ -313,7 +317,7 @@ setMethod("getRate", "Kepler", function(object, state, rate, ...) {
     # object@state <- object@odeSolver@ode@state <- state
     # object@state <- state
     object@counter <- object@counter + 1
-    object
+    object@rate
 
 })
 
@@ -328,11 +332,13 @@ Kepler <- function() {
     return(kepler)
 }
 
+
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerApp.R
 #
 # Demostration of the use of ODE solver RK45
 #
-# Examples folder
 
 KeplerApp <- function(verbose = FALSE) {
     
@@ -381,9 +387,10 @@ KeplerApp()
 
 ## Kepler using the Verlet ODE solver
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerVerlet.R
 #
-
 
 setClass("KeplerVerlet", slots = c(
     GM = "numeric",
@@ -436,7 +443,7 @@ setMethod("init", "KeplerVerlet", function(object, initState, ...) {
     object
 })
 
-setMethod("getRate", "KeplerVerlet", function(object, state, rate, ...) {
+setMethod("getRate", "KeplerVerlet", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
     r3 <- r2 * sqrt(r2)   # distance cubed
@@ -449,7 +456,7 @@ setMethod("getRate", "KeplerVerlet", function(object, state, rate, ...) {
     # object@state <- object@odeSolver@ode@state <- state
     # object@state <- state
     object@counter <- object@counter + 1
-    object
+    object@rate
 
 })
 
@@ -465,7 +472,8 @@ KeplerVerlet <- function() {
 }
 
 
-
+# This code can also be found in the `examples` folder under this name:
+#
 # KeplerVerletApp.R
 #
 # Demostration of the use of ODE solver RK45

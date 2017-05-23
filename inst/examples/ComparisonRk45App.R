@@ -27,6 +27,6 @@ while (time < 50) {
     #     ode_solver@ode@n, "\n")
     cat(sprintf("time=%10f xl=%14e error=%14e n=%5d \n", time, state[1],
                 (state[1] - getExactSolution(ode_solver@ode, time)),
-                ode_solver@ode@n))
+                getRateCounts(ode)))
 }
-cat("rate evaluated #", ode_solver@ode@n)
+cat("rate evaluated #", getRateCounts(ode))

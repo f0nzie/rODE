@@ -60,7 +60,7 @@ test_that("values correct after step", {
     expect_true(!is.null(step(euler)))        # step from Euler returns a value
     expect_equal(euler@ode@state, c(0, 1, 3))
     expect_equal(euler@ode@rate, c(0, 0, 0))
-    expect_equal(getRate(euler@ode)@rate, c(0, 0, 0))
+    expect_equal(getRate(euler@ode), c(0, 0, 0))
 })
 
 # setMethod("step", "Projectile", function(object) {

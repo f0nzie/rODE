@@ -12,6 +12,8 @@ vignette: >
 ## Reaction with RK4 solver
 
 ```{r}
+# This code can also be found in the `examples` folder under this name:
+#
 # Reaction.R
 
 # /**
@@ -48,17 +50,17 @@ setMethod("getState", "Reaction", function(object) {
 })
 
 
-setMethod("getRate", "Reaction", function(object, state, rate) {
+setMethod("getRate", "Reaction", function(object, state, ...) {
     xxy <- state[1] * state[1] *state[2]
-    rate[1] <- object@k1 * object@A - object@k2 * object@B * state[1] +
+    object@rate[1] <- object@k1 * object@A - object@k2 * object@B * state[1] +
         object@k3 * xxy - object@k4 * state[1]                          # X rate
-    rate[2] <- object@k2 * object@B * state[1] - object@k3 * xxy        # Y rate
-    rate[3] <- 1                                 # rate of change of time, dt/dt
+    object@rate[2] <- object@k2 * object@B * state[1] - object@k3 * xxy        # Y rate
+    object@rate[3] <- 1                                 # rate of change of time, dt/dt
 
     object@state <- object@odeSolver@ode@state <- state
-    object@rate  <- object@odeSolver@ode@rate  <- rate
-    # object@rate                                                # time derivative
-    invisible(object)
+    # object@rate  <- object@odeSolver@ode@rate  <- rate
+    object@rate                                                # time derivative
+    # invisible(object)
 })
 
 
@@ -70,13 +72,15 @@ Reaction <- function(initialConditions) {
 }
 
 
-
+# This code can also be found in the `examples` folder under this name:
 #
 # ReactionApp.R
 #
 # ReactionApp solves an autocatalytic oscillating chemical
 # reaction (Brusselator model) using
 # a fouth-order Runge-Kutta algorithm.
+#
+#
 ReactionApp <- function(verbose = FALSE) {
     
     X <- 1; Y <- 5;

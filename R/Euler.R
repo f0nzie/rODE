@@ -46,16 +46,18 @@ setMethod("init", "Euler", function(object, stepSize, ...) {
 setMethod("step", signature(object = "Euler"), function(object, ...) {
     # step through the differential equation
     state <- getState(object@ode)                         # get the state
+
+
     # ode_object <- getRate(object@ode, state, object@ode@rate)  # get the rate
     # rate <- ode_object@rate
-    rate  <- getRate(object@ode, state, object@ode@rate)@rate  # get the rate
+    rate  <- getRate(object@ode, state)  # get the rate
 
     for (i in 1:object@numEqn) {
         state[i] <- state[i] + object@stepSize * rate[i]  # calc the new state
     }
     object@ode@state <- state              # return state and rate for new iter
     object@ode@rate  <- rate
-    invisible(object)                                 # use this object to ressign in R
+    invisible(object)                      # use this object to ressign in R
 
 })
 

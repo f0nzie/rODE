@@ -13,7 +13,7 @@ expect_equal(particle@state, c(0,0,0,0,0))
 expect_equal(getState(particle), c(0,0,0,0,0))
 expect_true(getTime(particle) == 0)
 expect_true(getEnergy(particle) == -Inf)
-expect_equal(getRate(particle, c(0,0,0,0,0))@rate, c(0, NaN,   0, NaN,   1))
+expect_equal(getRate(particle, c(0,0,0,0,0)), c(0, NaN,   0, NaN,   1))
 
 
 x <- 1
@@ -47,7 +47,7 @@ cat(" state(after) =", particle@state, particle@odeSolver@ode@state,"\n")
 
 expect_equal(slotNames(particle), c("GM", "odeSolver", "counter", "state", "rate"))
 expect_equal(particle@state, c(1.000000, 0.000000, 0.000000, 6.283185, 0.000000), tolerance = 1e-6)
-expect_equal(getRate(particle, c(0,0,0,0,0))@rate, c(0, NaN,   0, NaN,   1))
+expect_equal(getRate(particle, c(0,0,0,0,0)), c(0, NaN,   0, NaN,   1))
 
 
 cat(particle@odeSolver@ode@state)

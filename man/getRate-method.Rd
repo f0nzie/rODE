@@ -6,16 +6,14 @@
 \alias{getRate,ODE-method}
 \title{Get a new rate given a state}
 \usage{
-getRate(object, state, rate, ...)
+getRate(object, state, ...)
 
-\S4method{getRate}{ODE}(object, state, rate, ...)
+\S4method{getRate}{ODE}(object, state, ...)
 }
 \arguments{
 \item{object}{a class object}
 
 \item{state}{current state}
-
-\item{rate}{new rate}
 
 \item{...}{additional parameters}
 }

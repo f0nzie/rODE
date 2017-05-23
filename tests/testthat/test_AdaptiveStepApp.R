@@ -1,7 +1,5 @@
 library(testthat)
 
-# source("./R/ode_generics.R")
-# source("./R/RK45.R")
 
 
 setClass("Impulse", contains = c("ODE"),
@@ -19,17 +17,17 @@ setMethod("getState", signature = c("Impulse"), function(object, ...) {
     return(object@state)
 })
 
-setMethod("getRate", signature = c("Impulse"), function(object, state, rate, ...) {
-    rate[1] <- state[2]
-    rate[2] <- object@epsilon / ( object@epsilon * object@epsilon +
+setMethod("getRate", signature = c("Impulse"), function(object, state, ...) {
+    object@rate[1] <- state[2]
+    object@rate[2] <- object@epsilon / ( object@epsilon * object@epsilon +
         state[1] * state[1] )
-    rate[3] <- 1                             # dt/dt
-    object@rate <- rate
-    return(object)
+    object@rate[3] <- 1                             # dt/dt
+
+        return(object@rate)
 })
 
 
-# main 
+# main
 ode        <- new("Impulse")
 ode_solver <- RK45(ode)
 ode_solver <- init(ode_solver, 0.1)
@@ -41,5 +39,5 @@ while (getState(ode)[1] < 12) {
     # cat(sprintf("state[1] =%12f, state[3] =%12f, state[2] =%12f \n", getState(ode)[1], getState(ode)[3], getState(ode)[2]))
 }
 
-expect_equal(c(getState(ode)[1], getState(ode)[3], getState(ode)[2]), 
+expect_equal(c(getState(ode)[1], getState(ode)[3], getState(ode)[2]),
 c(19.254268,   10.099912, 2.697305), tolerance = 1.0e-7)

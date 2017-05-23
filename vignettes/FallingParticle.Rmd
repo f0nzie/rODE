@@ -12,7 +12,7 @@ vignette: >
 ## The FallingParticleODE class using the EUler ODE solver
 
 ```{r eval=FALSE}
-# #####################
+# This code can also be found in the `examples` folder under this name:
 # FallingParticleODE.R
 #
 
@@ -36,12 +36,12 @@ setMethod("getState", "FallingParticleODE", function(object, ...) {
     return(object@state)
 })
 
-setMethod("getRate", "FallingParticleODE", function(object, state, rate, ...) {
+setMethod("getRate", "FallingParticleODE", function(object, state, ...) {
     # Gets the rate of change using the argument's state variables.
     object@rate[1] <- state[2]
     object@rate[2] <- - object@g
     object@rate[3] <- 1
-    invisible(object)
+    invisible(object@rate)
 
 })
 
@@ -55,7 +55,11 @@ FallingParticleODE <- function(y, v) {
 }
 
 
-
+# This code can also be found in the `examples` folder under this name:
+# 
+# FallingParticleODEApp.R
+#
+#
 FallingParticleODEApp <- function(verbose = FALSE) {
     library(ggplot2)
     

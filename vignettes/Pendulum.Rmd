@@ -12,11 +12,12 @@ vignette: >
 ## Pendulum with Euler-Richardson ODE solver
 
 ```{r}
-library(rODE)
+# This code can also be found in the `examples` folder under this name:
+#
 # Pendulum.R
 #
 # Original Pendulum class uses Euler-Richardson solver
-
+#
 
 setClass("Pendulum", slots = c(
     omega0Squared = "numeric",
@@ -63,15 +64,15 @@ setMethod("getState", "Pendulum", function(object) {
 })
 
 
-setMethod("getRate", "Pendulum", function(object, state, rate) {
-    rate[1] <- state[2]     # rate of change of angle
-    rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
-    rate[3] <- 1            # rate of change of time, dt/dt
+setMethod("getRate", "Pendulum", function(object, state, ...) {
+    object@rate[1] <- state[2]     # rate of change of angle
+    object@rate[2] <- -object@omega0Squared * sin(state[1]) # rate of change dtheta
+    object@rate[3] <- 1            # rate of change of time, dt/dt
 
     object@state <- object@odeSolver@ode@state <- state
-    object@rate  <- object@odeSolver@ode@rate  <- rate
+    # object@rate  <- object@odeSolver@ode@rate  <- rate
     # object@rate
-    invisible(object)
+    invisible(object@rate)
 })
 
 
@@ -81,8 +82,10 @@ Pendulum <- function()  new("Pendulum")
 
 
 # #############
+# This code can also be found in the `examples` folder under this name:
 #
 # PendulumApp.R
+#
 PendulumApp <- function(verbose = FALSE) {
     
     library(ggplot2)
@@ -132,11 +135,13 @@ PendulumApp()
 
 ```{r}
 # ###################
+# This code can also be found in the `examples` folder under this name:
+#
 # PendulumEuler.R
 #
 # The original Pendulum uses Euler-Richardson solver
 #
-
+#
 setClass("PendulumEuler", slots = c(
     omega0Squared = "numeric",
     state = "numeric",
@@ -183,14 +188,14 @@ setMethod("getState", "PendulumEuler", function(object) {
 })
 
 
-setMethod("getRate", "PendulumEuler", function(object, state, rate) {
-    rate[1] <- state[2]     # rate of change of angle                                      # diff 11
-    rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
-    rate[3] <- 1            # rate of change of time, dt/dt
+setMethod("getRate", "PendulumEuler", function(object, state, ...) {
+    object@rate[1] <- state[2]     # rate of change of angle                                      # diff 11
+    object@rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
+    object@rate[3] <- 1            # rate of change of time, dt/dt
 
     object@state <- object@odeSolver@ode@state <- state
-    object@rate  <- object@odeSolver@ode@rate  <- rate
-    object                                                   #
+    # object@rate  <- object@odeSolver@ode@rate  <- rate
+    object@rate                                                   #
 })
 
 
@@ -198,7 +203,7 @@ setMethod("getRate", "PendulumEuler", function(object, state, rate) {
 PendulumEuler <- function()  new("PendulumEuler")
 
 
-
+# This code can also be found in the `examples` folder under this name:
 #
 # PendulumEulerApp.R
 #
@@ -249,10 +254,12 @@ PendulumEulerApp()
 ## Pendulum with RK4
 ```{r}
 # ###################
+# This code can also be found in the `examples` folder under this name:
+#
 # PendulumRK4.R
 #
 # The original Pendulum uses Euler-Richardson solver
-
+#
 
 
 setClass("PendulumRK4", slots = c(
@@ -301,14 +308,14 @@ setMethod("getState", "PendulumRK4", function(object) {
 })
 
 
-setMethod("getRate", "PendulumRK4", function(object, state, rate) {
-    rate[1] <- state[2]     # rate of change of angle                                      # diff 11
-    rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
-    rate[3] <- 1            # rate of change of time, dt/dt
+setMethod("getRate", "PendulumRK4", function(object, state, ...) {
+    object@rate[1] <- state[2]     # rate of change of angle                                      # diff 11
+    object@rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
+    object@rate[3] <- 1            # rate of change of time, dt/dt
 
     object@state <- object@odeSolver@ode@state <- state
-    object@rate  <- object@odeSolver@ode@rate  <- rate
-    object                                                     #
+    # object@rate  <- object@odeSolver@ode@rate  <- rate
+    object@rate                                                 #
 })
 
 
@@ -317,7 +324,7 @@ PendulumRK4 <- function()  new("PendulumRK4")
 
 
 
-
+# This code can also be found in the `examples` folder under this name:
 #
 # PendulumRK4App.R
 #

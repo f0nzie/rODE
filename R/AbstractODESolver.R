@@ -55,15 +55,6 @@ setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
 })
 
 
-#' # constructor
-#' #' @importFrom methods new
-#' AbstractODESolver <- function(.ode) {
-#'     odesolver <- new("AbstractODESolver", .ode)
-#'     odesolver@ode <- .ode
-#'     odesolver
-#' }
-
-
 
 # constructor methods
 
