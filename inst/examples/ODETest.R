@@ -6,8 +6,7 @@ setGeneric("getRateCounter", function(object) standardGeneric("getRateCounter"))
 
 setClass("ODETest", slots = c(
     n     = "numeric",           # counts the number of getRate evaluations
-    stack = "environment",
-    rateEvals = "numeric"
+    stack = "environment"
     ),
     contains = c("ODE")
     )
@@ -33,13 +32,6 @@ setMethod("getState", "ODETest", function(object, ...) {
 
 setMethod("getRate", "ODETest", function(object, state, ...) {
 
-    # increm <- function() {
-    #     i <- 1
-    #     function() {
-    #         i <<- i + 1
-    #         i
-    #     }
-    # }
     object@rate[1] <- - state[1]
     object@rate[2] <-  1            # rate of change of time, dt/dt
 
