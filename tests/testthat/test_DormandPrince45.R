@@ -63,7 +63,11 @@ test_that("ODE solver core is OK", {
 
     # test after setting the state
     expect_equal(getState(solver@ode),  c(2.00, 0.00, 0.00, 0.25, 0.00))
-    expect_s4_class(getRate(solver@ode), "ODE")     # returns an object
+
+    ### expect_s4_class(, "ODE")     # returns an object
+    cat("getRate=", getRate(solver@ode, state))
+    cat(class(getRate(solver@ode)))
+
     expect_equal(getStepSize(solver), 0.01)
 
     expect_equal(getStepSize(solver), 0.01)

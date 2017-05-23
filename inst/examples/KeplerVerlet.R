@@ -54,7 +54,7 @@ setMethod("init", "KeplerVerlet", function(object, initState, ...) {
     object
 })
 
-setMethod("getRate", "KeplerVerlet", function(object, state, rate, ...) {
+setMethod("getRate", "KeplerVerlet", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
     r3 <- r2 * sqrt(r2)   # distance cubed
@@ -67,7 +67,8 @@ setMethod("getRate", "KeplerVerlet", function(object, state, rate, ...) {
     # object@state <- object@odeSolver@ode@state <- state
     # object@state <- state
     object@counter <- object@counter + 1
-    object
+    ### object
+    object@rate
 
 })
 

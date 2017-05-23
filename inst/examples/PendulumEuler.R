@@ -56,14 +56,15 @@ setMethod("getState", "PendulumEuler", function(object) {
 })
 
 
-setMethod("getRate", "PendulumEuler", function(object, state, rate) {
-    rate[1] <- state[2]     # rate of change of angle                                      # diff 11
-    rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
-    rate[3] <- 1            # rate of change of time, dt/dt
+setMethod("getRate", "PendulumEuler", function(object, state) {
+    object@rate[1] <- state[2]     # rate of change of angle                                      # diff 11
+    object@rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
+    object@rate[3] <- 1            # rate of change of time, dt/dt
 
     object@state <- object@odeSolver@ode@state <- state
-    object@rate  <- object@odeSolver@ode@rate  <- rate
-    object                                                   #
+    # object@rate  <- object@odeSolver@ode@rate  <- rate
+    # object
+    object@rate
 })
 
 

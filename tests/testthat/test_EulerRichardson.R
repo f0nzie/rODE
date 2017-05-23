@@ -38,6 +38,7 @@ expect_equal(eulerRichardson@ode@state, state)
 expect_equal(eulerRichardson@numEqn, 3)               # number of equations
 
 expect_true(!is.null(step(eulerRichardson)))    # step returns a value not NULL
+
 expect_true(length(ode@rate)  == 0)                     # rate still empty
 expect_equal(getRate(eulerRichardson@ode), c(0, 0, 0))  # rate has a vector
 

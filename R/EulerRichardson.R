@@ -48,8 +48,8 @@ setMethod("step", "EulerRichardson", function(object, ...) {
     state <- getState(object@ode)                         # get the state vector
     # rate  <- getRate(object@ode, state, object@ode@rate)  # get the rate vector
 
-    object@ode <- getRate(object@ode, state, object@ode@rate)  # get the rate vector
-    rate <- object@ode@rate
+    # object@ode <- getRate(object@ode, state, object@ode@rate)  # get the rate vector
+    # rate <- object@ode@rate
 
     rate <- getRate(object@ode, state)
 
