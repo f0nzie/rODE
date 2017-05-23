@@ -18,12 +18,12 @@ setMethod("getState", signature = c("Impulse"), function(object, ...) {
 })
 
 setMethod("getRate", signature = c("Impulse"), function(object, state, ...) {
-    rate[1] <- state[2]
-    rate[2] <- object@epsilon / ( object@epsilon * object@epsilon +
+    object@rate[1] <- state[2]
+    object@rate[2] <- object@epsilon / ( object@epsilon * object@epsilon +
         state[1] * state[1] )
-    rate[3] <- 1                             # dt/dt
-    object@rate <- rate
-    return(object@rate)
+    object@rate[3] <- 1                             # dt/dt
+
+        return(object@rate)
 })
 
 
