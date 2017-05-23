@@ -55,9 +55,7 @@ setMethod("step", "EulerRichardson", function(object, ...) {
         object@midstate[i] <- state[i] + rate[i] * dt2
     }
 
-    # rate  <- getRate(object@ode, object@midstate, rate) # rate based on midpoint
     rate <- getRate(object@ode, object@midstate) # rate based on midpoint
-    # rate <- object@ode@rate
 
     for (i in 1:object@numEqn) {
         state[i] <- state[i] + object@stepSize * rate[i] # calc new state
