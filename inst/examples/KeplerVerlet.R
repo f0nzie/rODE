@@ -43,6 +43,7 @@ setMethod("getEnergy", "KeplerVerlet", function(object, ...) {
     return(pe+ke)
 })
 
+
 setMethod("init", "KeplerVerlet", function(object, initState, ...) {
     object@state <- initState
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
@@ -54,6 +55,7 @@ setMethod("init", "KeplerVerlet", function(object, initState, ...) {
     object
 })
 
+
 setMethod("getRate", "KeplerVerlet", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
@@ -64,12 +66,11 @@ setMethod("getRate", "KeplerVerlet", function(object, state, ...) {
     object@rate[4] <- (- object@GM * state[3]) / r3
     object@rate[5] <- 1   # time derivative
 
-    # object@state <- object@odeSolver@ode@state <- state
-    # object@state <- state
     object@counter <- object@counter + 1
     object@rate
 
 })
+
 
 setMethod("getState", "KeplerVerlet", function(object, ...) {
     # Gets the state variables.
