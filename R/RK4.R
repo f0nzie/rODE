@@ -56,7 +56,6 @@ setMethod("step", "RK4", function(object, ...) {
     }
 
     # get the rate at the initial state
-    # object@rate1 <- getRate(object@ode, state, object@rate1)
     object@rate1 <- getRate(object@ode, state)
     for (i in 1:object@numEqn) {
         object@estimated_state[i] <- state[i] + object@stepSize * object@rate1[i] / 2
@@ -83,7 +82,7 @@ setMethod("step", "RK4", function(object, ...) {
             (object@rate1[i] + 2 * object@rate2[i] + 2 * object@rate3[i] +
             object@rate4[i]) / 6.0
     }
-    object                          # use this object to reassign in R
+    object                                 # use this object to reassign in R
 })
 
 
