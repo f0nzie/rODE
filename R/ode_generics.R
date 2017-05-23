@@ -1,4 +1,10 @@
-
+#' Get the number of times that the rate has been calculated
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getRateCounts-method
+#' @export
 setGeneric("getRateCounts", function(object, ...) standardGeneric("getRateCounts"))
 
 # Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
