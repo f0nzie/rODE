@@ -67,7 +67,6 @@ setMethod("getRate", "KeplerVerlet", function(object, state, ...) {
     # object@state <- object@odeSolver@ode@state <- state
     # object@state <- state
     object@counter <- object@counter + 1
-    ### object
     object@rate
 
 })

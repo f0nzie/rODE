@@ -54,7 +54,7 @@ setMethod("getState", "Projectile", function(object) {
 })
 
 
-setMethod("getRate", "Projectile", function(object, state) {
+setMethod("getRate", "Projectile", function(object, state, ...) {
     object@rate[1] <- state[2]     # rate of change of x                                          # diff 11
     object@rate[2] <- 0            # rate of change of vx
     object@rate[3] <- state[4]     # rate of change of y
@@ -62,9 +62,7 @@ setMethod("getRate", "Projectile", function(object, state) {
     object@rate[5] <- 1            # dt/dt = 1
 
     object@state <- object@odeSolver@ode@state <- state
-    # object@rate  <- object@odeSolver@ode@rate  <- rate
     object@rate
-    # invisible(object)
 })
 
 

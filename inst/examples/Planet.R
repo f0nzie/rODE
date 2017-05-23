@@ -1,4 +1,4 @@
-
+# Planet.R
 
 setClass("Planet", slots = c(
     odeSolver = "Euler",
@@ -51,8 +51,6 @@ setMethod("getRate", "Planet", function(object, state, ...) {
     object@state <- object@odeSolver@ode@state <- state
     object@odeSolver@ode@rate <- object@rate
     object@rate
-    # invisible(object)
-
 })
 
 setMethod("getState", "Planet", function(object, ...) {
