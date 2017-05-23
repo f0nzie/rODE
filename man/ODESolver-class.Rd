@@ -10,5 +10,5 @@
 \item{stepSize}{size of the step}
 }
 \description{
-ODESolver class
+A virtual class
 }

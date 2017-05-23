@@ -38,7 +38,7 @@ setMethod("init", "Planet", function(object, initState, ...) {
 
 })
 
-setMethod("getRate", "Planet", function(object, state, rate, ...) {
+setMethod("getRate", "Planet", function(object, state, ...) {
     # Gets the rate of change using the argument's state variables.
     r2 <- state[1] * state[1] + state[3] * state[3]
     r3 <- r2 * sqrt(r2)
@@ -50,8 +50,8 @@ setMethod("getRate", "Planet", function(object, state, rate, ...) {
 
     object@state <- object@odeSolver@ode@state <- state
     object@odeSolver@ode@rate <- object@rate
-    # object@rate
-    invisible(object)
+    object@rate
+    # invisible(object)
 
 })
 

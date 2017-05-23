@@ -72,8 +72,9 @@ setMethod("step", "DormandPrince45", function(object, ...) {
     currentStep       <- object@stepSize
     error             <- 0
     state             <- getState(object@ode)
-    object@ode        <- getRate(object@ode, state, object@k[1,])
-    object@k[1,]      <- object@ode@rate      # in Java, rate is passed by param
+    # object@ode        <- getRate(object@ode, state, object@k[1,])
+    # object@k[1,]      <- object@ode@rate      # in Java, rate is passed by param
+    object@k[1,]      <- getRate(object@ode, state)
     # NEW iteration
     repeat  {
         iterations  <- iterations - 1
@@ -91,9 +92,13 @@ setMethod("step", "DormandPrince45", function(object, ...) {
             }
             # print k array
             # get the ODE object, state and rate
-            object@ode <- getRate(object@ode, object@temp_state, object@k[s,])
+            # object@ode <- getRate(object@ode, object@temp_state, object@k[s,])
             # assign rate to k vector
-            object@k[s,] <- object@ode@rate    # in Java rate is passed by param
+            # object@k[s,] <- object@ode@rate    # in Java rate is passed by param
+
+            object@k[s,] <- getRate(object@ode, object@temp_state)   # in Java rate is passed by param
+
+
         } # end for loop "s"
         # compute the error
         error <- 0

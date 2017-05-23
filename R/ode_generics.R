@@ -1,3 +1,12 @@
+#' Get the number of times that the rate has been calculated
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getRateCounts-method
+#' @export
+setGeneric("getRateCounts", function(object, ...) standardGeneric("getRateCounts"))
+
 # Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
 #' @rdname AbstractODESolver-class
 #' @export
@@ -32,11 +41,11 @@ setGeneric("Euler", function(ode, ...)
 #'
 #' @param object a class object
 #' @param state current state
-#' @param rate new rate
 #' @param ... additional parameters
 #'
 #' @export
-setGeneric("getRate", function(object, state, rate, ...) standardGeneric("getRate"))
+setGeneric("getRate", function(object, state, ...) standardGeneric("getRate"))
+
 
 #' Get current state of the system
 #'
