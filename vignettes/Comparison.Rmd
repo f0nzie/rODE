@@ -47,9 +47,6 @@ setMethod("getRate", "ODETest", function(object, state, ...) {
     object@rate[2] <-  1            # rate of change of time, dt/dt
 
     object@n <- object@n + 1
-
-    object@state <- state
-
     object@rate
 })
 
@@ -91,7 +88,7 @@ ComparisonRK45App <- function(verbose = FALSE) {
 }
 
 
-ComparisonRK45App()
+ComparisonRK45App(verbose = TRUE)
 ```
 
 

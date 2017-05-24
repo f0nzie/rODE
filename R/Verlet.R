@@ -79,8 +79,8 @@ setMethod("step", "Verlet", function(object, ...) {
         # cat(sprintf("i2=%3d, state1=%12f, rate2=%11f \n", i-1, state[i], object@rate2[i]))
     }
     if (object@numEqn%%2 == 1) { # last equation if  we have an odd number of equations
-        # in Java this is written like this:
-        #  state[numEqn-1] = state[numEqn-1] + stepSize*rate1[numEqn-1];
+        ##  in Java this is written like this:
+        ##  state[numEqn-1] = state[numEqn-1] + stepSize*rate1[numEqn-1];
         state[object@numEqn] <- state[object@numEqn] +
             object@stepSize * object@rate1[object@numEqn]
 
@@ -89,7 +89,7 @@ setMethod("step", "Verlet", function(object, ...) {
         #             object@rate1[object@numEqn]))
     }
     object@ode@state <- state
-    object                                 # use this object to reassign in R
+    object                                  # use this object to reassign in R
 })
 
 

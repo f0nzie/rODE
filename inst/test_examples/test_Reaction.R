@@ -1,8 +1,9 @@
-# test_ReactionApp.R
+context("test Reaction as app")
 
-library(testthat)
+source(paste(system.file("examples", package = "rODE"),
+             "Reaction.R", sep ="/"))
 
-source("./inst/examples/Reaction.R")
+# source("./inst/examples/Reaction.R")
 
 X <- 1; Y <- 5;
 dt <- 0.1

@@ -10,8 +10,6 @@
 # */
 
 
-
-
 setClass("Reaction", slots = c(
     k1 = "numeric",
     k2 = "numeric",
@@ -40,13 +38,10 @@ setMethod("getRate", "Reaction", function(object, state, ...) {
     xxy <- state[1] * state[1] *state[2]
     object@rate[1] <- object@k1 * object@A - object@k2 * object@B * state[1] +
         object@k3 * xxy - object@k4 * state[1]                          # X rate
-    object@rate[2] <- object@k2 * object@B * state[1] - object@k3 * xxy        # Y rate
-    object@rate[3] <- 1                                 # rate of change of time, dt/dt
+    object@rate[2] <- object@k2 * object@B * state[1] - object@k3 * xxy # Y rate
+    object@rate[3] <- 1                       # rate of change of time, dt/dt
 
-    object@state <- object@odeSolver@ode@state <- state
-    # object@rate  <- object@odeSolver@ode@rate  <- rate
     object@rate                                                # time derivative
-    # invisible(object)
 })
 
 

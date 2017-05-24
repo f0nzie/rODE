@@ -1,8 +1,9 @@
-#
-# ############################################################  Test Pendulum
-library(testthat)
+context("test PendulumRK4 with loop")
 
-source("./inst/examples/PendulumRK4.R")                   # this script uses Euler-Richardson
+source(paste(system.file("examples", package = "rODE"),
+             "PendulumRK4.R", sep ="/"))
+
+# source("./inst/examples/PendulumRK4.R")                   # this script uses Euler-Richardson
 
 
 ode <- new("ODE")

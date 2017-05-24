@@ -72,8 +72,6 @@ setMethod("step", "DormandPrince45", function(object, ...) {
     currentStep       <- object@stepSize
     error             <- 0
     state             <- getState(object@ode)
-    # object@ode        <- getRate(object@ode, state, object@k[1,])
-    # object@k[1,]      <- object@ode@rate      # in Java, rate is passed by param
     object@k[1,]      <- getRate(object@ode, state)
     # NEW iteration
     repeat  {
