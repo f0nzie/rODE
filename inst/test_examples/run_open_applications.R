@@ -60,6 +60,17 @@ for (app in examples) {
         cat("\t tested")
     }
 
+
+    if (i == 13) {
+        # Reaction
+        result <- do.call(application, list(FALSE))
+        expect_equal(result,
+                     list(1.987618, 1.143675, 100.1
+                     ), tolerance = 1e-6)
+        cat("\t tested")
+    }
+
+
     i <- i + 1
 }
 

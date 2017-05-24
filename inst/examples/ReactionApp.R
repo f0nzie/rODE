@@ -23,7 +23,20 @@ ReactionApp <- function(verbose = FALSE) {
                     solver@ode@state[3]))
         solver <- step(solver)
     }
-    # at t=100, dt=0.1,  c(2.131958,     1.105316,   100.000000)
+
+    # print the last line after solver
+    if (verbose)
+        cat(sprintf("%12f %12f %12f \n", solver@ode@state[1],
+                solver@ode@state[2],
+                solver@ode@state[3]))
+
+    return(list(solver@ode@state[1], solver@ode@state[2], solver@ode@state[3]))
 }
 
+
 ReactionApp()
+
+
+# Java
+# at t=100, dt=0.1,  c(2.131958,     1.105316,   100.000000)
+#    t=50, dt=0.1,     0.493079    2.821023   50.000000
