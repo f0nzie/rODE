@@ -11,8 +11,8 @@ dt <- 0.01
 
 ball <- FallingParticleODE(initial_y, initial_v)
 
-eusolver <- Euler(ball)
-eusolver <- setStepSize(eusolver, dt)
+solver <- Euler(ball)
+solver <- setStepSize(eusolver, dt)
 
 # stop loop when the ball hits the ground
 while (ball@state[1] > 0) {

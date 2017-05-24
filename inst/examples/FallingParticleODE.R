@@ -3,13 +3,13 @@
 #
 
 setClass("FallingParticleODE", slots = c(
-    g = "numeric"
-),
-    prototype = prototype(
-        g = 9.8
-    ),
-    contains = c("ODE")
-    )
+        g = "numeric"
+        ),
+        prototype = prototype(
+            g = 9.8
+        ),
+        contains = c("ODE")
+        )
 
 
 setMethod("initialize", "FallingParticleODE", function(.Object, ...) {
@@ -28,6 +28,7 @@ setMethod("getRate", "FallingParticleODE", function(object, state, ...) {
     object@rate[1] <- state[2]
     object@rate[2] <- - object@g
     object@rate[3] <- 1
+
     object@rate
 
 })
