@@ -40,4 +40,4 @@ DTE <- data.table::rbindlist(rowvec)
 print(ggplot(DTE, aes(x = state3, y = state1)) + geom_line(col = "blue"))
 print(ggplot(DTE, aes(x = state3, y = state2)) + geom_line(col = "red"))
 
-save(DTE, file = "./data/pendulumDTE_1e-2.rda")
+# save(DTE, file = "./data/pendulumDTE_1e-2.rda")
