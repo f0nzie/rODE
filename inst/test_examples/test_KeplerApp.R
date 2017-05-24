@@ -6,7 +6,10 @@ library(testthat)
 #
 #
 
-source("./inst/examples/Kepler.R")
+source(paste(system.file("examples", package = "rODE"),
+             "Kepler.R", sep ="/"))
+
+# source("./inst/examples/Kepler.R")
 
 # set the orbit into a predefined state.
 r <- c(2, 0)

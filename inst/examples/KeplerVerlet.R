@@ -3,6 +3,7 @@
 
 
 
+
 setClass("KeplerVerlet", slots = c(
     GM = "numeric",
     odeSolver = "Verlet",

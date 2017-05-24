@@ -2,7 +2,10 @@
 
 library(testthat)
 
-source("./inst/examples/Reaction.R")
+source(paste(system.file("examples", package = "rODE"),
+             "Reaction.R", sep ="/"))
+
+# source("./inst/examples/Reaction.R")
 
 X <- 1; Y <- 5;
 dt <- 0.1

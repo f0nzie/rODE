@@ -4,7 +4,10 @@
 #
 #
 
-source("./inst/examples/ODETest.R")           # hold the step and rate
+source(paste(system.file("examples", package = "rODE"),
+             "ODETest.R", sep ="/"))
+
+# source("./inst/examples/ODETest.R")           # hold the step and rate
 
 ode <- new("ODETest")
 

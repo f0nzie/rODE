@@ -1,6 +1,9 @@
 library(testthat)
 
-source("./inst/examples/Planet.R")
+source(paste(system.file("examples", package = "rODE"),
+             "Planet.R", sep ="/"))
+
+# source("./inst/examples/Planet.R")
 
 # x =  1, AU or Astronomical Units. Length of semimajor axis or the orbit of the Earth around the Sun.
 

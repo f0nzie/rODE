@@ -4,7 +4,10 @@ library(testthat)
 # Demostration of the use of ODE solver RK45
 #
 
-source("./inst/examples/KeplerVerlet.R")
+source(paste(system.file("examples", package = "rODE"),
+             "KeplerVerlet.R", sep ="/"))
+
+# source("./inst/examples/KeplerVerlet.R")
 
 particle <- KeplerVerlet()
 

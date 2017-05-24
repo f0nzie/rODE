@@ -1,8 +1,10 @@
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  + + unit tests
 library(testthat)
 
+source(paste(system.file("examples", package = "rODE"),
+             "FallingParticleODE.R", sep ="/"))
 
-source("./inst/examples/FallingParticleODE.R")
+# source("./inst/examples/FallingParticleODE.R")
 
 initial_y <- 10
 initial_v <- 0

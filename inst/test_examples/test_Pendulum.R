@@ -2,7 +2,10 @@
 # ############################################################  Test Pendulum
 library(testthat)
 
-source("./inst/examples/Pendulum.R")                   # this script uses Euler-Richardson
+source(paste(system.file("examples", package = "rODE"),
+             "Pendulum.R", sep ="/"))
+
+# source("./inst/examples/Pendulum.R")                   # this script uses Euler-Richardson
 
 
 ode <- new("ODE")
