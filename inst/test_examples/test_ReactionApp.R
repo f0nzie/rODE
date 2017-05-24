@@ -1,6 +1,4 @@
-# test_ReactionApp.R
-
-library(testthat)
+context("test Reaction as app")
 
 source(paste(system.file("examples", package = "rODE"),
              "Reaction.R", sep ="/"))

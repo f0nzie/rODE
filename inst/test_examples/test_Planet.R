@@ -1,4 +1,4 @@
-library(testthat)
+context("test Planet")
 
 source(paste(system.file("examples", package = "rODE"),
              "Planet.R", sep ="/"))

@@ -1,6 +1,4 @@
-#
-# ############################################################  Test Pendulum
-library(testthat)
+context("test PendulumRK4 with loop")
 
 source(paste(system.file("examples", package = "rODE"),
              "PendulumRK4.R", sep ="/"))

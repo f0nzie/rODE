@@ -1,5 +1,5 @@
-library(testthat)
-# test_KeplerVerletApp.R
+context("test KeplerVerlet as app")
+
 #
 # Demostration of the use of ODE solver RK45
 #
@@ -26,19 +26,19 @@ vy <- 2 * pi
 dt <- 0.01
 tol <- 1e-3
 
-cat("state(before)=", particle@state, "\n")
+# cat("state(before)=", particle@state, "\n")
 particle <- init(particle, c(x, vx, y, vy, 0))
-cat(" state(after)=", particle@state, "\n")
+# cat(" state(after)=", particle@state, "\n")
 
 odeSolver <- Verlet(particle)
 
-cat("stepSize (before)=", particle@odeSolver@stepSize, "\n")
+# cat("stepSize (before)=", particle@odeSolver@stepSize, "\n")
 odeSolver <- init(odeSolver, dt)
-cat("   stepSize(afer)=", particle@odeSolver@stepSize, "\n")
+# cat("   stepSize(afer)=", particle@odeSolver@stepSize, "\n")
 
-cat("state(before) =", particle@state, particle@odeSolver@ode@state,"\n")
+# cat("state(before) =", particle@state, particle@odeSolver@ode@state,"\n")
 particle@odeSolver <- odeSolver
-cat(" state(after) =", particle@state, particle@odeSolver@ode@state,"\n")
+# cat(" state(after) =", particle@state, particle@odeSolver@ode@state,"\n")
 
 # odeSolver <- setTolerance(odeSolver, tol)
 
@@ -53,7 +53,7 @@ expect_equal(particle@state, c(1.000000, 0.000000, 0.000000, 6.283185, 0.000000)
 expect_equal(getRate(particle, c(0,0,0,0,0)), c(0, NaN,   0, NaN,   1))
 
 
-cat(particle@odeSolver@ode@state)
+# cat(particle@odeSolver@ode@state)
 
 particle <- doStep(particle)
 

@@ -1,8 +1,10 @@
 library(testthat)
 
-test_file("./inst/test_examples/test_ComparisonRK45ODEApp.R", reporter = "tap")
+# test_file("./inst/test_examples/test_zApplications.R", reporter = "tap")
 
-# test_dir("./inst/test_examples", reporter = "tap")
+test_dir(system.file("test_examples", package="rODE"), reporter = "tap")
+
+# source(file.path(system.file("examples", package="rODE"), "FallingParticleODE.R"))
 
 
 # source("./R/Kepler.R")

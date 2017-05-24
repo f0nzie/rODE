@@ -4,7 +4,10 @@
 # File ComparisonRK45App.R does npt makde ode abstraction
 #
 
-source("./inst/examples//ODETest.R")
+source(paste(system.file("examples", package = "rODE"),
+             "ODETest.R", sep ="/"))
+
+# source("./inst/examples//ODETest.R")
 
 ode <- new("ODETest")
 

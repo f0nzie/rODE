@@ -1,4 +1,4 @@
-library(testthat)
+context("test Projectile with loop")
 
 source(paste(system.file("examples", package = "rODE"),
              "Projectile.R", sep ="/"))

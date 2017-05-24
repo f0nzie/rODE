@@ -1,8 +1,12 @@
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  + + unit tests
 library(testthat)
 
-source(paste(system.file("examples", package = "rODE"),
-             "FallingParticleODE.R", sep ="/"))
+context("test FallingParticleODE as app")
+
+# source(paste(system.file("examples", package = "rODE"),
+#              "FallingParticleODE.R", sep ="/"))
+
+source(file.path(system.file("examples", package="rODE"), "FallingParticleODE.R"))
 
 # source("./inst/examples/FallingParticleODE.R")
 

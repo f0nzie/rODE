@@ -1,6 +1,4 @@
-#
-# ############################################################  Test Pendulum
-library(testthat)
+context("test Pendulum as app")
 
 source(paste(system.file("examples", package = "rODE"),
              "Pendulum.R", sep ="/"))

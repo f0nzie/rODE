@@ -1,4 +1,4 @@
-library(testthat)
+context("test Kepler as app")
 
 # test_KeplerApp.R
 #

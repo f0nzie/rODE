@@ -1,6 +1,4 @@
-#
-# ############################################################  Test Pendulum
-library(testthat)
+context("test PendulumEuler with loop")
 
 source(paste(system.file("examples", package = "rODE"),
              "PendulumEuler.R", sep ="/"))
