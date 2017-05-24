@@ -1,8 +1,9 @@
-#
-# ############################################################  Test Pendulum
-library(testthat)
+context("test PendulumEuler with loop")
 
-source("./inst/examples/PendulumEuler.R")               # this script uses Euler solver
+source(paste(system.file("examples", package = "rODE"),
+             "PendulumEuler.R", sep ="/"))
+
+# source("./inst/examples/PendulumEuler.R")               # this script uses Euler solver
 
 
 ode <- new("ODE")

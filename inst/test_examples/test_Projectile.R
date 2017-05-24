@@ -1,7 +1,9 @@
-library(testthat)
+context("test Projectile with loop")
 
+source(paste(system.file("examples", package = "rODE"),
+             "Projectile.R", sep ="/"))
 
-source("./inst/examples/Projectile.R")
+# source("./inst/examples/Projectile.R")
 
 
 x <- 0; vx <- 10; y <- 0; vy <- 10

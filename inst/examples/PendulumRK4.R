@@ -51,14 +51,12 @@ setMethod("getState", "PendulumRK4", function(object) {
 })
 
 
-setMethod("getRate", "PendulumRK4", function(object, state) {
+setMethod("getRate", "PendulumRK4", function(object, state, ...) {
     object@rate[1] <- state[2]     # rate of change of angle                                      # diff 11
     object@rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
     object@rate[3] <- 1            # rate of change of time, dt/dt
 
     object@state <- object@odeSolver@ode@state <- state
-    # object@rate  <- object@odeSolver@ode@rate  <- rate
-    # object
     object@rate
 })
 

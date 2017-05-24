@@ -3,8 +3,6 @@
 # Original Pendulum class uses Euler-Richardson solver
 
 
-
-
 setClass("Pendulum", slots = c(
     omega0Squared = "numeric",
     state = "numeric",
@@ -37,6 +35,7 @@ setMethod("step", "Pendulum", function(object) {
     object
 })
 
+
 setMethod("setState", signature("Pendulum"), function(object, theta, thetaDot, ...) {
     object@state[1] <- theta     # angle
     object@state[2] <- thetaDot  # derivative of angle
@@ -45,20 +44,18 @@ setMethod("setState", signature("Pendulum"), function(object, theta, thetaDot, .
     object
 })
 
+
 setMethod("getState", "Pendulum", function(object) {
     object@state
 })
 
 
-setMethod("getRate", "Pendulum", function(object, state) {
-    rate[1] <- state[2]     # rate of change of angle
-    rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
-    rate[3] <- 1            # rate of change of time, dt/dt
+setMethod("getRate", "Pendulum", function(object, state, ...) {
+    object@rate[1] <- state[2]     # rate of change of angle
+    object@rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
+    object@rate[3] <- 1            # rate of change of time, dt/dt
 
-    object@state <- object@odeSolver@ode@state <- state
-    object@rate  <- object@odeSolver@ode@rate  <- rate
     object@rate
-    # invisible(object)
 })
 
 

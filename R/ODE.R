@@ -16,6 +16,5 @@ setMethod("getState", "ODE", function(object, ...) {
 #' @rdname getRate-method
 setMethod("getRate", "ODE", function(object, state, ...) {
     # Gets the rate of change using the argument's state variables.
-    # invisible(object)
     return(object@rate)
 })
