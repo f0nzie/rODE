@@ -10,6 +10,44 @@ vignette: >
 ---
 
 ## The FallingParticleODE class using the EUler ODE solver
+Because this is free fall of a particle in one-dimension, for vertical motion, we use Newton's second law:
+
+$$
+m \frac{d^2y} {dt^2} = F
+$$
+and we know that the gravitational force is:
+$$
+F = -mg
+$$
+Therefore:
+$$
+m \frac{d^2y} {dt^2} = -g
+$$
+That expressing as first-order differential equations:
+$$
+\frac {dy}{dt} = v \\
+\frac {dv}{dt} = -g
+$$
+
+($y$), we define the numerical state equations as:
+
+    state[1]  x
+    state[2]  v
+    state[3]  t
+
+From the equations of motion for a falling particle, the derivatives are:
+$$
+\dot s_1 = s_2 \\
+\dot s_2 = -g  \\
+\dot s_3 = 1
+$$
+which is equivalent of writing this as the rate in the code:
+$$
+r_1 = r_2 \\
+r_2 = -g  \\
+r_3 = 1
+$$
+
 
 ```{r eval=FALSE}
 # This code can also be found in the `examples` folder under this name:
