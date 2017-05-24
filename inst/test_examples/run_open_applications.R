@@ -1,4 +1,12 @@
-# Test by opening all application under the `examples` folder
+# Test by opening all applications under the `examples` folder Get the list of
+# appliations by filtering those ending with `App`.
+#
+# Remove the extension `.R` from each app and loop to call each of the
+# applications with `do.call`.
+#
+# A list contains the expected results that are compared against the result
+# coming out from the call to the application.
+
 
 library(testthat)
 

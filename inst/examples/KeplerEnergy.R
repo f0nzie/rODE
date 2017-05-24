@@ -1,10 +1,10 @@
-# KeplerVerlet.R
+# KeplerEnergy.R
 #
 
 
 
 
-setClass("KeplerVerlet", slots = c(
+setClass("KeplerEnergy", slots = c(
     GM = "numeric",
     odeSolver = "Verlet",
     counter = "numeric"
@@ -12,7 +12,7 @@ setClass("KeplerVerlet", slots = c(
     contains = c("ODE")
 )
 
-setMethod("initialize", "KeplerVerlet", function(.Object, ...) {
+setMethod("initialize", "KeplerEnergy", function(.Object, ...) {
     .Object@GM <- 4 * pi * pi                # gravitation constant times combined mass
     .Object@state <- vector("numeric", 5)  # x, vx, y, vy, t
     # .Object@odeSolver <- Verlet(ode = .Object)
@@ -21,7 +21,7 @@ setMethod("initialize", "KeplerVerlet", function(.Object, ...) {
     return(.Object)
 })
 
-setMethod("doStep", "KeplerVerlet", function(object, ...) {
+setMethod("doStep", "KeplerEnergy", function(object, ...) {
     # cat("state@doStep=", object@state, "\n")
     object@odeSolver <- step(object@odeSolver)
 
@@ -32,11 +32,11 @@ setMethod("doStep", "KeplerVerlet", function(object, ...) {
     object
 })
 
-setMethod("getTime", "KeplerVerlet", function(object, ...) {
+setMethod("getTime", "KeplerEnergy", function(object, ...) {
     return(object@state[5])
 })
 
-setMethod("getEnergy", "KeplerVerlet", function(object, ...) {
+setMethod("getEnergy", "KeplerEnergy", function(object, ...) {
     ke <- 0.5 * (object@state[2] * object@state[2] +
                      object@state[4] * object@state[4])
     pe <- -object@GM / sqrt(object@state[1] * object@state[1] +
@@ -45,7 +45,7 @@ setMethod("getEnergy", "KeplerVerlet", function(object, ...) {
 })
 
 
-setMethod("init", "KeplerVerlet", function(object, initState, ...) {
+setMethod("init", "KeplerEnergy", function(object, initState, ...) {
     object@state <- initState
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
 
@@ -57,7 +57,7 @@ setMethod("init", "KeplerVerlet", function(object, initState, ...) {
 })
 
 
-setMethod("getRate", "KeplerVerlet", function(object, state, ...) {
+setMethod("getRate", "KeplerEnergy", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared
     r3 <- r2 * sqrt(r2)   # distance cubed
@@ -73,13 +73,13 @@ setMethod("getRate", "KeplerVerlet", function(object, state, ...) {
 })
 
 
-setMethod("getState", "KeplerVerlet", function(object, ...) {
+setMethod("getState", "KeplerEnergy", function(object, ...) {
     # Gets the state variables.
     return(object@state)
 })
 
 # constructor
-KeplerVerlet <- function() {
-    kepler <- new("KeplerVerlet")
+KeplerEnergy <- function() {
+    kepler <- new("KeplerEnergy")
     return(kepler)
 }

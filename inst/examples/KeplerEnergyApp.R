@@ -1,13 +1,13 @@
-# KeplerVerletApp.R
+# KeplerEnergyApp.R
 #
 # Demostration of the use of ODE solver RK45
 #
 #
 
 
-source("./inst/examples/KeplerVerlet.R")
+source("./inst/examples/KeplerEnergy.R")
 
-KeplerEulerApp <- function(verbose = FALSE) {
+KeplerEnergyApp <- function(verbose = FALSE) {
 
     x  <- 1
     vx <- 0
@@ -16,7 +16,7 @@ KeplerEulerApp <- function(verbose = FALSE) {
     dt <- 0.01
     tol <- 1e-3
 
-    particle <- KeplerVerlet()
+    particle <- KeplerEnergy()
 
     particle <- init(particle, c(x, vx, y, vy, 0))
 
@@ -39,6 +39,9 @@ KeplerEulerApp <- function(verbose = FALSE) {
         i <- i + 1
     }
 }
+
+
+KeplerEnergyApp()
 
 #' output from Java run
 #'
