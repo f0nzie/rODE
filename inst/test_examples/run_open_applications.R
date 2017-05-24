@@ -15,7 +15,7 @@ examples <- list.files(path = examples_dir, pattern = "*App", all.files = FALSE,
 i <- 1
 for (app in examples) {
     application <- sub("\\.R$", '', app)
-    cat(sprintf("%3d testing ... %30s %s \n", i, app, application))
+    cat(sprintf("\n %3d testing ... %30s %25s", i, app, application))
     source(paste(system.file("examples", package = "rODE"),
                  app, sep ="/"))
     if (i == 1) {
@@ -23,12 +23,14 @@ for (app in examples) {
         result <- do.call(application, list(FALSE))
         expect_equal(result, list(53.25076, 1.053471e-09, 1.053471e-09, 604),
                      tolerance = 1e-7)
+        cat("\t tested")
     }
     if (i == 2) {
         # ComparisonRK45ODEApp. tolerance = 1e-6
         result <- do.call(application, list(FALSE))
         expect_equal(result, list(51.958888, 9.584591e-08, 9.584591e-08, 286),
                      tolerance = 1e-7)
+        cat("\t tested")
     }
     if (i == 3) {
         # FallingParticleApp
@@ -37,6 +39,7 @@ for (app in examples) {
                      list(-0.090080, -14.014000, -14.112000, -9.800000,
                           1.440000, 1.000000),
                      tolerance = 1e-13)
+        cat("\t tested")
     }
     if (i == 4) {
         # KeplerApp
@@ -45,6 +48,7 @@ for (app in examples) {
                      list(0.444912, -1.436203, 0.459081, 10.033245
                           ),
                      tolerance = 1e-6)
+        cat("\t tested")
     }
     if (i == 5) {
         # KeplerDormandPrince45App
@@ -53,6 +57,7 @@ for (app in examples) {
                      list(1.507215, -19.737875, 1.507215, -0.999051, -0.044948
                      ),
                      tolerance = 1e-5)
+        cat("\t tested")
     }
 
     i <- i + 1
