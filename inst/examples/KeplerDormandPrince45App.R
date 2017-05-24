@@ -37,16 +37,22 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
         energy <- getEnergy(particle)
 
         if (verbose)
-        cat(sprintf("time=%12f energy=%12f state[5]=%12f x=%10f y=%10f \n", getTime(particle),
+        cat(sprintf("time=%12f energy=%12f state[5]=%12f x=%10f y=%10f \n",
+                    getTime(particle),
                     energy, particle@state[5], particle@state[1], particle@state[3]))
         i <- i + 1
     }
-    # Values from Java at t approx = 1.5
-    # time=    1.444831 energy=  -19.737930 state[4]=    1.444831
-    # time=    1.507215 energy=  -19.737875 state[4]=    1.507215
-    # time=    1.569599 energy=  -19.737819 state[4]=    1.569599
+    return(list(getTime(particle), energy, particle@state[5], particle@state[1],
+                particle@state[3]
+                ))
 
 }
 
 
 KeplerDormandPrince45App()
+
+
+# Values from Java at t approx = 1.5
+# time=    1.444831 energy=  -19.737930 state[4]=    1.444831
+# time=    1.507215 energy=  -19.737875 state[4]=    1.507215
+# time=    1.569599 energy=  -19.737819 state[4]=    1.569599

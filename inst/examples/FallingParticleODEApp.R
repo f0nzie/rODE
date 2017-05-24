@@ -26,4 +26,7 @@ FallingParticleODEApp <- function(verbose = FALSE) {
             cat(sprintf("%12f %12f\n", ball@state[3], ball@rate[3] ))
         }
     }
+    return(list(ball@state[1], ball@rate[1],
+           ball@state[2], ball@rate[2],
+           ball@state[3], ball@rate[3]))
 }
