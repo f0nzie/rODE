@@ -18,5 +18,4 @@ showMethods2 <- function(theClass) {
 
     # vector comparison of methods
     # expect_equal(fvec, c("getStepSize", "init", "setStepSize", "step"))
-
 }

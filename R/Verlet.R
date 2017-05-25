@@ -26,6 +26,7 @@ setMethod("initialize", "Verlet", function(.Object, ode, ...) {
     return(.Object)
 })
 
+
 #' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "Verlet", function(object, stepSize, ...) {
@@ -39,10 +40,12 @@ setMethod("init", "Verlet", function(object, stepSize, ...) {
     object
 })
 
+
 #' @rdname Verlet-class
 setMethod("getRateCounter", "Verlet", function(object, ...) {
     return(object@rateCounter)
 })
+
 
 #' @rdname step-method
 setMethod("step", "Verlet", function(object, ...) {
@@ -92,14 +95,6 @@ setMethod("step", "Verlet", function(object, ...) {
     object                                  # use this object to reassign in R
 })
 
-
-# # constructor
-# verlet <- function(.ode) {
-#     # constructor for RK4 ODE solver
-#     .verlet <- new("Verlet", .ode)
-#     .verlet <- init(.verlet, .verlet@stepSize)
-#     return(.verlet)
-# }
 
 
 #' Verlet class constructor ODE
