@@ -3,7 +3,9 @@
 #
 
 
-source("./inst/examples/FallingParticleODE.R")
+source(paste(system.file("examples", package = "rODE"),
+             "FallingParticleODE.R", sep ="/"))
+
 
 FallingParticleODEApp <- function(verbose = FALSE) {
 

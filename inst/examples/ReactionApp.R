@@ -5,8 +5,9 @@
 # reaction (Brusselator model) using
 # a fouth-order Runge-Kutta algorithm.
 
-
-source("./inst/examples/Reaction.R")
+source(paste(system.file("examples", package = "rODE"),
+             "Reaction.R",
+             sep ="/"))
 
 ReactionApp <- function(verbose = FALSE) {
     X <- 1; Y <- 5;

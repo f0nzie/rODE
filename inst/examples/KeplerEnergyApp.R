@@ -4,8 +4,9 @@
 #
 #
 
-
-source("./inst/examples/KeplerEnergy.R")
+source(paste(system.file("examples", package = "rODE"),
+             "KeplerEnergy.R",
+             sep ="/"))
 
 KeplerEnergyApp <- function(verbose = FALSE) {
 

@@ -5,8 +5,9 @@
 
 library(ggplot2)
 
-
-source("./inst/examples/Pendulum.R")                   # this script uses Euler-Richardson
+source(paste(system.file("examples", package = "rODE"),
+             "Pendulum.R",
+             sep ="/"))
 
 PendulumApp <- function(verbose = FALSE) {
     ode <- new("ODE")
