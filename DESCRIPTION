@@ -4,8 +4,10 @@ Title: Ordinary Differential Equation Solvers Written in R using S4 classes
 Version: 0.1.0
 Author: Alfonso Reyes <alfonso.reyes@oilgainsanalytics.com>
 Maintainer: Alfonso Reyes <alfonso.reyes@oilgainsanalytics.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: The objective of this package is to show Physics students how
+     an ODE solver is made and how effective classes can be for the equation
+     construction. Most of the ideas come from the book on Computer Simulations
+     in Physics by Wolfgang Christian et al.
 Depends: R (>= 3.4.0)    
 License: GPL-2
 Encoding: UTF-8

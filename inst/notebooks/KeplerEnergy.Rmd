@@ -1,6 +1,6 @@
 ---
 title: "Kepler Energy"
-author: "Alfonso R. Reyes"
+author: "Vignette Author"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,15 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=F, error=T, message=F, warning=F}
-knitr::opts_chunk$set(echo=T, comment=NA, error=T, warning=F, message = F, fig.align = 'center')
-```
-
-
-## The KeplerEnergy application using the VErlet ODE solver
-
 ```{r}
-library(rODE)
 
 setClass("KeplerEnergy", slots = c(
     GM = "numeric",
@@ -128,8 +120,12 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     }
 }
 
+KeplerEnergyApp()
 
-KeplerEnergyApp(TRUE)
+```
+
+
+```{r}
 
 ```
 

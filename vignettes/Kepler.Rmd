@@ -62,7 +62,6 @@ Kepler <- function(r, v) {
 }
 
 # This code can also be found in the `examples` folder under this name:
-#
 # KeplerApp.R
 #
 KeplerApp <- function(verbose = FALSE) {
