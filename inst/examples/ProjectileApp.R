@@ -26,8 +26,10 @@ ProjectileApp <- function(verbose = FALSE) {
     while (projectile@state[3] >= 0)    {
         # state[5]:           state[1]: x;  # state[3]: y
         if (verbose)
-            cat(sprintf("%12f %12f %12f \n", projectile@state[5],
-                    projectile@state[1], projectile@state[3]))
+            cat(sprintf("%12f %12f %12f %12f %12f \n",
+                        projectile@state[5],
+                        projectile@state[1], projectile@state[2],
+                        projectile@state[3], projectile@state[4]))
         rowV[[i]] <- list(state1 = projectile@state[1],
                           state3 = projectile@state[3],
                           state5 = projectile@state[5])
@@ -39,10 +41,16 @@ ProjectileApp <- function(verbose = FALSE) {
     datatable
 
     if (verbose) {
-    print(qplot(state1, state3, data = datatable))
-    print(qplot(state1, state5, data = datatable))
+        cat(sprintf("%12f %12f %12f %12f %12f \n", projectile@state[5],
+                    projectile@state[1], projectile@state[2],
+                    projectile@state[3], projectile@state[4]))
+        print(qplot(state1, state3, data = datatable))
+        print(qplot(state1, state5, data = datatable))
     }
 
+    return(list(projectile@state[5],
+                projectile@state[1], projectile@state[2],
+                projectile@state[3], projectile@state[4]))
 }
 
 

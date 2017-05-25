@@ -39,6 +39,9 @@ KeplerEnergyApp <- function(verbose = FALSE) {
                     energy, particle@state[5]))
         i <- i + 1
     }
+    return(list(getTime(particle),
+                energy, particle@state[5]
+    ))
 }
 
 
@@ -54,6 +57,11 @@ KeplerEnergyApp()
 # time=    1.020000 energy=  -19.739209 state[4]=    1.020000
 # time=    1.030000 energy=  -19.739208 state[4]=    1.030000
 # time=    1.040000 energy=  -19.739208 state[4]=    1.040000
+# ...
+# time=    1.180000 energy=  -19.739187 state[4]=    1.180000
+# time=    1.190000 energy=  -19.739185 state[4]=    1.190000
+# time=    1.200000 energy=  -19.739182 state[4]=    1.200000
+# time=    1.210000 energy=  -19.739180 state[4]=    1.210000
 
 #' output from R run
 #'

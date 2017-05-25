@@ -39,11 +39,18 @@ PendulumApp <- function(verbose = FALSE) {
     DTRK4 <- data.table::rbindlist(rowvec)
 
     if (verbose) {
-    print(ggplot(DTRK4, aes(x = state3, y = state1)) + geom_line(col = "blue"))
-    print(ggplot(DTRK4, aes(x = state3, y = state2)) + geom_line(col = "red"))
+        cat(sprintf("state1=%12f state2=%12f state3=%12f \n",
+                    pendulum@state[1],
+                    pendulum@state[2], pendulum@state[3]))
+        print(ggplot(DTRK4, aes(x = state3, y = state1)) + geom_line(col = "blue"))
+        print(ggplot(DTRK4, aes(x = state3, y = state2)) + geom_line(col = "red"))
     }
     # save(DTRK4, file = "./data/pendulumRK4_1e-3.rda")
 
+    return(list(pendulum@state[1],
+                pendulum@state[2],
+                pendulum@state[3]
+    ))
 }
 
 

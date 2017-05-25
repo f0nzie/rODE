@@ -35,10 +35,22 @@ KeplerEulerApp <- function(verbose = FALSE) {
         # odeSolver <- particle@odeSolver
         energy <- getEnergy(particle)
         if (verbose)
-            cat(sprintf("time=%12f energy=%12f state[5]=%12f \n",
-                        getTime(particle), energy, particle@state[5]))
+            cat(sprintf("time=%11f energy=%11f s[1]=%11f s[2]=%11f s[3]=%11f s[4]=%11f s[5]=%11f\n",
+                        getTime(particle), energy,
+                        particle@state[1],
+                        particle@state[2],
+                        particle@state[3],
+                        particle@state[4],
+                        particle@state[5]))
         i <- i + 1
     }
+    return(list(getTime(particle), energy,
+                particle@state[1],
+                particle@state[2],
+                particle@state[3],
+                particle@state[4],
+                particle@state[5]
+    ))
 
 }
 
