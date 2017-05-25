@@ -70,7 +70,7 @@ setMethod("getStepSize", "Euler", function(object, ...) {
 })
 
 
-#' Euler constructor ODE
+#' Euler constructor when `ODE` passed
 #'
 #' @rdname Euler-class
 #'
@@ -82,12 +82,13 @@ setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
     return(.euler)
 })
 
-#' Euler constructor missing
+#' Euler constructor `missing` is passed
 #'
 #' @rdname Euler-class
 #'
 #' @importFrom methods new
 setMethod("Euler", signature(ode = "missing"), function(ode, ...) {
+    # use this constructor when no ODE object is passed
     if (missing(ode)) {
         ode <- new("ODE")
         warning("No ODE supplied. Using an empty one!")

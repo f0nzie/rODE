@@ -33,7 +33,6 @@ setMethod("initialize", "Planet", function(.Object, ...) {
 setMethod("doStep", "Planet", function(object, ...) {
     # Gets the state variables.
     object@odeSolver <- step(object@odeSolver)
-    # object@odeSolver <- setStepSize(object@odeSolver, stepSize)
     object@state <- object@odeSolver@ode@state
     object@rate  <- object@odeSolver@ode@rate
     invisible(object)
@@ -41,12 +40,8 @@ setMethod("doStep", "Planet", function(object, ...) {
 
 setMethod("init", "Planet", function(object, initState, ...) {
     object@state <- object@odeSolver@ode@state <- initState
-    # callNextMethod(object@odeSolver, getStepSize(object@odeSolver))
     # initialize providing the step size
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
-    # object@odeSolver <- callNextMethod(object, object@odeSolver@stepSize)
-    # object@odeSolver <- callNextMethod(object@odeSolver, getStepSize(object@odeSolver))
-
     object@rate <- object@odeSolver@ode@rate
     object@state <- object@odeSolver@ode@state
 
@@ -116,5 +111,10 @@ PlanetApp <- function(verbose = FALSE) {
 
 PlanetApp()
 
+```
+
+
+```{r}
+PlanetApp(verbose = TRUE)
 ```
 

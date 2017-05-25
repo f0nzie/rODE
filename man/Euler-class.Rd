@@ -23,7 +23,7 @@ Euler(ode, ...)
 \description{
 Euler class
 
-Euler constructor ODE
+Euler constructor when `ODE` passed
 
-Euler constructor missing
+Euler constructor `missing` is passed
 }

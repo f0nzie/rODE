@@ -5,11 +5,11 @@ context("test KeplerVerlet as app")
 #
 
 source(paste(system.file("examples", package = "rODE"),
-             "KeplerVerlet.R", sep ="/"))
+             "KeplerEnergy.R", sep ="/"))
 
-# source("./inst/examples/KeplerVerlet.R")
+# source("./inst/examples/KeplerEnergy.R")
 
-particle <- KeplerVerlet()
+particle <- KeplerEnergy()
 
 expect_equal(slotNames(particle), c("GM", "odeSolver", "counter", "state", "rate"))
 expect_equal(particle@state, c(0,0,0,0,0))
