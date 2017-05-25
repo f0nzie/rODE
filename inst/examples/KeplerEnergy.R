@@ -3,7 +3,6 @@
 
 
 
-
 setClass("KeplerEnergy", slots = c(
     GM = "numeric",
     odeSolver = "Verlet",
@@ -48,9 +47,6 @@ setMethod("getEnergy", "KeplerEnergy", function(object, ...) {
 setMethod("init", "KeplerEnergy", function(object, initState, ...) {
     object@state <- initState
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
-
-    # object@rate  <- object@odeSolver@ode@rate
-    # object@state <- object@odeSolver@ode@state
 
     object@counter <- 0
     object

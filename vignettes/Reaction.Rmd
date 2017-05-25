@@ -13,7 +13,6 @@ vignette: >
 
 ```{r}
 # This code can also be found in the `examples` folder under this name:
-#
 # Reaction.R
 
 # /**
@@ -61,6 +60,8 @@ setMethod("getRate", "Reaction", function(object, state, ...) {
 })
 
 
+
+
 # constructor
 Reaction <- function(initialConditions) {
     .Reaction <- new("Reaction")
@@ -70,7 +71,6 @@ Reaction <- function(initialConditions) {
 
 
 # This code can also be found in the `examples` folder under this name:
-#
 # ReactionApp.R
 #
 # ReactionApp solves an autocatalytic oscillating chemical

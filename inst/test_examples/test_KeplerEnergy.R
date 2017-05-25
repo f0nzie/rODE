@@ -1,4 +1,5 @@
-context("test KeplerVerlet as app")
+library(testthat)
+context("test KeplerEnergy as app")
 
 #
 # Demostration of the use of ODE solver RK45
