@@ -43,12 +43,18 @@ PendulumEulerApp <- function(verbose = FALSE) {
     DTE <- data.table::rbindlist(rowvec)
 
     if (verbose) {
-    print(ggplot(DTE, aes(x = state3, y = state1)) + geom_line(col = "blue"))
-    print(ggplot(DTE, aes(x = state3, y = state2)) + geom_line(col = "red"))
+        cat(sprintf("state1=%12f state2=%12f state3=%12f \n",
+                    pendulum@state[1],
+                    pendulum@state[2], pendulum@state[3]))
+        print(ggplot(DTE, aes(x = state3, y = state1)) + geom_line(col = "blue"))
+        print(ggplot(DTE, aes(x = state3, y = state2)) + geom_line(col = "red"))
     }
 
     # save(DTE, file = "./data/pendulumDTE_1e-2.rda")
-
+    return(list(pendulum@state[1],
+                pendulum@state[2],
+                pendulum@state[3]
+    ))
 }
 
 
