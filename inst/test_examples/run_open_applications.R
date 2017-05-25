@@ -68,6 +68,16 @@ for (app in examples) {
         cat("\t tested")
     }
 
+    if (i == 6) {
+        # KeplerEnergyApp
+        result <- do.call(application, list(FALSE))
+        expect_equal(result,
+                     list(1.200000, -19.739182, 1.200000
+                     ),
+                     tolerance = 1e-5)
+        cat("\t tested")
+    }
+
 
     if (i == 13) {
         # Reaction
