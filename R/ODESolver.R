@@ -1,9 +1,9 @@
 # ODESolver.R
 #
 
-#' ODESolver class
+#' ODESolver virtual class
 #'
-#' A virtual class
+#' A virtual class inherited by AbstractODESolver
 #'
 #' @param object a class object
 #' @param stepSize size of the step

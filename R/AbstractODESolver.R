@@ -81,9 +81,9 @@ setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
 })
 
 
-
-
-#' AbstractODESolver constructor `ODE``
+#' AbstractODESolver constructor `ODE`
+#'
+#' Uses this constructor when ODE object is passed
 #'
 #' @param ode an ODE object
 #' @param ...  additional parameters
