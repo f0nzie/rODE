@@ -3,6 +3,10 @@
 
 #' AbstractODESolver class
 #'
+#' Defines the basic methods for all the ODE solvers.
+#'
+#' Inherits from: ODESolver class
+#'
 #' @param ode an ODE object
 #' @param ... additional parameters
 #'
@@ -21,13 +25,13 @@
 
 
 setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
-    .Object <- init(.Object, 0.1)
+    .Object <- init(.Object, 0.1)                   # default value for stepSize
     return(.Object)
 })
 
 #' @rdname step-method
 setMethod("step", "AbstractODESolver", function(object, ...) {
-    NULL
+    object
 })
 
 
@@ -66,6 +70,7 @@ setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
 #' @importFrom methods new
 #' @export
 setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
+    # use this method when no ODE object is passed
     if (missing(ode)) {
         ode <- new("ODE")
         warning("No ODE supplied. Using an empty one!")
@@ -74,6 +79,9 @@ setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
     odesolver@ode <- ode
     odesolver
 })
+
+
+
 
 #' AbstractODESolver constructor `ODE``
 #'

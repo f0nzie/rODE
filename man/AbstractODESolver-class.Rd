@@ -15,5 +15,8 @@ AbstractODESolver(ode, ...)
 \item{...}{additional parameters}
 }
 \description{
-AbstractODESolver class
+Defines the basic methods for all the ODE solvers.
+}
+\details{
+Inherits from: ODESolver class
 }
