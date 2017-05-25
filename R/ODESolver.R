@@ -29,10 +29,12 @@ setMethod("step", "ODESolver", function(object, ...) {
 #'
 #' @rdname setStepSize-method
 setMethod("setStepSize", "ODESolver", function(object, stepSize, ...) {
+    # set the current value of the step
     object
 })
 
 #' @rdname getStepSize-method
 setMethod("getStepSize", "ODESolver", function(object, ...) {
+    # get the current value of the step
     object@stepSize
 })
