@@ -2,8 +2,7 @@
 #
 # PendulumApp.R
 
-
-library(ggplot2)
+suppressPackageStartupMessages(library(ggplot2))
 
 source(paste(system.file("examples", package = "rODE"),
              "Pendulum.R",
