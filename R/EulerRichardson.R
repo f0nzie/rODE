@@ -32,6 +32,7 @@ setMethod("initialize", "EulerRichardson", function(.Object, ode, ...) {
                 return(.Object)
             })
 
+
 #' @rdname init-method
 #' @importFrom methods callNextMethod
 setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
@@ -41,6 +42,7 @@ setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
     object@midstate <- vector("numeric", object@numEqn)  #    same size as state
     object
 })
+
 
 #' @rdname step-method
 setMethod("step", "EulerRichardson", function(object, ...) {
