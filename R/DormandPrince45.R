@@ -47,6 +47,7 @@ setMethod("initialize", "DormandPrince45", function(.Object, ode, ...) {
     return(.Object)
 })
 
+
 #' @rdname init-method
 setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     # inititalize the solver
@@ -64,6 +65,7 @@ setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     object@ode@state <- state
     object
 })
+
 
 #' @rdname step-method
 setMethod("step", "DormandPrince45", function(object, ...) {
@@ -140,16 +142,19 @@ setMethod("step", "DormandPrince45", function(object, ...) {
 }
 )
 
+
 #' @rdname DormandPrince45-class
 setMethod("enableRuntimeExceptions", "DormandPrince45", function(object, enable) {
     object@enableExceptions <- enable
 })
+
 
 #' @rdname setStepSize-method
 setMethod("setStepSize", "DormandPrince45", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     object
 })
+
 
 #' @rdname getStepSize-method
 setMethod("getStepSize", "DormandPrince45", function(object, ...) {
@@ -176,10 +181,13 @@ setMethod("getTolerance", "DormandPrince45", function(object) {
     return(object@tol)
 })
 
+
 #' @rdname getErrorCode-method
 setMethod("getErrorCode", "DormandPrince45", function(object) {
     return(object@error_code)
 })
+
+
 
 #' DormandPrince45 constructor
 #'

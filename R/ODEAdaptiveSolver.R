@@ -1,3 +1,7 @@
+# ODEAdaptiveSolver.R
+#
+# Base class to be inherited by adaptive solvers such as RK45
+#
 
 #' @include ODESolver.R
 setClass("ODEAdaptiveSolver", slots = c(
