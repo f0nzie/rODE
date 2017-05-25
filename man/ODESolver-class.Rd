@@ -3,12 +3,12 @@
 \docType{class}
 \name{ODESolver-class}
 \alias{ODESolver-class}
-\title{ODESolver class}
+\title{ODESolver virtual class}
 \arguments{
 \item{object}{a class object}
 
 \item{stepSize}{size of the step}
 }
 \description{
-A virtual class
+A virtual class inherited by AbstractODESolver
 }

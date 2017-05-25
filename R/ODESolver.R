@@ -16,21 +16,23 @@ setClass("ODESolver")
 #'
 #' @rdname init-method
 setMethod("init", "ODESolver", function(object, stepSize, ...) {
+    object
 })
 
 
 #' @rdname step-method
 setMethod("step", "ODESolver", function(object, ...) {
-    NULL
+    object
 })
 
 #' Set the size of the step
 #'
 #' @rdname setStepSize-method
 setMethod("setStepSize", "ODESolver", function(object, stepSize, ...) {
+    object
 })
 
 #' @rdname getStepSize-method
 setMethod("getStepSize", "ODESolver", function(object, ...) {
-    NULL
+    object@stepSize
 })
