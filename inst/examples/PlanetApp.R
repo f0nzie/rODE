@@ -3,7 +3,9 @@
 #
 #
 
-source("./inst/examples/Planet.R")
+source(paste(system.file("examples", package = "rODE"),
+             "Planet.R",
+             sep ="/"))
 
 
 PlanetApp <- function(verbose = FALSE) {

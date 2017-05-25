@@ -3,7 +3,8 @@
 #
 #
 
-source("./inst/examples/Kepler.R")
+source(paste(system.file("examples", package = "rODE"),
+             "Kepler.R", sep ="/"))
 
 KeplerApp <- function(verbose = FALSE) {
 

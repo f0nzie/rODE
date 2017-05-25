@@ -6,8 +6,9 @@ library(ggplot2)
 
 # ####################################################  Test Pendulum with Euler
 
-
-source("./inst/examples/PendulumEuler.R")       # Pendulum script with ODE EUler
+source(paste(system.file("examples", package = "rODE"),
+             "PendulumEuler.R",
+             sep ="/"))
 
 PendulumEulerApp <- function(verbose = FALSE) {
 
