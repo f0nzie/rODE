@@ -1,3 +1,7 @@
+# RK45.R
+#
+# Simplified calling class of DormandPrince45
+#
 
 #' RK45 class
 #'

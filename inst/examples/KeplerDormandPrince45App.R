@@ -5,7 +5,9 @@
 #
 #
 
-source("./inst/examples/KeplerDormandPrince45.R")
+source(paste(system.file("examples", package = "rODE"),
+             "KeplerDormandPrince45.R",
+             sep ="/"))
 
 
 KeplerDormandPrince45App <- function(verbose = FALSE) {

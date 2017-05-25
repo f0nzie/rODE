@@ -3,9 +3,11 @@
 #                                                      test Projectile with RK4
 #                                                      originally uses Euler
 
-library(data.table)
+suppressMessages(library(data.table))
 
-source("./inst/examples/Projectile.R")
+source(paste(system.file("examples", package = "rODE"),
+             "Projectile.R",
+             sep ="/"))
 
 ProjectileApp <- function(verbose = FALSE) {
 

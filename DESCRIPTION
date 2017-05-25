@@ -29,7 +29,6 @@ Collate:
     'RK4.R'
     'RK45.R'
     'Verlet.R'
-    'hello.R'
     'rODE-package.r'
     'utils.R'
 VignetteBuilder: knitr

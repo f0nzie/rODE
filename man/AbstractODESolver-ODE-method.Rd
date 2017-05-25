@@ -3,7 +3,7 @@
 \docType{methods}
 \name{AbstractODESolver,ODE-method}
 \alias{AbstractODESolver,ODE-method}
-\title{AbstractODESolver constructor `ODE``}
+\title{AbstractODESolver constructor `ODE`}
 \usage{
 \S4method{AbstractODESolver}{ODE}(ode, ...)
 }
@@ -13,5 +13,5 @@
 \item{...}{additional parameters}
 }
 \description{
-AbstractODESolver constructor `ODE``
+Uses this constructor when ODE object is passed
 }

@@ -19,11 +19,13 @@
             contains = c("AbstractODESolver")
         )
 
+
 setMethod("initialize", "RK4", function(.Object, ode, ...) {
     # initialize the class
     .Object@ode <- ode
     return(.Object)
 })
+
 
 #' @rdname init-method
 #' @importFrom methods callNextMethod

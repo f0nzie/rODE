@@ -7,6 +7,7 @@
 #' @export
 setGeneric("getRateCounts", function(object, ...) standardGeneric("getRateCounts"))
 
+
 # Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
 #' @rdname AbstractODESolver-class
 #' @export

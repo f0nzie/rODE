@@ -18,5 +18,13 @@ showMethods2 <- function(theClass) {
 
     # vector comparison of methods
     # expect_equal(fvec, c("getStepSize", "init", "setStepSize", "step"))
+}
 
+#' Run test of all the examples
+#'
+#' @export
+run_test_examples <- function() {
+    test_ex_dir  <- system.file("test_examples", package="rODE")
+    examples_dir <- system.file("examples", package = "rODE")
+    source(paste(test_ex_dir, "run_open_applications.R", sep = "/"))
 }

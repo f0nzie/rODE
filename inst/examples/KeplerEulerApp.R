@@ -4,8 +4,9 @@
 #
 #
 
-
-source("./inst/examples/KeplerEuler.R")
+source(paste(system.file("examples", package = "rODE"),
+             "KeplerEuler.R",
+             sep ="/"))
 
 KeplerEulerApp <- function(verbose = FALSE) {
 

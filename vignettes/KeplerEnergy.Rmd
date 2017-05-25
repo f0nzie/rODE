@@ -118,9 +118,7 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     initialEnergy <- getEnergy(particle)
     i <- 0
     while (getTime(particle) <= 1.20) {
-        # odeSolver <- step(odeSolver)
         particle <- doStep(particle)
-        # odeSolver <- particle@odeSolver
         energy <- getEnergy(particle)
         if (verbose)
             cat(sprintf("time=%12f energy=%12f state[5]=%12f \n",

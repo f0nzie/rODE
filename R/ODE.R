@@ -1,10 +1,14 @@
 # ODE.R
 #
+# ODE base class
+#
+# Inherited by: ODE solver objects
+
 
 #' @include ode_generics.R
 setClass("ODE", slots = c(
-    state = "numeric",
-    rate  = "numeric"
+    state = "numeric",              # variables
+    rate  = "numeric"               # derivatives
 ))
 
 #' @rdname getState-method

@@ -4,10 +4,10 @@
 #
 #
 context("ComparisonRK45App.R")
+
 source(paste(system.file("examples", package = "rODE"),
              "ODETest.R", sep ="/"))
 
-# source("./inst/examples/ODETest.R")           # hold the step and rate
 
 ComparisonRK45App <- function(verbose = FALSE) {
     ode <- new("ODETest")
