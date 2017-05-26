@@ -5,8 +5,8 @@
 #
 context("ComparisonRK45App.R")
 
-source(paste(system.file("examples", package = "rODE"),
-             "ODETest.R", sep ="/"))
+# source(paste(system.file("examples", package = "rODE"),
+#              "ODETest.R", sep ="/"))
 
 
 ComparisonRK45App <- function(verbose = FALSE) {
