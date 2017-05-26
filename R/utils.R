@@ -28,3 +28,15 @@ run_test_examples <- function() {
     examples_dir <- system.file("examples", package = "rODE")
     source(paste(test_ex_dir, "run_open_applications.R", sep = "/"))
 }
+
+
+#' Source the R script
+#'
+#' @param aClassFile a file containing one or more classes
+#' @param aFolder    a folder where examples are located
+#' @export
+importFromExamples <- function(aClassFile, aFolder = "examples") {
+    source(paste(system.file(aFolder, package = "rODE"),
+                 aClassFile,
+                 sep ="/"), echo = FALSE)
+}
