@@ -2,9 +2,7 @@
 # FallingParticleApp.R
 #
 
-
-source(paste(system.file("examples", package = "rODE"),
-             "FallingParticleODE.R", sep ="/"))
+importFromExamples("FallingParticleODE.R")
 
 
 FallingParticleODEApp <- function(verbose = FALSE) {
@@ -32,3 +30,6 @@ FallingParticleODEApp <- function(verbose = FALSE) {
            ball@state[2], ball@rate[2],
            ball@state[3], ball@rate[3]))
 }
+
+
+FallingParticleODEApp()
