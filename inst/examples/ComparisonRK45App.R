@@ -5,6 +5,8 @@
 # Compares the solution by the RK45 ODE solver versus the analytical solution
 #
 
+importFromExamples("ODETest.R")
+
  ComparisonRK45App <- function(verbose = FALSE) {
 
      ode <- new("ODETest")                     # create an `ODETest` object

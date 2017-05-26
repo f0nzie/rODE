@@ -38,5 +38,4 @@ Collate:
     'Verlet.R'
     'rODE-package.r'
     'utils.R'
-    'xP-ODETest.R'
 VignetteBuilder: knitr

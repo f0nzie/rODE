@@ -6,6 +6,8 @@
 # Also plots the solver solution versus the analytical solution at a
 # tolerance of 1e-6
 
+importFromExamples("ODETest.R")
+
 ComparisonRK45ODEApp <- function(verbose = FALSE) {
 
     ode <- new("ODETest")                         # new ODE instance
