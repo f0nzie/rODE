@@ -1,7 +1,7 @@
 # ComparisonRK45ODEApp.R
 #
 # Updates ODE state instead of using internal state in the ODE solver
-# File ComparisonRK45App.R does npt makde ode abstraction
+# File ComparisonRK45App.R does not make ode abstraction
 #
 
 # source(paste(system.file("examples", package = "rODE"),
