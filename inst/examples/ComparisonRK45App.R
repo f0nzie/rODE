@@ -2,8 +2,6 @@
 #
 # Compares the solution by the RK45 ODE solver versus the analytical solution
 #
-#
-context("ComparisonRK45App.R")
 
 # source(paste(system.file("examples", package = "rODE"),
 #              "ODETest.R", sep ="/"))
