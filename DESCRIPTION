@@ -31,10 +31,10 @@ Collate:
     'DormandPrince45.R'
     'Euler.R'
     'EulerRichardson.R'
-    'ODETest.R'
     'RK4.R'
     'RK45.R'
     'Verlet.R'
     'rODE-package.r'
     'utils.R'
+    'xP-ODETest.R'
 VignetteBuilder: knitr

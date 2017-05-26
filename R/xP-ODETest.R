@@ -1,5 +1,5 @@
 #
-# ODETest.R
+# xP-ODETest.R
 # Base class for examples:
 #                         ComparisonRK45App.R
 #                         ComparisonRK45ODEApp.R
