@@ -25,7 +25,7 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
         ode <- ode_solver@ode
         state <- getState(ode)
         if (verbose)
-        cat(sprintf("time=%10f xl=%14e error=%14e n=%5d \n",
+            cat(sprintf("time=%10f xl=%14e error=%14e n=%5d \n",
                     time,
                     state[1],
                     (state[1] - getExactSolution(ode_solver@ode, time)),
