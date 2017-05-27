@@ -1,8 +1,8 @@
 # SHO.R
 #
 
-setClass("SHO", slots = c(
-    k      = "numeric",
+.SHO <- setClass("SHO", slots = c(
+    k        = "numeric",
     state    = "numeric",
     amp      = "numeric",
     phase    = "numeric",
@@ -17,59 +17,67 @@ setClass("SHO", slots = c(
     contains = c("ODE")
     )
 
-setMethod("initialize", "Pendulum", function(.Object) {
-    .Object@odeSolver <- EulerRichardson(.Object)
-    return(.Object)
-})
-
-setMethod("setStepSize", signature("Pendulum"), function(object, dt, ...) {
-    # use explicit parameter declaration
-    # setStepSize generic may use two different step parameters: stepSize and dt
-    object@odeSolver <- setStepSize(object@odeSolver, dt)
-    object
-})
+# setMethod("initialize", "SHO", function(.Object) {
+#     return(.Object)
+# })
 
 
-setMethod("step", "Pendulum", function(object) {
-    object@odeSolver <- step(object@odeSolver)
-    object@rate  <- object@odeSolver@ode@rate
-    object@state <- object@odeSolver@ode@state
-    object
-})
-
-
-setMethod("setState", signature("Pendulum"), function(object, theta, thetaDot, ...) {
-    object@state[1] <- theta     # angle
-    object@state[2] <- thetaDot  # derivative of angle
-    #                              state[3] is time
-    object@odeSolver@ode@state <- object@state
-    object
-})
-
-
-setMethod("getState", "Pendulum", function(object) {
+setMethod("getState", "SHO", function(object) {
     object@state
 })
 
-
-setMethod("getRate", "Pendulum", function(object, state, ...) {
-    object@rate[1] <- state[2]     # rate of change of angle
-    object@rate[2] <- -object@omega0Squared * sin(state[1])  # rate of change of dtheta
+setMethod("getRate", "SHO", function(object, state, ...) {
+    object@rate[1] <- state[2]     # rate of change
+    object@rate[2] <- -object@k * state[1]
     object@rate[3] <- 1            # rate of change of time, dt/dt
-
     object@rate
+    # count++
 })
 
+setGeneric("getAnalyticX", function(object, ...) standardGeneric("getAnalyticX"))
+setMethod("getAnalyticX", "SHO", function(object, ...) {
+    object@amp * sin(object@omega * object@state[3] + object@phase)
+})
+
+setGeneric("getPositionError", function(object, ...) standardGeneric("getPositionError"))
+setMethod("getPositionError", "SHO", function(object, ...) {
+    object@state[1] - object@sin(object@omega * object@state[3] * object@phase)
+})
+
+setGeneric("getEnergyError", function(object, ...) standardGeneric("getEnergyError"))
+setMethod("getEnergyError", "SHO", function(object, ...) {
+    0.5 * (object@k * object@state[1] * object@state[1] +
+               object@state[2] * object@state[2]) - object@energy
+})
 
 # constructor
-Pendulum <- function()  new("Pendulum")
-# constructor
 SHO <- function(x, v, k) {
-    sho <- new("SHO")
+    sho <- .SHO()
+    sho@k <- k
     sho@state[1] = x
     sho@state[2] = v
-    sho@amp <- sqrt(x*x + v*v /k)
-    sho@phase <- a
-    kepler@state[5] = 0
-    return(kepler)
+    sho@amp <- sqrt(x*x + v*v / k)
+    sho@phase <- atan2(x, v/sqrt(k))
+    sho@omega <- sqrt(k)
+    sho@energy <- 0.5 * (k *x*x + v*v)
+    return(sho)
 }
+
+
+# SHOApp.R
+SHOApp <- function() {
+    x <- 1.0; v <- 0; k <- 1.0; dt <- 0.1; tolerance <- 1e-3
+
+    sho    <- SHO(x, v, k)
+    solver <- DormandPrince45(sho)
+    solver <- setTolerance(solver, tolerance)
+    solver <- init(solver, dt)
+
+    while (TRUE) {
+        solver <- step(solver)
+        sho    <- solver@ode
+        cat(sprintf("%12f %12f %12f \n", sho@state[1], sho@state[2], sho@state[3]))
+    }
+}
+
+SHOApp()
