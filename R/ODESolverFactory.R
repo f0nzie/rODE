@@ -1,0 +1,43 @@
+
+###' include ODE.R Euler.R
+###'
+
+#' ODESolverFactory helps to create a solver given only the name as string
+#'
+#' @rdname ODESolverFactory-class
+#' @export
+ODESolverFactory <- setClass("ODESolverFactory", slots = c(
+    # A factory class that creates an ODESolver using a name
+    solverName = "character"))
+
+#' @rdname createODESolver-method
+setGeneric("createODESolver", function(object, ...)
+    standardGeneric("createODESolver"))
+
+#' @rdname createODESolver-method
+setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverName, ...) {
+    object@solverName <- trimws(tolower(solverName))
+    cat(object@solverName)
+    if (object@solverName == "rk4")
+        return(RK4(ode))
+    else if (object@solverName == "dormandprince45")
+        return(DormandPrince45(ode))
+    else if (object@solverName == "RK45")
+        return(DormandPrince45(ode))
+    else if (object@solverName == "euler")
+        return(Euler(ode))
+    else if (object@solverName == "verlet")
+        return(Verlet(ode))
+    else
+        return(NULL)
+})
+
+
+factory <- ODESolverFactory()
+
+
+# Examples
+# ode <- new("ODE")
+# factory <- new("ODESolverFactory")
+# createODESolver(factory, ode, "Verlet")
+# createODESolver(ode, "Euler")

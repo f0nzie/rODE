@@ -33,6 +33,7 @@ Collate:
     'DormandPrince45.R'
     'Euler.R'
     'EulerRichardson.R'
+    'ODESolverFactory.R'
     'RK4.R'
     'RK45.R'
     'Verlet.R'
