@@ -3,7 +3,6 @@
 #  Kepler.R
 #
 
-
 setClass("Kepler", slots = c(
     GM = "numeric"
     ),
@@ -16,12 +15,10 @@ setMethod("initialize", "Kepler", function(.Object, ...) {
     return(.Object)
 })
 
-
 setMethod("getState", "Kepler", function(object, ...) {
     # Gets the state variables.
     return(object@state)
 })
-
 
 setMethod("getRate", "Kepler", function(object, state, ...) {
     # Computes the rate using the given state.
@@ -36,8 +33,6 @@ setMethod("getRate", "Kepler", function(object, state, ...) {
     object@rate
 
 })
-
-
 
 # constructor
 Kepler <- function(r, v) {

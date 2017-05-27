@@ -81,6 +81,7 @@ setMethod("getStepSize", "Euler", function(object, ...) {
 #' @example ./inst/examples/FallingParticleODEApp.R
 #' @example ./inst/examples/KeplerEuler.R
 #' @example ./inst/examples/PlanetApp.R
+#' @example ./inst/examples/RigidBodyNXFApp.R
 setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
     .euler <- .Euler(ode = ode)
     .euler <- init(.euler, .euler@stepSize)

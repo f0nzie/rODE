@@ -26,10 +26,6 @@ KeplerApp <- function(verbose = FALSE) {
                                p1anet2.v = planet@state[4])
         solver <- step(solver)
         planet <- solver@ode
-        if (verbose)
-            cat(sprintf("state[1]=%10f, state[2]= %10f,  state[3]=%10f, state[5]=%10f\n",
-                    planet@state[1],
-                    planet@state[2], planet@state[3], planet@state[5]))
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowVector)

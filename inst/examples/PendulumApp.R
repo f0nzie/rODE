@@ -16,7 +16,6 @@ PendulumApp <- function(verbose = FALSE) {
     pendulum <- setState(pendulum, theta, thetaDot)
     pendulum <- setStepSize(pendulum, dt = dt) # using stepSize in RK4
     pendulum@odeSolver <- setStepSize(pendulum@odeSolver, dt) # set new step size
-
     rowvec <- vector("list")
     i <- 1
     while (pendulum@state[3] <= 40)    {
@@ -29,6 +28,6 @@ PendulumApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowvec)
     return(DT)
 }
-
+# show solution
 solution <- PendulumApp()
 plot(solution)

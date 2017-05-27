@@ -103,6 +103,7 @@ setMethod("step", "Verlet", function(object, ...) {
 #'
 #' @export
 #' @example ./inst/examples/KeplerEnergyApp.R
+#' @example ./inst/examples/Logistic.R
 setMethod("Verlet", signature(ode = "ODE"), function(ode, ...) {
     .verlet <- .Verlet(ode = ode)
     .verlet <- init(.verlet, .verlet@stepSize)

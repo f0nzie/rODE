@@ -3,7 +3,6 @@
 
 importFromExamples("FallingParticleODE.R")      # source the class
 
-
 FallingParticleODEApp <- function(verbose = FALSE) {
     # initial values
     initial_y <- 10
@@ -26,7 +25,6 @@ FallingParticleODEApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowVector)
     return(DT)
 }
-
-
+# show solution
 solution <- FallingParticleODEApp()
 plot(solution)

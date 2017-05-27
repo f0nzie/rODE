@@ -1,9 +1,7 @@
-#
 # ODETest.R
 # Base class for examples:
 #                         ComparisonRK45App.R
 #                         ComparisonRK45ODEApp.R
-#
 
 #' ODETest as an example of ODE class inheritance
 #'
@@ -38,13 +36,10 @@ setMethod("getState", "ODETest", function(object, ...) {
 
 #' @rdname getRate-method
 setMethod("getRate", "ODETest", function(object, state, ...) {
-
     object@rate[1] <- - state[1]
     object@rate[2] <-  1            # rate of change of time, dt/dt
-
     # accumulate how many the rate has been called to calculate
-    object@stack$rateCounts <- object@stack$rateCounts + 1
-
+    object@stack$rateCounts <- object@stack$rateCounts + 1          # use stack
     object@state <- state
     object@rate
 })

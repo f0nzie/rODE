@@ -1,8 +1,8 @@
+# ++++++++++++++++++++++++++++++++++++++++++ example: KeplerDormandPrince45App.R
 # Demostration of the use of ODE solver RK45 for a particle subjected to
 # a inverse-law force. The difference with the example KeplerApp is we are
 # seeing the effect in thex and y axis on the particle.
 # The original routine used the Verlet ODE solver
-# KeplerDormandPrince45App.R
 
 importFromExamples("KeplerDormandPrince45.R")
 

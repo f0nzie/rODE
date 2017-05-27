@@ -1,5 +1,4 @@
-# KeplerVerlet.R
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  base class: KeplerVerlet.R
 
 setClass("Kepler", slots = c(
     GM = "numeric",
@@ -38,7 +37,6 @@ setMethod("getEnergy", "Kepler", function(object, ...) {
 setMethod("init", "Kepler", function(object, initState, ...) {
     object@state <- initState
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
-
     object@counter <- 0
     object
 })
