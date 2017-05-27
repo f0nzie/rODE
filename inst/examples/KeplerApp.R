@@ -1,46 +1,44 @@
-#
-# KeplerApp.R
-#
-#
+#  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ example KeplerApp.R
+#  KeplerApp solves an inverse-square law model (Kepler model) using an adaptive
+#  stepsize algorithm.
+#  Application showing two planet orbiting
+#  File in examples: KeplerApp.R
 
-source(paste(system.file("examples", package = "rODE"),
-             "Kepler.R", sep ="/"))
+importFromExamples("Kepler.R") # source the class Kepler
 
 KeplerApp <- function(verbose = FALSE) {
 
     # set the orbit into a predefined state.
-    r <- c(2, 0)
-    v <- c(0, 0.25)
+    r <- c(2, 0)                                   # orbit radius
+    v <- c(0, 0.25)                                # velocity
     dt <- 0.1
 
     planet <- Kepler(r, v)
     solver <- RK45(planet)
 
-    # solver <- step(solver)
-
+    rowVector <- vector("list")
+    i <- 1
     while (planet@state[5] <= 10) {
+        rowVector[[i]] <- list(t  = planet@state[5],
+                               planet1.r = planet@state[1],
+                               p1anet1.v = planet@state[2],
+                               planet2.r = planet@state[3],
+                               p1anet2.v = planet@state[4])
         solver <- step(solver)
         planet <- solver@ode
         if (verbose)
             cat(sprintf("state[1]=%10f, state[2]= %10f,  state[3]=%10f, state[5]=%10f\n",
                     planet@state[1],
                     planet@state[2], planet@state[3], planet@state[5]))
+        i <-  i + 1
     }
+    DT <- data.table::rbindlist(rowVector)
 
-    return(list(planet@state[1], planet@state[2], planet@state[3], planet@state[5]))
+    return(DT)
 }
 
 
-KeplerApp()
+solution <- KeplerApp()
+plot(solution)
 
 
-
-
-
-
-# at t=100, dt=0.1,  c(2.131958,     1.105316,   100.000000)
-# Java: state[0] = 0.444912, state[1]= -1.436203, state[2]= 0.459081, state[4]= 10.033245
-#       currentStep=    0.061646
-
-# R:    state[1] = 0.444912, state[2]= -1.436203, state[3]= 0.459081, state[5]= 10.033245
-#       currentStep= 0.06164632

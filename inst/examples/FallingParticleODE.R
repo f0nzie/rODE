@@ -1,6 +1,5 @@
-######################
-# FallingParticleODE.R
-#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ base class: FallingParticleODE.R
+# Class definition for application FallingParticleODEApp.R
 
 setClass("FallingParticleODE", slots = c(
         g = "numeric"

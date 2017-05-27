@@ -8,7 +8,7 @@
 #'
 #' @rdname RK45-class
 #' @example ./inst/examples/ComparisonRK45App.R
-#'
+#' @example ./inst/examples/KeplerApp.R
 setClass("RK45",
     contains = c("DormandPrince45")
 )

@@ -1,10 +1,9 @@
-# Example file: ComparisonRK45ODEApp.R
-# ODE Solver:   Runge-Kutta 45
-# Class:        RK45
-#
+# +++++++++++++++++++++++++++++++++++++++++ Example:      ComparisonRK45ODEApp.R
 # Updates the ODE state instead of using the internal state in the ODE solver
 # Also plots the solver solution versus the analytical solution at a
 # tolerance of 1e-6
+# ODE Solver:   Runge-Kutta 45
+# Class:        RK45
 
 importFromExamples("ODETest.R")
 
@@ -48,26 +47,27 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
     return(DT)
 }
 
-DT <- ComparisonRK45ODEApp()
+solution <- ComparisonRK45ODEApp()
 
 
 library(ggplot2)
 library(dplyr)
 library(tidyr)
 
-DT.multi <- DT %>%
+solution.multi <- solution %>%
     select(t, ODE, exact)
 
-plot(DT.multi)
+plot(solution.multi)
 
-DT.2x1 <- DT.multi %>%
+solution.2x1 <- solution.multi %>%
     gather(key, value, -t)
 
 t
-g <- ggplot(DT.2x1, mapping = aes(x = t, y = value, color = key))
+g <- ggplot(solution.2x1, mapping = aes(x = t, y = value, color = key))
 g <-  g + geom_line(size = 1) + labs(title = "ODE vs Exact solution",
                                      subtitle = "tolerance = 1E-6")
 print(g)
 
-# This example can also be found under the package folder ./examples
-# ComparisonRK45ODEApp.R
+
+
+

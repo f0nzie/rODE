@@ -1,57 +1,34 @@
-# #############
-#
-# PendulumApp.R
+# ++++++++++++++++++++++++++++++++++++++++++++++++++      example: PendulumApp.R
+# Simulation of a pendulum using the EulerRichardson ODE solver
 
 suppressPackageStartupMessages(library(ggplot2))
 
-source(paste(system.file("examples", package = "rODE"),
-             "Pendulum.R",
-             sep ="/"))
+importFromExamples("Pendulum.R")      # source the class
 
 PendulumApp <- function(verbose = FALSE) {
-    ode <- new("ODE")
-    pendulum <- Pendulum()
-
-    dt <- 0.1
+    # initial values
     theta <- 0.2
     thetaDot <- 0
-
+    dt <- 0.1
+    ode <- new("ODE")
+    pendulum <- Pendulum()
     pendulum@state[3] <- 0      # set time to zero, t = 0
-
     pendulum <- setState(pendulum, theta, thetaDot)
     pendulum <- setStepSize(pendulum, dt = dt) # using stepSize in RK4
-
     pendulum@odeSolver <- setStepSize(pendulum@odeSolver, dt) # set new step size
 
     rowvec <- vector("list")
     i <- 1
-    while (pendulum@state[3] <= 1000)    {
-        rowvec[[i]] <- list(state1 = pendulum@state[1], # angle
-                            state2 = pendulum@state[2],      # derivative of the angle
-                            state3 = pendulum@state[3])       # time
-        if (verbose)
-            cat(sprintf("state1=%12f state2=%12f state3=%12f \n",
-                        pendulum@state[1],
-                    pendulum@state[2], pendulum@state[3]))
-        i <- i + 1
+    while (pendulum@state[3] <= 40)    {
+        rowvec[[i]] <- list(t  = pendulum@state[3],    # time
+                            theta = pendulum@state[1], # angle
+                            thetadot = pendulum@state[2]) # derivative of angle
         pendulum <- step(pendulum)
+        i <- i + 1
     }
-    DTRK4 <- data.table::rbindlist(rowvec)
-
-    if (verbose) {
-        cat(sprintf("state1=%12f state2=%12f state3=%12f \n",
-                    pendulum@state[1],
-                    pendulum@state[2], pendulum@state[3]))
-        print(ggplot(DTRK4, aes(x = state3, y = state1)) + geom_line(col = "blue"))
-        print(ggplot(DTRK4, aes(x = state3, y = state2)) + geom_line(col = "red"))
-    }
-    # save(DTRK4, file = "./data/pendulumRK4_1e-3.rda")
-
-    return(list(pendulum@state[1],
-                pendulum@state[2],
-                pendulum@state[3]
-    ))
+    DT <- data.table::rbindlist(rowvec)
+    return(DT)
 }
 
-
-PendulumApp()
+solution <- PendulumApp()
+plot(solution)

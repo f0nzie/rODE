@@ -65,6 +65,7 @@ setGeneric("getState", function(object, ...) standardGeneric("getState"))
 #'
 #' @rdname step-method
 #' @export
+#' @example ./inst/examples/ReactionApp.R
 setGeneric("step", function(object, ...) standardGeneric("step"))
 
 
@@ -87,6 +88,7 @@ setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 #'
 #' @rdname doStep-method
 #' @export
+#' @example ./inst/examples/PlanetApp.R
 setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 # setGeneric("setState", function(object, x, vx, y, vy, ...) standardGeneric("setState"))
 # setGeneric("setState", function(object, theta, thetaDot, ...) standardGeneric("setState"))
@@ -101,6 +103,7 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #'
 #' @rdname init-method
 #' @export
+#' @example ./inst/examples/PlanetApp.R
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
 
@@ -127,6 +130,7 @@ setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 #' @param ... additional parameters
 #'
 #' @export
+#' @example ./inst/examples/ProjectileApp.R
 setGeneric("setState", function(object, ...) standardGeneric("setState"))
 
 

@@ -1,57 +1,36 @@
-#
-# ProjectileApp.R
+# +++++++++++++++++++++++++++++++++++++++++++++++++ application: ProjectileApp.R
 #                                                      test Projectile with RK4
 #                                                      originally uses Euler
 
-suppressMessages(library(data.table))
+# suppressMessages(library(data.table))
 
-source(paste(system.file("examples", package = "rODE"),
-             "Projectile.R",
-             sep ="/"))
+importFromExamples("Projectile.R")      # source the class
 
 ProjectileApp <- function(verbose = FALSE) {
-
+    # initial values
     x <- 0; vx <- 10; y <- 0; vy <- 10
-    state <- c(x, vx, y, vy, 0)
+    state <- c(x, vx, y, vy, 0)                        # state vector
     dt <- 0.01
 
     projectile <- Projectile()
-
     projectile <- setState(projectile, x, vx, y, vy)
     projectile@odeSolver <- init(projectile@odeSolver, 0.123)
     projectile@odeSolver <- setStepSize(projectile@odeSolver, dt)
-
     rowV <- vector("list")
     i <- 1
     while (projectile@state[3] >= 0)    {
-        # state[5]:           state[1]: x;  # state[3]: y
-        if (verbose)
-            cat(sprintf("%12f %12f %12f %12f %12f \n",
-                        projectile@state[5],
-                        projectile@state[1], projectile@state[2],
-                        projectile@state[3], projectile@state[4]))
-        rowV[[i]] <- list(state1 = projectile@state[1],
-                          state3 = projectile@state[3],
-                          state5 = projectile@state[5])
+        rowV[[i]] <- list(t = projectile@state[5],
+                          x  = projectile@state[1],
+                          vx = projectile@state[2],
+                          y  = projectile@state[3],     # vertical position
+                          vy = projectile@state[4])
         projectile <- step(projectile)
         i <- i + 1
     }
-
-    datatable <- data.table::rbindlist(rowV)
-    datatable
-
-    if (verbose) {
-        cat(sprintf("%12f %12f %12f %12f %12f \n", projectile@state[5],
-                    projectile@state[1], projectile@state[2],
-                    projectile@state[3], projectile@state[4]))
-        print(qplot(state1, state3, data = datatable))
-        print(qplot(state1, state5, data = datatable))
-    }
-
-    return(list(projectile@state[5],
-                projectile@state[1], projectile@state[2],
-                projectile@state[3], projectile@state[4]))
+    DT <- data.table::rbindlist(rowV)
+    return(DT)
 }
 
 
-ProjectileApp()
+solution <- ProjectileApp()
+plot(solution)

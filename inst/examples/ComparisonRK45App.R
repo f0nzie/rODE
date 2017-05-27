@@ -1,9 +1,7 @@
+# Compares the solution by the RK45 ODE solver versus the analytical solution
 # Example file: ComparisonRK45App.R
 # ODE Solver:   Runge-Kutta 45
 # Class:        RK45
-#
-# Compares the solution by the RK45 ODE solver versus the analytical solution
-#
 
 importFromExamples("ODETest.R")
 
@@ -45,7 +43,5 @@ importFromExamples("ODETest.R")
      return(DT)
  }
 
- ComparisonRK45App()                          # run the example
-
- # This example can also be found in ./examples/ComparisonRK45App.R
- # The class ODETest can be found in ./R/xP-ODETest.R
+solution <- ComparisonRK45App()                          # run the example
+plot(solution)

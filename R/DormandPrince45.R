@@ -8,6 +8,7 @@
 #' @rdname DormandPrince45-class
 #'
 #' @include ODEAdaptiveSolver.R ODE.R
+#' @example ./inst/examples/KeplerDormandPrince45.R
 setClass("DormandPrince45", slots = c(
     error_code       = "numeric",
     a                = "matrix",
@@ -198,6 +199,7 @@ setMethod("getErrorCode", "DormandPrince45", function(object) {
 #' @param .ode an ODE object
 #' @importFrom methods new
 #' @export
+#' @example ./inst/examples/KeplerDormandPrince45.R
 DormandPrince45 <- function(.ode) {
     dormandPrince45 <- new("DormandPrince45", .ode)
     dormandPrince45 <- init(dormandPrince45, dormandPrince45@stepSize)

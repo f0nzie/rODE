@@ -1,5 +1,4 @@
-#' KeplerVerlet.R
-#'
+# KeplerVerlet.R
 
 
 setClass("Kepler", slots = c(
@@ -11,7 +10,7 @@ setClass("Kepler", slots = c(
 )
 
 setMethod("initialize", "Kepler", function(.Object, ...) {
-    .Object@GM <- 4 * pi * pi                # gravitation constant times combined mass
+    .Object@GM <- 4 * pi * pi         # gravitation constant times combined mass
     .Object@state <- vector("numeric", 5)  # x, vx, y, vy, t
     .Object@odeSolver <- DormandPrince45(.Object)
     .Object@counter <- 0
@@ -19,13 +18,8 @@ setMethod("initialize", "Kepler", function(.Object, ...) {
 })
 
 setMethod("doStep", "Kepler", function(object, ...) {
-    # cat("state@doStep=", object@state, "\n")
     object@odeSolver <- step(object@odeSolver)
-
     object@state <- object@odeSolver@ode@state
-
-    # object@rate <- object@odeSolver@ode@rate
-    # cat("\t", object@odeSolver@ode@state)
     object
 })
 
@@ -45,9 +39,6 @@ setMethod("init", "Kepler", function(object, initState, ...) {
     object@state <- initState
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
 
-    # object@rate  <- object@odeSolver@ode@rate
-    # object@state <- object@odeSolver@ode@state
-
     object@counter <- 0
     object
 })
@@ -62,8 +53,6 @@ setMethod("getRate", "Kepler", function(object, state, ...) {
     object@rate[4] <- (- object@GM * state[3]) / r3
     object@rate[5] <- 1   # time derivative
 
-    # object@state <- object@odeSolver@ode@state <- state
-    # object@state <- state
     object@counter <- object@counter + 1
     object@rate
 
