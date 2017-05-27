@@ -1,9 +1,5 @@
-####################
-# Projectile.R
-#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  base class: Projectile.R
 # Projectile class to be solved with Euler method
-#
-######################
 
 
 setClass("Projectile", slots = c(
@@ -31,10 +27,8 @@ setMethod("setStepSize", "Projectile", function(object, stepSize, ...) {
 
 setMethod("step", "Projectile", function(object) {
     object@odeSolver <- step(object@odeSolver)
-
     object@rate  <- object@odeSolver@ode@rate
     object@state <- object@odeSolver@ode@state
-
     object
 })
 
@@ -45,7 +39,6 @@ setMethod("setState", signature("Projectile"), function(object, x, vx, y, vy, ..
     object@state[3] <- y
     object@state[4] <- vy
     object@state[5] <- 0     # t + dt
-
     object@odeSolver@ode@state <- object@state
     object
 })
@@ -57,7 +50,7 @@ setMethod("getState", "Projectile", function(object) {
 
 
 setMethod("getRate", "Projectile", function(object, state, ...) {
-    object@rate[1] <- state[2]     # rate of change of x                                          # diff 11
+    object@rate[1] <- state[2]     # rate of change of x
     object@rate[2] <- 0            # rate of change of vx
     object@rate[3] <- state[4]     # rate of change of y
     object@rate[4] <- - object@g   # rate of change of vy

@@ -98,6 +98,7 @@ setMethod("step", "RK4", function(object, ...) {
 #'
 #' @importFrom methods new
 #' @export
+#' @example ./inst/examples/ReactionApp.R
 setMethod("RK4", signature(ode = "ODE"), function(ode, ...) {
     # constructor for RK4 ODE solver
     .rk4 <- .RK4(ode = ode)

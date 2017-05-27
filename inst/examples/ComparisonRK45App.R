@@ -1,41 +1,35 @@
-# ComparisonRK45App.R
-#
+# ++++++++++++++++++++++++++++++++++++++++++++++++  example: ComparisonRK45App.R
 # Compares the solution by the RK45 ODE solver versus the analytical solution
-#
-#
-context("ComparisonRK45App.R")
+# Example file: ComparisonRK45App.R
+# ODE Solver:   Runge-Kutta 45
+# Class:        RK45
 
-source(paste(system.file("examples", package = "rODE"),
-             "ODETest.R", sep ="/"))
+importFromExamples("ODETest.R")
 
-
-ComparisonRK45App <- function(verbose = FALSE) {
-    ode <- new("ODETest")
-
-    ode_solver <- RK45(ode)
-
-    ode_solver <- setStepSize(ode_solver, 1)
-    ode_solver <- setTolerance(ode_solver, 1e-8)
-
-    time <-  0
-
-    while (time < 50) {
-        ode_solver <- step(ode_solver)
-        stepSize <-  ode_solver@stepSize     # update the step size
-        time <- time + stepSize
-        state <- getState(ode_solver@ode)
-        if (verbose)
-            cat(sprintf("time=%10f xl=%14e error=%14e n=%5d \n", time, state[1],
-                    (state[1] - getExactSolution(ode_solver@ode, time)),
-                    getRateCounts(ode)))
-    }
-    if (verbose)
-        cat("rate evaluated #", getRateCounts(ode))
-
-    return(list(time , state[1],
-                state[1] - getExactSolution(ode_solver@ode, time),
-           getRateCounts(ode)
-           ))
-}
-
-ComparisonRK45App()
+ ComparisonRK45App <- function(verbose = FALSE) {
+     ode <- new("ODETest")                     # create an `ODETest` object
+     ode_solver <- RK45(ode)                   # select the ODE solver
+     ode_solver <- setStepSize(ode_solver, 1)      # set the step
+     ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+     time <-  0
+     rowVector <- vector("list")
+     i <- 1
+     while (time < 50) {
+         rowVector[[i]] <- list(t  = ode_solver@ode@state[2],
+                                s1 = getState(ode_solver@ode)[1],
+                                s2 = getState(ode_solver@ode)[2],
+                                xs = getExactSolution(ode_solver@ode, time),
+                                rc = getRateCounts(ode),
+                                time = time)
+         ode_solver <- step(ode_solver)       # advance one step
+         stepSize <-  ode_solver@stepSize     # update the step size
+         time <- time + stepSize
+         state <- getState(ode_solver@ode)    # get the `state` vector
+         i <- i + 1
+     }
+     DT <- data.table::rbindlist(rowVector)    # a data table with the results
+     return(DT)
+ }
+# show solution
+solution <- ComparisonRK45App()                          # run the example
+plot(solution)

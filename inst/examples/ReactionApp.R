@@ -1,43 +1,31 @@
-#
-# ReactionApp.R
-#
+# +++++++++++++++++++++++++++++++++++++++++++++++++++ application: ReactionApp.R
 # ReactionApp solves an autocatalytic oscillating chemical
 # reaction (Brusselator model) using
-# a fouth-order Runge-Kutta algorithm.
+# a fourth-order Runge-Kutta algorithm.
 
-source(paste(system.file("examples", package = "rODE"),
-             "Reaction.R",
-             sep ="/"))
+importFromExamples("Reaction.R")      # source the class
 
 ReactionApp <- function(verbose = FALSE) {
     X <- 1; Y <- 5;
     dt <- 0.1
 
     reaction <- Reaction(c(X, Y, 0))
-
     solver <- RK4(reaction)
-
-    while (solver@ode@state[3] < 100) {
-        if (verbose)
-            cat(sprintf("%12f %12f %12f \n", solver@ode@state[1],
-                    solver@ode@state[2],
-                    solver@ode@state[3]))
+    rowvec <- vector("list")
+    i <- 1
+    while (solver@ode@state[3] < 100) {             # stop at t = 100
+        rowvec[[i]] <- list(t = solver@ode@state[3],
+                            X = solver@ode@state[1],
+                            Y = solver@ode@state[2])
         solver <- step(solver)
+        i <-  i + 1
     }
-
-    # print the last line after solver
-    if (verbose)
-        cat(sprintf("%12f %12f %12f \n", solver@ode@state[1],
-                solver@ode@state[2],
-                solver@ode@state[3]))
-
-    return(list(solver@ode@state[1], solver@ode@state[2], solver@ode@state[3]))
+    DT <- data.table::rbindlist(rowvec)
+    return(DT)
 }
 
 
-ReactionApp()
+solution <- ReactionApp()
+plot(solution)
 
 
-# Java
-# at t=100, dt=0.1,  c(2.131958,     1.105316,   100.000000)
-#    t=50, dt=0.1,     0.493079    2.821023   50.000000

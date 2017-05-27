@@ -1,18 +1,16 @@
 # KeplerEnergy.R
 #
 
-
-
 setClass("KeplerEnergy", slots = c(
-    GM = "numeric",
+    GM        = "numeric",
     odeSolver = "Verlet",
-    counter = "numeric"
+    counter   = "numeric"
     ),
     contains = c("ODE")
 )
 
 setMethod("initialize", "KeplerEnergy", function(.Object, ...) {
-    .Object@GM <- 4 * pi * pi                # gravitation constant times combined mass
+    .Object@GM <- 4 * pi * pi         # gravitation constant times combined mass
     .Object@state <- vector("numeric", 5)  # x, vx, y, vy, t
     # .Object@odeSolver <- Verlet(ode = .Object)
     .Object@odeSolver <- Verlet(.Object)
@@ -21,13 +19,8 @@ setMethod("initialize", "KeplerEnergy", function(.Object, ...) {
 })
 
 setMethod("doStep", "KeplerEnergy", function(object, ...) {
-    # cat("state@doStep=", object@state, "\n")
     object@odeSolver <- step(object@odeSolver)
-
     object@state <- object@odeSolver@ode@state
-
-    # object@rate <- object@odeSolver@ode@rate
-    # cat("\t", object@odeSolver@ode@state)
     object
 })
 
@@ -47,7 +40,6 @@ setMethod("getEnergy", "KeplerEnergy", function(object, ...) {
 setMethod("init", "KeplerEnergy", function(object, initState, ...) {
     object@state <- initState
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
-
     object@counter <- 0
     object
 })

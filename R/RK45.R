@@ -1,13 +1,14 @@
 # RK45.R
 #
-# Simplified calling class of DormandPrince45
+# Simpler calling pf class DormandPrince45
 #
-
 #' RK45 class
 #'
 #' @param ode and ODE object
 #'
 #' @rdname RK45-class
+#' @example ./inst/examples/ComparisonRK45App.R
+#' @example ./inst/examples/KeplerApp.R
 setClass("RK45",
     contains = c("DormandPrince45")
 )
@@ -29,4 +30,5 @@ RK45 <- function(ode) {
     rk45 <- DormandPrince45(ode)             # equivalent to Java "super(ode)"
     return(rk45)
 }
+
 

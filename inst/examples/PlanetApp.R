@@ -1,36 +1,37 @@
-# #################
-# PlanetApp.R
-#
-#
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++  example: PlanetApp.R
+# Simulation of Earth orbiting around the SUn using the Euler ODE solver
 
-source(paste(system.file("examples", package = "rODE"),
-             "Planet.R",
-             sep ="/"))
-
+importFromExamples("Planet.R")      # source the class
 
 PlanetApp <- function(verbose = FALSE) {
-    # x =  1, AU or Astronomical Units. Length of semimajor axis or the orbit of the Earth around the Sun.
-
+    # x =  1, AU or Astronomical Units. Length of semimajor axis or the orbit
+    # of the Earth around the Sun.
     x <- 1; vx <- 0; y <- 0; vy <- 6.28; t <- 0
     state <- c(x, vx, y, vy, t)
     dt <-  0.01
-
     planet <- Planet()
-
     planet@odeSolver <- setStepSize(planet@odeSolver, dt)
     planet <- init(planet, initState = state)
-
+    rowvec <- vector("list")
+    i <- 1
     # run infinite loop. stop with ESCAPE.
     while (planet@state[5] <= 365) {     # Earth orbit is 365 days around the sun
-        for (i in 1:5) {                 # advances time
+        rowvec[[i]] <- list(t  = planet@state[5],
+                            x  = planet@state[1],
+                            vx = planet@state[2],
+                            y  = planet@state[3],
+                            vy = planet@state[4])
+        for (j in 1:5) {                 # advances time
             planet <- doStep(planet)
         }
-        if (verbose)
-            cat(sprintf("%12f %12f %12f %12f %12f \n",
-                    planet@state[1], planet@state[2], planet@state[3],
-                    planet@state[4], planet@state[5]))
+        i <- i + 1
     }
-
+    DT <- data.table::rbindlist(rowvec)
+    return(DT)
 }
+# run the application
+solution <- PlanetApp()
+select_rows <- seq(1, 7301, 20)      # do not overplot
+solution <- solution[select_rows,]
+plot(solution)
 
-PlanetApp()

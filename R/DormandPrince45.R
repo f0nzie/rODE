@@ -8,6 +8,7 @@
 #' @rdname DormandPrince45-class
 #'
 #' @include ODEAdaptiveSolver.R ODE.R
+#' @example ./inst/examples/KeplerDormandPrince45.R
 setClass("DormandPrince45", slots = c(
     error_code       = "numeric",
     a                = "matrix",
@@ -163,6 +164,8 @@ setMethod("getStepSize", "DormandPrince45", function(object, ...) {
 
 
 #' @rdname setTolerance-method
+#' @example ./inst/examples/ComparisonRK45ODEApp.R
+#' @family adaptive solver methods
 setMethod("setTolerance", "DormandPrince45", function(object, tol) {
     object@tol <- abs(tol)
     if (object@tol < 1.0E-12) {
@@ -177,12 +180,14 @@ setMethod("setTolerance", "DormandPrince45", function(object, tol) {
 })
 
 #' @rdname getTolerance-method
+#' @family adaptive solver methods
 setMethod("getTolerance", "DormandPrince45", function(object) {
     return(object@tol)
 })
 
 
 #' @rdname getErrorCode-method
+#' @family adaptive solver methods
 setMethod("getErrorCode", "DormandPrince45", function(object) {
     return(object@error_code)
 })
@@ -194,6 +199,7 @@ setMethod("getErrorCode", "DormandPrince45", function(object) {
 #' @param .ode an ODE object
 #' @importFrom methods new
 #' @export
+#' @example ./inst/examples/KeplerDormandPrince45.R
 DormandPrince45 <- function(.ode) {
     dormandPrince45 <- new("DormandPrince45", .ode)
     dormandPrince45 <- init(dormandPrince45, dormandPrince45@stepSize)

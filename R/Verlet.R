@@ -10,7 +10,7 @@
 #' @param ... additional parameters
 #'
 #' @rdname Verlet-class
-#'
+#' @example ./inst/examples/KeplerEnergyApp.R
 .Verlet <- setClass("Verlet", slots = c(
               rate1 = "numeric",
               rate2 = "numeric",
@@ -102,6 +102,8 @@ setMethod("step", "Verlet", function(object, ...) {
 #' @rdname Verlet-class
 #'
 #' @export
+#' @example ./inst/examples/KeplerEnergyApp.R
+#' @example ./inst/examples/Logistic.R
 setMethod("Verlet", signature(ode = "ODE"), function(ode, ...) {
     .verlet <- .Verlet(ode = ode)
     .verlet <- init(.verlet, .verlet@stepSize)

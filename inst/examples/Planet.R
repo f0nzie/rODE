@@ -25,17 +25,11 @@ setMethod("doStep", "Planet", function(object, ...) {
 
 setMethod("init", "Planet", function(object, initState, ...) {
     object@state <- object@odeSolver@ode@state <- initState
-    # callNextMethod(object@odeSolver, getStepSize(object@odeSolver))
     # initialize providing the step size
     object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
-    # object@odeSolver <- callNextMethod(object, object@odeSolver@stepSize)
-    # object@odeSolver <- callNextMethod(object@odeSolver, getStepSize(object@odeSolver))
-
     object@rate <- object@odeSolver@ode@rate
     object@state <- object@odeSolver@ode@state
-
     object
-
 })
 
 setMethod("getRate", "Planet", function(object, state, ...) {
