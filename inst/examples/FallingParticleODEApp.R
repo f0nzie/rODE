@@ -1,34 +1,32 @@
-# ###########################
-# FallingParticleApp.R
-#
+# +++++++++++++++++++++++++++++++++++++++++++++++  example: FallingParticleApp.R
+# Application that simulates the free fall of a ball using Euler ODE solver
 
-
-source(paste(system.file("examples", package = "rODE"),
-             "FallingParticleODE.R", sep ="/"))
+importFromExamples("FallingParticleODE.R")      # source the class
 
 
 FallingParticleODEApp <- function(verbose = FALSE) {
-
+    # initial values
     initial_y <- 10
     initial_v <- 0
     dt <- 0.01
-
     ball <- FallingParticleODE(initial_y, initial_v)
-
-    solver <- Euler(ball)
-    solver <- setStepSize(solver, dt)
-
-    # stop loop when the ball hits the ground
+    solver <- Euler(ball)                        # set the ODE solver
+    solver <- setStepSize(solver, dt)            # set the step
+    rowVector <- vector("list")
+    i <- 1
+    # stop loop when the ball hits the ground, state[1] is the vertical position
     while (ball@state[1] > 0) {
-        solver <- step(solver)
-        ball <- solver@ode
-        if (verbose) {
-            cat(sprintf("%12f %12f ",  ball@state[1], ball@rate[1] ))
-            cat(sprintf("%12f %12f ",  ball@state[2], ball@rate[2] ))
-            cat(sprintf("%12f %12f\n", ball@state[3], ball@rate[3] ))
-        }
+        rowVector[[i]] <- list(t  = ball@state[3],
+                               y  = ball@state[1],
+                               vy = ball@state[2])
+        solver <- step(solver)                   # move one step at a time
+        ball <- solver@ode                       # update the ball state
+        i <- i + 1
     }
-    return(list(ball@state[1], ball@rate[1],
-           ball@state[2], ball@rate[2],
-           ball@state[3], ball@rate[3]))
+    DT <- data.table::rbindlist(rowVector)
+    return(DT)
 }
+
+
+solution <- FallingParticleODEApp()
+plot(solution)

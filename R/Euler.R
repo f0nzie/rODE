@@ -42,6 +42,7 @@ setMethod("init", "Euler", function(object, stepSize, ...) {
     invisible(object)                                               #   right dimensions
 })
 
+
 #' @rdname step-method
 setMethod("step", signature(object = "Euler"), function(object, ...) {
     # step through the differential equation
@@ -56,6 +57,7 @@ setMethod("step", signature(object = "Euler"), function(object, ...) {
     invisible(object)                      # use this object to ressign in R
 
 })
+
 
 #' @rdname setStepSize-method
 setMethod("setStepSize", "Euler", function(object, stepSize, ...) {
@@ -76,6 +78,9 @@ setMethod("getStepSize", "Euler", function(object, ...) {
 #'
 #' @importFrom methods new
 #' @export
+#' @example ./inst/examples/FallingParticleODEApp.R
+#' @example ./inst/examples/KeplerEuler.R
+#' @example ./inst/examples/PlanetApp.R
 setMethod("Euler", signature(ode = "ODE"), function(ode, ...) {
     .euler <- .Euler(ode = ode)
     .euler <- init(.euler, .euler@stepSize)

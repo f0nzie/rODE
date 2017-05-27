@@ -1,6 +1,5 @@
-######################
-# FallingParticleODE.R
-#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ base class: FallingParticleODE.R
+# Class definition for application FallingParticleODEApp.R
 
 setClass("FallingParticleODE", slots = c(
         g = "numeric"
@@ -24,13 +23,11 @@ setMethod("getState", "FallingParticleODE", function(object, ...) {
 
 setMethod("getRate", "FallingParticleODE", function(object, state, ...) {
     # Gets the rate of change using the argument's state variables.
-    # cat("getRate()  called with ", class(object), "\n")
     object@rate[1] <- state[2]
     object@rate[2] <- - object@g
     object@rate[3] <- 1
 
     object@rate
-
 })
 
 # constructor

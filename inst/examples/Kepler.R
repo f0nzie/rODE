@@ -1,4 +1,6 @@
-# Kepler.R
+#  Kepler models Keplerian orbits of a mass moving under the influence of an
+#  inverse square force by implementing the ODE interface.
+#  Kepler.R
 #
 
 
