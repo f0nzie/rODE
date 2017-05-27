@@ -17,11 +17,6 @@
     contains = c("ODE")
     )
 
-# setMethod("initialize", "SHO", function(.Object) {
-#     return(.Object)
-# })
-
-
 setMethod("getState", "SHO", function(object) {
     object@state
 })
