@@ -73,7 +73,7 @@ SHOApp <- function() {
                                t = sho@state[3])
         solver <- step(solver)
         sho    <- solver@ode
-        cat(sprintf("%12f %12f %12f \n", sho@state[1], sho@state[2], sho@state[3]))
+        # cat(sprintf("%12f %12f %12f \n", sho@state[1], sho@state[2], sho@state[3]))
         i <- i + 1
     }
     return(data.table::rbindlist(rowVector))
