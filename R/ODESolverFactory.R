@@ -14,7 +14,13 @@ ODESolverFactory <- setClass("ODESolverFactory", slots = c(
 setGeneric("createODESolver", function(object, ...)
     standardGeneric("createODESolver"))
 
+#' This is a factory method that creates an ODESolver using a name.
 #' @rdname createODESolver-method
+#' @param object an solver object
+#' @param ode an ODE object
+#' @param solverName the desired solver as a string
+#' @param ... an additional parameter
+#' @export
 setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverName, ...) {
     object@solverName <- trimws(tolower(solverName))
     cat(object@solverName)
@@ -22,7 +28,7 @@ setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverNam
         return(RK4(ode))
     else if (object@solverName == "dormandprince45")
         return(DormandPrince45(ode))
-    else if (object@solverName == "RK45")
+    else if (object@solverName == "rk45")
         return(DormandPrince45(ode))
     else if (object@solverName == "euler")
         return(Euler(ode))
