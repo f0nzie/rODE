@@ -92,5 +92,5 @@ SpringRK4App <- function(verbose = FALSE) {
 }
 
 # show solution
-solution <- SpringRK4App(TRUE)
+solution <- SpringRK4App()
 plot(solution)

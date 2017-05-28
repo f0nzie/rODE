@@ -1,0 +1,98 @@
+# Test by opening all applications under the `examples` folder Get the list of
+# appliations by filtering those ending with `App`.
+#
+# Remove the extension `.R` from each app and loop to call each of the
+# applications with `do.call`.
+#
+# A list contains the expected results that are compared against the result
+# coming out from the call to the application.
+
+
+library(testthat)
+
+# this is where examples live
+examples_dir <- system.file("examples", package = "rODE")
+
+# get all the scripts that `App` in them
+examples <- list.files(path = examples_dir, pattern = "*App", all.files = FALSE,
+           full.names = FALSE, recursive = FALSE, ignore.case = FALSE,
+           include.dirs = FALSE, no.. = FALSE)
+
+expected <- list(AdaptiveStepApp = list(
+                    rowVector = list(s1 = 9.910181, s2 = 2.697124, t=6.635591),
+                    tolerance = 1e-7),
+
+                 ComparisonRK45App = list(
+                    rowVector = list(t=45.75203, s1=9.691675e-10, s2=45.75203,
+                                  xs=1.6393e-21, rc=598, time=49.46946),
+                    tolerance = 1e-7),
+
+                 ComparisonRK45ODEApp = list(
+                    rowVector = list(t=43.22881, ODE=1.108886e-07, s2=43.22881,
+                      exact=5.249407e-21, rate.counts=280, time=48.30561),
+                    tolerance = 1e-6),
+
+                 FallingParticleODEApp = list(
+                    rowVector = list(t=1.43, y=0.05006, vy=-14.014),
+                    tolerance = 1e-12),
+
+                 KeplerApp = list(
+                     rowVector = list(t=9.971599,
+                                    planet1.r=0.5303791, p1anet1.v=-1.339153,
+                                    planet2.r=0.4781323, p1anet2.v=-0.2645141),
+                     tolerance = 1e-6),
+
+                 KeplerDormandPrince45App = list(
+                     rowVector = list(t=1.444831, x=-0.9404485, vx=-2.136978,
+                          y=0.3400727, vx=-5.908522, energy=-19.73793),
+                     tolerance = 1e-6),
+
+                 KeplerEnergyApp = list(
+                     rowVector = list(t=1.19, x=0.3757742, vx=-5.817511,
+                          y=0.927382, vy=2.363469, E=-19.73918),
+                     tolerance = 1e-5),
+
+                 KeplerEulerApp = list(
+                     rowVector = list(t=0.98, x=-0.6514722, vx=4.019233,
+                                      y=-1.578873, vy=-2.069668, E=-12.89498),
+                     tolerance = 1e-5),
+
+                 LogisticApp = list(
+                     rowVector = list(t=10, s1=0.1001006, s2=-0.006313836),
+                     tolerance = 1e-5),
+
+                 PendulumApp = list(
+                     rowVector = list(t=39.9, theta=0.2066864, thetadot=-0.05442821),
+                     tolerance = 1e-5)
+
+)
+
+
+
+# loop to open each file
+examples <- examples[1:10]
+i <- 1
+for (app in examples) {
+    application <- sub("\\.R$", '', app)
+    # cat(sprintf("\n %3d testing ... %30s %25s", i, app, application))
+    cat(sprintf("\n %3d testing ... %30s", i, app))
+    source(paste(system.file("examples", package = "rODE"),
+                 app, sep ="/"))
+
+    # cat(sprintf("%25s", application))
+    result  <- do.call(application, list(FALSE))
+    .result <- as.list(result[nrow(result),]);
+    cat("\t", names(expected[application]))
+    if (i==10) { cat("\n");print(.result)}
+    # cat(expected[i]$tolerance)
+
+    last_row <- expected[[application]]$rowVector
+    expect_equal(.result, last_row, tolerance = expected[[application]]$tolerance)
+    # cat(expected[[application]]$tolerance)
+    # cat("\t tested")
+    # cat(names(expected[i]), "\n")
+
+    i <- i + 1
+}
+
+
