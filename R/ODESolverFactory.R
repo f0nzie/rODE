@@ -39,22 +39,13 @@ setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverNam
 })
 
 
-
-# factory <- ODESolverFactory()
-
-# Examples
-# ode <- new("ODE")
-# factory <- new("ODESolverFactory")
-# createODESolver(factory, ode, "Verlet")
-# createODESolver(ode, "Euler")
-
 #' ODESolverFactory constructor
 #'
 #' @rdname ODESolverFactory-class
 #' @param ... additional parameters
 #' @importFrom methods new
 #' @export
-#' @example ./inst/examples/ReactionApp.R
+#' @example ./inst/examples/SHO.R
 setMethod("ODESolverFactory", signature("ANY"), function(...) {
     # constructor for .ODESolverFactory
     factory <- .ODESolverFactory()
