@@ -57,7 +57,7 @@ setGeneric("RK4", function(ode, ...)
 
 #' @rdname Verlet-class
 #' @export
-#' @example ./inst/examples/Logistic.R
+#' @example ./inst/examples/LogisticApp.R
 setGeneric("Verlet", function(ode, ...)
     standardGeneric("Verlet"))
 
@@ -125,7 +125,7 @@ setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 #' @rdname doStep-method
 #' @export
 #' @example ./inst/examples/PlanetApp.R
-#' @example ./inst/examples/Logistic.R
+#' @example ./inst/examples/LogisticApp.R
 setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 
 
@@ -148,7 +148,7 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #'     object
 #' })
 #'
-#' # init method in Logistic.R
+#' # init method in LogisticApp.R
 #' setMethod("init", "Logistic", function(object, initState, r, K, ...) {
 #'     object@r <- r
 #'     object@K <- K
@@ -264,7 +264,7 @@ setGeneric("getRateCounter", function(object, ...)
 #' @param ... additional parameters
 #' @rdname getTime-method
 #' @export
-#' @example ./inst/examples/Logistic.R
+#' @example ./inst/examples/LogisticApp.R
 #' @example ./inst/examples/KeplerEnergy.R
 setGeneric("getTime", function(object, ...) standardGeneric("getTime"))
 
