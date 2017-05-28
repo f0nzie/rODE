@@ -69,7 +69,7 @@ setGeneric("Euler", function(ode, ...)
 
 #' @rdname ODESolverFactory-class
 #' @export
-#' @example ./inst/examples/RigidBodyNXFApp.R
+#' @example ./inst/examples/SHOApp.R
 setGeneric("ODESolverFactory", function(...)
     standardGeneric("ODESolverFactory"))
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
