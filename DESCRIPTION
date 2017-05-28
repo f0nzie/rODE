@@ -1,7 +1,7 @@
 Package: rODE
 Type: Package
 Title: Ordinary Differential Equation (ODE) Solvers Written in R Using S4 Classes
-Version: 0.99.4
+Version: 0.99.4.9000
 Author: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
 Maintainer: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
 Description: Show Physics and engineering students how an ODE solver
@@ -33,6 +33,7 @@ Collate:
     'DormandPrince45.R'
     'Euler.R'
     'EulerRichardson.R'
+    'ODESolverFactory.R'
     'RK4.R'
     'RK45.R'
     'Verlet.R'

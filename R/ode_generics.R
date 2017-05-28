@@ -67,6 +67,11 @@ setGeneric("Verlet", function(ode, ...)
 setGeneric("Euler", function(ode, ...)
     standardGeneric("Euler"))
 
+#' @rdname ODESolverFactory-class
+#' @export
+#' @example ./inst/examples/SHOApp.R
+setGeneric("ODESolverFactory", function(...)
+    standardGeneric("ODESolverFactory"))
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #' Get a new rate given a state
@@ -203,6 +208,7 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
 #' @example ./inst/examples/KeplerDormandPrince45App.R
+#' @example ./inst/examples/AdaptiveStepApp.R
 setGeneric("setTolerance", function(object, tol, ...)
     standardGeneric("setTolerance"))
 
