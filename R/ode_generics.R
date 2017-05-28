@@ -208,6 +208,7 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
 #' @example ./inst/examples/KeplerDormandPrince45App.R
+#' @example ./inst/examples/AdaptiveStepApp.R
 setGeneric("setTolerance", function(object, tol, ...)
     standardGeneric("setTolerance"))
 

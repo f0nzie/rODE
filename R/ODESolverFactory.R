@@ -45,7 +45,7 @@ setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverNam
 #' @param ... additional parameters
 #' @importFrom methods new
 #' @export
-#' @example ./inst/examples/SHO.R
+#' @example ./inst/examples/SHOApp.R
 setMethod("ODESolverFactory", signature("ANY"), function(...) {
     # constructor for .ODESolverFactory
     factory <- .ODESolverFactory()
