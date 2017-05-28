@@ -63,35 +63,61 @@ expected <- list(AdaptiveStepApp = list(
 
                  PendulumApp = list(
                      rowVector = list(t=39.9, theta=0.2066864, thetadot=-0.05442821),
-                     tolerance = 1e-5)
+                     tolerance = 1e-5),
 
-)
+                 PendulumEulerApp = list(
+                     rowVector = list(t=50, theta=-0.1246416, thetaDot=0.6912865),
+                     tolerance = 1e-5),
 
+                 PendulumRK4App = list(
+                     rowVector = list(state1=-0.1969044, state2=-0.06044034, state3=19.9),
+                     tolerance = 1e-5),
 
+                 PlanetApp = list(
+                     rowVector = list(t=89.95, x=0.5448977, vx=1.754475,
+                                      y=-8.489961, vy=0.2846164),
+                     tolerance = 1e-5),
+
+                 ProjectileApp = list(
+                     rowVector = list(t=2.04, x=20.4, vx=10, y=0.00816, vy=-9.992),
+                     tolerance = 1e-5),
+
+                 ReactionApp = list(
+                     rowVector = list(t=100, X=2.131958, Y=1.105316),
+                     tolerance = 1e-6),
+
+                 RigidBodyNXFApp = list(
+                     rowVector = list(t=12, y1=-0.7434223, y2=-0.7347173, y3=0.8655997),
+                     tolerance = 1e-6),
+
+                 SHOApp = list(
+                     rowVector = list(x=-1.007698, v=0.422443, t=499.905),
+                     tolerance = 1e-6),
+
+                 SpringRK4App = list(
+                     rowVector = list(t=21.9, y1=-0.009364557, y2=0.08782852),
+                     tolerance = 1e-6)
+) # end of list for expected values
 
 # loop to open each file
-examples <- examples[1:10]
+goDebug <- FALSE
+nmax <- 18
+examples <- examples[1:nmax]          # reduce the list for debugging
 i <- 1
 for (app in examples) {
     application <- sub("\\.R$", '', app)
-    # cat(sprintf("\n %3d testing ... %30s %25s", i, app, application))
     cat(sprintf("\n %3d testing ... %30s", i, app))
-    source(paste(system.file("examples", package = "rODE"),
-                 app, sep ="/"))
-
-    # cat(sprintf("%25s", application))
+    source(paste(system.file("examples", package = "rODE"), app, sep ="/"))
     result  <- do.call(application, list(FALSE))
     .result <- as.list(result[nrow(result),]);
-    cat("\t", names(expected[application]))
-    if (i==10) { cat("\n");print(.result)}
-    # cat(expected[i]$tolerance)
-
+    cat(sprintf("%25s", names(expected[application])))
+    if (goDebug) {
+        cat("\n");
+        print(.result)}
     last_row <- expected[[application]]$rowVector
     expect_equal(.result, last_row, tolerance = expected[[application]]$tolerance)
     # cat(expected[[application]]$tolerance)
-    # cat("\t tested")
-    # cat(names(expected[i]), "\n")
-
+    cat("\t tested")
     i <- i + 1
 }
 
