@@ -8,14 +8,12 @@
     phase    = "numeric",
     omega    = "numeric",
     energy   = "numeric",
-    count    = "numeric"
-    ),
+    count    = "numeric"),
     prototype = prototype(
         k = 0.1,
         state = c(pi/2.0, 0.0, 0.0)
     ),
-    contains = c("ODE")
-    )
+    contains = c("ODE"))
 
 setMethod("getState", "SHO", function(object) {
     object@state
@@ -65,7 +63,7 @@ SHOApp <- function() {
     sho    <- SHO(x, v, k)
     solver_factory <- ODESolverFactory()
     solver <- createODESolver(solver_factory, sho, "DormandPrince45")
-    # solver <- DormandPrince45(sho)
+    # solver <- DormandPrince45(sho)                    # this can also be used
     solver <- setTolerance(solver, tolerance)
     solver <- init(solver, dt)
     i <- 1; rowVector <- vector("list")
