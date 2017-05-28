@@ -64,7 +64,7 @@ Logistic <- function() {
 }
 
 # Run the application
-LogisticVerletApp <- function(verbose = FALSE) {
+LogisticApp <- function(verbose = FALSE) {
     x  <- 0.1
     vx <- 0
     r  <- 2        # Malthusian parameter (rate of maximum population growth)
@@ -88,5 +88,5 @@ LogisticVerletApp <- function(verbose = FALSE) {
     return(DT)
 }
 # show solution
-solution <- LogisticVerletApp()
+solution <- LogisticApp()
 plot(solution)
