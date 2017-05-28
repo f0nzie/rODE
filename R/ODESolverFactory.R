@@ -6,7 +6,7 @@
 #'
 #' @rdname ODESolverFactory-class
 #' @export
-ODESolverFactory <- setClass("ODESolverFactory", slots = c(
+.ODESolverFactory <- setClass("ODESolverFactory", slots = c(
     # A factory class that creates an ODESolver using a name
     solverName = "character"))
 
@@ -39,11 +39,24 @@ setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverNam
 })
 
 
-factory <- ODESolverFactory()
 
+# factory <- ODESolverFactory()
 
 # Examples
 # ode <- new("ODE")
 # factory <- new("ODESolverFactory")
 # createODESolver(factory, ode, "Verlet")
 # createODESolver(ode, "Euler")
+
+#' ODESolverFactory constructor
+#'
+#' @rdname ODESolverFactory-class
+#' @param ... additional parameters
+#' @importFrom methods new
+#' @export
+#' @example ./inst/examples/ReactionApp.R
+setMethod("ODESolverFactory", signature("ANY"), function(...) {
+    # constructor for .ODESolverFactory
+    factory <- .ODESolverFactory()
+    return(factory)
+})

@@ -67,6 +67,11 @@ setGeneric("Verlet", function(ode, ...)
 setGeneric("Euler", function(ode, ...)
     standardGeneric("Euler"))
 
+#' @rdname ODESolverFactory-class
+#' @export
+#' @example ./inst/examples/RigidBodyNXFApp.R
+setGeneric("ODESolverFactory", function(...)
+    standardGeneric("ODESolverFactory"))
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #' Get a new rate given a state
