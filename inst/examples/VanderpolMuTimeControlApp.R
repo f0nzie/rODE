@@ -43,9 +43,9 @@ VanderPol <- function(y1, y2, mu = 1.0) {
 
 
 # run the application
-VanderpolMuTimeControl <- function(verbose = FALSE) {
+VanderpolMuTimeControlApp <- function(verbose = FALSE) {
     # set the orbit into a predefined state.
-    y1 <- 2; y2 <- 0; mu <- 10; tmax <- mu * 3; dt <- 0.1
+    y1 <- 2; y2 <- 0; mu <- 10; tmax <- mu * 3; dt <- 0.01
     rigid_body <- VanderPol(y1, y2, mu)
     solver <- RK45(rigid_body)
     rowVector <- vector("list")
@@ -64,6 +64,6 @@ VanderpolMuTimeControl <- function(verbose = FALSE) {
 
 }
 # show solution
-solution <- VanderpolMuTimeControl()
+solution <- VanderpolMuTimeControlApp()
 plot(solution)
 
