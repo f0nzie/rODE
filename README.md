@@ -25,6 +25,12 @@ You can install rODE from github with:
 devtools::install_github("AlfonsoRReyes/rODE")
 ```
 
+Or from `CRAN`:
+
+``` r
+install.packages("rODE")
+```
+
 Examples
 --------
 
