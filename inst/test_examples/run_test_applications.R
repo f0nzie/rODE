@@ -98,14 +98,20 @@ expected <- list(AdaptiveStepApp = list(
 
                  VanderpolApp = list(
                      rowVector = list(t=19.95867, y1=2.008232, y2=0.04026076),
-                     tolerance = 1e-6)
+                     tolerance = 1e-6),
+
+                 VanderpolMuTimeControlApp = list(
+                     rowVector = list(t=29.94172, y1=-1.910788, y2=0.07189794),
+                     tolerance = 1e-7)
+
+
 ) # end of list for expected values
 
 # loop to open each file
 goDebug <- FALSE
 nmax <- 0
 if (goDebug) {
-    nmax <- 19
+    nmax <- 20
     examples <- examples[1:nmax]          # reduce the list for debugging
 }
 i <- 1
@@ -116,7 +122,7 @@ for (app in examples) {
     result  <- do.call(application, list(FALSE))
     .result <- as.list(result[nrow(result),]);
     cat(sprintf("%25s", names(expected[application])))
-    if ((goDebug) && (names(expected[application]) == "VanderpolApp")) {
+    if ((goDebug) && (names(expected[application]) == "VanderpolMuTimeControlApp")) {
         cat("\n");
         print(.result)}
     last_row <- expected[[application]]$rowVector
