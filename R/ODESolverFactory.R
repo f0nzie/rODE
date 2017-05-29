@@ -23,7 +23,6 @@ setGeneric("createODESolver", function(object, ...)
 #' @export
 setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverName, ...) {
     object@solverName <- trimws(tolower(solverName))
-    cat(object@solverName)
     if (object@solverName == "rk4")
         return(RK4(ode))
     else if (object@solverName == "dormandprince45")

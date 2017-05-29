@@ -58,7 +58,7 @@ SHO <- function(x, v, k) {
 
 
 # SHOApp.R
-SHOApp <- function() {
+SHOApp <- function(...) {
     x <- 1.0; v <- 0; k <- 1.0; dt <- 0.01; tolerance <- 1e-3
     sho    <- SHO(x, v, k)
     solver_factory <- ODESolverFactory()
@@ -73,7 +73,6 @@ SHOApp <- function() {
                                t = sho@state[3])
         solver <- step(solver)
         sho    <- solver@ode
-        # cat(sprintf("%12f %12f %12f \n", sho@state[1], sho@state[2], sho@state[3]))
         i <- i + 1
     }
     return(data.table::rbindlist(rowVector))

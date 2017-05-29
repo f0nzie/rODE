@@ -25,7 +25,7 @@ setMethod("getRate", signature = c("Impulse"), function(object, state, ...) {
 
 
 # running function
-AdaptiveStepApp <- function() {
+AdaptiveStepApp <- function(verbose = FALSE) {
     ode        <- new("Impulse")
     ode_solver <- RK45(ode)
     ode_solver <- init(ode_solver, 0.1)
