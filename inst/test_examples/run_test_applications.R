@@ -1,11 +1,9 @@
 # Test by opening all applications under the `examples` folder Get the list of
-# appliations by filtering those ending with `App`.
-#
-# Remove the extension `.R` from each app and loop to call each of the
+# appli ations by filtering those ending with `App`.
+# Removes the extension `.R` from each app and loop to call each of the
 # applications with `do.call`.
-#
-# A list contains the expected results that are compared against the result
-# coming out from the call to the application.
+# A list contains the `expected`` results that are compared against the result
+# coming out from the call to the R application.
 
 
 library(testthat)
@@ -96,13 +94,20 @@ expected <- list(AdaptiveStepApp = list(
 
                  SpringRK4App = list(
                      rowVector = list(t=21.9, y1=-0.009364557, y2=0.08782852),
+                     tolerance = 1e-6),
+
+                 VanderpolApp = list(
+                     rowVector = list(t=19.95867, y1=2.008232, y2=0.04026076),
                      tolerance = 1e-6)
 ) # end of list for expected values
 
 # loop to open each file
 goDebug <- FALSE
-nmax <- 18
-examples <- examples[1:nmax]          # reduce the list for debugging
+nmax <- 0
+if (goDebug) {
+    nmax <- 19
+    examples <- examples[1:nmax]          # reduce the list for debugging
+}
 i <- 1
 for (app in examples) {
     application <- sub("\\.R$", '', app)
@@ -111,7 +116,7 @@ for (app in examples) {
     result  <- do.call(application, list(FALSE))
     .result <- as.list(result[nrow(result),]);
     cat(sprintf("%25s", names(expected[application])))
-    if (goDebug) {
+    if ((goDebug) && (names(expected[application]) == "VanderpolApp")) {
         cat("\n");
         print(.result)}
     last_row <- expected[[application]]$rowVector

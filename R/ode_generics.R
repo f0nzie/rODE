@@ -91,8 +91,8 @@ setGeneric("getRate", function(object, state, ...) standardGeneric("getRate"))
 #' @param ... additional parameters
 #' @rdname getState-method
 #' @export
-#' @example ./inst/examples/VanderPol.R
-#' @example ./inst/examples/SpringRK4.R
+#' @example ./inst/examples/VanderPolApp.R
+#' @example ./inst/examples/SpringRK4App.R
 setGeneric("getState", function(object, ...) standardGeneric("getState"))
 
 
@@ -180,7 +180,7 @@ setGeneric("init", function(object, ...) standardGeneric("init"))
 #' @param stepSize size of the step
 #' @rdname setStepSize-method
 #' @export
-#' @example ./inst/examples/SpringRK4.R
+#' @example ./inst/examples/SpringRK4App.R
 #' @example ./inst/examples/ComparisonRK45App.R
 setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 
