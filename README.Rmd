@@ -68,7 +68,7 @@ For instance, the notebook `Comparison` and ``Kepler` use the ODE solver `RK45`,
 ## Tests
 There are tests for the core ODE solver classes under tests/testthat, as well as tests for the examples.
 
-The tests for the examples are two: one for the base/parent classes such as `Kepler` or `Planet` or `Projectile`; this test runner is called `run_tests_this_folder.R`. For the applications themselves there is another runner that opens each of the applications as request for a return value. If the hard coded value is not returned, the test will fail. This ensures that any minor change in the core solver classes do not have any impact on the application solutions, and if there is, it must be explained. The name of the test runner is `run_open_applications.R`.
+The tests for the examples are two: one for the base/parent classes such as `Kepler` or `Planet` or `Projectile`; this test runner is called `run_tests_this_folder.R`. For the applications themselves there is another runner that opens each of the applications as request for a return value. If the hard coded value is not returned, the test will fail. This ensures that any minor change in the core solver classes do not have any impact on the application solutions, and if there is, it must be explained. The name of the test runner is `run_tes_applications.R`.
 
 
 
