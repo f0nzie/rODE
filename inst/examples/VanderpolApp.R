@@ -41,7 +41,7 @@ VanderPol <- function(y1, y2) {
 }
 
 # run the application
-VanderPolApp <- function(verbose = FALSE) {
+VanderpolApp <- function(verbose = FALSE) {
     # set the orbit into a predefined state.
     y1 <- 2; y2 <- 0; dt <- 0.1;
     rigid_body <- VanderPol(y1, y2)
@@ -61,6 +61,6 @@ VanderPolApp <- function(verbose = FALSE) {
 
 }
 # show solution
-solution <- VanderPolApp()
+solution <- VanderpolApp()
 plot(solution)
 

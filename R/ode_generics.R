@@ -57,7 +57,7 @@ setGeneric("RK4", function(ode, ...)
 
 #' @rdname Verlet-class
 #' @export
-#' @example ./inst/examples/Logistic.R
+#' @example ./inst/examples/LogisticApp.R
 setGeneric("Verlet", function(ode, ...)
     standardGeneric("Verlet"))
 
@@ -91,8 +91,8 @@ setGeneric("getRate", function(object, state, ...) standardGeneric("getRate"))
 #' @param ... additional parameters
 #' @rdname getState-method
 #' @export
-#' @example ./inst/examples/VanderPol.R
-#' @example ./inst/examples/SpringRK4.R
+#' @example ./inst/examples/VanderPolApp.R
+#' @example ./inst/examples/SpringRK4App.R
 setGeneric("getState", function(object, ...) standardGeneric("getState"))
 
 
@@ -125,7 +125,7 @@ setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 #' @rdname doStep-method
 #' @export
 #' @example ./inst/examples/PlanetApp.R
-#' @example ./inst/examples/Logistic.R
+#' @example ./inst/examples/LogisticApp.R
 setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 
 
@@ -148,7 +148,7 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #'     object
 #' })
 #'
-#' # init method in Logistic.R
+#' # init method in LogisticApp.R
 #' setMethod("init", "Logistic", function(object, initState, r, K, ...) {
 #'     object@r <- r
 #'     object@K <- K
@@ -180,7 +180,7 @@ setGeneric("init", function(object, ...) standardGeneric("init"))
 #' @param stepSize size of the step
 #' @rdname setStepSize-method
 #' @export
-#' @example ./inst/examples/SpringRK4.R
+#' @example ./inst/examples/SpringRK4App.R
 #' @example ./inst/examples/ComparisonRK45App.R
 setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 
@@ -264,7 +264,7 @@ setGeneric("getRateCounter", function(object, ...)
 #' @param ... additional parameters
 #' @rdname getTime-method
 #' @export
-#' @example ./inst/examples/Logistic.R
+#' @example ./inst/examples/LogisticApp.R
 #' @example ./inst/examples/KeplerEnergy.R
 setGeneric("getTime", function(object, ...) standardGeneric("getTime"))
 
