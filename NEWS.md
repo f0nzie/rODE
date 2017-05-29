@@ -3,7 +3,7 @@
 * add NEWS.md
 * add file cran-comments.md
 * add pre-commit hook for README in Windows
-* couple of chnages in README
+* couple of changes in README
 
 # rODE 0.99.4.9005
 * fix vignettes names
