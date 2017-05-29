@@ -42,3 +42,11 @@ run_test_applications <- function() {
     examples_dir <- system.file("examples", package = "rODE")
     source(paste(test_ex_dir, "run_test_applications.R", sep = "/"))
 }
+
+
+release_questions <- function() {
+    c(
+        "Have you add the names for the vignettes?",
+        "Do the examples have App in them?"
+    )
+}
