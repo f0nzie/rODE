@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 # rODE
 
-The goal of rODE is to explore R and its S4 classes and their differences with Java and Python while exploring simulations by solving differential equations.
+The goal of rODE is to explore R and its S4 classes and the differences with Java and Python classes while exploring simulations by solving differential equations.
 
 `rODE` is based in the extraordinary physics library for computer simulations OpenSourcePhyisics. Take a look at http://opensourcephysics.org.
 
