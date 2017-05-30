@@ -4,7 +4,7 @@ solver <- new("ODEAdaptiveSolver")
 expect_equal(slotNames(solver), c("NO_ERROR", "DID_NOT_CONVERGE", "BISECTION_EVENT_NOT_FOUND"))
 
 expect_equal(showMethods2("ODEAdaptiveSolver"),
-             c("getErrorCode", "getTolerance", "initialize", "setTolerance"))
+             c("getErrorCode", "getTolerance", "setTolerance"))
 
 expect_equal(c(solver@NO_ERROR,
                solver@DID_NOT_CONVERGE,
