@@ -1,5 +1,7 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd.  -->
+[![Rdoc](http://www.rdocumentation.org/badges/version/rODE)](http://www.rdocumentation.org/packages/rODE)
+
 rODE
 ====
 
