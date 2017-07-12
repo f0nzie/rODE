@@ -7,7 +7,9 @@ rODE
 
 The goal of `rODE` is to explore R and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
 
-`rODE` has been inspired on the extraordinary physics library for computer simulations OpenSourcePhyisics. Take a look at <http://opensourcephysics.org>.
+This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.
+
+`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at <http://opensourcephysics.org>.
 
 The ODE solvers implemented in R so far:
 
@@ -23,8 +25,7 @@ Installation
 You can install the latest version of `rODE` from github with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("AlfonsoRReyes/rODE")
+devtools::install_github("f0nzie/rODE")
 ```
 
 Or from `CRAN`:
@@ -40,12 +41,12 @@ Example scripts are located under the folder `examples` inside the package.
 
 These examples make use of a parent class containing a customized rate calculation as well as the step and startup method. The methods that you would commonly find in the base script or parent class are:
 
--   getRate()
--   getState()
--   step() or doStep()
--   setStepSize()
--   init(), which is not the same as the `S4` class `initialize` method
--   initialize(), and
+-   `getRate()`
+-   `getState()`
+-   `step()` or `doStep()`
+-   `setStepSize()`
+-   `init()`, which is not the same as the `S4` class `initialize` method
+-   `initialize()`, and
 -   the constructor
 
 These methods are defined in the virtual classes `ODE` and `ODESolver`.
@@ -62,7 +63,7 @@ The vignettes contain examples of the use of the various ODE solvers.
 For instance, the notebook `Comparison` and `Kepler` use the ODE solver `RK45`; `FallingParticle` and `Planet` use the `Euler` solver; `Pendulum` makes use of `EulerRichardson`; `Planet` of `Euler`, `Projectile`; `Reaction` of `RK4`, and `KeplerEnergy` uses the ODE solver `Verlet`.
 
 Tests
------
+=====
 
 There are tests for the core ODE solver classes under tests/testthat, as well as additional tests for the examples themselves.
 
@@ -75,6 +76,9 @@ For the applications there is another runner (`run_test_applications.R`) that op
 ### Tests all the application examples
 
 You can test all applications under the `examples` folder by running the script `run_test_applications.R`. The way it works is by getting the list of all applications by filtering those ending with `App`. Then removes the extension `.R` from each app and starts looping to call each of the applications with `do.call`. A list contains the `expected` results that are compared against the result coming out from the call to the R application.
+
+Applications
+============
 
 AdaptiveStepApp
 ---------------
@@ -228,7 +232,6 @@ KeplerApp <- function(verbose = FALSE) {
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowVector)
-
     return(DT)
 }
 
@@ -330,9 +333,8 @@ PendulumApp
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++++      example: PendulumApp.R
 # Simulation of a pendulum using the EulerRichardson ODE solver
-
+library(rODE)
 suppressPackageStartupMessages(library(ggplot2))
-
 importFromExamples("Pendulum.R")      # source the class
 
 PendulumApp <- function(verbose = FALSE) {
@@ -371,7 +373,7 @@ PlanetApp
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++  example: PlanetApp.R
 # Simulation of Earth orbiting around the SUn using the Euler ODE solver
-
+library(rODE)
 importFromExamples("Planet.R")      # source the class
 
 PlanetApp <- function(verbose = FALSE) {
@@ -400,6 +402,7 @@ PlanetApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowvec)
     return(DT)
 }
+
 # run the application
 solution <- PlanetApp()
 select_rows <- seq(1, nrow(solution), 10)      # do not overplot
@@ -416,7 +419,7 @@ ProjectileApp
 # +++++++++++++++++++++++++++++++++++++++++++++++++ application: ProjectileApp.R
 #                                                      test Projectile with RK4
 #                                                      originally uses Euler
-
+library(rODE)
 importFromExamples("Projectile.R")      # source the class
 
 ProjectileApp <- function(verbose = FALSE) {
@@ -444,7 +447,6 @@ ProjectileApp <- function(verbose = FALSE) {
     return(DT)
 }
 
-
 solution <- ProjectileApp()
 plot(solution)
 ```
@@ -459,7 +461,7 @@ ReactionApp
 # ReactionApp solves an autocatalytic oscillating chemical
 # reaction (Brusselator model) using
 # a fourth-order Runge-Kutta algorithm.
-
+library(rODE)
 importFromExamples("Reaction.R")      # source the class
 
 ReactionApp <- function(verbose = FALSE) {
@@ -480,7 +482,6 @@ ReactionApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowvec)
     return(DT)
 }
-
 
 solution <- ReactionApp()
 plot(solution)
@@ -572,9 +573,8 @@ SpringRK4App
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++++application:  SpringRK4App.R
 # Simulation of a spring considering no friction
-
+library(rODE)
 importFromExamples("SpringRK4.R")
-
 
 # run application
 SpringRK4App <- function(verbose = FALSE) {
@@ -605,12 +605,16 @@ solution <- SpringRK4App()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-15-1.png) \#\# VanderpolApp
+![](man/figures/README-unnamed-chunk-15-1.png)
+
+VanderpolApp
+------------
 
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++   application: VanderPolApp.R
 # Solution of the Van der Pol equation
 #
+library(rODE)
 importFromExamples("VanderPol.R")
 
 # run the application
@@ -631,8 +635,8 @@ VanderpolApp <- function(verbose = FALSE) {
     }
     DT <- data.table::rbindlist(rowVector)
     return(DT)
-
 }
+
 # show solution
 solution <- VanderpolApp()
 plot(solution)
@@ -648,7 +652,7 @@ VanderpolMuTimeControlApp
 # This is a modification of the original Vanderpol.R script
 # In this version, we will add tha ability of setting mu and time lapse.
 # This example is also shown in the Matlab help guide
-
+library(rODE)
 importFromExamples("VanderpolMuTimeControl.R")
 
 # run the application
@@ -670,8 +674,8 @@ VanderpolMuTimeControlApp <- function(verbose = FALSE) {
     }
     DT <- data.table::rbindlist(rowVector)
     return(DT)
-
 }
+
 # show solution
 solution <- VanderpolMuTimeControlApp()
 plot(solution)
