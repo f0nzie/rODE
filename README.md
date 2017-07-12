@@ -23,7 +23,6 @@ Installation
 You can install the latest version of `rODE` from github with:
 
 ``` r
-# install.packages("devtools")
 devtools::install_github("f0nzie/rODE")
 ```
 

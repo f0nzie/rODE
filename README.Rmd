@@ -34,7 +34,6 @@ The ODE solvers implemented in R so far:
 You can install the latest version of `rODE` from github with:
 
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
 devtools::install_github("f0nzie/rODE")
 ```
 
