@@ -1,6 +1,9 @@
 # rODE 20170712 0.99.5
 * to be release to CRAN
 * change github user to f0nzie
+* testing rODE in Linux Mint 18.2. Passed.
+* add section Applications in README
+* 
 
 # rODE 20170712 9007
 * fix tests that we were using showMethods2
