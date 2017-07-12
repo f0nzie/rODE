@@ -291,3 +291,358 @@ plot(solution)
 ```
 
 ![](README-unnamed-chunk-7-1.png)
+
+PendulumApp
+-----------
+
+``` r
+# ++++++++++++++++++++++++++++++++++++++++++++++++++      example: PendulumApp.R
+# Simulation of a pendulum using the EulerRichardson ODE solver
+
+suppressPackageStartupMessages(library(ggplot2))
+
+importFromExamples("Pendulum.R")      # source the class
+
+PendulumApp <- function(verbose = FALSE) {
+    # initial values
+    theta <- 0.2
+    thetaDot <- 0
+    dt <- 0.1
+    ode <- new("ODE")
+    pendulum <- Pendulum()
+    pendulum@state[3] <- 0      # set time to zero, t = 0
+    pendulum <- setState(pendulum, theta, thetaDot)
+    pendulum <- setStepSize(pendulum, dt = dt) # using stepSize in RK4
+    pendulum@odeSolver <- setStepSize(pendulum@odeSolver, dt) # set new step size
+    rowvec <- vector("list")
+    i <- 1
+    while (pendulum@state[3] <= 40)    {
+        rowvec[[i]] <- list(t  = pendulum@state[3],    # time
+                            theta = pendulum@state[1], # angle
+                            thetadot = pendulum@state[2]) # derivative of angle
+        pendulum <- step(pendulum)
+        i <- i + 1
+    }
+    DT <- data.table::rbindlist(rowvec)
+    return(DT)
+}
+# show solution
+solution <- PendulumApp()
+plot(solution)
+```
+
+![](README-unnamed-chunk-8-1.png)
+
+PlanetApp
+---------
+
+``` r
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++  example: PlanetApp.R
+# Simulation of Earth orbiting around the SUn using the Euler ODE solver
+
+importFromExamples("Planet.R")      # source the class
+
+PlanetApp <- function(verbose = FALSE) {
+    # x =  1, AU or Astronomical Units. Length of semimajor axis or the orbit
+    # of the Earth around the Sun.
+    x <- 1; vx <- 0; y <- 0; vy <- 6.28; t <- 0
+    state <- c(x, vx, y, vy, t)
+    dt <-  0.01
+    planet <- Planet()
+    planet@odeSolver <- setStepSize(planet@odeSolver, dt)
+    planet <- init(planet, initState = state)
+    rowvec <- vector("list")
+    i <- 1
+    # run infinite loop. stop with ESCAPE.
+    while (planet@state[5] <= 90) {     # Earth orbit is 365 days around the sun
+        rowvec[[i]] <- list(t  = planet@state[5],     # just doing 3 months
+                            x  = planet@state[1],     # to speed up for CRAN
+                            vx = planet@state[2],
+                            y  = planet@state[3],
+                            vy = planet@state[4])
+        for (j in 1:5) {                 # advances time
+            planet <- doStep(planet)
+        }
+        i <- i + 1
+    }
+    DT <- data.table::rbindlist(rowvec)
+    return(DT)
+}
+# run the application
+solution <- PlanetApp()
+select_rows <- seq(1, nrow(solution), 10)      # do not overplot
+solution <- solution[select_rows,]
+plot(solution)
+```
+
+![](README-unnamed-chunk-9-1.png)
+
+ProjectileApp
+-------------
+
+``` r
+# +++++++++++++++++++++++++++++++++++++++++++++++++ application: ProjectileApp.R
+#                                                      test Projectile with RK4
+#                                                      originally uses Euler
+
+importFromExamples("Projectile.R")      # source the class
+
+ProjectileApp <- function(verbose = FALSE) {
+    # initial values
+    x <- 0; vx <- 10; y <- 0; vy <- 10
+    state <- c(x, vx, y, vy, 0)                        # state vector
+    dt <- 0.01
+
+    projectile <- Projectile()
+    projectile <- setState(projectile, x, vx, y, vy)
+    projectile@odeSolver <- init(projectile@odeSolver, 0.123)
+    projectile@odeSolver <- setStepSize(projectile@odeSolver, dt)
+    rowV <- vector("list")
+    i <- 1
+    while (projectile@state[3] >= 0)    {
+        rowV[[i]] <- list(t = projectile@state[5],
+                          x  = projectile@state[1],
+                          vx = projectile@state[2],
+                          y  = projectile@state[3],     # vertical position
+                          vy = projectile@state[4])
+        projectile <- step(projectile)
+        i <- i + 1
+    }
+    DT <- data.table::rbindlist(rowV)
+    return(DT)
+}
+
+
+solution <- ProjectileApp()
+plot(solution)
+```
+
+![](README-unnamed-chunk-10-1.png)
+
+ReactionApp
+-----------
+
+``` r
+# +++++++++++++++++++++++++++++++++++++++++++++++++++ application: ReactionApp.R
+# ReactionApp solves an autocatalytic oscillating chemical
+# reaction (Brusselator model) using
+# a fourth-order Runge-Kutta algorithm.
+
+importFromExamples("Reaction.R")      # source the class
+
+ReactionApp <- function(verbose = FALSE) {
+    X <- 1; Y <- 5;
+    dt <- 0.1
+
+    reaction <- Reaction(c(X, Y, 0))
+    solver <- RK4(reaction)
+    rowvec <- vector("list")
+    i <- 1
+    while (solver@ode@state[3] < 100) {             # stop at t = 100
+        rowvec[[i]] <- list(t = solver@ode@state[3],
+                            X = solver@ode@state[1],
+                            Y = solver@ode@state[2])
+        solver <- step(solver)
+        i <-  i + 1
+    }
+    DT <- data.table::rbindlist(rowvec)
+    return(DT)
+}
+
+
+solution <- ReactionApp()
+plot(solution)
+```
+
+![](README-unnamed-chunk-11-1.png)
+
+RigidBodyNXFApp
+---------------
+
+``` r
+# +++++++++++++++++++++++++++++++++++++++++++++++ application: RigidBodyNXFApp.R
+# example of a nonstiff system is the system of equations describing
+# the motion of a rigid body without external forces.
+library(rODE)
+importFromExamples("RigidBody.R")
+
+# run the application
+RigidBodyNXFApp <- function(verbose = FALSE) {
+    # load the R class that sets up the solver for this application
+    y1 <- 0   # initial y1 value
+    y2 <- 1    # initial y2 value
+    y3 <- 1    # initial y3 value
+    dt        <- 0.01 # delta time for step
+
+    body <- RigidBodyNXF(y1, y2, y3)
+    solver <- Euler(body)
+    solver <- setStepSize(solver, dt)
+    rowVector <- vector("list")
+    i <- 1
+    # stop loop when the body hits the ground
+    while (body@state[4] <= 12) {
+        rowVector[[i]] <- list(t  = body@state[4],
+                               y1 = body@state[1],
+                               y2 = body@state[2],
+                               y3 = body@state[3])
+        solver <- step(solver)
+        body <- solver@ode
+        i <- i + 1
+    }
+    DT <- data.table::rbindlist(rowVector)
+    return(DT)
+}
+
+# get the data table from the app
+solution <- RigidBodyNXFApp()
+plot(solution)
+```
+
+![](README-unnamed-chunk-12-1.png)
+
+SHOApp
+------
+
+``` r
+library(rODE)
+importFromExamples("SHO.R")
+
+# SHOApp.R
+SHOApp <- function(...) {
+    x <- 1.0; v <- 0; k <- 1.0; dt <- 0.01; tolerance <- 1e-3
+    sho    <- SHO(x, v, k)
+    solver_factory <- ODESolverFactory()
+    solver <- createODESolver(solver_factory, sho, "DormandPrince45")
+    # solver <- DormandPrince45(sho)                    # this can also be used
+    solver <- setTolerance(solver, tolerance)
+    solver <- init(solver, dt)
+    i <- 1; rowVector <- vector("list")
+    while (sho@state[3] <= 500) {
+        rowVector[[i]] <- list(x = sho@state[1],
+                               v = sho@state[2],
+                               t = sho@state[3])
+        solver <- step(solver)
+        sho    <- solver@ode
+        i <- i + 1
+    }
+    return(data.table::rbindlist(rowVector))
+}
+
+solution <- SHOApp()
+plot(solution)
+```
+
+![](README-unnamed-chunk-13-1.png)
+
+SpringRK4App
+------------
+
+``` r
+# ++++++++++++++++++++++++++++++++++++++++++++++++++application:  SpringRK4App.R
+# Simulation of a spring considering no friction
+
+importFromExamples("SpringRK4.R")
+
+
+# run application
+SpringRK4App <- function(verbose = FALSE) {
+    theta    <- 0
+    thetaDot <- -0.2
+    tmax     <- 22; dt <- 0.1
+    ode <- new("ODE")
+    spring <- SpringRK4()
+    spring@state[3] <- 0      # set time to zero, t = 0
+    spring <- setState(spring, theta, thetaDot)
+    spring <- setStepSize(spring, dt = dt) # using stepSize in RK4
+    spring@odeSolver <- setStepSize(spring@odeSolver, dt) # set new step size
+    rowvec <- vector("list")
+    i <- 1
+    while (spring@state[3] <= tmax)    {
+        rowvec[[i]] <- list(t  = spring@state[3],      # angle
+                            y1 = spring@state[1],      # derivative of the angle
+                            y2 = spring@state[2])      # time
+        i <- i + 1
+        spring <- step(spring)
+    }
+    DT <- data.table::rbindlist(rowvec)
+    return(DT)
+}
+
+# show solution
+solution <- SpringRK4App()
+plot(solution)
+```
+
+![](README-unnamed-chunk-14-1.png) \#\# VanderpolApp
+
+``` r
+# ++++++++++++++++++++++++++++++++++++++++++++++++   application: VanderPolApp.R
+# Solution of the Van der Pol equation
+#
+importFromExamples("VanderPol.R")
+
+# run the application
+VanderpolApp <- function(verbose = FALSE) {
+    # set the orbit into a predefined state.
+    y1 <- 2; y2 <- 0; dt <- 0.1;
+    rigid_body <- VanderPol(y1, y2)
+    solver <- RK45(rigid_body)
+    rowVector <- vector("list")
+    i <- 1
+    while (rigid_body@state[3] <= 20) {
+        rowVector[[i]] <- list(t =  rigid_body@state[3],
+                               y1 = rigid_body@state[1],
+                               y2 = rigid_body@state[2])
+        solver <- step(solver)
+        rigid_body <- solver@ode
+        i <-  i + 1
+    }
+    DT <- data.table::rbindlist(rowVector)
+    return(DT)
+
+}
+# show solution
+solution <- VanderpolApp()
+plot(solution)
+```
+
+![](README-unnamed-chunk-15-1.png)
+
+VanderpolMuTimeControlApp
+-------------------------
+
+``` r
+# +++++++++++++++++++++++++++++++++++++     example: VanderpolMuTimeControlApp.R
+# This is a modification of the original Vanderpol.R script
+# In this version, we will add tha ability of setting mu and time lapse.
+# This example is also shown in the Matlab help guide
+
+importFromExamples("VanderpolMuTimeControl.R")
+
+# run the application
+VanderpolMuTimeControlApp <- function(verbose = FALSE) {
+    # set the orbit into a predefined state.
+    y1 <- 2; y2 <- 0; mu <- 10; tmax <- mu * 3; dt <- 0.01
+    rigid_body <- VanderPol(y1, y2, mu)
+    solver <- RK45(rigid_body)
+    rowVector <- vector("list")
+    i <- 1
+    while (rigid_body@state[3] <= tmax) {
+        rowVector[[i]] <- list(t =  rigid_body@state[3],
+                               y1 = rigid_body@state[1],
+                               y2 = rigid_body@state[2]
+                               )
+        solver <- step(solver)
+        rigid_body <- solver@ode
+        i <-  i + 1
+    }
+    DT <- data.table::rbindlist(rowVector)
+    return(DT)
+
+}
+# show solution
+solution <- VanderpolMuTimeControlApp()
+plot(solution)
+```
+
+![](README-unnamed-chunk-16-1.png)
