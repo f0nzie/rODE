@@ -121,7 +121,7 @@ for (app in examples) {
     source(paste(system.file("examples", package = "rODE"), app, sep ="/"))
     result  <- do.call(application, list(FALSE))
     .result <- as.list(result[nrow(result),]);
-    cat(sprintf("%25s", names(expected[application])))
+    cat(sprintf("%30s", names(expected[application])))
     if ((goDebug) && (names(expected[application]) == "VanderpolMuTimeControlApp")) {
         cat("\n");
         print(.result)}
