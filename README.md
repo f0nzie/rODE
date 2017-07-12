@@ -24,7 +24,7 @@ You can install the latest version of `rODE` from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("AlfonsoRReyes/rODE")
+devtools::install_github("f0nzie/rODE")
 ```
 
 Or from `CRAN`:
