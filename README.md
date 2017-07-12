@@ -40,12 +40,12 @@ Example scripts are located under the folder `examples` inside the package.
 
 These examples make use of a parent class containing a customized rate calculation as well as the step and startup method. The methods that you would commonly find in the base script or parent class are:
 
--   getRate()
--   getState()
--   step() or doStep()
--   setStepSize()
--   init(), which is not the same as the `S4` class `initialize` method
--   initialize(), and
+-   `getRate()`
+-   `getState()`
+-   `step()` or `doStep()`
+-   `setStepSize()`
+-   `init()`, which is not the same as the `S4` class `initialize` method
+-   `initialize()`, and
 -   the constructor
 
 These methods are defined in the virtual classes `ODE` and `ODESolver`.
@@ -228,7 +228,6 @@ KeplerApp <- function(verbose = FALSE) {
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowVector)
-
     return(DT)
 }
 
@@ -330,9 +329,8 @@ PendulumApp
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++++      example: PendulumApp.R
 # Simulation of a pendulum using the EulerRichardson ODE solver
-
+library(rODE)
 suppressPackageStartupMessages(library(ggplot2))
-
 importFromExamples("Pendulum.R")      # source the class
 
 PendulumApp <- function(verbose = FALSE) {
@@ -371,7 +369,7 @@ PlanetApp
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++  example: PlanetApp.R
 # Simulation of Earth orbiting around the SUn using the Euler ODE solver
-
+library(rODE)
 importFromExamples("Planet.R")      # source the class
 
 PlanetApp <- function(verbose = FALSE) {
@@ -400,6 +398,7 @@ PlanetApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowvec)
     return(DT)
 }
+
 # run the application
 solution <- PlanetApp()
 select_rows <- seq(1, nrow(solution), 10)      # do not overplot
@@ -416,7 +415,7 @@ ProjectileApp
 # +++++++++++++++++++++++++++++++++++++++++++++++++ application: ProjectileApp.R
 #                                                      test Projectile with RK4
 #                                                      originally uses Euler
-
+library(rODE)
 importFromExamples("Projectile.R")      # source the class
 
 ProjectileApp <- function(verbose = FALSE) {
@@ -444,7 +443,6 @@ ProjectileApp <- function(verbose = FALSE) {
     return(DT)
 }
 
-
 solution <- ProjectileApp()
 plot(solution)
 ```
@@ -459,7 +457,7 @@ ReactionApp
 # ReactionApp solves an autocatalytic oscillating chemical
 # reaction (Brusselator model) using
 # a fourth-order Runge-Kutta algorithm.
-
+library(rODE)
 importFromExamples("Reaction.R")      # source the class
 
 ReactionApp <- function(verbose = FALSE) {
@@ -480,7 +478,6 @@ ReactionApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowvec)
     return(DT)
 }
-
 
 solution <- ReactionApp()
 plot(solution)
@@ -572,9 +569,8 @@ SpringRK4App
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++++application:  SpringRK4App.R
 # Simulation of a spring considering no friction
-
+library(rODE)
 importFromExamples("SpringRK4.R")
-
 
 # run application
 SpringRK4App <- function(verbose = FALSE) {
@@ -605,12 +601,16 @@ solution <- SpringRK4App()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-15-1.png) \#\# VanderpolApp
+![](man/figures/README-unnamed-chunk-15-1.png)
+
+VanderpolApp
+------------
 
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++   application: VanderPolApp.R
 # Solution of the Van der Pol equation
 #
+library(rODE)
 importFromExamples("VanderPol.R")
 
 # run the application
@@ -631,8 +631,8 @@ VanderpolApp <- function(verbose = FALSE) {
     }
     DT <- data.table::rbindlist(rowVector)
     return(DT)
-
 }
+
 # show solution
 solution <- VanderpolApp()
 plot(solution)
@@ -648,7 +648,7 @@ VanderpolMuTimeControlApp
 # This is a modification of the original Vanderpol.R script
 # In this version, we will add tha ability of setting mu and time lapse.
 # This example is also shown in the Matlab help guide
-
+library(rODE)
 importFromExamples("VanderpolMuTimeControl.R")
 
 # run the application
@@ -670,8 +670,8 @@ VanderpolMuTimeControlApp <- function(verbose = FALSE) {
     }
     DT <- data.table::rbindlist(rowVector)
     return(DT)
-
 }
+
 # show solution
 solution <- VanderpolMuTimeControlApp()
 plot(solution)
