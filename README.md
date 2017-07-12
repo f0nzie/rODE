@@ -7,7 +7,7 @@ rODE
 
 The goal of `rODE` is to explore R and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
 
-`rODE` has been inspired on the extraordinary physics library for computer simulations OpenSourcePhyisics. Take a look at <http://opensourcephysics.org>.
+`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at <http://opensourcephysics.org>.
 
 The ODE solvers implemented in R so far:
 
@@ -62,7 +62,7 @@ The vignettes contain examples of the use of the various ODE solvers.
 For instance, the notebook `Comparison` and `Kepler` use the ODE solver `RK45`; `FallingParticle` and `Planet` use the `Euler` solver; `Pendulum` makes use of `EulerRichardson`; `Planet` of `Euler`, `Projectile`; `Reaction` of `RK4`, and `KeplerEnergy` uses the ODE solver `Verlet`.
 
 Tests
------
+=====
 
 There are tests for the core ODE solver classes under tests/testthat, as well as additional tests for the examples themselves.
 
@@ -75,6 +75,9 @@ For the applications there is another runner (`run_test_applications.R`) that op
 ### Tests all the application examples
 
 You can test all applications under the `examples` folder by running the script `run_test_applications.R`. The way it works is by getting the list of all applications by filtering those ending with `App`. Then removes the extension `.R` from each app and starts looping to call each of the applications with `do.call`. A list contains the `expected` results that are compared against the result coming out from the call to the R application.
+
+Applications
+============
 
 AdaptiveStepApp
 ---------------
