@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 
 The goal of `rODE` is to explore R and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
 
+This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.
+
 `rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at http://opensourcephysics.org.
 
 The ODE solvers implemented in R so far:
