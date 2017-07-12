@@ -76,6 +76,43 @@ For the applications there is another runner (`run_test_applications.R`) that op
 
 You can test all applications under the `examples` folder by running the script `run_test_applications.R`. The way it works is by getting the list of all applications by filtering those ending with `App`. Then removes the extension `.R` from each app and starts looping to call each of the applications with `do.call`. A list contains the `expected` results that are compared against the result coming out from the call to the R application.
 
+AdaptiveStepApp
+---------------
+
+``` r
+library(rODE)
+#> 
+#> Attaching package: 'rODE'
+#> The following object is masked from 'package:stats':
+#> 
+#>     step
+importFromExamples("AdaptiveStep.R")
+
+# running function
+AdaptiveStepApp <- function(verbose = FALSE) {
+    ode        <- new("Impulse")
+    ode_solver <- RK45(ode)
+    ode_solver <- init(ode_solver, 0.1)
+    ode_solver <- setTolerance(ode_solver, 1.0e-4)
+    i <- 1; rowVector <- vector("list")
+    while (getState(ode)[1] < 12) {
+        rowVector[[i]] <- list(s1 = getState(ode)[1],
+                               s2 = getState(ode)[2],
+                               t  = getState(ode)[3])
+        ode_solver <- step(ode_solver)
+        ode <- ode_solver@ode
+        i <- i + 1
+    }
+    return(data.table::rbindlist(rowVector))
+}
+
+# run application
+solution <- AdaptiveStepApp()
+plot(solution)
+```
+
+![](man/figures/README-unnamed-chunk-3-1.png)
+
 ComparisonRK45App
 -----------------
 
@@ -86,11 +123,6 @@ ComparisonRK45App
 # ODE Solver:   Runge-Kutta 45
 # Class:        RK45
 library(rODE)
-#> 
-#> Attaching package: 'rODE'
-#> The following object is masked from 'package:stats':
-#> 
-#>     step
 importFromExamples("ODETest.R")
 
  ComparisonRK45App <- function(verbose = FALSE) {
@@ -121,7 +153,7 @@ solution <- ComparisonRK45App()                          # run the example
 plot(solution)
 ```
 
-![](README-unnamed-chunk-3-1.png)
+![](man/figures/README-unnamed-chunk-4-1.png)
 
 FallingParticleODE
 ------------------
@@ -159,10 +191,10 @@ solution <- FallingParticleODEApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-4-1.png)
+![](man/figures/README-unnamed-chunk-5-1.png)
 
-Kepler
-------
+KeplerApp
+---------
 
 ``` r
 #  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ example KeplerApp.R
@@ -204,7 +236,7 @@ solution <- KeplerApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-5-1.png)
+![](man/figures/README-unnamed-chunk-6-1.png)
 
 KeplerEnergyApp
 ---------------
@@ -252,7 +284,7 @@ solution <- KeplerEnergyApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-6-1.png)
+![](man/figures/README-unnamed-chunk-7-1.png)
 
 LogisticApp
 -----------
@@ -290,7 +322,7 @@ solution <- LogisticApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![](man/figures/README-unnamed-chunk-8-1.png)
 
 PendulumApp
 -----------
@@ -331,7 +363,7 @@ solution <- PendulumApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-8-1.png)
+![](man/figures/README-unnamed-chunk-9-1.png)
 
 PlanetApp
 ---------
@@ -375,7 +407,7 @@ solution <- solution[select_rows,]
 plot(solution)
 ```
 
-![](README-unnamed-chunk-9-1.png)
+![](man/figures/README-unnamed-chunk-10-1.png)
 
 ProjectileApp
 -------------
@@ -417,7 +449,7 @@ solution <- ProjectileApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-10-1.png)
+![](man/figures/README-unnamed-chunk-11-1.png)
 
 ReactionApp
 -----------
@@ -454,7 +486,7 @@ solution <- ReactionApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-11-1.png)
+![](man/figures/README-unnamed-chunk-12-1.png)
 
 RigidBodyNXFApp
 ---------------
@@ -498,7 +530,7 @@ solution <- RigidBodyNXFApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-12-1.png)
+![](man/figures/README-unnamed-chunk-13-1.png)
 
 SHOApp
 ------
@@ -532,7 +564,7 @@ solution <- SHOApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-13-1.png)
+![](man/figures/README-unnamed-chunk-14-1.png)
 
 SpringRK4App
 ------------
@@ -573,7 +605,7 @@ solution <- SpringRK4App()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-14-1.png) \#\# VanderpolApp
+![](man/figures/README-unnamed-chunk-15-1.png) \#\# VanderpolApp
 
 ``` r
 # ++++++++++++++++++++++++++++++++++++++++++++++++   application: VanderPolApp.R
@@ -606,7 +638,7 @@ solution <- VanderpolApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-15-1.png)
+![](man/figures/README-unnamed-chunk-16-1.png)
 
 VanderpolMuTimeControlApp
 -------------------------
@@ -645,4 +677,4 @@ solution <- VanderpolMuTimeControlApp()
 plot(solution)
 ```
 
-![](README-unnamed-chunk-16-1.png)
+![](man/figures/README-unnamed-chunk-17-1.png)

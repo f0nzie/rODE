@@ -10,9 +10,10 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "man/figures/README-"
 )
 ```
+
 
 # rODE
 
@@ -82,6 +83,37 @@ For the applications there is another runner (`run_test_applications.R`) that op
 You can test all applications under the `examples` folder by running the script `run_test_applications.R`. The way it works is by getting the list of all applications by filtering those ending with `App`. Then removes the extension `.R` from each app and starts looping to call each of the  applications with `do.call`.
 A list contains the `expected` results that are compared against the result
 coming out from the call to the R application.
+
+
+## AdaptiveStepApp
+
+```{r}
+library(rODE)
+importFromExamples("AdaptiveStep.R")
+
+# running function
+AdaptiveStepApp <- function(verbose = FALSE) {
+    ode        <- new("Impulse")
+    ode_solver <- RK45(ode)
+    ode_solver <- init(ode_solver, 0.1)
+    ode_solver <- setTolerance(ode_solver, 1.0e-4)
+    i <- 1; rowVector <- vector("list")
+    while (getState(ode)[1] < 12) {
+        rowVector[[i]] <- list(s1 = getState(ode)[1],
+                               s2 = getState(ode)[2],
+                               t  = getState(ode)[3])
+        ode_solver <- step(ode_solver)
+        ode <- ode_solver@ode
+        i <- i + 1
+    }
+    return(data.table::rbindlist(rowVector))
+}
+
+# run application
+solution <- AdaptiveStepApp()
+plot(solution)
+```
+
 
 
 ## ComparisonRK45App
@@ -160,8 +192,7 @@ plot(solution)
 
 
 
-
-## Kepler
+## KeplerApp
 ```{r}
 #  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ example KeplerApp.R
 #  KeplerApp solves an inverse-square law model (Kepler model) using an adaptive
