@@ -1,3 +1,5 @@
+# ode_generics.R
+
 #' Get the number of times that the rate has been calculated
 #'
 #' @param object a class object
@@ -91,7 +93,7 @@ setGeneric("getRate", function(object, state, ...) standardGeneric("getRate"))
 #' @param ... additional parameters
 #' @rdname getState-method
 #' @export
-#' @example ./inst/examples/VanderPolApp.R
+#' @example ./inst/examples/VanderpolApp.R
 #' @example ./inst/examples/SpringRK4App.R
 setGeneric("getState", function(object, ...) standardGeneric("getState"))
 
