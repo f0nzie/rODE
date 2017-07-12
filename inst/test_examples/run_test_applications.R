@@ -1,8 +1,8 @@
-# Test by opening all applications under the `examples` folder Get the list of
-# appli ations by filtering those ending with `App`.
-# Removes the extension `.R` from each app and loop to call each of the
+# Test all applications under the `examples` folder.
+# Gets the list of all applications by filtering those ending with `App`.
+# Removes the extension `.R` from each app and starts looping to call each of the
 # applications with `do.call`.
-# A list contains the `expected`` results that are compared against the result
+# A list contains the `expected` results that are compared against the result
 # coming out from the call to the R application.
 
 
@@ -121,7 +121,7 @@ for (app in examples) {
     source(paste(system.file("examples", package = "rODE"), app, sep ="/"))
     result  <- do.call(application, list(FALSE))
     .result <- as.list(result[nrow(result),]);
-    cat(sprintf("%25s", names(expected[application])))
+    cat(sprintf("%30s", names(expected[application])))
     if ((goDebug) && (names(expected[application]) == "VanderpolMuTimeControlApp")) {
         cat("\n");
         print(.result)}

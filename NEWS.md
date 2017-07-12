@@ -1,3 +1,15 @@
+# rODE 20170712 0.99.5
+* to be release to CRAN
+* change github user to f0nzie
+* testing rODE in Linux Mint 18.2. Passed.
+* add section Applications in README
+* testing rODE in osX. Passed.
+
+# rODE 20170712 9007
+* fix tests that we were using showMethods2
+* split examples in classes and applications
+* add applications to README. Includes figures.
+* move figures folder to man/figures
 
 # rODE 0.99.4.9006
 * add NEWS.md
