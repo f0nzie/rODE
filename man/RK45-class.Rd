@@ -34,16 +34,17 @@ importFromExamples("ODETest.R")
      rowVector <- vector("list")
      i <- 1
      while (time < 50) {
-         rowVector[[i]] <- list(t  = ode_solver@ode@state[2],
-                                s1 = getState(ode_solver@ode)[1],
-                                s2 = getState(ode_solver@ode)[2],
-                                xs = getExactSolution(ode_solver@ode, time),
+         rowVector[[i]] <- list(t  = getState(ode)[2],
+                                s1 = getState(ode)[1],
+                                s2 = getState(ode)[2],
+                                xs = getExactSolution(ode, time),
                                 rc = getRateCounts(ode),
                                 time = time)
          ode_solver <- step(ode_solver)       # advance one step
          stepSize <-  ode_solver@stepSize     # update the step size
          time <- time + stepSize
-         state <- getState(ode_solver@ode)    # get the `state` vector
+         ode <- ode_solver@ode                     # get updated ODE object
+         state <- getState(ode)    # get the `state` vector
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results
@@ -71,12 +72,12 @@ KeplerApp <- function(verbose = FALSE) {
 
     rowVector <- vector("list")
     i <- 1
-    while (planet@state[5] <= 10) {
+    while (getState(planet)[5] <= 10) {
         rowVector[[i]] <- list(t  = planet@state[5],
-                               planet1.r = planet@state[1],
-                               p1anet1.v = planet@state[2],
-                               planet2.r = planet@state[3],
-                               p1anet2.v = planet@state[4])
+                               planet1.r = getState(planet)[1],
+                               p1anet1.v = getState(planet)[2],
+                               planet2.r = getState(planet)[3],
+                               p1anet2.v = getState(planet)[4])
         solver <- step(solver)
         planet <- solver@ode
         i <-  i + 1

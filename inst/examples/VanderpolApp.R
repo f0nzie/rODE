@@ -11,11 +11,11 @@ VanderpolApp <- function(verbose = FALSE) {
     solver <- RK45(rigid_body)
     rowVector <- vector("list")
     i <- 1
-    while (rigid_body@state[3] <= 20) {
-        rowVector[[i]] <- list(t =  rigid_body@state[3],
-                               y1 = rigid_body@state[1],
-                               y2 = rigid_body@state[2])
-        solver <- step(solver)
+    while (getState(rigid_body)[3] <= 20) {
+        rowVector[[i]] <- list(t  = getState(rigid_body)[3],
+                               y1 = getState(rigid_body)[1],
+                               y2 = getState(rigid_body)[2])
+        solver     <- step(solver)
         rigid_body <- solver@ode
         i <-  i + 1
     }

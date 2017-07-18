@@ -15,12 +15,12 @@ PlanetApp <- function(verbose = FALSE) {
     rowvec <- vector("list")
     i <- 1
     # run infinite loop. stop with ESCAPE.
-    while (planet@state[5] <= 90) {     # Earth orbit is 365 days around the sun
-        rowvec[[i]] <- list(t  = planet@state[5],     # just doing 3 months
-                            x  = planet@state[1],     # to speed up for CRAN
-                            vx = planet@state[2],
-                            y  = planet@state[3],
-                            vy = planet@state[4])
+    while (getState(planet)[5] <= 90) {     # Earth orbit is 365 days around the sun
+        rowvec[[i]] <- list(t  = getState(planet)[5],     # just doing 3 months
+                            x  = getState(planet)[1],     # to speed up for CRAN
+                            vx = getState(planet)[2],
+                            y  = getState(planet)[3],
+                            vy = getState(planet)[4])
         for (j in 1:5) {                 # advances time
             planet <- doStep(planet)
         }

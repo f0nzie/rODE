@@ -17,10 +17,10 @@ SpringRK4App <- function(verbose = FALSE) {
     spring@odeSolver <- setStepSize(spring@odeSolver, dt) # set new step size
     rowvec <- vector("list")
     i <- 1
-    while (spring@state[3] <= tmax)    {
-        rowvec[[i]] <- list(t  = spring@state[3],      # angle
-                            y1 = spring@state[1],      # derivative of the angle
-                            y2 = spring@state[2])      # time
+    while (getState(spring)[3] <= tmax)    {
+        rowvec[[i]] <- list(t  = getState(spring)[3],      # angle
+                            y1 = getState(spring)[1],      # derivative of the angle
+                            y2 = getState(spring)[2])      # time
         i <- i + 1
         spring <- step(spring)
     }

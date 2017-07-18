@@ -18,12 +18,12 @@ ProjectileApp <- function(verbose = FALSE) {
     projectile@odeSolver <- setStepSize(projectile@odeSolver, dt)
     rowV <- vector("list")
     i <- 1
-    while (projectile@state[3] >= 0)    {
-        rowV[[i]] <- list(t = projectile@state[5],
-                          x  = projectile@state[1],
-                          vx = projectile@state[2],
-                          y  = projectile@state[3],     # vertical position
-                          vy = projectile@state[4])
+    while (getState(projectile)[3] >= 0)    {
+        rowV[[i]] <- list(t  = getState(projectile)[5],
+                          x  = getState(projectile)[1],
+                          vx = getState(projectile)[2],
+                          y  = getState(projectile)[3],     # vertical position
+                          vy = getState(projectile)[4])
         projectile <- step(projectile)
         i <- i + 1
     }

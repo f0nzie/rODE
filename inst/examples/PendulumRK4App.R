@@ -26,17 +26,15 @@ PendulumRK4App <- function(verbose = FALSE) {
 
     rowvec <- vector("list")
     i <- 1
-    while (pendulum@state[3] <= 20)    {
-        rowvec[[i]] <- list(state1 = pendulum@state[1], # angle
-                            state2 = pendulum@state[2],      # derivative of the angle
-                            state3 = pendulum@state[3])       # time
+    while (getState(pendulum)[3] <= 20)    {
+        rowvec[[i]] <- list(state1 = getState(pendulum)[1], # angle
+                            state2 = getState(pendulum)[2],      # derivative of the angle
+                            state3 = getState(pendulum)[3])       # time
         i <- i + 1
         pendulum <- step(pendulum)
     }
     return(data.table::rbindlist(rowvec))
-
 }
-
 
 solution <- PendulumRK4App()
 plot(solution)

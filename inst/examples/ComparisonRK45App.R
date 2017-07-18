@@ -15,16 +15,17 @@ importFromExamples("ODETest.R")
      rowVector <- vector("list")
      i <- 1
      while (time < 50) {
-         rowVector[[i]] <- list(t  = ode_solver@ode@state[2],
-                                s1 = getState(ode_solver@ode)[1],
-                                s2 = getState(ode_solver@ode)[2],
-                                xs = getExactSolution(ode_solver@ode, time),
+         rowVector[[i]] <- list(t  = getState(ode)[2],
+                                s1 = getState(ode)[1],
+                                s2 = getState(ode)[2],
+                                xs = getExactSolution(ode, time),
                                 rc = getRateCounts(ode),
                                 time = time)
          ode_solver <- step(ode_solver)       # advance one step
          stepSize <-  ode_solver@stepSize     # update the step size
          time <- time + stepSize
-         state <- getState(ode_solver@ode)    # get the `state` vector
+         ode <- ode_solver@ode                     # get updated ODE object
+         state <- getState(ode)    # get the `state` vector
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results

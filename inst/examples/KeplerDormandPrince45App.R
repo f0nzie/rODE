@@ -24,11 +24,11 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) < 1.5) {
-        rowVector[[i]] <- list(t  = particle@state[5],
-                               x  = particle@state[1],
-                               vx = particle@state[2],
-                               y  = particle@state[3],
-                               vx = particle@state[4],
+        rowVector[[i]] <- list(t  = getState(particle)[5],
+                               x  = getState(particle)[1],
+                               vx = getState(particle)[2],
+                               y  = getState(particle)[3],
+                               vx = getState(particle)[4],
                                energy = getEnergy(particle) )
         particle <- doStep(particle)            # advance one step
         energy   <- getEnergy(particle)         # calculate energy

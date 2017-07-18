@@ -35,8 +35,8 @@ LogisticApp <- function(verbose = FALSE) {
     i <- 1
     while (getTime(population) <= tmax) {
         rowVector[[i]] <- list(t = getTime(population),
-                               s1 = population@state[1],
-                               s2 = population@state[2])
+                               s1 = getState(population)[1],
+                               s2 = getState(population)[2])
         population <- doStep(population)
         i <- i + 1
     }

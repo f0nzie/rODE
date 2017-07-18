@@ -87,12 +87,12 @@ KeplerApp <- function(verbose = FALSE) {
 
     rowVector <- vector("list")
     i <- 1
-    while (planet@state[5] <= 10) {
+    while (getState(planet)[5] <= 10) {
         rowVector[[i]] <- list(t  = planet@state[5],
-                               planet1.r = planet@state[1],
-                               p1anet1.v = planet@state[2],
-                               planet2.r = planet@state[3],
-                               p1anet2.v = planet@state[4])
+                               planet1.r = getState(planet)[1],
+                               p1anet1.v = getState(planet)[2],
+                               planet2.r = getState(planet)[3],
+                               p1anet2.v = getState(planet)[4])
         solver <- step(solver)
         planet <- solver@ode
         i <-  i + 1

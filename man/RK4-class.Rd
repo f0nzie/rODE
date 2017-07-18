@@ -110,10 +110,10 @@ PendulumApp <- function(verbose = FALSE) {
     pendulum@odeSolver <- setStepSize(pendulum@odeSolver, dt) # set new step size
     rowvec <- vector("list")
     i <- 1
-    while (pendulum@state[3] <= 40)    {
-        rowvec[[i]] <- list(t  = pendulum@state[3],    # time
-                            theta = pendulum@state[1], # angle
-                            thetadot = pendulum@state[2]) # derivative of angle
+    while (getState(pendulum)[3] <= 40)    {
+        rowvec[[i]] <- list(t  = getState(pendulum)[3],    # time
+                            theta = getState(pendulum)[1], # angle
+                            thetadot = getState(pendulum)[2]) # derivative of angle
         pendulum <- step(pendulum)
         i <- i + 1
     }
@@ -138,11 +138,12 @@ ReactionApp <- function(verbose = FALSE) {
     solver <- RK4(reaction)
     rowvec <- vector("list")
     i <- 1
-    while (solver@ode@state[3] < 100) {             # stop at t = 100
-        rowvec[[i]] <- list(t = solver@ode@state[3],
-                            X = solver@ode@state[1],
-                            Y = solver@ode@state[2])
-        solver <- step(solver)
+    while (getState(reaction)[3] < 100) {             # stop at t = 100
+        rowvec[[i]] <- list(t = getState(reaction)[3],
+                            X = getState(reaction)[1],
+                            Y = getState(reaction)[2])
+        solver   <- step(solver)
+        reaction <- solver@ode
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowvec)

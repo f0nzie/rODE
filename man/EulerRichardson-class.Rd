@@ -38,10 +38,10 @@ PendulumApp <- function(verbose = FALSE) {
     pendulum@odeSolver <- setStepSize(pendulum@odeSolver, dt) # set new step size
     rowvec <- vector("list")
     i <- 1
-    while (pendulum@state[3] <= 40)    {
-        rowvec[[i]] <- list(t  = pendulum@state[3],    # time
-                            theta = pendulum@state[1], # angle
-                            thetadot = pendulum@state[2]) # derivative of angle
+    while (getState(pendulum)[3] <= 40)    {
+        rowvec[[i]] <- list(t  = getState(pendulum)[3],    # time
+                            theta = getState(pendulum)[1], # angle
+                            thetadot = getState(pendulum)[2]) # derivative of angle
         pendulum <- step(pendulum)
         i <- i + 1
     }

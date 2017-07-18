@@ -13,11 +13,12 @@ ReactionApp <- function(verbose = FALSE) {
     solver <- RK4(reaction)
     rowvec <- vector("list")
     i <- 1
-    while (solver@ode@state[3] < 100) {             # stop at t = 100
-        rowvec[[i]] <- list(t = solver@ode@state[3],
-                            X = solver@ode@state[1],
-                            Y = solver@ode@state[2])
-        solver <- step(solver)
+    while (getState(reaction)[3] < 100) {             # stop at t = 100
+        rowvec[[i]] <- list(t = getState(reaction)[3],
+                            X = getState(reaction)[1],
+                            Y = getState(reaction)[2])
+        solver   <- step(solver)
+        reaction <- solver@ode
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowvec)

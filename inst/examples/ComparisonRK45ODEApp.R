@@ -17,10 +17,10 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
     i <- 1    # counter
     while (time < 50) {
         # add solution objects to a row vector
-        rowVector[[i]] <- list(t = ode_solver@ode@state[2],
-                               ODE = getState(ode_solver@ode)[1],
-                               s2  = getState(ode_solver@ode)[2],
-                               exact = getExactSolution(ode_solver@ode, time),
+        rowVector[[i]] <- list(t = getState(ode)[2],
+                               ODE = getState(ode)[1],
+                               s2  = getState(ode)[2],
+                               exact = getExactSolution(ode, time),
                                rate.counts = getRateCounts(ode),
                                time = time )
         ode_solver <- step(ode_solver)            # advance solver one step
@@ -36,9 +36,11 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
 
 solution <- ComparisonRK45ODEApp()
 plot(solution)
+
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+
 solution.multi <- solution %>%
     select(t, ODE, exact)
 plot(solution.multi)
