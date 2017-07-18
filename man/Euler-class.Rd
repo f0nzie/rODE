@@ -75,7 +75,7 @@ FallingParticleODEApp <- function(verbose = FALSE) {
     initial_y <- 10
     initial_v <- 0
     dt <- 0.01
-    ball <- FallingParticleODE(initial_y, initial_v)
+    ball   <- FallingParticleODE(initial_y, initial_v)
     solver <- Euler(ball)                        # set the ODE solver
     solver <- setStepSize(solver, dt)            # set the step
     rowVector <- vector("list")

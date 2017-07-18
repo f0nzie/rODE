@@ -97,10 +97,11 @@ importFromExamples("ODETest.R")
                                 rc = getRateCounts(ode),
                                 time = time)
          ode_solver <- step(ode_solver)       # advance one step
-         stepSize <-  ode_solver@stepSize     # update the step size
+         # stepSize <-  ode_solver@stepSize     # update the step size
+         stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
          ode <- ode_solver@ode                     # get updated ODE object
-         state <- getState(ode)    # get the `state` vector
+         # state <- getState(ode)    # get the `state` vector
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results
