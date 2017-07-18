@@ -38,6 +38,11 @@ setStepSize uses either of two step parameters: stepSize and dt
 `dt`` is used in Pendulum
 
 Set the size of the step
+
+#' @rdname getODE-method
+setMethod("getODE", "AbstractODESolver", function(object, ...) {
+    object@ode
+})
 }
 \examples{
 # ++++++++++++++++++++++++++++++++++++++++++++++++++application:  SpringRK4App.R

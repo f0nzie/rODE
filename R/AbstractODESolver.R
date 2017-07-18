@@ -33,10 +33,10 @@ setMethod("step", "AbstractODESolver", function(object, ...) {
     object
 })
 
-#' @rdname getODE-method
-setMethod("getODE", "AbstractODESolver", function(object, ...) {
-    object@ode
-})
+#' #' @rdname getODE-method
+#' setMethod("getODE", "AbstractODESolver", function(object, ...) {
+#'     object@ode
+#' })
 
 
 #' @rdname setStepSize-method
