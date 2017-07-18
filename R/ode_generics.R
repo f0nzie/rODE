@@ -108,6 +108,14 @@ setGeneric("getState", function(object, ...) standardGeneric("getState"))
 setGeneric("step", function(object, ...) standardGeneric("step"))
 
 
+#' Get the ODE status from the solver
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#' @rdname getODE-method
+#' @export
+setGeneric("getODE", function(object, ...) standardGeneric("getODE"))
+
 
 #' Get the step size
 #'

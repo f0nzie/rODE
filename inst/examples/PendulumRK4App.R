@@ -9,19 +9,14 @@ source(paste(system.file("examples", package = "rODE"),
              sep ="/"))
 
 PendulumRK4App <- function(verbose = FALSE) {
-
-    ode <- new("ODE")
     pendulum <- PendulumRK4()
-
     dt <- 0.1
     theta <- 0.2
     thetaDot <- 0
     pendulum@state[3] <- 0      # set time to zero, t = 0
-
     pendulum <- setState(pendulum, theta, thetaDot)
     pendulum <- setStepSize(pendulum, dt = dt) # using stepSize in RK4
     pendulum@odeSolver <- setStepSize(pendulum@odeSolver, dt) # set new step size
-
     rowvec <- vector("list")
     i <- 1
     while (getState(pendulum)[3] <= 20)    {

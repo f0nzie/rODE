@@ -25,7 +25,7 @@ importFromExamples("ODETest.R")
          # stepSize <-  ode_solver@stepSize     # update the step size
          stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
-         ode <- ode_solver@ode                     # get updated ODE object
+         ode <- getODE(ode_solver)                     # get updated ODE object
          # state <- getState(ode)    # get the `state` vector
          i <- i + 1
      }

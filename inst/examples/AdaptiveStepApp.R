@@ -13,7 +13,7 @@ AdaptiveStepApp <- function(verbose = FALSE) {
                                s2 = getState(ode)[2],
                                t  = getState(ode)[3])
         ode_solver <- step(ode_solver)
-        ode <- ode_solver@ode
+        ode <- getODE(ode_solver)
         i <- i + 1
     }
     return(data.table::rbindlist(rowVector))

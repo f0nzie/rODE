@@ -19,7 +19,7 @@ VanderpolMuTimeControlApp <- function(verbose = FALSE) {
                                y2 = getState(rigid_body)[2]
                                )
         solver     <- step(solver)
-        rigid_body <- solver@ode
+        rigid_body <- getODE(solver)
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowVector)

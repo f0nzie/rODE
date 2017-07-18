@@ -9,7 +9,6 @@ SpringRK4App <- function(verbose = FALSE) {
     theta    <- 0
     thetaDot <- -0.2
     tmax     <- 22; dt <- 0.1
-    ode <- new("ODE")
     spring <- SpringRK4()
     spring@state[3] <- 0      # set time to zero, t = 0
     spring <- setState(spring, theta, thetaDot)

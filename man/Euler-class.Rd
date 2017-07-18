@@ -86,7 +86,7 @@ FallingParticleODEApp <- function(verbose = FALSE) {
                                y  = getState(ball)[1],
                                vy = getState(ball)[2])
         solver <- step(solver)                   # move one step at a time
-        ball <- solver@ode                       # update the ball state
+        ball <- getODE(solver)                       # update the ball state
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)

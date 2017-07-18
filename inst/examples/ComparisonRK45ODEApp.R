@@ -26,7 +26,7 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
         ode_solver <- step(ode_solver)            # advance solver one step
         stepSize <-  getStepSize(ode_solver)      # get the current step size
         time <- time + stepSize
-        ode <- ode_solver@ode                     # get updated ODE object
+        ode <- getODE(ode_solver)                    # get updated ODE object
         state <- getState(ode)                    # get the `state` vector
         i <- i + 1                                # add a row vector
     }

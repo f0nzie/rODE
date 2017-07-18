@@ -20,7 +20,6 @@ PendulumApp <- function(verbose = FALSE) {
     theta <- 0.2
     thetaDot <- 0
     dt <- 0.1
-    ode <- new("ODE")
     pendulum <- Pendulum()
     # pendulum@state[3] <- 0      # set time to zero, t = 0
     pendulum <- setState(pendulum, theta, thetaDot)
@@ -53,7 +52,6 @@ PendulumEulerApp <- function(verbose = FALSE) {
     theta <- 0.2
     thetaDot <- 0
     dt <- 0.01
-    ode <- new("ODE")
     pendulum <- PendulumEuler()
     pendulum@state[3] <- 0      # set time to zero, t = 0
     pendulum <- setState(pendulum, theta, thetaDot)

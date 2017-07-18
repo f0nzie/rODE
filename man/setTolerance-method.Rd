@@ -52,7 +52,7 @@ importFromExamples("ODETest.R")
          # stepSize <-  ode_solver@stepSize     # update the step size
          stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
-         ode <- ode_solver@ode                     # get updated ODE object
+         ode <- getODE(ode_solver)                     # get updated ODE object
          # state <- getState(ode)    # get the `state` vector
          i <- i + 1
      }
@@ -120,7 +120,7 @@ AdaptiveStepApp <- function(verbose = FALSE) {
                                s2 = getState(ode)[2],
                                t  = getState(ode)[3])
         ode_solver <- step(ode_solver)
-        ode <- ode_solver@ode
+        ode <- getODE(ode_solver)
         i <- i + 1
     }
     return(data.table::rbindlist(rowVector))
@@ -157,7 +157,7 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
         ode_solver <- step(ode_solver)            # advance solver one step
         stepSize <-  getStepSize(ode_solver)      # get the current step size
         time <- time + stepSize
-        ode <- ode_solver@ode                     # get updated ODE object
+        ode <- getODE(ode_solver)                    # get updated ODE object
         state <- getState(ode)                    # get the `state` vector
         i <- i + 1                                # add a row vector
     }

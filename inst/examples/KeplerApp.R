@@ -25,7 +25,7 @@ KeplerApp <- function(verbose = FALSE) {
                                planet2.r = getState(planet)[3],
                                p1anet2.v = getState(planet)[4])
         solver <- step(solver)
-        planet <- solver@ode
+        planet <- getODE(solver)
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowVector)

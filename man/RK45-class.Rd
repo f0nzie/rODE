@@ -44,7 +44,7 @@ importFromExamples("ODETest.R")
          # stepSize <-  ode_solver@stepSize     # update the step size
          stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
-         ode <- ode_solver@ode                     # get updated ODE object
+         ode <- getODE(ode_solver)                     # get updated ODE object
          # state <- getState(ode)    # get the `state` vector
          i <- i + 1
      }
@@ -80,7 +80,7 @@ KeplerApp <- function(verbose = FALSE) {
                                planet2.r = getState(planet)[3],
                                p1anet2.v = getState(planet)[4])
         solver <- step(solver)
-        planet <- solver@ode
+        planet <- getODE(solver)
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowVector)

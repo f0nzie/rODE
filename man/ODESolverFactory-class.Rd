@@ -41,7 +41,7 @@ SHOApp <- function(...) {
                                v = getState(sho)[2],
                                t = getState(sho)[3])
         solver <- step(solver)
-        sho    <- solver@ode
+        sho    <- getODE(solver)
         i <- i + 1
     }
     return(data.table::rbindlist(rowVector))
@@ -71,7 +71,7 @@ SHOApp <- function(...) {
                                v = getState(sho)[2],
                                t = getState(sho)[3])
         solver <- step(solver)
-        sho    <- solver@ode
+        sho    <- getODE(solver)
         i <- i + 1
     }
     return(data.table::rbindlist(rowVector))
