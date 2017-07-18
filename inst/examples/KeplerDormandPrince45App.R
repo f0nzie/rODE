@@ -14,8 +14,8 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     vy <- 2 * pi
     dt <- 0.01          # step size
     tol <- 1e-3         # tolerance
-    particle <- Kepler()                            # use class Kepler
-    particle <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
+    particle  <- Kepler()                            # use class Kepler
+    particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
     odeSolver <- init(odeSolver, dt)            # start the solver
     odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers

@@ -54,7 +54,7 @@ RigidBodyNXFApp <- function(verbose = FALSE) {
                                y2 = getState(body)[2],
                                y3 = getState(body)[3])
         solver <- step(solver)
-        body   <- solver@ode
+        body   <- getODE(solver)
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)
@@ -86,7 +86,7 @@ FallingParticleODEApp <- function(verbose = FALSE) {
                                y  = getState(ball)[1],
                                vy = getState(ball)[2])
         solver <- step(solver)                   # move one step at a time
-        ball <- getODE(solver)                       # update the ball state
+        ball   <- getODE(solver)                       # update the ball state
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)
@@ -239,7 +239,7 @@ RigidBodyNXFApp <- function(verbose = FALSE) {
                                y2 = getState(body)[2],
                                y3 = getState(body)[3])
         solver <- step(solver)
-        body   <- solver@ode
+        body   <- getODE(solver)
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)

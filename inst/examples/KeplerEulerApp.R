@@ -30,7 +30,7 @@ KeplerEulerApp <- function(verbose = FALSE) {
                                vy = particle@state[4],
                                E  = getEnergy(particle))
         particle <- doStep(particle)
-        energy <- getEnergy(particle)
+        energy   <- getEnergy(particle)
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)

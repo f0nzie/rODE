@@ -49,11 +49,9 @@ importFromExamples("ODETest.R")
                                 rc = getRateCounts(ode),
                                 time = time)
          ode_solver <- step(ode_solver)       # advance one step
-         # stepSize <-  ode_solver@stepSize     # update the step size
          stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
          ode <- getODE(ode_solver)                     # get updated ODE object
-         # state <- getState(ode)    # get the `state` vector
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results
@@ -77,8 +75,8 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     vy <- 2 * pi
     dt <- 0.01          # step size
     tol <- 1e-3         # tolerance
-    particle <- Kepler()                            # use class Kepler
-    particle <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
+    particle  <- Kepler()                            # use class Kepler
+    particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
     odeSolver <- init(odeSolver, dt)            # start the solver
     odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
@@ -156,8 +154,8 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
                                time = time )
         ode_solver <- step(ode_solver)            # advance solver one step
         stepSize <-  getStepSize(ode_solver)      # get the current step size
-        time <- time + stepSize
-        ode <- getODE(ode_solver)                    # get updated ODE object
+        time  <- time + stepSize
+        ode   <- getODE(ode_solver)                    # get updated ODE object
         state <- getState(ode)                    # get the `state` vector
         i <- i + 1                                # add a row vector
     }

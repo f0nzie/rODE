@@ -24,7 +24,7 @@ RigidBodyNXFApp <- function(verbose = FALSE) {
                                y2 = getState(body)[2],
                                y3 = getState(body)[3])
         solver <- step(solver)
-        body   <- solver@ode
+        body   <- getODE(solver)
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)

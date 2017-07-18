@@ -142,7 +142,7 @@ ReactionApp <- function(verbose = FALSE) {
                             X = getState(reaction)[1],
                             Y = getState(reaction)[2])
         solver   <- step(solver)
-        reaction <- solver@ode
+        reaction <- getODE(solver)
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowvec)
