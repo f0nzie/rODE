@@ -13,6 +13,7 @@
 \alias{init,Euler-method}
 \alias{init,EulerRichardson-method}
 \alias{init,RK4-method}
+\alias{init<-,RK4-method}
 \alias{init,Verlet-method}
 \title{Set initial values before starting the ODE solver}
 \usage{
@@ -33,6 +34,8 @@ init(object, ...)
 \S4method{init}{EulerRichardson}(object, stepSize, ...)
 
 \S4method{init}{RK4}(object, stepSize, ...)
+
+\S4method{init}{RK4}(object, ...) <- value
 
 \S4method{init}{Verlet}(object, stepSize, ...)
 }

@@ -20,7 +20,11 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     dt <- 0.01          # step size
     tol <- 1e-3         # tolerance
     particle  <- KeplerDormandPrince45()                      # use class Kepler
-    particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
+
+    # Two ways of initializing the ODE object
+      # particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
+    init(particle) <- c(x, vx, y, vy, 0)
+
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
 
     # Two ways of initializing the solver
@@ -28,10 +32,11 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     init(odeSolver) <-  dt
 
     # Two ways of setting the tolerance
-    # odeSolver <- setTolerance(odeSolver, tol) # this works for adaptive solvers
+      # odeSolver <- setTolerance(odeSolver, tol) # this works for adaptive solvers
     setTolerance(odeSolver) <- tol
 
     setSolver(particle) <-  odeSolver
+
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
     i <- 1

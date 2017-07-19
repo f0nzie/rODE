@@ -45,9 +45,19 @@ LogisticApp <- function(verbose = FALSE) {
     K  <- 10.0     # carrying capacity of the environment
     dt   <- 0.01; tol  <- 1e-3; tmax <- 10
     population <- Logistic()
-    population <- init(population, c(x, vx, 0), r, K)
+
+    # Two ways of initializing the object
+      # population <- init(population, c(x, vx, 0), r, K)
+    init(population) <-  list(initState = c(x, vx, 0),
+                              r = r,
+                              K = K)
+
     odeSolver <- Verlet(population)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     population@odeSolver <- odeSolver
     rowVector <- vector("list")
     i <- 1
@@ -118,7 +128,10 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     tol <- 1e-3
     particle <- KeplerEnergy()
 
-    particle <- init(particle, c(x, vx, y, vy, 0))
+    # Two ways of initializing the ODE object
+      # particle <- init(particle, c(x, vx, y, vy, 0))
+    init(particle) <- c(x, vx, y, vy, 0)
+
     odeSolver <- Verlet(particle)
 
     # Two ways of initializing the solver
@@ -164,7 +177,10 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     tol <- 1e-3
     particle <- KeplerEnergy()
 
-    particle <- init(particle, c(x, vx, y, vy, 0))
+    # Two ways of initializing the ODE object
+      # particle <- init(particle, c(x, vx, y, vy, 0))
+    init(particle) <- c(x, vx, y, vy, 0)
+
     odeSolver <- Verlet(particle)
 
     # Two ways of initializing the solver
@@ -206,9 +222,19 @@ LogisticApp <- function(verbose = FALSE) {
     K  <- 10.0     # carrying capacity of the environment
     dt   <- 0.01; tol  <- 1e-3; tmax <- 10
     population <- Logistic()
-    population <- init(population, c(x, vx, 0), r, K)
+
+    # Two ways of initializing the object
+      # population <- init(population, c(x, vx, 0), r, K)
+    init(population) <-  list(initState = c(x, vx, 0),
+                              r = r,
+                              K = K)
+
     odeSolver <- Verlet(population)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     population@odeSolver <- odeSolver
     rowVector <- vector("list")
     i <- 1

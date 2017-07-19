@@ -14,7 +14,10 @@ SHOApp <- function(...) {
     # solver <- setTolerance(solver, tolerance)           # or this below
     setTolerance(solver) <-  tolerance
 
-    solver <- init(solver, dt)
+    # Two ways of initializing the solver
+      # solver <- init(solver, dt)
+    init(solver) <- dt
+
     i <- 1; rowVector <- vector("list")
     while (getState(sho)[3] <= 500) {
         rowVector[[i]] <- list(x = getState(sho)[1],

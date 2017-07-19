@@ -35,7 +35,11 @@ ProjectileApp <- function(verbose = FALSE) {
 
     projectile <- Projectile()
     projectile <- setState(projectile, x, vx, y, vy)
+
     projectile@odeSolver <- init(projectile@odeSolver, 0.123)
+
+    # init(projectile) <-  0.123
+
     projectile@odeSolver <- setStepSize(projectile@odeSolver, dt)
     rowV <- vector("list")
     i <- 1

@@ -15,7 +15,11 @@ KeplerEulerApp <- function(verbose = FALSE) {
     tol <- 1e-3
 
     particle <- Kepler()                           # create a Kepler object
-    particle <- init(particle, c(x, vx, y, vy, 0)) # set particle initial values
+
+    # Two ways of initializing the ODE object
+      # particle <- init(particle, c(x, vx, y, vy, 0)) # set initial values
+    init(particle) <-  c(x, vx, y, vy, 0)       # set particle initial values
+
     odeSolver <- Euler(particle)                   # select the solver
 
     # Two ways of initializing the solver

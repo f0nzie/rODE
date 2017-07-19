@@ -71,6 +71,14 @@ setMethod("init", "KeplerDormandPrince45", function(object, initState, ...) {
     object
 })
 
+setReplaceMethod("init", "KeplerDormandPrince45", function(object, ..., value) {
+    object@state <- value
+    # call init in AbstractODESolver
+    object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
+    object@counter <- 0
+    object
+})
+
 setMethod("getRate", "KeplerDormandPrince45", function(object, state, ...) {
     # Computes the rate using the given state.
     r2 <- state[1] * state[1] + state[3] * state[3]  # distance squared

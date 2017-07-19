@@ -14,7 +14,10 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     tol <- 1e-3
     particle <- KeplerEnergy()
 
-    particle <- init(particle, c(x, vx, y, vy, 0))
+    # Two ways of initializing the ODE object
+      # particle <- init(particle, c(x, vx, y, vy, 0))
+    init(particle) <- c(x, vx, y, vy, 0)
+
     odeSolver <- Verlet(particle)
 
     # Two ways of initializing the solver
