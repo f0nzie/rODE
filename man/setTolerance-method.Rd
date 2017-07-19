@@ -67,6 +67,12 @@ plot(solution)
 
 importFromExamples("KeplerDormandPrince45.R")
 
+setSolver <- function(solver, ode) {
+    # .solver <- get(solver)
+    # ode@.solver <- solver
+
+}
+
 KeplerDormandPrince45App <- function(verbose = FALSE) {
     # values for the examples
     x  <- 1
@@ -80,8 +86,10 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
     odeSolver <- init(odeSolver, dt)            # start the solver
     odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
-    particle@odeSolver <- odeSolver             # copy the solver to ODE object
+    # particle@odeSolver <- odeSolver             # copy the solver to ODE object
     # particle <- setSolver(odeSolver, particle)
+    # setSolver(odeSolver, particle)
+    slot(particle, "odeSolver") <- odeSolver
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
     i <- 1
