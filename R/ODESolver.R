@@ -33,6 +33,7 @@ setMethod("getODE", "ODESolver", function(object, ...) {
 
 #' #' @rdname setSolver-method
 #' setMethod("setSolver", "ODESolver", function(object, ode, ...) {
+#'     object@ode <- ode
 #'     object@ode
 #' })
 

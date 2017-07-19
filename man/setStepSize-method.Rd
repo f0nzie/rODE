@@ -39,6 +39,7 @@ setStepSize uses either of two step parameters: stepSize and dt
 
 #' @rdname setSolver-method
 setMethod("setSolver", "ODESolver", function(object, ode, ...) {
+    object@ode <- ode
     object@ode
 })
 Set the size of the step

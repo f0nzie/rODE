@@ -6,10 +6,9 @@
 
 importFromExamples("KeplerDormandPrince45.R")
 
-setSolver <- function(solver, ode) {
-    # .solver <- get(solver)
-    # ode@.solver <- solver
-
+set_solver <- function(ode_object, solver) {
+    slot(ode_object, "odeSolver") <- solver
+    ode_object
 }
 
 KeplerDormandPrince45App <- function(verbose = FALSE) {
@@ -20,25 +19,29 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     vy <- 2 * pi
     dt <- 0.01          # step size
     tol <- 1e-3         # tolerance
-    particle  <- Kepler()                            # use class Kepler
+    particle  <- KeplerDormandPrince45()                            # use class Kepler
     particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
     odeSolver <- init(odeSolver, dt)            # start the solver
     odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
-    # particle@odeSolver <- odeSolver             # copy the solver to ODE object
-    # particle <- setSolver(odeSolver, particle)
-    # setSolver(odeSolver, particle)
-    slot(particle, "odeSolver") <- odeSolver
+
+    # these all produce the same positive result to copy the solver to ODE object
+    # (the problem with these solutions is that the user has to know the name of
+    #  the slot @odeSolver)
+    #     particle@odeSolver <- odeSolver
+        slot(particle, "odeSolver") <- odeSolver
+    #     particle <- set_solver(particle, odeSolver)
+
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) < 1.5) {
-        rowVector[[i]] <- list(t  = getState(particle)[5],
-                               x  = getState(particle)[1],
-                               vx = getState(particle)[2],
-                               y  = getState(particle)[3],
-                               vx = getState(particle)[4],
-                               energy = getEnergy(particle) )
+    rowVector[[i]] <- list(t  = getState(particle)[5],
+                           x  = getState(particle)[1],
+                           vx = getState(particle)[2],
+                           y  = getState(particle)[3],
+                           vx = getState(particle)[4],
+                           energy = getEnergy(particle) )
         particle <- doStep(particle)            # advance one step
         energy   <- getEnergy(particle)         # calculate energy
         i <- i + 1

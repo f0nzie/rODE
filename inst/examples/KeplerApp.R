@@ -12,7 +12,7 @@ KeplerApp <- function(verbose = FALSE) {
     r <- c(2, 0)                                   # orbit radius
     v <- c(0, 0.25)                                # velocity
     dt <- 0.1
-    planet <- Kepler(r, v)
+    planet <- Kepler(r, v)                         # make up an ODE object
     solver <- RK45(planet)
     rowVector <- vector("list")
     i <- 1
