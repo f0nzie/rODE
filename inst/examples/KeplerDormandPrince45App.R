@@ -19,14 +19,16 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     vy <- 2 * pi
     dt <- 0.01          # step size
     tol <- 1e-3         # tolerance
-    particle  <- KeplerDormandPrince45()                            # use class Kepler
+    particle  <- KeplerDormandPrince45()                      # use class Kepler
     particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
     odeSolver <- init(odeSolver, dt)            # start the solver
-    # odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
-    setTolerance(odeSolver) <- tol
-    setSolver(particle) <-  odeSolver
 
+    # Two ways of setting the tolerance
+    # odeSolver <- setTolerance(odeSolver, tol) # this works for adaptive solvers
+    setTolerance(odeSolver) <- tol
+
+    setSolver(particle) <-  odeSolver
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
     i <- 1

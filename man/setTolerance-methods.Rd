@@ -50,8 +50,11 @@ importFromExamples("ODETest.R")
      ode <- new("ODETest")                     # create an `ODETest` object
      ode_solver <- RK45(ode)                   # select the ODE solver
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
+
+     # Two ways of setting the tolerance
      # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
      setTolerance(ode_solver) <-  1e-8
+
      time <-  0
      rowVector <- vector("list")
      i <- 1
@@ -94,14 +97,16 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     vy <- 2 * pi
     dt <- 0.01          # step size
     tol <- 1e-3         # tolerance
-    particle  <- KeplerDormandPrince45()                            # use class Kepler
+    particle  <- KeplerDormandPrince45()                      # use class Kepler
     particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
     odeSolver <- init(odeSolver, dt)            # start the solver
-    # odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
-    setTolerance(odeSolver) <- tol
-    setSolver(particle) <-  odeSolver
 
+    # Two ways of setting the tolerance
+    # odeSolver <- setTolerance(odeSolver, tol) # this works for adaptive solvers
+    setTolerance(odeSolver) <- tol
+
+    setSolver(particle) <-  odeSolver
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
     i <- 1
@@ -132,7 +137,9 @@ AdaptiveStepApp <- function(verbose = FALSE) {
     ode        <- new("Impulse")
     ode_solver <- RK45(ode)
     ode_solver <- init(ode_solver, 0.1)
-    # ode_solver <- setTolerance(ode_solver, 1.0e-4) # two ways to set tolerance
+
+    # two ways to set tolerance
+    # ode_solver <- setTolerance(ode_solver, 1.0e-4)
     setTolerance(ode_solver) <- 1.0e-4
 
     i <- 1; rowVector <- vector("list")
@@ -163,7 +170,9 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
     ode <- new("ODETest")                         # new ODE instance
     ode_solver <- RK45(ode)                       # select ODE solver
     ode_solver <- setStepSize(ode_solver, 1)      # set the step
-    # ode_solver <- setTolerance(ode_solver, 1e-6)  # two ways to set tolerance
+
+    # two ways to set tolerance
+    # ode_solver <- setTolerance(ode_solver, 1e-6)
     setTolerance(ode_solver) <-  1e-6
 
     time <-  0

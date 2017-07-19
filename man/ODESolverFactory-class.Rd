@@ -31,9 +31,10 @@ SHOApp <- function(...) {
     # Use ODESolverFactory
     solver_factory <- ODESolverFactory()
     solver <- createODESolver(solver_factory, sho, "DormandPrince45")
-
     # solver <- DormandPrince45(sho)                    # this can also be used
-    # solver <- setTolerance(solver, tolerance)           # or this
+
+    # Two ways of setting the tolerance
+    # solver <- setTolerance(solver, tolerance)           # or this below
     setTolerance(solver) <-  tolerance
 
     solver <- init(solver, dt)
@@ -63,9 +64,10 @@ SHOApp <- function(...) {
     # Use ODESolverFactory
     solver_factory <- ODESolverFactory()
     solver <- createODESolver(solver_factory, sho, "DormandPrince45")
-
     # solver <- DormandPrince45(sho)                    # this can also be used
-    # solver <- setTolerance(solver, tolerance)           # or this
+
+    # Two ways of setting the tolerance
+    # solver <- setTolerance(solver, tolerance)           # or this below
     setTolerance(solver) <-  tolerance
 
     solver <- init(solver, dt)

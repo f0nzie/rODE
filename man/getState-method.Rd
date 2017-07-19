@@ -62,7 +62,7 @@ SpringRK4App <- function(verbose = FALSE) {
     spring <- SpringRK4()
     spring@state[3] <- 0      # set time to zero, t = 0
     spring <- setState(spring, theta, thetaDot)
-    spring <- setStepSize(spring, dt = dt) # using stepSize in RK4
+    # spring <- setStepSize(spring, dt = dt) # using stepSize in RK4
     spring@odeSolver <- setStepSize(spring@odeSolver, dt) # set new step size
     rowvec <- vector("list")
     i <- 1

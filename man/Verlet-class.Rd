@@ -76,8 +76,11 @@ importFromExamples("ODETest.R")
      ode <- new("ODETest")                     # create an `ODETest` object
      ode_solver <- RK45(ode)                   # select the ODE solver
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
+
+     # Two ways of setting the tolerance
      # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
      setTolerance(ode_solver) <-  1e-8
+
      time <-  0
      rowVector <- vector("list")
      i <- 1
