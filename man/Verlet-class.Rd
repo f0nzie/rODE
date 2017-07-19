@@ -78,7 +78,7 @@ importFromExamples("ODETest.R")
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
 
      # Two ways of setting the tolerance
-     # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+       # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
      setTolerance(ode_solver) <-  1e-8
 
      time <-  0
@@ -117,9 +117,14 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     dt <- 0.01
     tol <- 1e-3
     particle <- KeplerEnergy()
+
     particle <- init(particle, c(x, vx, y, vy, 0))
     odeSolver <- Verlet(particle)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+    # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     particle@odeSolver <- odeSolver
     initialEnergy <- getEnergy(particle)
     rowVector <- vector("list")
@@ -158,9 +163,14 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     dt <- 0.01
     tol <- 1e-3
     particle <- KeplerEnergy()
+
     particle <- init(particle, c(x, vx, y, vy, 0))
     odeSolver <- Verlet(particle)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+    # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     particle@odeSolver <- odeSolver
     initialEnergy <- getEnergy(particle)
     rowVector <- vector("list")

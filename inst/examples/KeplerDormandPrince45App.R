@@ -22,7 +22,10 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     particle  <- KeplerDormandPrince45()                      # use class Kepler
     particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
-    odeSolver <- init(odeSolver, dt)            # start the solver
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)            # start the solver
+    init(odeSolver) <-  dt
 
     # Two ways of setting the tolerance
     # odeSolver <- setTolerance(odeSolver, tol) # this works for adaptive solvers

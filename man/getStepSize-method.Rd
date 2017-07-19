@@ -41,7 +41,7 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
     ode_solver <- setStepSize(ode_solver, 1)      # set the step
 
     # two ways to set tolerance
-    # ode_solver <- setTolerance(ode_solver, 1e-6)
+      # ode_solver <- setTolerance(ode_solver, 1e-6)
     setTolerance(ode_solver) <-  1e-6
 
     time <-  0

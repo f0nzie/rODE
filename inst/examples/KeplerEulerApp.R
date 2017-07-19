@@ -17,7 +17,11 @@ KeplerEulerApp <- function(verbose = FALSE) {
     particle <- Kepler()                           # create a Kepler object
     particle <- init(particle, c(x, vx, y, vy, 0)) # set particle initial values
     odeSolver <- Euler(particle)                   # select the solver
-    odeSolver <- init(odeSolver, dt)               # start the solver
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)               # start the solver
+    init(odeSolver) <-  dt
+
     particle@odeSolver <- odeSolver               # copy solver to ODE object
     initialEnergy <- getEnergy(particle)         # calculate the initial energy
     rowVector <- vector("list")

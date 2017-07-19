@@ -5,11 +5,13 @@ importFromExamples("AdaptiveStep.R")
 AdaptiveStepApp <- function(verbose = FALSE) {
     ode        <- new("Impulse")
     ode_solver <- RK45(ode)
-    # ode_solver <- init(ode_solver, 0.1)
+
+    # Two ways to initialize the solver
+      # ode_solver <- init(ode_solver, 0.1)
     init(ode_solver) <- 0.1
 
     # two ways to set tolerance
-    # ode_solver <- setTolerance(ode_solver, 1.0e-4)
+      # ode_solver <- setTolerance(ode_solver, 1.0e-4)
     setTolerance(ode_solver) <- 1.0e-4
 
     i <- 1; rowVector <- vector("list")

@@ -31,7 +31,7 @@ importFromExamples("ODETest.R")
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
 
      # Two ways of setting the tolerance
-     # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+       # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
      setTolerance(ode_solver) <-  1e-8
 
      time <-  0
