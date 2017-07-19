@@ -164,7 +164,7 @@ setMethod("getStepSize", "DormandPrince45", function(object, ...) {
 })
 
 
-#' @rdname setTolerance-method
+#' @rdname set-methods
 #' @example ./inst/examples/ComparisonRK45ODEApp.R
 #' @family adaptive solver methods
 setMethod("setTolerance", "DormandPrince45", function(object, tol) {
@@ -181,7 +181,7 @@ setMethod("setTolerance", "DormandPrince45", function(object, tol) {
 })
 
 
-#' @rdname setTolerance-method
+#' @rdname set-methods
 # #' @example ./inst/examples/ComparisonRK45ODEApp.R
 #' @family adaptive solver methods
 setReplaceMethod("setTolerance", "DormandPrince45", function(object, ..., value) {

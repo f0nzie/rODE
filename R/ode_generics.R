@@ -219,27 +219,27 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 
 #' Set the tolerance for the solver
 #'
+#' @name setTolerance
 #' @param object a class object
 #' @param tol tolerance
-#' @rdname setTolerance-method
+#' @aliases setTolerance
+#' @rdname set-methods
 #' @export
-# #' @example ./inst/examples/ComparisonRK45App.R
-# #' @example ./inst/examples/KeplerDormandPrince45App.R
-# #' @example ./inst/examples/AdaptiveStepApp.R
+#' @example ./inst/examples/ComparisonRK45App.R
+#' @example ./inst/examples/KeplerDormandPrince45App.R
+#' @example ./inst/examples/AdaptiveStepApp.R
 setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance"))
 
 
 
 #' Set the tolerance for the solver
 #'
-#' @param object a class object
+#' @name setTolerance<-
 #' @param ... additional parameters
-#' @param tol tolerance
-#' @rdname setTolerance-method
+#' @param value a value to set
+#' @aliases <-, setTolerance<-
+#' @rdname set-methods
 #' @export
-# #' @example ./inst/examples/ComparisonRK45App.R
-# #' @example ./inst/examples/KeplerDormandPrince45App.R
-# #' @example ./inst/examples/AdaptiveStepApp.R
 setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTolerance<-"))
 
 
