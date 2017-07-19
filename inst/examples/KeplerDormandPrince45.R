@@ -61,11 +61,10 @@ setMethod("getState", "KeplerDormandPrince45", function(object, ...) {
     return(object@state)
 })
 
-# setMethod("setSolver", "KeplerDormandPrince45", function(object, solver, ...) {
-#     # object@odeSolver <- solver
-#     slot(object, "odeSolver") <- solver
-#     object
-# })
+setReplaceMethod("setSolver", "KeplerDormandPrince45", function(object, ..., value) {
+    object@odeSolver <- value
+    object
+})
 
 # constructor
 KeplerDormandPrince45 <- function() {

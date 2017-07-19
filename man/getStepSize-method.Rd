@@ -7,14 +7,7 @@
 \alias{getStepSize,ODESolver-method}
 \alias{getStepSize,AbstractODESolver-method}
 \alias{getStepSize,DormandPrince45-method}
-\title{#' Set a solver over an ODE object
-#'
-#' @param object a class object
-#' @param ... additional parameters
-#' @rdname setSolver-method
-#' @export
-setGeneric("setSolver", function(object, solver, ...) standardGeneric("setSolver"))
-Get the step size}
+\title{Get the step size}
 \usage{
 getStepSize(object, ...)
 
@@ -30,13 +23,6 @@ getStepSize(object, ...)
 \item{...}{additional parameters}
 }
 \description{
-#' Set a solver over an ODE object
-#'
-#' @param object a class object
-#' @param ... additional parameters
-#' @rdname setSolver-method
-#' @export
-setGeneric("setSolver", function(object, solver, ...) standardGeneric("setSolver"))
 Get the step size
 }
 \examples{

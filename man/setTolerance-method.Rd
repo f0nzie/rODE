@@ -90,8 +90,10 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     # (the problem with these solutions is that the user has to know the name of
     #  the slot @odeSolver)
     #     particle@odeSolver <- odeSolver
-        slot(particle, "odeSolver") <- odeSolver
+        # slot(particle, "odeSolver") <- odeSolver
     #     particle <- set_solver(particle, odeSolver)
+    setSolver(particle) <-  odeSolver
+
 
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
