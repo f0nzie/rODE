@@ -81,6 +81,7 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     odeSolver <- init(odeSolver, dt)            # start the solver
     odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
     particle@odeSolver <- odeSolver             # copy the solver to ODE object
+    # particle <- setSolver(odeSolver, particle)
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
     i <- 1

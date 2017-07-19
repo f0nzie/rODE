@@ -37,6 +37,10 @@ setStepSize uses either of two step parameters: stepSize and dt
 `stepSize`` works for most of the applications
 `dt`` is used in Pendulum
 
+#' @rdname setSolver-method
+setMethod("setSolver", "ODESolver", function(object, ode, ...) {
+    object@ode
+})
 Set the size of the step
 
 #' @rdname getODE-method

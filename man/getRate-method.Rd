@@ -81,10 +81,8 @@ KeplerApp <- function(verbose = FALSE) {
     r <- c(2, 0)                                   # orbit radius
     v <- c(0, 0.25)                                # velocity
     dt <- 0.1
-
     planet <- Kepler(r, v)
     solver <- RK45(planet)
-
     rowVector <- vector("list")
     i <- 1
     while (getState(planet)[5] <= 10) {

@@ -30,6 +30,13 @@ setMethod("getODE", "ODESolver", function(object, ...) {
     object@ode
 })
 
+
+#' #' @rdname setSolver-method
+#' setMethod("setSolver", "ODESolver", function(object, ode, ...) {
+#'     object@ode
+#' })
+
+
 #' Set the size of the step
 #'
 #' @rdname setStepSize-method

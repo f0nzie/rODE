@@ -17,11 +17,4 @@ getODE(object, ...)
 }
 \description{
 Get the ODE status from the solver
-
-#' @rdname doStep-method
-setMethod("doStep", "ODESolver", function(object, ...) {
-    object <- step(object)
-    object@state <- object@ode@state
-    object
-})
 }
