@@ -5,7 +5,6 @@
 \name{setTolerance}
 \alias{setTolerance}
 \alias{setTolerance<-}
-\alias{<-,}
 \alias{setTolerance,ODEAdaptiveSolver-method}
 \alias{setTolerance<-,ODEAdaptiveSolver-method}
 \alias{setTolerance,DormandPrince45-method}

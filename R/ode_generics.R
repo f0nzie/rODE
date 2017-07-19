@@ -221,7 +221,6 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 #'
 #' @param object a class object
 #' @param tol tolerance
-#' @aliases setTolerance
 #' @rdname setTolerance-methods
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
@@ -235,7 +234,6 @@ setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance")
 #'
 #' @param ... additional parameters
 #' @param value a value to set
-#' @aliases <-, setTolerance<-
 #' @rdname setTolerance-methods
 #' @export
 setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTolerance<-"))
