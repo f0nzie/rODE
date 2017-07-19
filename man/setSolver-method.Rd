@@ -4,12 +4,10 @@
 \alias{setSolver<-}
 \title{Set a solver over an ODE object}
 \usage{
-setSolver(object, ...) <- value
+setSolver(object) <- value
 }
 \arguments{
 \item{object}{a class object}
-
-\item{...}{additional parameters}
 
 \item{value}{value to be set}
 }

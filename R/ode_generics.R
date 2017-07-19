@@ -121,11 +121,9 @@ setGeneric("getODE", function(object, ...) standardGeneric("getODE"))
 #'
 #' @param object a class object
 #' @param value value to be set
-#' @param ... additional parameters
 #' @rdname setSolver-method
 #' @export
-# setGeneric("setSolver", function(object, solver, ...) standardGeneric("setSolver"))
-setGeneric("setSolver<-", function(object, ..., value) {standardGeneric("setSolver<-")})
+setGeneric("setSolver<-", function(object, value) {standardGeneric("setSolver<-")})
 
 
 #' Get the step size

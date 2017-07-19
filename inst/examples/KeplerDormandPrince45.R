@@ -61,7 +61,7 @@ setMethod("getState", "KeplerDormandPrince45", function(object, ...) {
     return(object@state)
 })
 
-setReplaceMethod("setSolver", "KeplerDormandPrince45", function(object, ..., value) {
+setReplaceMethod("setSolver", "KeplerDormandPrince45", function(object, value) {
     object@odeSolver <- value
     object
 })

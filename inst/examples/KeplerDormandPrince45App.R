@@ -25,14 +25,7 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     odeSolver <- init(odeSolver, dt)            # start the solver
     odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
 
-    # these all produce the same positive result to copy the solver to ODE object
-    # (the problem with these solutions is that the user has to know the name of
-    #  the slot @odeSolver)
-    #     particle@odeSolver <- odeSolver
-        # slot(particle, "odeSolver") <- odeSolver
-    #     particle <- set_solver(particle, odeSolver)
     setSolver(particle) <-  odeSolver
-
 
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
