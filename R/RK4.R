@@ -45,6 +45,20 @@ setMethod("init", "RK4", function(object, stepSize, ...) {
 })
 
 
+#' @rdname init-method
+#' @importFrom methods callNextMethod
+setReplaceMethod("init", "RK4", function(object, ..., value) {
+    # inititalize the solver
+    object <- callNextMethod(object, value)        # call superclass init
+    # set the rate vectors to the number of equations
+    object@rate1 <- vector("numeric", object@numEqn)  # make the rate vector
+    object@rate2 <- vector("numeric", object@numEqn)  # make the rate vector
+    object@rate3 <- vector("numeric", object@numEqn)  # make the rate vector
+    object@rate4 <- vector("numeric", object@numEqn)  # make the rate vector
+    object@estimated_state <- vector("numeric", object@numEqn)
+    object
+})
+
 #' @rdname step-method
 setMethod("step", "RK4", function(object, ...) {
     # step through the differential equation solver
