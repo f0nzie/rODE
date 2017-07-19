@@ -7,7 +7,9 @@
 \alias{init}
 \alias{init,ODESolver-method}
 \alias{init,AbstractODESolver-method}
+\alias{init<-,AbstractODESolver-method}
 \alias{init,DormandPrince45-method}
+\alias{init<-,DormandPrince45-method}
 \alias{init,Euler-method}
 \alias{init,EulerRichardson-method}
 \alias{init,RK4-method}
@@ -20,7 +22,11 @@ init(object, ...)
 
 \S4method{init}{AbstractODESolver}(object, stepSize, ...)
 
+\S4method{init}{AbstractODESolver}(object, ...) <- value
+
 \S4method{init}{DormandPrince45}(object, stepSize, ...)
+
+\S4method{init}{DormandPrince45}(object, ...) <- value
 
 \S4method{init}{Euler}(object, stepSize, ...)
 

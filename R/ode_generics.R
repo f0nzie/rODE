@@ -188,6 +188,9 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #' })
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
+#' @export
+setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
+
 
 
 #' setStepSize uses either of two step parameters: stepSize and dt

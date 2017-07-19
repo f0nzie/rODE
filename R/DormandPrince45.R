@@ -68,6 +68,25 @@ setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     object
 })
 
+#' @rdname init-method
+setReplaceMethod("init", "DormandPrince45", function(object,  ..., value) {
+    stepSize <- value
+    # inititalize the solver
+    object@stepSize <- stepSize
+    state <- getState(object@ode)
+    if (is.null(state)) {
+        stop("state vector not defined")
+        return(object)      # state vector not defined.
+    }
+    if (object@numEqn != length(state)) {
+        object@numEqn <- length(state)
+        object@temp_state <- vector("numeric", object@numEqn)
+        object@k <- matrix(data = 0, nrow = object@numStages, ncol =  object@numEqn)
+    }
+    object@ode@state <- state
+    object
+})
+
 
 #' @rdname step-method
 setMethod("step", "DormandPrince45", function(object, ...) {
