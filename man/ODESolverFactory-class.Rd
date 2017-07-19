@@ -37,7 +37,8 @@ SHOApp <- function(...) {
     # solver <- setTolerance(solver, tolerance)           # or this below
     setTolerance(solver) <-  tolerance
 
-    # solver <- init(solver, dt)
+    # Two ways of initializing the solver
+      # solver <- init(solver, dt)
     init(solver) <- dt
 
     i <- 1; rowVector <- vector("list")
@@ -72,7 +73,8 @@ SHOApp <- function(...) {
     # solver <- setTolerance(solver, tolerance)           # or this below
     setTolerance(solver) <-  tolerance
 
-    # solver <- init(solver, dt)
+    # Two ways of initializing the solver
+      # solver <- init(solver, dt)
     init(solver) <- dt
 
     i <- 1; rowVector <- vector("list")
