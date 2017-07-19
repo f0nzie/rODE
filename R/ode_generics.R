@@ -219,7 +219,6 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 
 #' Set the tolerance for the solver
 #'
-#' @name setTolerance
 #' @param object a class object
 #' @param tol tolerance
 #' @aliases setTolerance
@@ -234,7 +233,6 @@ setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance")
 
 #' Set the tolerance for the solver
 #'
-#' @name setTolerance<-
 #' @param ... additional parameters
 #' @param value a value to set
 #' @aliases <-, setTolerance<-
