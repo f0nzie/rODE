@@ -40,6 +40,15 @@ setMethod("init", "Logistic", function(object, initState, r, K, ...) {
     object
 })
 
+setReplaceMethod("init", "Logistic", function(object, ..., value) {
+    object@r <- value[["r"]]
+    object@K <- value[["K"]]
+    object@state <- value[["initState"]]
+    object@odeSolver <- init(object@odeSolver, getStepSize(object@odeSolver))
+    object@counter <- 0
+    object
+})
+
 
 setMethod("getRate", "Logistic", function(object, state, ...) {
     # Computes the rate using the given state.
