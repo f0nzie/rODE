@@ -39,7 +39,9 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
     ode <- new("ODETest")                         # new ODE instance
     ode_solver <- RK45(ode)                       # select ODE solver
     ode_solver <- setStepSize(ode_solver, 1)      # set the step
-    ode_solver <- setTolerance(ode_solver, 1e-6)  # set the tolerance
+    # ode_solver <- setTolerance(ode_solver, 1e-6)  # two ways to set tolerance
+    setTolerance(ode_solver) <-  1e-6
+
     time <-  0
     rowVector <- vector("list")                   # row vector
     i <- 1    # counter

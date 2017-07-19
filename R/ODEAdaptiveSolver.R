@@ -19,6 +19,12 @@ setClass("ODEAdaptiveSolver", slots = c(
 
 #' @rdname setTolerance-method
 setMethod("setTolerance", "ODEAdaptiveSolver", function(object, tol) {
+    NULL
+})
+
+#' @rdname setTolerance-method
+setReplaceMethod("setTolerance", "ODEAdaptiveSolver", function(object, ..., value) {
+    NULL
 })
 
 

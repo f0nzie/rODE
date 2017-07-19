@@ -6,7 +6,9 @@ AdaptiveStepApp <- function(verbose = FALSE) {
     ode        <- new("Impulse")
     ode_solver <- RK45(ode)
     ode_solver <- init(ode_solver, 0.1)
-    ode_solver <- setTolerance(ode_solver, 1.0e-4)
+    # ode_solver <- setTolerance(ode_solver, 1.0e-4) # two ways to set tolerance
+    setTolerance(ode_solver) <- 1.0e-4
+
     i <- 1; rowVector <- vector("list")
     while (getState(ode)[1] < 12) {
         rowVector[[i]] <- list(s1 = getState(ode)[1],

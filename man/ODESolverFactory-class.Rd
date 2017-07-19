@@ -33,7 +33,9 @@ SHOApp <- function(...) {
     solver <- createODESolver(solver_factory, sho, "DormandPrince45")
 
     # solver <- DormandPrince45(sho)                    # this can also be used
-    solver <- setTolerance(solver, tolerance)
+    # solver <- setTolerance(solver, tolerance)           # or this
+    setTolerance(solver) <-  tolerance
+
     solver <- init(solver, dt)
     i <- 1; rowVector <- vector("list")
     while (getState(sho)[3] <= 500) {
@@ -63,7 +65,9 @@ SHOApp <- function(...) {
     solver <- createODESolver(solver_factory, sho, "DormandPrince45")
 
     # solver <- DormandPrince45(sho)                    # this can also be used
-    solver <- setTolerance(solver, tolerance)
+    # solver <- setTolerance(solver, tolerance)           # or this
+    setTolerance(solver) <-  tolerance
+
     solver <- init(solver, dt)
     i <- 1; rowVector <- vector("list")
     while (getState(sho)[3] <= 500) {

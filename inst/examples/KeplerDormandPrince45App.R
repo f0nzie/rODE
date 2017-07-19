@@ -23,8 +23,8 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
     odeSolver <- init(odeSolver, dt)            # start the solver
-    odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
-
+    # odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
+    setTolerance(odeSolver) <- tol
     setSolver(particle) <-  odeSolver
 
     initialEnergy <- getEnergy(particle)        # calculate the energy

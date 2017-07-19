@@ -180,6 +180,26 @@ setMethod("setTolerance", "DormandPrince45", function(object, tol) {
     return(object)
 })
 
+
+#' @rdname setTolerance-method
+# #' @example ./inst/examples/ComparisonRK45ODEApp.R
+#' @family adaptive solver methods
+setReplaceMethod("setTolerance", "DormandPrince45", function(object, ..., value) {
+    tol <- value
+    object@tol <- abs(tol)
+    if (object@tol < 1.0E-12) {
+        err_msg = "Error: Dormand-Prince ODE solver tolerance cannot be smaller than 1.0e-12." # $NON-NLS-1$
+        if (object@enableExceptions) {
+            stop(err_msg)
+        }
+        cat(err_msg, "\n")
+        object@tol <- 1.0e-12
+    }
+    return(object)
+})
+
+
+
 #' @rdname getTolerance-method
 #' @family adaptive solver methods
 setMethod("getTolerance", "DormandPrince45", function(object) {
