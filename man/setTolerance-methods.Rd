@@ -33,9 +33,9 @@ setTolerance(object, ...) <- value
 \item{value}{a value to set}
 }
 \description{
-Set the tolerance for the solver
+Sets the tolerance like this: odeSolver <- setTolerance(odeSolver, tol)
 
-Set the tolerance for the solver
+Sets the tolerance like this: setTolerance(odeSolver) <- tol
 }
 \examples{
 # ++++++++++++++++++++++++++++++++++++++++++++++++  example: ComparisonRK45App.R

@@ -219,6 +219,8 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 
 #' Set the tolerance for the solver
 #'
+#' Sets the tolerance like this: odeSolver <- setTolerance(odeSolver, tol)
+#'
 #' @param object a class object
 #' @param tol tolerance
 #' @rdname setTolerance-methods
@@ -231,6 +233,8 @@ setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance")
 
 
 #' Set the tolerance for the solver
+#'
+#' Sets the tolerance like this: setTolerance(odeSolver) <- tol
 #'
 #' @param ... additional parameters
 #' @param value a value to set
