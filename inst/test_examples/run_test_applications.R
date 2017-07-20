@@ -8,13 +8,13 @@
 
 library(testthat)
 
-# this is where examples live
-examples_dir <- system.file("examples", package = "rODE")
-
-# get all the scripts that `App` in them
-examples <- list.files(path = examples_dir, pattern = "*App", all.files = FALSE,
-           full.names = FALSE, recursive = FALSE, ignore.case = FALSE,
-           include.dirs = FALSE, no.. = FALSE)
+# # this is where examples live
+# examples_dir <- system.file("examples", package = "rODE")
+#
+# # get all the scripts that `App` in them
+# examples <- list.files(path = examples_dir, pattern = "*App", all.files = FALSE,
+#            full.names = FALSE, recursive = FALSE, ignore.case = FALSE,
+#            include.dirs = FALSE, no.. = FALSE)
 
 expected <- list(AdaptiveStepApp = list(
                     rowVector = list(s1 = 9.910181, s2 = 2.697124, t=6.635591),
@@ -106,6 +106,8 @@ expected <- list(AdaptiveStepApp = list(
 
 
 ) # end of list for expected values
+
+examples <- rODE:::get_list_examples(aPackage = "rODE")
 
 # loop to open each file
 goDebug <- FALSE

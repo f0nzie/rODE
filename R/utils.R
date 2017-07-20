@@ -52,3 +52,16 @@ release_questions <- function() {
         "Do the examples have App in them?"
     )
 }
+
+
+
+get_list_examples <- function(aPackage) {
+    # this is where examples live
+    examples_dir <- system.file("examples", package = aPackage)
+
+    # get all the scripts that `App` in them
+    list.files(path = examples_dir, pattern = "*App", all.files = FALSE,
+                           full.names = FALSE, recursive = FALSE, ignore.case = FALSE,
+                           include.dirs = FALSE, no.. = FALSE)
+}
+
