@@ -110,10 +110,10 @@ expected <- list(AdaptiveStepApp = list(
 examples <- rODE:::get_list_examples(aPackage = "rODE")
 
 
-loop_on_examples <- function() {
+loop_on_examples <- function(goDebug = FALSE) {
     examples <- rODE:::get_list_examples(aPackage = "rODE")
     # loop to open each file
-    goDebug <- FALSE
+    # goDebug <- FALSE
     nmax <- 0
     if (goDebug) {
         nmax <- 20
@@ -127,7 +127,8 @@ loop_on_examples <- function() {
         result  <- do.call(application, list(FALSE))
         .result <- as.list(result[nrow(result),]);
         cat(sprintf("%30s", names(expected[application])))
-        if ((goDebug) && (names(expected[application]) == "VanderpolMuTimeControlApp")) {
+        # if ((goDebug) && (names(expected[application]) == "VanderpolMuTimeControlApp")) {
+        if (goDebug) {
             cat("\n");
             print(.result)}
         last_row <- expected[[application]]$rowVector
@@ -139,7 +140,7 @@ loop_on_examples <- function() {
 
 }
 
-loop_on_examples()
+loop_on_examples(goDebug = FALSE)
 
 
 
