@@ -34,7 +34,6 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     # Two ways of setting the tolerance
       # odeSolver <- setTolerance(odeSolver, tol) # this works for adaptive solvers
     setTolerance(odeSolver) <- tol
-
     setSolver(particle) <-  odeSolver
 
     initialEnergy <- getEnergy(particle)        # calculate the energy

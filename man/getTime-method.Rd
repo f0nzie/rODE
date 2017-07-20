@@ -41,6 +41,8 @@ LogisticApp <- function(verbose = FALSE) {
     init(odeSolver) <-  dt
 
     population@odeSolver <- odeSolver
+    # setSolver(population) <-  odeSolver
+
     rowVector <- vector("list")
     i <- 1
     while (getTime(population) <= tmax) {

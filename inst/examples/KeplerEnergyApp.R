@@ -21,7 +21,7 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     odeSolver <- Verlet(particle)
 
     # Two ways of initializing the solver
-    # odeSolver <- init(odeSolver, dt)
+      # odeSolver <- init(odeSolver, dt)
     init(odeSolver) <-  dt
 
     particle@odeSolver <- odeSolver

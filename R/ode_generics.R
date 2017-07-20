@@ -151,6 +151,7 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 
 #' Set initial values before starting the ODE solver
 #'
+#' Sets the tolerance like this: solver <- init(solver, dt)
 #' Not all super classes require an init method.
 #'
 #' @param object a class object

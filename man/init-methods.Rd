@@ -52,6 +52,7 @@ init(object, ...) <- value
 \item{stepSize}{size of the step}
 }
 \description{
+Sets the tolerance like this: solver <- init(solver, dt)
 Not all super classes require an init method.
 
 Sets the tolerance like this: init(solver) <- dt

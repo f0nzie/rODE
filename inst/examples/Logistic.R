@@ -2,12 +2,12 @@
 # Simulates the logistic equation
 
 setClass("Logistic", slots = c(
-    K = "numeric",
-    r = "numeric",
-    odeSolver = "Verlet",
-    counter = "numeric"
-),
-contains = c("ODE")
+        K = "numeric",
+        r = "numeric",
+        odeSolver = "Verlet",
+        counter = "numeric"
+        ),
+        contains = c("ODE")
 )
 
 setMethod("initialize", "Logistic", function(.Object, ...) {

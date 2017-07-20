@@ -59,6 +59,8 @@ LogisticApp <- function(verbose = FALSE) {
     init(odeSolver) <-  dt
 
     population@odeSolver <- odeSolver
+    # setSolver(population) <-  odeSolver
+
     rowVector <- vector("list")
     i <- 1
     while (getTime(population) <= tmax) {
@@ -135,7 +137,7 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     odeSolver <- Verlet(particle)
 
     # Two ways of initializing the solver
-    # odeSolver <- init(odeSolver, dt)
+      # odeSolver <- init(odeSolver, dt)
     init(odeSolver) <-  dt
 
     particle@odeSolver <- odeSolver
@@ -184,7 +186,7 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     odeSolver <- Verlet(particle)
 
     # Two ways of initializing the solver
-    # odeSolver <- init(odeSolver, dt)
+      # odeSolver <- init(odeSolver, dt)
     init(odeSolver) <-  dt
 
     particle@odeSolver <- odeSolver
@@ -236,6 +238,8 @@ LogisticApp <- function(verbose = FALSE) {
     init(odeSolver) <-  dt
 
     population@odeSolver <- odeSolver
+    # setSolver(population) <-  odeSolver
+
     rowVector <- vector("list")
     i <- 1
     while (getTime(population) <= tmax) {
