@@ -45,16 +45,28 @@ LogisticApp <- function(verbose = FALSE) {
     K  <- 10.0     # carrying capacity of the environment
     dt   <- 0.01; tol  <- 1e-3; tmax <- 10
     population <- Logistic()
-    population <- init(population, c(x, vx, 0), r, K)
+
+    # Two ways of initializing the object
+      # population <- init(population, c(x, vx, 0), r, K)
+    init(population) <-  list(initState = c(x, vx, 0),
+                              r = r,
+                              K = K)
+
     odeSolver <- Verlet(population)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     population@odeSolver <- odeSolver
+    # setSolver(population) <-  odeSolver
+
     rowVector <- vector("list")
     i <- 1
     while (getTime(population) <= tmax) {
         rowVector[[i]] <- list(t = getTime(population),
-                               s1 = population@state[1],
-                               s2 = population@state[2])
+                               s1 = getState(population)[1],
+                               s2 = getState(population)[2])
         population <- doStep(population)
         i <- i + 1
     }
@@ -76,21 +88,25 @@ importFromExamples("ODETest.R")
      ode <- new("ODETest")                     # create an `ODETest` object
      ode_solver <- RK45(ode)                   # select the ODE solver
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
-     ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+
+     # Two ways of setting the tolerance
+       # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+     setTolerance(ode_solver) <-  1e-8
+
      time <-  0
      rowVector <- vector("list")
      i <- 1
      while (time < 50) {
-         rowVector[[i]] <- list(t  = ode_solver@ode@state[2],
-                                s1 = getState(ode_solver@ode)[1],
-                                s2 = getState(ode_solver@ode)[2],
-                                xs = getExactSolution(ode_solver@ode, time),
+         rowVector[[i]] <- list(t  = getState(ode)[2],
+                                s1 = getState(ode)[1],
+                                s2 = getState(ode)[2],
+                                xs = getExactSolution(ode, time),
                                 rc = getRateCounts(ode),
                                 time = time)
          ode_solver <- step(ode_solver)       # advance one step
-         stepSize <-  ode_solver@stepSize     # update the step size
+         stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
-         state <- getState(ode_solver@ode)    # get the `state` vector
+         ode <- getODE(ode_solver)                     # get updated ODE object
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results
@@ -113,22 +129,30 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     dt <- 0.01
     tol <- 1e-3
     particle <- KeplerEnergy()
-    particle <- init(particle, c(x, vx, y, vy, 0))
+
+    # Two ways of initializing the ODE object
+      # particle <- init(particle, c(x, vx, y, vy, 0))
+    init(particle) <- c(x, vx, y, vy, 0)
+
     odeSolver <- Verlet(particle)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     particle@odeSolver <- odeSolver
     initialEnergy <- getEnergy(particle)
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) <= 1.20) {
-        rowVector[[i]] <- list(t  = particle@state[5],
-                               x  = particle@state[1],
-                               vx = particle@state[2],
-                               y  = particle@state[3],
-                               vy = particle@state[4],
+        rowVector[[i]] <- list(t  = getState(particle)[5],
+                               x  = getState(particle)[1],
+                               vx = getState(particle)[2],
+                               y  = getState(particle)[3],
+                               vy = getState(particle)[4],
                                E  = getEnergy(particle))
         particle <- doStep(particle)
-        energy <- getEnergy(particle)
+        energy   <- getEnergy(particle)
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)
@@ -154,22 +178,30 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     dt <- 0.01
     tol <- 1e-3
     particle <- KeplerEnergy()
-    particle <- init(particle, c(x, vx, y, vy, 0))
+
+    # Two ways of initializing the ODE object
+      # particle <- init(particle, c(x, vx, y, vy, 0))
+    init(particle) <- c(x, vx, y, vy, 0)
+
     odeSolver <- Verlet(particle)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     particle@odeSolver <- odeSolver
     initialEnergy <- getEnergy(particle)
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) <= 1.20) {
-        rowVector[[i]] <- list(t  = particle@state[5],
-                               x  = particle@state[1],
-                               vx = particle@state[2],
-                               y  = particle@state[3],
-                               vy = particle@state[4],
+        rowVector[[i]] <- list(t  = getState(particle)[5],
+                               x  = getState(particle)[1],
+                               vx = getState(particle)[2],
+                               y  = getState(particle)[3],
+                               vy = getState(particle)[4],
                                E  = getEnergy(particle))
         particle <- doStep(particle)
-        energy <- getEnergy(particle)
+        energy   <- getEnergy(particle)
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)
@@ -192,16 +224,28 @@ LogisticApp <- function(verbose = FALSE) {
     K  <- 10.0     # carrying capacity of the environment
     dt   <- 0.01; tol  <- 1e-3; tmax <- 10
     population <- Logistic()
-    population <- init(population, c(x, vx, 0), r, K)
+
+    # Two ways of initializing the object
+      # population <- init(population, c(x, vx, 0), r, K)
+    init(population) <-  list(initState = c(x, vx, 0),
+                              r = r,
+                              K = K)
+
     odeSolver <- Verlet(population)
-    odeSolver <- init(odeSolver, dt)
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)
+    init(odeSolver) <-  dt
+
     population@odeSolver <- odeSolver
+    # setSolver(population) <-  odeSolver
+
     rowVector <- vector("list")
     i <- 1
     while (getTime(population) <= tmax) {
         rowVector[[i]] <- list(t = getTime(population),
-                               s1 = population@state[1],
-                               s2 = population@state[2])
+                               s1 = getState(population)[1],
+                               s2 = getState(population)[2])
         population <- doStep(population)
         i <- i + 1
     }

@@ -108,6 +108,23 @@ setGeneric("getState", function(object, ...) standardGeneric("getState"))
 setGeneric("step", function(object, ...) standardGeneric("step"))
 
 
+#' Get the ODE status from the solver
+#'
+#' @param object a class object
+#' @param ... additional parameters
+#' @rdname getODE-method
+#' @export
+setGeneric("getODE", function(object, ...) standardGeneric("getODE"))
+
+
+#' Set a solver over an ODE object
+#'
+#' @param object a class object
+#' @param value value to be set
+#' @rdname setSolver-method
+#' @export
+setGeneric("setSolver<-", function(object, value) {standardGeneric("setSolver<-")})
+
 
 #' Get the step size
 #'
@@ -134,12 +151,14 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 
 #' Set initial values before starting the ODE solver
 #'
+#' Sets the tolerance like this: solver <- init(solver, dt)
 #' Not all super classes require an init method.
 #'
 #' @param object a class object
 #' @param ... additional parameters
 #' @param stepSize size of the step
-#' @rdname init-method
+#' @param value a value to set
+#' @rdname init-methods
 #' @export
 #' @examples
 #' # init method in Kepler.R
@@ -172,6 +191,15 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
 
+#' Set initial values before starting the ODE solver
+#'
+#' Sets the tolerance like this: init(solver) <- dt
+#'
+#' @rdname init-methods
+#' @export
+setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
+
+
 
 #' setStepSize uses either of two step parameters: stepSize and dt
 #' `stepSize`` works for most of the applications
@@ -200,19 +228,30 @@ setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 setGeneric("setState", function(object, ...) standardGeneric("setState"))
 
 
-
 #' Set the tolerance for the solver
 #'
+#' Sets the tolerance like this: odeSolver <- setTolerance(odeSolver, tol)
+#'
 #' @param object a class object
-#' @param ... additional parameters
 #' @param tol tolerance
-#' @rdname setTolerance-method
+#' @rdname setTolerance-methods
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
 #' @example ./inst/examples/KeplerDormandPrince45App.R
 #' @example ./inst/examples/AdaptiveStepApp.R
-setGeneric("setTolerance", function(object, tol, ...)
-    standardGeneric("setTolerance"))
+setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance"))
+
+
+
+#' Set the tolerance for the solver
+#'
+#' Sets the tolerance like this: setTolerance(odeSolver) <- tol
+#'
+#' @param ... additional parameters
+#' @param value a value to set
+#' @rdname setTolerance-methods
+#' @export
+setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTolerance<-"))
 
 
 #' Get the tolerance for the solver

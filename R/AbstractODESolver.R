@@ -33,6 +33,11 @@ setMethod("step", "AbstractODESolver", function(object, ...) {
     object
 })
 
+#' #' @rdname getODE-method
+#' setMethod("getODE", "AbstractODESolver", function(object, ...) {
+#'     object@ode
+#' })
+
 
 #' @rdname setStepSize-method
 setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
@@ -40,7 +45,8 @@ setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
     object
 })
 
-#' @rdname init-method
+
+#' @rdname init-methods
 setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     state <- getState(object@ode)
@@ -51,6 +57,21 @@ setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
     }
     object
 })
+
+
+#' @rdname init-methods
+setReplaceMethod("init", "AbstractODESolver", function(object, ..., value) {
+    stepSize <- value
+    object@stepSize <- stepSize
+    state <- getState(object@ode)
+    if (is.null(state)) {
+        object@numEqn <-  0
+    } else {
+        object@numEqn = length(state)
+    }
+    object
+})
+
 
 #' @rdname getStepSize-method
 setMethod("getStepSize", "AbstractODESolver", function(object, ...) {

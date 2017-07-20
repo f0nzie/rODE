@@ -35,7 +35,7 @@ setMethod("initialize", "Euler", function(.Object, ode, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname init-methods
 #' @importFrom methods callNextMethod
 setMethod("init", "Euler", function(object, stepSize, ...) {
     object <- callNextMethod(object, stepSize)           # call superclass init

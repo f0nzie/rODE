@@ -32,12 +32,12 @@ VanderpolApp <- function(verbose = FALSE) {
     solver <- RK45(rigid_body)
     rowVector <- vector("list")
     i <- 1
-    while (rigid_body@state[3] <= 20) {
-        rowVector[[i]] <- list(t =  rigid_body@state[3],
-                               y1 = rigid_body@state[1],
-                               y2 = rigid_body@state[2])
-        solver <- step(solver)
-        rigid_body <- solver@ode
+    while (getState(rigid_body)[3] <= 20) {
+        rowVector[[i]] <- list(t  = getState(rigid_body)[3],
+                               y1 = getState(rigid_body)[1],
+                               y2 = getState(rigid_body)[2])
+        solver     <- step(solver)
+        rigid_body <- getODE(solver)
         i <-  i + 1
     }
     DT <- data.table::rbindlist(rowVector)
@@ -59,18 +59,17 @@ SpringRK4App <- function(verbose = FALSE) {
     theta    <- 0
     thetaDot <- -0.2
     tmax     <- 22; dt <- 0.1
-    ode <- new("ODE")
     spring <- SpringRK4()
     spring@state[3] <- 0      # set time to zero, t = 0
     spring <- setState(spring, theta, thetaDot)
-    spring <- setStepSize(spring, dt = dt) # using stepSize in RK4
+    #  spring <- setStepSize(spring, dt = dt) # using stepSize in RK4
     spring@odeSolver <- setStepSize(spring@odeSolver, dt) # set new step size
     rowvec <- vector("list")
     i <- 1
-    while (spring@state[3] <= tmax)    {
-        rowvec[[i]] <- list(t  = spring@state[3],      # angle
-                            y1 = spring@state[1],      # derivative of the angle
-                            y2 = spring@state[2])      # time
+    while (getState(spring)[3] <= tmax)    {
+        rowvec[[i]] <- list(t  = getState(spring)[3],      # angle
+                            y1 = getState(spring)[1],      # derivative of the angle
+                            y2 = getState(spring)[2])      # time
         i <- i + 1
         spring <- step(spring)
     }

@@ -13,7 +13,7 @@ setClass("ODESolver")
 
 #' Set initial values and get ready to start the solver
 #'
-#' @rdname init-method
+#' @rdname init-methods
 setMethod("init", "ODESolver", function(object, stepSize, ...) {
     object
 })
@@ -23,6 +23,20 @@ setMethod("init", "ODESolver", function(object, stepSize, ...) {
 setMethod("step", "ODESolver", function(object, ...) {
     object
 })
+
+
+#' @rdname getODE-method
+setMethod("getODE", "ODESolver", function(object, ...) {
+    object@ode
+})
+
+
+#' #' @rdname setSolver-method
+#' setMethod("setSolver", "ODESolver", function(object, ode, ...) {
+#'     object@ode <- ode
+#'     object@ode
+#' })
+
 
 #' Set the size of the step
 #'

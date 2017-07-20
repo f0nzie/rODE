@@ -1,3 +1,6 @@
+# rODE 20170718 0.99.5.9000
+* change to getState() instead of internal class objects
+
 # rODE 20170712 0.99.5
 * to be release to CRAN
 * change github user to f0nzie

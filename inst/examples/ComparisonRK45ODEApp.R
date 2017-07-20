@@ -11,22 +11,26 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
     ode <- new("ODETest")                         # new ODE instance
     ode_solver <- RK45(ode)                       # select ODE solver
     ode_solver <- setStepSize(ode_solver, 1)      # set the step
-    ode_solver <- setTolerance(ode_solver, 1e-6)  # set the tolerance
+
+    # two ways to set tolerance
+      # ode_solver <- setTolerance(ode_solver, 1e-6)
+    setTolerance(ode_solver) <-  1e-6
+
     time <-  0
     rowVector <- vector("list")                   # row vector
     i <- 1    # counter
     while (time < 50) {
         # add solution objects to a row vector
-        rowVector[[i]] <- list(t = ode_solver@ode@state[2],
-                               ODE = getState(ode_solver@ode)[1],
-                               s2  = getState(ode_solver@ode)[2],
-                               exact = getExactSolution(ode_solver@ode, time),
+        rowVector[[i]] <- list(t = getState(ode)[2],
+                               ODE = getState(ode)[1],
+                               s2  = getState(ode)[2],
+                               exact = getExactSolution(ode, time),
                                rate.counts = getRateCounts(ode),
                                time = time )
         ode_solver <- step(ode_solver)            # advance solver one step
         stepSize <-  getStepSize(ode_solver)      # get the current step size
-        time <- time + stepSize
-        ode <- ode_solver@ode                     # get updated ODE object
+        time  <- time + stepSize
+        ode   <- getODE(ode_solver)                    # get updated ODE object
         state <- getState(ode)                    # get the `state` vector
         i <- i + 1                                # add a row vector
     }
@@ -36,9 +40,11 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
 
 solution <- ComparisonRK45ODEApp()
 plot(solution)
+
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+
 solution.multi <- solution %>%
     select(t, ODE, exact)
 plot(solution.multi)

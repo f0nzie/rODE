@@ -50,8 +50,27 @@ setMethod("initialize", "DormandPrince45", function(.Object, ode, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname init-methods
 setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
+    # inititalize the solver
+    object@stepSize <- stepSize
+    state <- getState(object@ode)
+    if (is.null(state)) {
+        stop("state vector not defined")
+        return(object)      # state vector not defined.
+    }
+    if (object@numEqn != length(state)) {
+        object@numEqn <- length(state)
+        object@temp_state <- vector("numeric", object@numEqn)
+        object@k <- matrix(data = 0, nrow = object@numStages, ncol =  object@numEqn)
+    }
+    object@ode@state <- state
+    object
+})
+
+#' @rdname init-methods
+setReplaceMethod("init", "DormandPrince45", function(object,  ..., value) {
+    stepSize <- value
     # inititalize the solver
     object@stepSize <- stepSize
     state <- getState(object@ode)
@@ -164,7 +183,7 @@ setMethod("getStepSize", "DormandPrince45", function(object, ...) {
 })
 
 
-#' @rdname setTolerance-method
+#' @rdname setTolerance-methods
 #' @example ./inst/examples/ComparisonRK45ODEApp.R
 #' @family adaptive solver methods
 setMethod("setTolerance", "DormandPrince45", function(object, tol) {
@@ -179,6 +198,26 @@ setMethod("setTolerance", "DormandPrince45", function(object, tol) {
     }
     return(object)
 })
+
+
+#' @rdname setTolerance-methods
+# #' @example ./inst/examples/ComparisonRK45ODEApp.R
+#' @family adaptive solver methods
+setReplaceMethod("setTolerance", "DormandPrince45", function(object, ..., value) {
+    tol <- value
+    object@tol <- abs(tol)
+    if (object@tol < 1.0E-12) {
+        err_msg = "Error: Dormand-Prince ODE solver tolerance cannot be smaller than 1.0e-12." # $NON-NLS-1$
+        if (object@enableExceptions) {
+            stop(err_msg)
+        }
+        cat(err_msg, "\n")
+        object@tol <- 1.0e-12
+    }
+    return(object)
+})
+
+
 
 #' @rdname getTolerance-method
 #' @family adaptive solver methods

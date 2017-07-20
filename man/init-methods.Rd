@@ -5,28 +5,40 @@
 \docType{methods}
 \name{init}
 \alias{init}
+\alias{init<-}
 \alias{init,ODESolver-method}
 \alias{init,AbstractODESolver-method}
+\alias{init<-,AbstractODESolver-method}
 \alias{init,DormandPrince45-method}
+\alias{init<-,DormandPrince45-method}
 \alias{init,Euler-method}
 \alias{init,EulerRichardson-method}
 \alias{init,RK4-method}
+\alias{init<-,RK4-method}
 \alias{init,Verlet-method}
 \title{Set initial values before starting the ODE solver}
 \usage{
 init(object, ...)
 
+init(object, ...) <- value
+
 \S4method{init}{ODESolver}(object, stepSize, ...)
 
 \S4method{init}{AbstractODESolver}(object, stepSize, ...)
 
+\S4method{init}{AbstractODESolver}(object, ...) <- value
+
 \S4method{init}{DormandPrince45}(object, stepSize, ...)
+
+\S4method{init}{DormandPrince45}(object, ...) <- value
 
 \S4method{init}{Euler}(object, stepSize, ...)
 
 \S4method{init}{EulerRichardson}(object, stepSize, ...)
 
 \S4method{init}{RK4}(object, stepSize, ...)
+
+\S4method{init}{RK4}(object, ...) <- value
 
 \S4method{init}{Verlet}(object, stepSize, ...)
 }
@@ -35,10 +47,15 @@ init(object, ...)
 
 \item{...}{additional parameters}
 
+\item{value}{a value to set}
+
 \item{stepSize}{size of the step}
 }
 \description{
+Sets the tolerance like this: solver <- init(solver, dt)
 Not all super classes require an init method.
+
+Sets the tolerance like this: init(solver) <- dt
 
 Set initial values and get ready to start the solver
 }

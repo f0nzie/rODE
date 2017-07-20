@@ -4,15 +4,24 @@
 \docType{methods}
 \name{setTolerance}
 \alias{setTolerance}
+\alias{setTolerance<-}
 \alias{setTolerance,ODEAdaptiveSolver-method}
+\alias{setTolerance<-,ODEAdaptiveSolver-method}
 \alias{setTolerance,DormandPrince45-method}
+\alias{setTolerance<-,DormandPrince45-method}
 \title{Set the tolerance for the solver}
 \usage{
-setTolerance(object, tol, ...)
+setTolerance(object, tol)
+
+setTolerance(object, ...) <- value
 
 \S4method{setTolerance}{ODEAdaptiveSolver}(object, tol)
 
+\S4method{setTolerance}{ODEAdaptiveSolver}(object, ...) <- value
+
 \S4method{setTolerance}{DormandPrince45}(object, tol)
+
+\S4method{setTolerance}{DormandPrince45}(object, ...) <- value
 }
 \arguments{
 \item{object}{a class object}
@@ -20,9 +29,13 @@ setTolerance(object, tol, ...)
 \item{tol}{tolerance}
 
 \item{...}{additional parameters}
+
+\item{value}{a value to set}
 }
 \description{
-Set the tolerance for the solver
+Sets the tolerance like this: odeSolver <- setTolerance(odeSolver, tol)
+
+Sets the tolerance like this: setTolerance(odeSolver) <- tol
 }
 \examples{
 # ++++++++++++++++++++++++++++++++++++++++++++++++  example: ComparisonRK45App.R
@@ -37,21 +50,25 @@ importFromExamples("ODETest.R")
      ode <- new("ODETest")                     # create an `ODETest` object
      ode_solver <- RK45(ode)                   # select the ODE solver
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
-     ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+
+     # Two ways of setting the tolerance
+       # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+     setTolerance(ode_solver) <-  1e-8
+
      time <-  0
      rowVector <- vector("list")
      i <- 1
      while (time < 50) {
-         rowVector[[i]] <- list(t  = ode_solver@ode@state[2],
-                                s1 = getState(ode_solver@ode)[1],
-                                s2 = getState(ode_solver@ode)[2],
-                                xs = getExactSolution(ode_solver@ode, time),
+         rowVector[[i]] <- list(t  = getState(ode)[2],
+                                s1 = getState(ode)[1],
+                                s2 = getState(ode)[2],
+                                xs = getExactSolution(ode, time),
                                 rc = getRateCounts(ode),
                                 time = time)
          ode_solver <- step(ode_solver)       # advance one step
-         stepSize <-  ode_solver@stepSize     # update the step size
+         stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
-         state <- getState(ode_solver@ode)    # get the `state` vector
+         ode <- getODE(ode_solver)                     # get updated ODE object
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results
@@ -67,6 +84,11 @@ plot(solution)
 
 importFromExamples("KeplerDormandPrince45.R")
 
+set_solver <- function(ode_object, solver) {
+    slot(ode_object, "odeSolver") <- solver
+    ode_object
+}
+
 KeplerDormandPrince45App <- function(verbose = FALSE) {
     # values for the examples
     x  <- 1
@@ -75,22 +97,33 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     vy <- 2 * pi
     dt <- 0.01          # step size
     tol <- 1e-3         # tolerance
-    particle <- Kepler()                            # use class Kepler
-    particle <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
+    particle  <- KeplerDormandPrince45()                      # use class Kepler
+
+    # Two ways of initializing the ODE object
+      # particle  <- init(particle, c(x, vx, y, vy, 0))  # enter state vector
+    init(particle) <- c(x, vx, y, vy, 0)
+
     odeSolver <- DormandPrince45(particle)      # select the ODE solver
-    odeSolver <- init(odeSolver, dt)            # start the solver
-    odeSolver <- setTolerance(odeSolver, tol)   # this works for adaptive solvers
-    particle@odeSolver <- odeSolver             # copy the solver to ODE object
+
+    # Two ways of initializing the solver
+      # odeSolver <- init(odeSolver, dt)            # start the solver
+    init(odeSolver) <-  dt
+
+    # Two ways of setting the tolerance
+      # odeSolver <- setTolerance(odeSolver, tol) # this works for adaptive solvers
+    setTolerance(odeSolver) <- tol
+    setSolver(particle) <-  odeSolver
+
     initialEnergy <- getEnergy(particle)        # calculate the energy
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) < 1.5) {
-        rowVector[[i]] <- list(t  = particle@state[5],
-                               x  = particle@state[1],
-                               vx = particle@state[2],
-                               y  = particle@state[3],
-                               vx = particle@state[4],
-                               energy = getEnergy(particle) )
+    rowVector[[i]] <- list(t  = getState(particle)[5],
+                           x  = getState(particle)[1],
+                           vx = getState(particle)[2],
+                           y  = getState(particle)[3],
+                           vx = getState(particle)[4],
+                           energy = getEnergy(particle) )
         particle <- doStep(particle)            # advance one step
         energy   <- getEnergy(particle)         # calculate energy
         i <- i + 1
@@ -110,15 +143,22 @@ importFromExamples("AdaptiveStep.R")
 AdaptiveStepApp <- function(verbose = FALSE) {
     ode        <- new("Impulse")
     ode_solver <- RK45(ode)
-    ode_solver <- init(ode_solver, 0.1)
-    ode_solver <- setTolerance(ode_solver, 1.0e-4)
+
+    # Two ways to initialize the solver
+      # ode_solver <- init(ode_solver, 0.1)
+    init(ode_solver) <- 0.1
+
+    # two ways to set tolerance
+      # ode_solver <- setTolerance(ode_solver, 1.0e-4)
+    setTolerance(ode_solver) <- 1.0e-4
+
     i <- 1; rowVector <- vector("list")
     while (getState(ode)[1] < 12) {
         rowVector[[i]] <- list(s1 = getState(ode)[1],
                                s2 = getState(ode)[2],
                                t  = getState(ode)[3])
         ode_solver <- step(ode_solver)
-        ode <- ode_solver@ode
+        ode <- getODE(ode_solver)
         i <- i + 1
     }
     return(data.table::rbindlist(rowVector))
@@ -140,22 +180,26 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
     ode <- new("ODETest")                         # new ODE instance
     ode_solver <- RK45(ode)                       # select ODE solver
     ode_solver <- setStepSize(ode_solver, 1)      # set the step
-    ode_solver <- setTolerance(ode_solver, 1e-6)  # set the tolerance
+
+    # two ways to set tolerance
+      # ode_solver <- setTolerance(ode_solver, 1e-6)
+    setTolerance(ode_solver) <-  1e-6
+
     time <-  0
     rowVector <- vector("list")                   # row vector
     i <- 1    # counter
     while (time < 50) {
         # add solution objects to a row vector
-        rowVector[[i]] <- list(t = ode_solver@ode@state[2],
-                               ODE = getState(ode_solver@ode)[1],
-                               s2  = getState(ode_solver@ode)[2],
-                               exact = getExactSolution(ode_solver@ode, time),
+        rowVector[[i]] <- list(t = getState(ode)[2],
+                               ODE = getState(ode)[1],
+                               s2  = getState(ode)[2],
+                               exact = getExactSolution(ode, time),
                                rate.counts = getRateCounts(ode),
                                time = time )
         ode_solver <- step(ode_solver)            # advance solver one step
         stepSize <-  getStepSize(ode_solver)      # get the current step size
-        time <- time + stepSize
-        ode <- ode_solver@ode                     # get updated ODE object
+        time  <- time + stepSize
+        ode   <- getODE(ode_solver)                    # get updated ODE object
         state <- getState(ode)                    # get the `state` vector
         i <- i + 1                                # add a row vector
     }
@@ -165,9 +209,11 @@ ComparisonRK45ODEApp <- function(verbose = FALSE) {
 
 solution <- ComparisonRK45ODEApp()
 plot(solution)
+
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+
 solution.multi <- solution \%>\%
     select(t, ODE, exact)
 plot(solution.multi)
@@ -183,6 +229,9 @@ print(g)
 
 }
 \seealso{
+Other adaptive solver methods: \code{\link{getErrorCode}},
+  \code{\link{getTolerance}}
+
 Other adaptive solver methods: \code{\link{getErrorCode}},
   \code{\link{getTolerance}}
 }

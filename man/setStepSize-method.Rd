@@ -37,7 +37,17 @@ setStepSize uses either of two step parameters: stepSize and dt
 `stepSize`` works for most of the applications
 `dt`` is used in Pendulum
 
+#' @rdname setSolver-method
+setMethod("setSolver", "ODESolver", function(object, ode, ...) {
+    object@ode <- ode
+    object@ode
+})
 Set the size of the step
+
+#' @rdname getODE-method
+setMethod("getODE", "AbstractODESolver", function(object, ...) {
+    object@ode
+})
 }
 \examples{
 # ++++++++++++++++++++++++++++++++++++++++++++++++++application:  SpringRK4App.R
@@ -51,18 +61,17 @@ SpringRK4App <- function(verbose = FALSE) {
     theta    <- 0
     thetaDot <- -0.2
     tmax     <- 22; dt <- 0.1
-    ode <- new("ODE")
     spring <- SpringRK4()
     spring@state[3] <- 0      # set time to zero, t = 0
     spring <- setState(spring, theta, thetaDot)
-    spring <- setStepSize(spring, dt = dt) # using stepSize in RK4
+    #  spring <- setStepSize(spring, dt = dt) # using stepSize in RK4
     spring@odeSolver <- setStepSize(spring@odeSolver, dt) # set new step size
     rowvec <- vector("list")
     i <- 1
-    while (spring@state[3] <= tmax)    {
-        rowvec[[i]] <- list(t  = spring@state[3],      # angle
-                            y1 = spring@state[1],      # derivative of the angle
-                            y2 = spring@state[2])      # time
+    while (getState(spring)[3] <= tmax)    {
+        rowvec[[i]] <- list(t  = getState(spring)[3],      # angle
+                            y1 = getState(spring)[1],      # derivative of the angle
+                            y2 = getState(spring)[2])      # time
         i <- i + 1
         spring <- step(spring)
     }
@@ -85,21 +94,25 @@ importFromExamples("ODETest.R")
      ode <- new("ODETest")                     # create an `ODETest` object
      ode_solver <- RK45(ode)                   # select the ODE solver
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
-     ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+
+     # Two ways of setting the tolerance
+       # ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
+     setTolerance(ode_solver) <-  1e-8
+
      time <-  0
      rowVector <- vector("list")
      i <- 1
      while (time < 50) {
-         rowVector[[i]] <- list(t  = ode_solver@ode@state[2],
-                                s1 = getState(ode_solver@ode)[1],
-                                s2 = getState(ode_solver@ode)[2],
-                                xs = getExactSolution(ode_solver@ode, time),
+         rowVector[[i]] <- list(t  = getState(ode)[2],
+                                s1 = getState(ode)[1],
+                                s2 = getState(ode)[2],
+                                xs = getExactSolution(ode, time),
                                 rc = getRateCounts(ode),
                                 time = time)
          ode_solver <- step(ode_solver)       # advance one step
-         stepSize <-  ode_solver@stepSize     # update the step size
+         stepSize <- getStepSize(ode_solver)
          time <- time + stepSize
-         state <- getState(ode_solver@ode)    # get the `state` vector
+         ode <- getODE(ode_solver)                     # get updated ODE object
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results

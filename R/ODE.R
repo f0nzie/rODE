@@ -29,3 +29,9 @@ setMethod("getRate", "ODE", function(object, state, ...) {
     # Gets the rate of change using the argument's state variables.
     return(object@rate)
 })
+
+
+# setReplaceMethod("setSolver", "ODE", function(object, value) {
+#     object@odeSolver <- value
+#     object
+# })

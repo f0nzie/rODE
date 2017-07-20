@@ -12,19 +12,19 @@ RigidBodyNXFApp <- function(verbose = FALSE) {
     y3 <- 1    # initial y3 value
     dt        <- 0.01 # delta time for step
 
-    body <- RigidBodyNXF(y1, y2, y3)
+    body   <- RigidBodyNXF(y1, y2, y3)
     solver <- Euler(body)
     solver <- setStepSize(solver, dt)
     rowVector <- vector("list")
     i <- 1
     # stop loop when the body hits the ground
-    while (body@state[4] <= 12) {
-        rowVector[[i]] <- list(t  = body@state[4],
-                               y1 = body@state[1],
-                               y2 = body@state[2],
-                               y3 = body@state[3])
+    while (getState(body)[4] <= 12) {
+        rowVector[[i]] <- list(t  = getState(body)[4],
+                               y1 = getState(body)[1],
+                               y2 = getState(body)[2],
+                               y3 = getState(body)[3])
         solver <- step(solver)
-        body <- solver@ode
+        body   <- getODE(solver)
         i <- i + 1
     }
     DT <- data.table::rbindlist(rowVector)
