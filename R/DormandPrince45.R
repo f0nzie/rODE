@@ -50,7 +50,7 @@ setMethod("initialize", "DormandPrince45", function(.Object, ode, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname init-methods
 setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     # inititalize the solver
     object@stepSize <- stepSize
@@ -68,7 +68,7 @@ setMethod("init", "DormandPrince45", function(object, stepSize, ...) {
     object
 })
 
-#' @rdname init-method
+#' @rdname init-methods
 setReplaceMethod("init", "DormandPrince45", function(object,  ..., value) {
     stepSize <- value
     # inititalize the solver

@@ -27,7 +27,7 @@ setMethod("initialize", "RK4", function(.Object, ode, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname init-methods
 #' @importFrom methods callNextMethod
 setMethod("init", "RK4", function(object, stepSize, ...) {
     # inititalize the solver
@@ -45,7 +45,7 @@ setMethod("init", "RK4", function(object, stepSize, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname init-methods
 #' @importFrom methods callNextMethod
 setReplaceMethod("init", "RK4", function(object, ..., value) {
     # inititalize the solver

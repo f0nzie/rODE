@@ -46,7 +46,7 @@ setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname init-methods
 setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     state <- getState(object@ode)
@@ -59,7 +59,7 @@ setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname init-methods
 setReplaceMethod("init", "AbstractODESolver", function(object, ..., value) {
     stepSize <- value
     object@stepSize <- stepSize

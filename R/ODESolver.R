@@ -13,7 +13,7 @@ setClass("ODESolver")
 
 #' Set initial values and get ready to start the solver
 #'
-#' @rdname init-method
+#' @rdname init-methods
 setMethod("init", "ODESolver", function(object, stepSize, ...) {
     object
 })

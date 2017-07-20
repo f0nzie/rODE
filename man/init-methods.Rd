@@ -5,6 +5,7 @@
 \docType{methods}
 \name{init}
 \alias{init}
+\alias{init<-}
 \alias{init,ODESolver-method}
 \alias{init,AbstractODESolver-method}
 \alias{init<-,AbstractODESolver-method}
@@ -18,6 +19,8 @@
 \title{Set initial values before starting the ODE solver}
 \usage{
 init(object, ...)
+
+init(object, ...) <- value
 
 \S4method{init}{ODESolver}(object, stepSize, ...)
 
@@ -44,10 +47,14 @@ init(object, ...)
 
 \item{...}{additional parameters}
 
+\item{value}{a value to set}
+
 \item{stepSize}{size of the step}
 }
 \description{
 Not all super classes require an init method.
+
+Sets the tolerance like this: init(solver) <- dt
 
 Set initial values and get ready to start the solver
 }

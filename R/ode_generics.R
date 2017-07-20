@@ -156,7 +156,8 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #' @param object a class object
 #' @param ... additional parameters
 #' @param stepSize size of the step
-#' @rdname init-method
+#' @param value a value to set
+#' @rdname init-methods
 #' @export
 #' @examples
 #' # init method in Kepler.R
@@ -188,6 +189,12 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #' })
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
+
+#' Set initial values before starting the ODE solver
+#'
+#' Sets the tolerance like this: init(solver) <- dt
+#'
+#' @rdname init-methods
 #' @export
 setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
 
