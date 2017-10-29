@@ -1,3 +1,7 @@
+# 0.99.5.9001
+* add travis, coverage, cran badges
+
+
 # rODE 20170718 0.99.5.9000
 * change to getState() instead of internal class objects
 
