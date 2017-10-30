@@ -22,7 +22,6 @@ setMethod("initialize", "EulerRichardson", function(.Object, ode, ...) {
 
 
 #' @rdname EulerRichardson-class
-#' @aliases init,init-methods
 #' @importFrom methods callNextMethod
 setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
     # inititalize the solver
@@ -33,7 +32,6 @@ setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
 })
 
 #' @rdname EulerRichardson-class
-#' @aliases step-method
 setMethod("step", "EulerRichardson", function(object, ...) {
     # step through the diffrential equation
     state <- getState(object@ode)                         # get the state vector
