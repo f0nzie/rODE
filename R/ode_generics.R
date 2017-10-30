@@ -42,6 +42,12 @@ setGeneric("AbstractODESolver", function(ode, ...)
     standardGeneric("AbstractODESolver"))
 
 
+#' @rdname Euler-class
+#' @export
+#' @example ./inst/examples/RigidBodyNXFApp.R
+setGeneric("Euler", function(ode, ...)
+    standardGeneric("Euler"))
+
 #' @rdname EulerRichardson-class
 #' @export
 #' @example ./inst/examples/PendulumApp.R
@@ -63,11 +69,7 @@ setGeneric("RK4", function(ode, ...)
 setGeneric("Verlet", function(ode, ...)
     standardGeneric("Verlet"))
 
-#' @rdname Euler-class
-#' @export
-#' @example ./inst/examples/RigidBodyNXFApp.R
-setGeneric("Euler", function(ode, ...)
-    standardGeneric("Euler"))
+
 
 #' @rdname ODESolverFactory-class
 #' @export
