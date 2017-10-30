@@ -1,4 +1,7 @@
 ## ------------------------------------------------------------------------
+library(rODE)
+
+## ------------------------------------------------------------------------
 # This code can also be found in the `examples` folder under this name:
 # Reaction.R
 
