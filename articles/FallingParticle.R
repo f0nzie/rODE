@@ -1,3 +1,6 @@
+## ------------------------------------------------------------------------
+library(rODE)
+
 ## ----eval=FALSE----------------------------------------------------------
 #  # This code can also be found in the `examples` folder under this name:
 #  # FallingParticleODE.R
