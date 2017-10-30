@@ -1,7 +1,6 @@
 
 
 #' Euler class
-#'
 #' @param ode an ODE object
 #' @param object an internal object of the class
 #' @param stepSize the size of the step
@@ -13,6 +12,9 @@
             contains = c("AbstractODESolver")
         )
 
+#' @param .Object internal object for initialize
+#' @rdname Euler-class
+#' @aliases initialize,initialize-method
 setMethod("initialize", "Euler", function(.Object, ode, ...) {
     tryCatch({
         if (missing(ode)) stop("ode param not supplied")
@@ -23,6 +25,7 @@ setMethod("initialize", "Euler", function(.Object, ode, ...) {
     .Object@ode@rate <- vector("numeric")       # create vector for the rate
     return(.Object)
 })
+
 
 #' @rdname Euler-class
 #' @aliases init,init-method
