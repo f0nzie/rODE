@@ -12,6 +12,12 @@ vignette: >
 ## Projectile with RK4 solver
 
 ```{r}
+library(rODE)
+library(ggplot2)
+```
+
+
+```{r}
 ####################
 # This code can also be found in the `examples` folder under this name:
 # 
