@@ -1,19 +1,3 @@
-# EulerRichardson.R
-
-
-# * An Euler-Richardson (midpoint) method ODE solver.
-# *
-# * The Euler-Richardson method uses the state at the beginning of the interval
-# * to estimate the state at the midpoint.
-# *
-#     * x(midpoint) = x(n) + v(n)*dt/2
-#     * v(midpoint) = v(n) + a(n)*dt/2
-#     * t(midpoint) = t(n) + dt/2
-#     *
-#     * The midpoint state is then used to calculate the final state.
-#     * @author             Wolfgang Christian
-#     * converted to R by   Alfonso R. Reyes
-
 
 #' EulerRichardson class
 #'
@@ -35,7 +19,8 @@ setMethod("initialize", "EulerRichardson", function(.Object, ode, ...) {
             })
 
 
-#' @rdname init-methods
+#' @rdname EulerRichardson-class
+#' @aliases init,init-methods
 #' @importFrom methods callNextMethod
 setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
     # inititalize the solver
@@ -45,8 +30,8 @@ setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
     object
 })
 
-
-#' @rdname step-method
+#' @rdname EulerRichardson-class
+#' @aliases step,step-method
 setMethod("step", "EulerRichardson", function(object, ...) {
     # step through the diffrential equation
     state <- getState(object@ode)                         # get the state vector
@@ -74,9 +59,7 @@ setMethod("step", "EulerRichardson", function(object, ...) {
 
 #' EulerRichardson constructor ODE
 #'
-#' @param ode an ODE object
-#' @param ...  additional parameters
-#'
+#' @rdname EulerRichardson-class
 #' @importFrom methods new
 #' @export
 setMethod("EulerRichardson", signature(ode = "ODE"), function(ode, ...) {
@@ -86,3 +69,20 @@ setMethod("EulerRichardson", signature(ode = "ODE"), function(ode, ...) {
     return(eulerRichardson)
 })
 
+
+
+# EulerRichardson.R
+
+
+# * An Euler-Richardson (midpoint) method ODE solver.
+# *
+# * The Euler-Richardson method uses the state at the beginning of the interval
+# * to estimate the state at the midpoint.
+# *
+#     * x(midpoint) = x(n) + v(n)*dt/2
+#     * v(midpoint) = v(n) + a(n)*dt/2
+#     * t(midpoint) = t(n) + dt/2
+#     *
+#     * The midpoint state is then used to calculate the final state.
+#     * @author             Wolfgang Christian
+#     * converted to R by   Alfonso R. Reyes
