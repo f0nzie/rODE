@@ -1,7 +1,9 @@
 
-#' EulerRichardson class
+#' EulerRichardson ODE solver class
 #'
 #' @param ode an ODE object
+#' @param object internal passing object
+#' @param stepSize the size of the step
 #' @param ... additional parameters
 #'
 #' @rdname EulerRichardson-class
@@ -31,7 +33,7 @@ setMethod("init", "EulerRichardson", function(object, stepSize, ...) {
 })
 
 #' @rdname EulerRichardson-class
-#' @aliases step,step-method
+#' @aliases step-method
 setMethod("step", "EulerRichardson", function(object, ...) {
     # step through the diffrential equation
     state <- getState(object@ode)                         # get the state vector
