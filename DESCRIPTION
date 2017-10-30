@@ -2,8 +2,7 @@ Package: rODE
 Type: Package
 Title: Ordinary Differential Equation (ODE) Solvers Written in R Using S4 Classes
 Version: 0.99.5.9000
-Author: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
-Maintainer: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
+Authors@R: person("Alfonso R.", "Reyes", role = c("aut", "cre"), email = "alfonso.reyes@oilgainsanalytics.com")
 Description: Show physics, math and engineering students how an ODE solver
     is made and how effective classes can be for the construction of
     the equations that describe natural phenomena. Inspiration for this work 
