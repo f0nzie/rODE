@@ -1,12 +1,9 @@
-# Verlet.R
-
-# Verlet ODE solver
-#
 
 #' Verlet class
 #'
 #' @param ode an ODE object
 #' @param object a class object
+#' @param stepSize size of the step
 #' @param ... additional parameters
 #'
 #' @rdname Verlet-class
@@ -26,8 +23,8 @@ setMethod("initialize", "Verlet", function(.Object, ode, ...) {
     return(.Object)
 })
 
-
-#' @rdname init-methods
+#' @rdname Verlet-class
+#' @aliases init-methods
 #' @importFrom methods callNextMethod
 setMethod("init", "Verlet", function(object, stepSize, ...) {
     # inititalize the solver
@@ -42,12 +39,12 @@ setMethod("init", "Verlet", function(object, stepSize, ...) {
 
 
 #' @rdname Verlet-class
+#' @aliases getRateCounter, getRateCounter-method
 setMethod("getRateCounter", "Verlet", function(object, ...) {
     return(object@rateCounter)
 })
 
-
-#' @rdname step-method
+#' @rdname Verlet-class
 setMethod("step", "Verlet", function(object, ...) {
     # state[]: x1, d x1/dt, x2, d x2/dt .... xN, d xN/dt, t
     state <- getState(object@ode)                         # get the state vector
