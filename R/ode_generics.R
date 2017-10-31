@@ -42,6 +42,12 @@ setGeneric("AbstractODESolver", function(ode, ...)
     standardGeneric("AbstractODESolver"))
 
 
+#' @rdname DormandPrince45-class
+#' @export
+setGeneric("DormandPrince45", function(ode, ...)
+    standardGeneric("DormandPrince45"))
+
+
 #' @rdname Euler-class
 #' @export
 #' @example ./inst/examples/RigidBodyNXFApp.R
@@ -160,7 +166,7 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #' @param ... additional parameters
 #' @param stepSize size of the step
 #' @param value a value to set
-#' @rdname init-methods
+#' @rdname init-method
 #' @export
 #' @examples
 #' # init method in Kepler.R
@@ -197,7 +203,7 @@ setGeneric("init", function(object, ...) standardGeneric("init"))
 #'
 #' Sets the tolerance like this: init(solver) <- dt
 #'
-#' @rdname init-methods
+#' @rdname init-method
 #' @export
 setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
 
@@ -210,6 +216,7 @@ setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
 #' @param object a class object
 #' @param ... additional parameters
 #' @param stepSize size of the step
+#'
 #' @rdname setStepSize-method
 #' @export
 #' @example ./inst/examples/SpringRK4App.R
@@ -224,6 +231,8 @@ setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 #'
 #' @param object a class object
 #' @param ... additional parameters
+#'
+#' @rdname setState-method
 #' @export
 #' @example ./inst/examples/ProjectileApp.R
 #' @example ./inst/examples/PendulumApp.R
@@ -236,6 +245,7 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 #'
 #' @param object a class object
 #' @param tol tolerance
+#'
 #' @rdname setTolerance-methods
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
@@ -251,6 +261,7 @@ setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance")
 #'
 #' @param ... additional parameters
 #' @param value a value to set
+#'
 #' @rdname setTolerance-methods
 #' @export
 setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTolerance<-"))
@@ -260,6 +271,7 @@ setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTo
 #'
 #' @param object a class object
 #' @param ... additional parameters
+#'
 #' @rdname getTolerance-method
 #' @export
 setGeneric("getTolerance", function(object, ...) standardGeneric("getTolerance"))
@@ -281,7 +293,11 @@ setGeneric("getErrorCode", function(object, tol, ...)
 
 #' Enable Runtime Exceptions
 #'
-#' @rdname DormandPrince45-class
+#' @param object a class object
+#' @param enable a boolean to enable exceptions
+#' @param ... additional parameters
+#'
+#' @rdname enableRuntimeExceptions-method
 #' @export
 #' @examples
 #' setMethod("enableRuntimeExceptions", "DormandPrince45", function(object, enable) {
@@ -290,11 +306,15 @@ setGeneric("getErrorCode", function(object, tol, ...)
 setGeneric("enableRuntimeExceptions", function(object, enable, ...)
     standardGeneric("enableRuntimeExceptions"))
 
+
 #' Get the rate counter
 #'
 #' How many time the rate has changed with a step
 #'
-#' @rdname Verlet-class
+#' @param object a class object
+#' @param ... additional parameters
+#'
+#' @rdname getRateCounter-method
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
 setGeneric("getRateCounter", function(object, ...)
@@ -305,6 +325,7 @@ setGeneric("getRateCounter", function(object, ...)
 #'
 #' @param object a class object
 #' @param ... additional parameters
+#'
 #' @rdname getTime-method
 #' @export
 #' @example ./inst/examples/LogisticApp.R
@@ -317,6 +338,7 @@ setGeneric("getTime", function(object, ...) standardGeneric("getTime"))
 #'
 #' @param object a class object
 #' @param ... additional parameters
+#'
 #' @rdname getEnergy-method
 #' @export
 #' @example ./inst/examples/KeplerEnergy.R
@@ -329,6 +351,7 @@ setGeneric("getEnergy", function(object, ...) standardGeneric("getEnergy"))
 #' @param object a class object
 #' @param ... additional parameters
 #' @param t time ath what we are performing the evaluation
+#'
 #' @rdname getExactSolution-method
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
