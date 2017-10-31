@@ -1,13 +1,13 @@
 
-#' Verlet class
+#' Verlet ODE solver class
 #'
 #' @param ode an ODE object
 #' @param object a class object
 #' @param stepSize size of the step
 #' @param ... additional parameters
 #'
-#' @rdname Verlet-class
 #' @example ./inst/examples/KeplerEnergyApp.R
+#' @rdname Verlet-class
 .Verlet <- setClass("Verlet", slots = c(
               rate1 = "numeric",
               rate2 = "numeric",
@@ -39,10 +39,11 @@ setMethod("init", "Verlet", function(object, stepSize, ...) {
 
 
 #' @rdname Verlet-class
-#' @aliases getRateCounter, getRateCounter-method
+#' @aliases getRateCounter,getRateCounter-method
 setMethod("getRateCounter", "Verlet", function(object, ...) {
     return(object@rateCounter)
 })
+
 
 #' @rdname Verlet-class
 setMethod("step", "Verlet", function(object, ...) {
