@@ -7,6 +7,9 @@
 #' Inherits from: ODESolver class
 #'
 #' @param ode an ODE object
+#' @param object a class object
+#' @param stepSize the size of the step
+#' @param value the step size value
 #' @param ... additional parameters
 #'
 #' @rdname AbstractODESolver-class
@@ -28,25 +31,27 @@ setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
     return(.Object)
 })
 
-#' @rdname step-method
+#' @rdname AbstractODESolver-class
 setMethod("step", "AbstractODESolver", function(object, ...) {
     object
 })
 
-#' #' @rdname getODE-method
+#' @rdname AbstractODESolver-class
+#' @aliases getODE,getODE-method
 #' setMethod("getODE", "AbstractODESolver", function(object, ...) {
 #'     object@ode
 #' })
 
 
-#' @rdname setStepSize-method
+#' @rdname AbstractODESolver-class
+#' @aliases setStepSize,setStepSize-method
 setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize = stepSize
     object
 })
 
 
-#' @rdname init-method
+#' @rdname AbstractODESolver-class
 setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize <- stepSize
     state <- getState(object@ode)
@@ -59,7 +64,7 @@ setMethod("init", "AbstractODESolver", function(object, stepSize, ...) {
 })
 
 
-#' @rdname init-method
+#' @rdname AbstractODESolver-class
 setReplaceMethod("init", "AbstractODESolver", function(object, ..., value) {
     stepSize <- value
     object@stepSize <- stepSize
@@ -73,19 +78,17 @@ setReplaceMethod("init", "AbstractODESolver", function(object, ..., value) {
 })
 
 
-#' @rdname getStepSize-method
+#' @rdname AbstractODESolver-class
 setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
     return(object@stepSize)
 })
 
 
 
-# constructor methods
 
 #' AbstractODESolver constructor `missing``
 #'
-#' @param ode an ODE object
-#' @param ...  additional parameters
+#' @rdname AbstractODESolver-class
 #'
 #' @importFrom methods new
 #' @export
@@ -105,8 +108,7 @@ setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
 #'
 #' Uses this constructor when ODE object is passed
 #'
-#' @param ode an ODE object
-#' @param ...  additional parameters
+#' @rdname AbstractODESolver-class
 #'
 #' @importFrom methods new
 setMethod("AbstractODESolver", signature(ode = "ODE"), function(ode, ...) {
