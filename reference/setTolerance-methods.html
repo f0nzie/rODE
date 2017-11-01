@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set the tolerance for the solver — setTolerance â€¢ rODE</title>
+<title>setTolerance — setTolerance â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,12 +108,12 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set the tolerance for the solver</h1>
+    <h1>setTolerance</h1>
     </div>
 
     
-    <p>Sets the tolerance like this: odeSolver &lt;- setTolerance(odeSolver, tol)</p>
-<p>Sets the tolerance like this: setTolerance(odeSolver) &lt;- tol</p>
+    <p>Set the tolerance for the solver</p>
+<p>Set the tolerance for the solver</p>
     
 
     <pre class="usage"><span class='fu'>setTolerance</span>(<span class='no'>object</span>, <span class='no'>tol</span>)
@@ -124,12 +124,6 @@
 <span class='fu'>setTolerance</span>(<span class='no'>object</span>, <span class='no'>tol</span>)
 
 <span class='co'># S4 method for ODEAdaptiveSolver</span>
-<span class='fu'>setTolerance</span>(<span class='no'>object</span>, <span class='no'>...</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
-
-<span class='co'># S4 method for DormandPrince45</span>
-<span class='fu'>setTolerance</span>(<span class='no'>object</span>, <span class='no'>tol</span>)
-
-<span class='co'># S4 method for DormandPrince45</span>
 <span class='fu'>setTolerance</span>(<span class='no'>object</span>, <span class='no'>...</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -153,12 +147,10 @@
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Other adaptive solver methods: <code><a href='getErrorCode-method.html'>getErrorCode</a></code>,
-  <code><a href='getTolerance-method.html'>getTolerance</a></code></p>
-<p>Other adaptive solver methods: <code><a href='getErrorCode-method.html'>getErrorCode</a></code>,
-  <code><a href='getTolerance-method.html'>getTolerance</a></code></p>
+    <p>Sets the tolerance like this: odeSolver &lt;- setTolerance(odeSolver, tol)</p>
+<p>Sets the tolerance like this: setTolerance(odeSolver) &lt;- tol</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -224,13 +216,13 @@
 
     <span class='co'># Two ways of initializing the ODE object</span>
       <span class='co'># particle  &lt;- init(particle, c(x, vx, y, vy, 0))  # enter state vector</span>
-    <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>particle</span>) <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>x</span>, <span class='no'>vx</span>, <span class='no'>y</span>, <span class='no'>vy</span>, <span class='fl'>0</span>)
+    <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>particle</span>) <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>x</span>, <span class='no'>vx</span>, <span class='no'>y</span>, <span class='no'>vy</span>, <span class='fl'>0</span>)
 
-    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='DormandPrince45.html'>DormandPrince45</a></span>(<span class='no'>particle</span>)      <span class='co'># select the ODE solver</span>
+    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='DormandPrince45-class.html'>DormandPrince45</a></span>(<span class='no'>particle</span>)      <span class='co'># select the ODE solver</span>
 
     <span class='co'># Two ways of initializing the solver</span>
       <span class='co'># odeSolver &lt;- init(odeSolver, dt)            # start the solver</span>
-    <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>odeSolver</span>) <span class='kw'>&lt;-</span>  <span class='no'>dt</span>
+    <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>odeSolver</span>) <span class='kw'>&lt;-</span>  <span class='no'>dt</span>
 
     <span class='co'># Two ways of setting the tolerance</span>
       <span class='co'># odeSolver &lt;- setTolerance(odeSolver, tol) # this works for adaptive solvers</span>
@@ -268,7 +260,7 @@
 
     <span class='co'># Two ways to initialize the solver</span>
       <span class='co'># ode_solver &lt;- init(ode_solver, 0.1)</span>
-    <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>ode_solver</span>) <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
+    <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>ode_solver</span>) <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
 
     <span class='co'># two ways to set tolerance</span>
       <span class='co'># ode_solver &lt;- setTolerance(ode_solver, 1.0e-4)</span>
@@ -288,71 +280,14 @@
 
 <span class='co'># run application</span>
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>AdaptiveStepApp</span>()
-<span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='setTolerance-methods-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># +++++++++++++++++++++++++++++++++++++++++ Example:      ComparisonRK45ODEApp.R</span>
-<span class='co'># Updates the ODE state instead of using the internal state in the ODE solver</span>
-<span class='co'># Also plots the solver solution versus the analytical solution at a</span>
-<span class='co'># tolerance of 1e-6</span>
-<span class='co'># ODE Solver:   Runge-Kutta 45</span>
-<span class='co'># Class:        RK45</span>
-
-<span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"ODETest.R"</span>)
-
-<span class='no'>ComparisonRK45ODEApp</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) {
-    <span class='no'>ode</span> <span class='kw'>&lt;-</span> <span class='fu'>new</span>(<span class='st'>"ODETest"</span>)                         <span class='co'># new ODE instance</span>
-    <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RK45-class.html'>RK45</a></span>(<span class='no'>ode</span>)                       <span class='co'># select ODE solver</span>
-    <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>ode_solver</span>, <span class='fl'>1</span>)      <span class='co'># set the step</span>
-
-    <span class='co'># two ways to set tolerance</span>
-      <span class='co'># ode_solver &lt;- setTolerance(ode_solver, 1e-6)</span>
-    <span class='fu'>setTolerance</span>(<span class='no'>ode_solver</span>) <span class='kw'>&lt;-</span>  <span class='fl'>1e-6</span>
-
-    <span class='no'>time</span> <span class='kw'>&lt;-</span>  <span class='fl'>0</span>
-    <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)                   <span class='co'># row vector</span>
-    <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>    <span class='co'># counter</span>
-    <span class='kw'>while</span> (<span class='no'>time</span> <span class='kw'>&lt;</span> <span class='fl'>50</span>) {
-        <span class='co'># add solution objects to a row vector</span>
-        <span class='no'>rowVector</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'>list</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
-                               <span class='kw'>ODE</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>1</span>],
-                               <span class='kw'>s2</span>  <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
-                               <span class='kw'>exact</span> <span class='kw'>=</span> <span class='fu'><a href='getExactSolution-method.html'>getExactSolution</a></span>(<span class='no'>ode</span>, <span class='no'>time</span>),
-                               <span class='kw'>rate.counts</span> <span class='kw'>=</span> <span class='fu'><a href='getRateCounts-method.html'>getRateCounts</a></span>(<span class='no'>ode</span>),
-                               <span class='kw'>time</span> <span class='kw'>=</span> <span class='no'>time</span> )
-        <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>ode_solver</span>)            <span class='co'># advance solver one step</span>
-        <span class='no'>stepSize</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>ode_solver</span>)      <span class='co'># get the current step size</span>
-        <span class='no'>time</span>  <span class='kw'>&lt;-</span> <span class='no'>time</span> + <span class='no'>stepSize</span>
-        <span class='no'>ode</span>   <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>ode_solver</span>)                    <span class='co'># get updated ODE object</span>
-        <span class='no'>state</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)                    <span class='co'># get the `state` vector</span>
-        <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='no'>i</span> + <span class='fl'>1</span>                                <span class='co'># add a row vector</span>
-    }
-    <span class='no'>DT</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/rbindlist'>rbindlist</a></span>(<span class='no'>rowVector</span>)        <span class='co'># create data table</span>
-    <span class='fu'>return</span>(<span class='no'>DT</span>)
-}
-
-<span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>ComparisonRK45ODEApp</span>()
-<span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='setTolerance-methods-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='fu'>library</span>(<span class='no'>tidyr</span>)
-
-<span class='no'>solution.multi</span> <span class='kw'>&lt;-</span> <span class='no'>solution</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>t</span>, <span class='no'>ODE</span>, <span class='no'>exact</span>)
-<span class='fu'>plot</span>(<span class='no'>solution.multi</span>)</div><div class='img'><img src='setTolerance-methods-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>solution.2x1</span> <span class='kw'>&lt;-</span> <span class='no'>solution.multi</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/gather'>gather</a></span>(<span class='no'>key</span>, <span class='no'>value</span>, -<span class='no'>t</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>solution.2x1</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>t</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>key</span>))
-<span class='no'>g</span> <span class='kw'>&lt;-</span>  <span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"ODE vs Exact solution"</span>,
-                                     <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"tolerance = 1E-6"</span>)
-<span class='fu'>print</span>(<span class='no'>g</span>)</div><div class='img'><img src='setTolerance-methods-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-
-
-
-</div></pre>
+<span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='setTolerance-methods-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the elapsed time — getTime â€¢ rODE</title>
+<title>getTime — getTime â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,7 +108,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the elapsed time</h1>
+    <h1>getTime</h1>
     </div>
 
     
@@ -147,7 +147,7 @@
 
     <span class='co'># Two ways of initializing the object</span>
       <span class='co'># population &lt;- init(population, c(x, vx, 0), r, K)</span>
-    <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>population</span>) <span class='kw'>&lt;-</span>  <span class='fu'>list</span>(<span class='kw'>initState</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>x</span>, <span class='no'>vx</span>, <span class='fl'>0</span>),
+    <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>population</span>) <span class='kw'>&lt;-</span>  <span class='fu'>list</span>(<span class='kw'>initState</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='no'>x</span>, <span class='no'>vx</span>, <span class='fl'>0</span>),
                               <span class='kw'>r</span> <span class='kw'>=</span> <span class='no'>r</span>,
                               <span class='kw'>K</span> <span class='kw'>=</span> <span class='no'>K</span>)
 
@@ -155,7 +155,7 @@
 
     <span class='co'># Two ways of initializing the solver</span>
       <span class='co'># odeSolver &lt;- init(odeSolver, dt)</span>
-    <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>odeSolver</span>) <span class='kw'>&lt;-</span>  <span class='no'>dt</span>
+    <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>odeSolver</span>) <span class='kw'>&lt;-</span>  <span class='no'>dt</span>
 
     <span class='no'>population</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='no'>odeSolver</span>
     <span class='co'># setSolver(population) &lt;-  odeSolver</span>
@@ -210,7 +210,7 @@
 
 <span class='fu'>setMethod</span>(<span class='st'>"init"</span>, <span class='st'>"KeplerEnergy"</span>, <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>initState</span>, <span class='no'>...</span>) {
     <span class='no'>object</span>@<span class='kw'>state</span> <span class='kw'>&lt;-</span> <span class='no'>initState</span>
-    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
+    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
     <span class='no'>object</span>@<span class='kw'>counter</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>
     <span class='no'>object</span>
 })</div><div class='output co'>#&gt; [1] "init"</div><div class='input'>
@@ -218,7 +218,7 @@
 <span class='fu'>setReplaceMethod</span>(<span class='st'>"init"</span>, <span class='st'>"KeplerEnergy"</span>, <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>...</span>, <span class='no'>value</span>) {
     <span class='no'>initState</span> <span class='kw'>&lt;-</span> <span class='no'>value</span>
     <span class='no'>object</span>@<span class='kw'>state</span> <span class='kw'>&lt;-</span> <span class='no'>initState</span>
-    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
+    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
     <span class='no'>object</span>@<span class='kw'>counter</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>
     <span class='no'>object</span>
 })</div><div class='output co'>#&gt; [1] "init&lt;-"</div><div class='input'>
