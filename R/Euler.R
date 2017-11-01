@@ -12,6 +12,13 @@
             contains = c("AbstractODESolver")
         )
 
+#' Euler generic
+#'
+#' @rdname Euler-class
+#' @export
+#' @example ./inst/examples/RigidBodyNXFApp.R
+setGeneric("Euler", function(ode, ...)   standardGeneric("Euler"))
+
 # #' @param .Object internal object for initialize
 # #' @rdname Euler-class
 # #' @aliases initialize,initialize-method
@@ -66,6 +73,10 @@ setMethod("setStepSize", "Euler", function(object, stepSize, ...) {
 setMethod("getStepSize", "Euler", function(object, ...) {
     return(object@stepSize)
 })
+
+
+
+
 
 
 #' Euler constructor when `ODE` passed

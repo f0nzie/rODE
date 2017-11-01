@@ -16,6 +16,14 @@
                 contains = c("AbstractODESolver")
             )
 
+#' Verlet generic
+#'
+#' @rdname Verlet-class
+#' @export
+#' @example ./inst/examples/LogisticApp.R
+setGeneric("Verlet", function(ode, ...)  standardGeneric("Verlet"))
+
+
 setMethod("initialize", "Verlet", function(.Object, ode, ...) {
     # initialize the class
     .Object@rateCounter <- -1
@@ -92,6 +100,8 @@ setMethod("step", "Verlet", function(object, ...) {
     object@ode@state <- state
     object                                  # use this object to reassign in R
 })
+
+
 
 
 

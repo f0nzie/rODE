@@ -30,6 +30,12 @@
                     contains = c("ODEAdaptiveSolver")
                     )
 
+#' DormandPrince45 generic
+#'
+#' @rdname DormandPrince45-class
+#' @export
+setGeneric("DormandPrince45", function(ode, ...) standardGeneric("DormandPrince45"))
+
 
 setMethod("initialize", "DormandPrince45", function(.Object, ode, ...) {
     # initialized the Euler ODE solver

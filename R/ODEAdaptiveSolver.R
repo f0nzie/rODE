@@ -24,6 +24,13 @@
         contains = c("ODESolver")
 )
 
+
+#' ODEAdaptiveSolver generic
+#'
+#' @rdname ODEAdaptiveSolver-class
+setGeneric("ODEAdaptiveSolver", function(...) standardGeneric("ODEAdaptiveSolver"))
+
+
 #' @rdname ODEAdaptiveSolver-class
 setMethod("setTolerance", "ODEAdaptiveSolver", function(object, tol) {
     NULL
@@ -44,10 +51,7 @@ setMethod("getErrorCode", "ODEAdaptiveSolver", function(object) {
 
 
 
-#' ODEAdaptiveSolver
-#'
-#' @rdname ODEAdaptiveSolver-class
-setGeneric("ODEAdaptiveSolver", function(...) standardGeneric("ODEAdaptiveSolver"))
+
 
 #' ODEAdaptiveSolver constructor
 #'

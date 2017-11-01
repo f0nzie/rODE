@@ -17,6 +17,14 @@
             contains = c("AbstractODESolver")
         )
 
+#' RK4 generic
+#'
+#' @rdname RK4-class
+#' @export
+#' @example ./inst/examples/Projectile.R
+#' @example ./inst/examples/PendulumApp.R
+setGeneric("RK4", function(ode, ...) standardGeneric("RK4"))
+
 
 setMethod("initialize", "RK4", function(.Object, ode, ...) {
     # initialize the class

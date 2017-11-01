@@ -13,6 +13,15 @@
                         contains = c("AbstractODESolver")
                     )
 
+
+#' EulerRichardson generic
+#'
+#' @rdname EulerRichardson-class
+#' @export
+#' @example ./inst/examples/PendulumApp.R
+setGeneric("EulerRichardson", function(ode, ...) standardGeneric("EulerRichardson"))
+
+
 setMethod("initialize", "EulerRichardson", function(.Object, ode, ...) {
                 # initialize the class
                 .Object@ode <- ode
@@ -54,6 +63,8 @@ setMethod("step", "EulerRichardson", function(object, ...) {
     object@ode@rate  <- rate
     object                          # use this object to reassign in R
 })
+
+
 
 
 
