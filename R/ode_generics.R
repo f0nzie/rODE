@@ -14,35 +14,7 @@ setGeneric("getRateCounts", function(object, ...)
 
 
 # Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
-#' @rdname AbstractODESolver-class
-#' @export
-#' @examples
-#' # This is how we start defining a new ODE solver: Euler
-#' .Euler <- setClass("Euler",              # Euler solver very simple; no slots
-#'      contains = c("AbstractODESolver"))
-#'
-#'
-#'
-#' # Here we define the ODE solver Verlet
-#' .Verlet <- setClass("Verlet", slots = c(
-#'     rate1 = "numeric",                          # Verlet calculates two rates
-#'     rate2 = "numeric",
-#'     rateCounter = "numeric"),
-#' contains = c("AbstractODESolver"))
-#'
-#'
-#'
-#' # This is the definition of the ODE solver Runge-Kutta 4
-#' .RK4 <- setClass("RK4", slots = c(       # On the other hand RK4 uses 4 rates
-#'    rate1 = "numeric",
-#'    rate2 = "numeric",
-#'    rate3 = "numeric",
-#'    rate4 = "numeric",
-#'    estimated_state = "numeric"),         # and estimates another state
-#' contains = c("AbstractODESolver"))
-#'
-setGeneric("AbstractODESolver", function(ode, ...)
-    standardGeneric("AbstractODESolver"))
+
 
 
 #' @rdname DormandPrince45-class
@@ -268,7 +240,7 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 #' @param object a class object
 #' @param tol tolerance
 #'
-#' @rdname setTolerance-methods
+#' @rdname setTolerance-method
 #' @export
 #' @example ./inst/examples/ComparisonRK45App.R
 #' @example ./inst/examples/KeplerDormandPrince45App.R
@@ -285,7 +257,7 @@ setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance")
 #' @param ... additional parameters
 #' @param value a value to set
 #'
-#' @rdname setTolerance-methods
+#' @rdname setTolerance-method
 #' @export
 setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTolerance<-"))
 
