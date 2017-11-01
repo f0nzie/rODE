@@ -1,4 +1,4 @@
-#' ODEAdaptiveSolver
+#' ODEAdaptiveSolver class
 #'
 #' Base class to be inherited by adaptive solvers such as RK45
 #'
@@ -9,19 +9,20 @@
 #'
 #' @rdname ODEAdaptiveSolver-class
 #' @include ODESolver.R
-.ODEAdaptiveSolver <- setClass("ODEAdaptiveSolver", slots = c(
-    NO_ERROR                  = "numeric",
-    DID_NOT_CONVERGE          = "numeric",
-    BISECTION_EVENT_NOT_FOUND = "numeric"
-    ),
-    prototype = prototype(
-        NO_ERROR                  = 0,
-        DID_NOT_CONVERGE          = 1,
-        BISECTION_EVENT_NOT_FOUND = 2
-    ),
-    contains = c("ODESolver")
+#' @export
+.ODEAdaptiveSolver <- setClass("ODEAdaptiveSolver",
+        slots = c(
+                NO_ERROR                  = "numeric",
+                DID_NOT_CONVERGE          = "numeric",
+                BISECTION_EVENT_NOT_FOUND = "numeric"
+                ),
+        prototype = prototype(
+                NO_ERROR                  = 0,
+                DID_NOT_CONVERGE          = 1,
+                BISECTION_EVENT_NOT_FOUND = 2
+        ),
+        contains = c("ODESolver")
 )
-
 
 #' @rdname ODEAdaptiveSolver-class
 setMethod("setTolerance", "ODEAdaptiveSolver", function(object, tol) {
@@ -32,7 +33,6 @@ setMethod("setTolerance", "ODEAdaptiveSolver", function(object, tol) {
 setReplaceMethod("setTolerance", "ODEAdaptiveSolver", function(object, ..., value) {
     NULL
 })
-
 
 #' @rdname ODEAdaptiveSolver-class
 setMethod("getTolerance", "ODEAdaptiveSolver", function(object) {
@@ -47,15 +47,14 @@ setMethod("getErrorCode", "ODEAdaptiveSolver", function(object) {
 #' ODEAdaptiveSolver
 #'
 #' @rdname ODEAdaptiveSolver-class
-setGeneric("ODEAdaptiveSolver", function(...)
-    standardGeneric("ODEAdaptiveSolver"))
+setGeneric("ODEAdaptiveSolver", function(...) standardGeneric("ODEAdaptiveSolver"))
 
 #' ODEAdaptiveSolver constructor
 #'
 #' @rdname ODEAdaptiveSolver-class
 #' @export
 setMethod("ODEAdaptiveSolver", signature("ANY"), function(...) {
-    # constructor for ODEAdaptiveSolver
-    solver <- .ODEAdaptiveSolver()
-    return(solver)
+ # constructor for ODEAdaptiveSolver
+ solver <- .ODEAdaptiveSolver()
+ return(solver)
 })
