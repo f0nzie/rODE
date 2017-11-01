@@ -1,4 +1,5 @@
 #' DormandPrince45 ODE solver class
+#'
 #' @param object a class object
 #' @param ode ODE object
 #' @param enable a logical flag
