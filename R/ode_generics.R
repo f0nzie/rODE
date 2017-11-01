@@ -1,5 +1,3 @@
-# ode_generics.R
-
 
 #' getRateCounts
 #'
@@ -12,52 +10,6 @@
 setGeneric("getRateCounts", function(object, ...)
     standardGeneric("getRateCounts"))
 
-
-# Generic functions for constructors +++++++++++++++++++++++++++++++++++++++++
-
-
-
-#' @rdname DormandPrince45-class
-#' @export
-setGeneric("DormandPrince45", function(ode, ...)
-    standardGeneric("DormandPrince45"))
-
-
-#' @rdname Euler-class
-#' @export
-#' @example ./inst/examples/RigidBodyNXFApp.R
-setGeneric("Euler", function(ode, ...)
-    standardGeneric("Euler"))
-
-#' @rdname EulerRichardson-class
-#' @export
-#' @example ./inst/examples/PendulumApp.R
-setGeneric("EulerRichardson", function(ode, ...)
-    standardGeneric("EulerRichardson"))
-
-
-#' @rdname RK4-class
-#' @export
-#' @example ./inst/examples/Projectile.R
-#' @example ./inst/examples/PendulumApp.R
-setGeneric("RK4", function(ode, ...)
-    standardGeneric("RK4"))
-
-
-#' @rdname Verlet-class
-#' @export
-#' @example ./inst/examples/LogisticApp.R
-setGeneric("Verlet", function(ode, ...)
-    standardGeneric("Verlet"))
-
-
-
-#' @rdname ODESolverFactory-class
-#' @export
-#' @example ./inst/examples/SHOApp.R
-setGeneric("ODESolverFactory", function(...)
-    standardGeneric("ODESolverFactory"))
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 #' getRate
@@ -88,7 +40,7 @@ setGeneric("getState", function(object, ...) standardGeneric("getState"))
 
 #' step
 #'
-#' Advances a step in the ODE solver
+#' Advances a step within the ODE solver
 #'
 #' @param object a class object
 #' @param ... additional parameters
@@ -122,7 +74,7 @@ setGeneric("setSolver<-", function(object, value) {standardGeneric("setSolver<-"
 
 #' getStepSize
 #'
-#' Get the step size
+#' Get the current value of the step size
 #'
 #' @param object a class object
 #' @param ... additional parameters
