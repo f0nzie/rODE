@@ -1,9 +1,11 @@
 
 #' ODESolverFactory
+#'
 #' ODESolverFactory helps to create a solver given only the name as string
 #' @param ... additional parameters
 #'
 #' @rdname ODESolverFactory-class
+#' @family ODESolver helpers
 #' @export
 .ODESolverFactory <- setClass("ODESolverFactory", slots = c(
     # A factory class that creates an ODESolver using a name
@@ -13,12 +15,17 @@
 setGeneric("createODESolver", function(object, ...)
     standardGeneric("createODESolver"))
 
+#' createODESolver
+#'
 #' This is a factory method that creates an ODESolver using a name.
-#' @rdname ODESolverFactory-method
+#'
 #' @param object an solver object
 #' @param ode an ODE object
 #' @param solverName the desired solver as a string
 #' @param ... an additional parameter
+#'
+#' @rdname ODESolverFactory-method
+#' @family ODESolver helpers
 #' @export
 setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverName, ...) {
     object@solverName <- trimws(tolower(solverName))
