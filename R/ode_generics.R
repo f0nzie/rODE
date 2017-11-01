@@ -1,5 +1,8 @@
 # ode_generics.R
 
+
+#' getRateCounts
+#'
 #' Get the number of times that the rate has been calculated
 #'
 #' @param object a class object
@@ -84,6 +87,9 @@ setGeneric("ODESolverFactory", function(...)
     standardGeneric("ODESolverFactory"))
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+
+#' getRate
+#'
 #' Get a new rate given a state
 #'
 #' @rdname getRate-method
@@ -95,6 +101,8 @@ setGeneric("ODESolverFactory", function(...)
 setGeneric("getRate", function(object, state, ...) standardGeneric("getRate"))
 
 
+#' getState
+#'
 #' Get current state of the system
 #'
 #' @param object a class object
@@ -106,6 +114,8 @@ setGeneric("getRate", function(object, state, ...) standardGeneric("getRate"))
 setGeneric("getState", function(object, ...) standardGeneric("getState"))
 
 
+#' step
+#'
 #' Advances a step in the ODE solver
 #'
 #' @param object a class object
@@ -116,6 +126,8 @@ setGeneric("getState", function(object, ...) standardGeneric("getState"))
 setGeneric("step", function(object, ...) standardGeneric("step"))
 
 
+#' getODE
+#'
 #' Get the ODE status from the solver
 #'
 #' @param object a class object
@@ -125,6 +137,8 @@ setGeneric("step", function(object, ...) standardGeneric("step"))
 setGeneric("getODE", function(object, ...) standardGeneric("getODE"))
 
 
+#' setSolver
+#'
 #' Set a solver over an ODE object
 #'
 #' @param object a class object
@@ -134,6 +148,8 @@ setGeneric("getODE", function(object, ...) standardGeneric("getODE"))
 setGeneric("setSolver<-", function(object, value) {standardGeneric("setSolver<-")})
 
 
+#' getStepSize
+#'
 #' Get the step size
 #'
 #' @param object a class object
@@ -145,6 +161,8 @@ setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 
 
 
+#' doStep
+#'
 #' Perform a step
 #'
 #' @param object a class object
@@ -156,7 +174,8 @@ setGeneric("getStepSize", function(object, ...) standardGeneric("getStepSize"))
 setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 
 
-
+#' init
+#'
 #' Set initial values before starting the ODE solver
 #'
 #' Sets the tolerance like this: solver <- init(solver, dt)
@@ -197,7 +216,8 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #' })
 setGeneric("init", function(object, ...) standardGeneric("init"))
 
-
+#' init<-
+#'
 #' Set initial values before starting the ODE solver
 #'
 #' Sets the tolerance like this: init(solver) <- dt
@@ -207,7 +227,8 @@ setGeneric("init", function(object, ...) standardGeneric("init"))
 setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
 
 
-
+#' setStepSize
+#'
 #' setStepSize uses either of two step parameters: stepSize and dt
 #' stepSize works for most of the applications
 #' dt is used in Pendulum
@@ -222,7 +243,8 @@ setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
 setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 
 
-
+#' setState
+#'
 #' New setState that should work with different methods
 #'  "theta", "thetaDot":  used in PendulumApp
 #'  "x", "vx", "y", "vy": used in ProjectileApp
@@ -237,6 +259,8 @@ setGeneric("setStepSize", function(object, ...) standardGeneric("setStepSize"))
 setGeneric("setState", function(object, ...) standardGeneric("setState"))
 
 
+#' setTolerance
+#'
 #' Set the tolerance for the solver
 #'
 #' Sets the tolerance like this: odeSolver <- setTolerance(odeSolver, tol)
@@ -252,7 +276,8 @@ setGeneric("setState", function(object, ...) standardGeneric("setState"))
 setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance"))
 
 
-
+#' setTolerance<-
+#'
 #' Set the tolerance for the solver
 #'
 #' Sets the tolerance like this: setTolerance(odeSolver) <- tol
@@ -265,6 +290,8 @@ setGeneric("setTolerance", function(object, tol) standardGeneric("setTolerance")
 setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTolerance<-"))
 
 
+#' getTolerance
+#'
 #' Get the tolerance for the solver
 #'
 #' @param object a class object
@@ -275,6 +302,9 @@ setGeneric("setTolerance<-", function(object, ..., value) standardGeneric("setTo
 setGeneric("getTolerance", function(object, ...) standardGeneric("getTolerance"))
 
 
+
+#' getErrorCode
+#'
 #' Get an error code
 #'
 #' @param object a class object
@@ -289,6 +319,10 @@ setGeneric("getTolerance", function(object, ...) standardGeneric("getTolerance")
 setGeneric("getErrorCode", function(object, tol, ...)
     standardGeneric("getErrorCode"))
 
+
+
+#' enableRuntimeExceptions
+#'
 #' Enable Runtime Exceptions
 #'
 #' @param object a class object
@@ -305,9 +339,12 @@ setGeneric("enableRuntimeExceptions", function(object, enable, ...)
     standardGeneric("enableRuntimeExceptions"))
 
 
+
+#' getRateCounter
+#'
 #' Get the rate counter
 #'
-#' How many time the rate has changed with a step
+#' How many times the rate has changed with a step
 #'
 #' @param object a class object
 #' @param ... additional parameters
@@ -319,6 +356,8 @@ setGeneric("getRateCounter", function(object, ...)
     standardGeneric("getRateCounter"))
 
 
+#' getTime
+#'
 #' Get the elapsed time
 #'
 #' @param object a class object
@@ -331,7 +370,8 @@ setGeneric("getRateCounter", function(object, ...)
 setGeneric("getTime", function(object, ...) standardGeneric("getTime"))
 
 
-
+#' getEnergy
+#'
 #' Get the calculated energy level
 #'
 #' @param object a class object
@@ -343,7 +383,8 @@ setGeneric("getTime", function(object, ...) standardGeneric("getTime"))
 setGeneric("getEnergy", function(object, ...) standardGeneric("getEnergy"))
 
 
-
+#' getExactSolution
+#'
 #' Compare analytical and calculated solutions
 #'
 #' @param object a class object
