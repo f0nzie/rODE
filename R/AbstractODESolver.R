@@ -1,6 +1,5 @@
-# AbstractODESolver.R
 
-#' AbstractODESolver class
+#' AbstractODESolver
 #'
 #' Defines the basic methods for all the ODE solvers.
 #'
@@ -15,15 +14,16 @@
 #' @rdname AbstractODESolver-class
 #'
 #' @include ODE.R ODESolver.R ode_generics.R
-.AbstractODESolver <- setClass("AbstractODESolver", slots = c(
-                    stepSize = "numeric",
-                    numEqn   = "numeric",
-                    ode      = "ODE"
-                ), prototype = prototype(
-                    stepSize = 0.1,
-                    numEqn = 0
-                ), contains = c("ODESolver")
-                )
+.AbstractODESolver <- setClass("AbstractODESolver",
+                        slots = c(
+                            stepSize = "numeric",
+                            numEqn   = "numeric",
+                            ode      = "ODE"),
+                        prototype = prototype(
+                            stepSize = 0.1,
+                            numEqn = 0),
+                    contains = c("ODESolver")
+                    )
 
 
 setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
@@ -31,20 +31,20 @@ setMethod("initialize", "AbstractODESolver", function(.Object, .ode, ...) {
     return(.Object)
 })
 
+
 #' @rdname AbstractODESolver-class
 setMethod("step", "AbstractODESolver", function(object, ...) {
     object
 })
 
+
 #' @rdname AbstractODESolver-class
-#' @aliases getODE,getODE-method
-#' setMethod("getODE", "AbstractODESolver", function(object, ...) {
-#'     object@ode
-#' })
+setMethod("getODE", "AbstractODESolver", function(object, ...) {
+    object@ode
+})
 
 
 #' @rdname AbstractODESolver-class
-#' @aliases setStepSize,setStepSize-method
 setMethod("setStepSize", "AbstractODESolver", function(object, stepSize, ...) {
     object@stepSize = stepSize
     object
@@ -83,10 +83,42 @@ setMethod("getStepSize", "AbstractODESolver", function(object, ...) {
     return(object@stepSize)
 })
 
+#' AbstractODESolver
+#'
+#' @rdname AbstractODESolver-class
+#' @export
+#' @examples
+#' # This is how we start defining a new ODE solver: Euler
+#' .Euler <- setClass("Euler",              # Euler solver very simple; no slots
+#'      contains = c("AbstractODESolver"))
+#'
+#'
+#'
+#' # Here we define the ODE solver Verlet
+#' .Verlet <- setClass("Verlet", slots = c(
+#'     rate1 = "numeric",                          # Verlet calculates two rates
+#'     rate2 = "numeric",
+#'     rateCounter = "numeric"),
+#' contains = c("AbstractODESolver"))
+#'
+#'
+#'
+#' # This is the definition of the ODE solver Runge-Kutta 4
+#' .RK4 <- setClass("RK4", slots = c(       # On the other hand RK4 uses 4 rates
+#'    rate1 = "numeric",
+#'    rate2 = "numeric",
+#'    rate3 = "numeric",
+#'    rate4 = "numeric",
+#'    estimated_state = "numeric"),         # and estimates another state
+#' contains = c("AbstractODESolver"))
+#'
+setGeneric("AbstractODESolver", function(ode, ...)
+    standardGeneric("AbstractODESolver"))
 
 
-
-#' AbstractODESolver constructor `missing``
+#' AbstractODESolver
+#'
+#' AbstractODESolver constructor missing
 #'
 #' @rdname AbstractODESolver-class
 #'
@@ -104,13 +136,15 @@ setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
 })
 
 
-#' AbstractODESolver constructor `ODE`
+#' AbstractODESolver
 #'
+#' AbstractODESolver constructor ODE
 #' Uses this constructor when ODE object is passed
 #'
 #' @rdname AbstractODESolver-class
 #'
 #' @importFrom methods new
+#' @export
 setMethod("AbstractODESolver", signature(ode = "ODE"), function(ode, ...) {
     odesolver <- .AbstractODESolver(ode = ode)
     odesolver@ode <- ode
