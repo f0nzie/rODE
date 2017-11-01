@@ -11,7 +11,16 @@
     # A factory class that creates an ODESolver using a name
     solverName = "character"))
 
-#' @rdname ODESolverFactory-method
+
+#' ODESolverFactory generic
+#'
+#' @rdname ODESolverFactory-class
+#' @export
+#' @example ./inst/examples/SHOApp.R
+setGeneric("ODESolverFactory", function(...) standardGeneric("ODESolverFactory"))
+
+
+#' @rdname ODESolverFactory-class
 setGeneric("createODESolver", function(object, ...)
     standardGeneric("createODESolver"))
 
@@ -22,9 +31,8 @@ setGeneric("createODESolver", function(object, ...)
 #' @param object an solver object
 #' @param ode an ODE object
 #' @param solverName the desired solver as a string
-#' @param ... an additional parameter
 #'
-#' @rdname ODESolverFactory-method
+#' @rdname ODESolverFactory-class
 #' @family ODESolver helpers
 #' @export
 setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverName, ...) {
@@ -42,6 +50,7 @@ setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverNam
     else
         return(NULL)
 })
+
 
 
 #' ODESolverFactory constructor
