@@ -1,5 +1,5 @@
 
-#' AbstractODESolver
+#' AbstractODESolver class
 #'
 #' Defines the basic methods for all the ODE solvers.
 #'
@@ -138,8 +138,7 @@ setMethod("AbstractODESolver", signature(ode = "missing"), function(ode, ...) {
 
 #' AbstractODESolver
 #'
-#' AbstractODESolver constructor ODE
-#' Uses this constructor when ODE object is passed
+#' AbstractODESolver constructor ODE. Uses this constructor when ODE object is passed
 #'
 #' @rdname AbstractODESolver-class
 #'
