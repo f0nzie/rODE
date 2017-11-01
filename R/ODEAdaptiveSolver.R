@@ -1,10 +1,15 @@
-# ODEAdaptiveSolver.R
-#
-# Base class to be inherited by adaptive solvers such as RK45
-#
-
+#' ODEAdaptiveSolver
+#'
+#' Base class to be inherited by adaptive solvers such as RK45
+#'
+#' @param object a class object
+#' @param tol tolerance
+#' @param value the value for the tolerance
+#' @param ... additional parameters
+#'
+#' @rdname ODEAdaptiveSolver-class
 #' @include ODESolver.R
-setClass("ODEAdaptiveSolver", slots = c(
+.ODEAdaptiveSolver <- setClass("ODEAdaptiveSolver", slots = c(
     NO_ERROR                  = "numeric",
     DID_NOT_CONVERGE          = "numeric",
     BISECTION_EVENT_NOT_FOUND = "numeric"
@@ -17,21 +22,40 @@ setClass("ODEAdaptiveSolver", slots = c(
     contains = c("ODESolver")
 )
 
-#' @rdname setTolerance-methods
+
+#' @rdname ODEAdaptiveSolver-class
 setMethod("setTolerance", "ODEAdaptiveSolver", function(object, tol) {
     NULL
 })
 
-#' @rdname setTolerance-methods
+#' @rdname ODEAdaptiveSolver-class
 setReplaceMethod("setTolerance", "ODEAdaptiveSolver", function(object, ..., value) {
     NULL
 })
 
 
-#' @rdname getTolerance-method
+#' @rdname ODEAdaptiveSolver-class
 setMethod("getTolerance", "ODEAdaptiveSolver", function(object) {
 })
 
-#' @rdname getErrorCode-method
+#' @rdname ODEAdaptiveSolver-class
 setMethod("getErrorCode", "ODEAdaptiveSolver", function(object) {
+})
+
+
+
+#' ODEAdaptiveSolver
+#'
+#' @rdname ODEAdaptiveSolver-class
+setGeneric("ODEAdaptiveSolver", function(...)
+    standardGeneric("ODEAdaptiveSolver"))
+
+#' ODEAdaptiveSolver constructor
+#'
+#' @rdname ODEAdaptiveSolver-class
+#' @export
+setMethod("ODEAdaptiveSolver", signature("ANY"), function(...) {
+    # constructor for ODEAdaptiveSolver
+    solver <- .ODEAdaptiveSolver()
+    return(solver)
 })
