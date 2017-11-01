@@ -214,7 +214,6 @@ setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
 #'
 #' @param object a class object
 #' @param ... additional parameters
-#' @param stepSize size of the step
 #'
 #' @rdname setStepSize-method
 #' @export
