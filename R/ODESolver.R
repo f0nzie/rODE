@@ -10,8 +10,14 @@
 #' @rdname ODESolver-class
 #' @family ODESolver helpers
 #' @include ode_generics.R
-setClass("ODESolver")
+.ODESolver <- setClass("ODESolver")
 
+#' ODESolver constructor
+#' @rdname ODESolver-class
+#' @export
+ODESolver <- function(object, stepSize, ...) {
+    .ODESolver
+}
 
 #' Set initial values and get ready to start the solver
 #' @rdname ODESolver-class
@@ -53,3 +59,5 @@ setMethod("getStepSize", "ODESolver", function(object, ...) {
     # get the current value of the step
     object@stepSize
 })
+
+

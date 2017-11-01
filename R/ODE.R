@@ -1,4 +1,6 @@
 
+#' ODE class
+#'
 #' Defines an ODE object for any solver
 #'
 #' @param object a class object
@@ -13,6 +15,16 @@ setClass("ODE", slots = c(
     state = "numeric",              # variables
     rate  = "numeric"               # derivatives
 ))
+
+#' ODE constructor
+#'
+#' @rdname ODE-class
+#' @export
+ODE <- function() {
+    ode <- new("ODE")
+    ode
+}
+
 
 #' @rdname ODE-class
 #' @aliases getState,getState-method
@@ -35,3 +47,5 @@ setMethod("getRate", "ODE", function(object, state, ...) {
 #     object@odeSolver <- value
 #     object
 # })
+
+
