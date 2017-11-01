@@ -1,9 +1,7 @@
-# ODESolverFactory.R
 
-###' include ODE.R Euler.R
-###'
-
+#' ODESolverFactory
 #' ODESolverFactory helps to create a solver given only the name as string
+#' @param ... additional parameters
 #'
 #' @rdname ODESolverFactory-class
 #' @export
@@ -11,12 +9,12 @@
     # A factory class that creates an ODESolver using a name
     solverName = "character"))
 
-#' @rdname createODESolver-method
+#' @rdname ODESolverFactory-method
 setGeneric("createODESolver", function(object, ...)
     standardGeneric("createODESolver"))
 
 #' This is a factory method that creates an ODESolver using a name.
-#' @rdname createODESolver-method
+#' @rdname ODESolverFactory-method
 #' @param object an solver object
 #' @param ode an ODE object
 #' @param solverName the desired solver as a string
@@ -42,7 +40,6 @@ setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverNam
 #' ODESolverFactory constructor
 #'
 #' @rdname ODESolverFactory-class
-#' @param ... additional parameters
 #' @importFrom methods new
 #' @export
 #' @example ./inst/examples/SHOApp.R
