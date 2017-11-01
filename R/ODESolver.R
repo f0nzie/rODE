@@ -8,7 +8,7 @@
 #' @param ... additional parameters
 #'
 #' @rdname ODESolver-class
-#'
+#' @family ODESolver helpers
 #' @include ode_generics.R
 setClass("ODESolver")
 
