@@ -164,7 +164,6 @@ setGeneric("doStep", function(object, ...) standardGeneric("doStep"))
 #'
 #' @param object a class object
 #' @param ... additional parameters
-#' @param stepSize size of the step
 #' @param value a value to set
 #' @rdname init-method
 #' @export
@@ -210,8 +209,8 @@ setGeneric("init<-", function(object, ..., value) standardGeneric("init<-"))
 
 
 #' setStepSize uses either of two step parameters: stepSize and dt
-#' `stepSize`` works for most of the applications
-#' `dt`` is used in Pendulum
+#' stepSize works for most of the applications
+#' dt is used in Pendulum
 #'
 #' @param object a class object
 #' @param ... additional parameters
