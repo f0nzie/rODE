@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Euler class — Euler â€¢ rODE</title>
+<title>Euler ODE solver class — Euler-class â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,16 +108,29 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Euler class</h1>
+    <h1>Euler ODE solver class</h1>
     </div>
 
     
-    <p>Euler class</p>
+    <p>Euler ODE solver class</p>
+<p>Euler generic</p>
 <p>Euler constructor when `ODE` passed</p>
 <p>Euler constructor `missing` is passed</p>
     
 
     <pre class="usage"><span class='fu'>Euler</span>(<span class='no'>ode</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for Euler</span>
+<span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for Euler</span>
+<span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for Euler</span>
+<span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for Euler</span>
+<span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for ODE</span>
 <span class='fu'>Euler</span>(<span class='no'>ode</span>, <span class='no'>...</span>)
@@ -135,6 +148,14 @@
     <tr>
       <th>...</th>
       <td><p>additional parameters</p></td>
+    </tr>
+    <tr>
+      <th>object</th>
+      <td><p>an internal object of the class</p></td>
+    </tr>
+    <tr>
+      <th>stepSize</th>
+      <td><p>the size of the step</p></td>
     </tr>
     </table>
     
@@ -245,13 +266,13 @@
 })</div><div class='output co'>#&gt; [1] "getEnergy"</div><div class='input'>
 <span class='fu'>setMethod</span>(<span class='st'>"init"</span>, <span class='st'>"Kepler"</span>, <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>initState</span>, <span class='no'>...</span>) {
     <span class='no'>object</span>@<span class='kw'>state</span> <span class='kw'>&lt;-</span> <span class='no'>initState</span>
-    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
+    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
     <span class='no'>object</span>@<span class='kw'>counter</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>
     <span class='no'>object</span>
 })</div><div class='output co'>#&gt; [1] "init"</div><div class='input'>
 <span class='fu'>setReplaceMethod</span>(<span class='st'>"init"</span>, <span class='st'>"Kepler"</span>, <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>...</span>, <span class='no'>value</span>) {
     <span class='no'>object</span>@<span class='kw'>state</span> <span class='kw'>&lt;-</span> <span class='no'>value</span>
-    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
+    <span class='no'>object</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>, <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>@<span class='kw'>odeSolver</span>))
     <span class='no'>object</span>@<span class='kw'>counter</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>
     <span class='no'>object</span>
 })</div><div class='output co'>#&gt; [1] "init&lt;-"</div><div class='input'>
@@ -294,7 +315,7 @@
     <span class='no'>dt</span> <span class='kw'>&lt;-</span>  <span class='fl'>0.01</span>
     <span class='no'>planet</span> <span class='kw'>&lt;-</span> <span class='fu'>Planet</span>()
     <span class='no'>planet</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>planet</span>@<span class='kw'>odeSolver</span>, <span class='no'>dt</span>)
-    <span class='no'>planet</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>planet</span>, <span class='kw'>initState</span> <span class='kw'>=</span> <span class='no'>state</span>)
+    <span class='no'>planet</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>planet</span>, <span class='kw'>initState</span> <span class='kw'>=</span> <span class='no'>state</span>)
     <span class='no'>rowvec</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
     <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
     <span class='co'># run infinite loop. stop with ESCAPE.</span>

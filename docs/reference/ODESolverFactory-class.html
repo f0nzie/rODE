@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>include ODE.R Euler.R — ODESolverFactory â€¢ rODE</title>
+<title>ODESolverFactory — ODESolverFactory-class â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,15 +108,22 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>include ODE.R Euler.R</h1>
+    <h1>ODESolverFactory</h1>
     </div>
 
     
     <p>ODESolverFactory helps to create a solver given only the name as string</p>
+<p>ODESolverFactory generic</p>
+<p>This is a factory method that creates an ODESolver using a name.</p>
 <p>ODESolverFactory constructor</p>
     
 
     <pre class="usage"><span class='fu'>ODESolverFactory</span>(<span class='no'>...</span>)
+
+<span class='fu'>createODESolver</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODESolverFactory</span>
+<span class='fu'>createODESolver</span>(<span class='no'>object</span>, <span class='no'>ode</span>, <span class='no'>solverName</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for ANY</span>
 <span class='fu'>ODESolverFactory</span>(<span class='no'>...</span>)</pre>
@@ -128,7 +135,24 @@
       <th>...</th>
       <td><p>additional parameters</p></td>
     </tr>
+    <tr>
+      <th>object</th>
+      <td><p>an solver object</p></td>
+    </tr>
+    <tr>
+      <th>ode</th>
+      <td><p>an ODE object</p></td>
+    </tr>
+    <tr>
+      <th>solverName</th>
+      <td><p>the desired solver as a string</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Other ODESolver helpers: <code><a href='ODESolver-class.html'>ODESolver-class</a></code></p>
+<p>Other ODESolver helpers: <code><a href='ODESolver-class.html'>ODESolver-class</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -141,16 +165,16 @@
 
     <span class='co'># Use ODESolverFactory</span>
     <span class='no'>solver_factory</span> <span class='kw'>&lt;-</span> <span class='fu'>ODESolverFactory</span>()
-    <span class='no'>solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='createODESolver-method.html'>createODESolver</a></span>(<span class='no'>solver_factory</span>, <span class='no'>sho</span>, <span class='st'>"DormandPrince45"</span>)
+    <span class='no'>solver</span> <span class='kw'>&lt;-</span> <span class='fu'>createODESolver</span>(<span class='no'>solver_factory</span>, <span class='no'>sho</span>, <span class='st'>"DormandPrince45"</span>)
     <span class='co'># solver &lt;- DormandPrince45(sho)                    # this can also be used</span>
 
     <span class='co'># Two ways of setting the tolerance</span>
     <span class='co'># solver &lt;- setTolerance(solver, tolerance)           # or this below</span>
-    <span class='fu'><a href='setTolerance-methods.html'>setTolerance</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span>  <span class='no'>tolerance</span>
+    <span class='fu'><a href='setTolerance-method.html'>setTolerance</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span>  <span class='no'>tolerance</span>
 
     <span class='co'># Two ways of initializing the solver</span>
       <span class='co'># solver &lt;- init(solver, dt)</span>
-    <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span> <span class='no'>dt</span>
+    <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span> <span class='no'>dt</span>
 
     <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>; <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
     <span class='kw'>while</span> (<span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>sho</span>)[<span class='fl'>3</span>] <span class='kw'>&lt;=</span> <span class='fl'>500</span>) {
@@ -176,16 +200,16 @@
 
     <span class='co'># Use ODESolverFactory</span>
     <span class='no'>solver_factory</span> <span class='kw'>&lt;-</span> <span class='fu'>ODESolverFactory</span>()
-    <span class='no'>solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='createODESolver-method.html'>createODESolver</a></span>(<span class='no'>solver_factory</span>, <span class='no'>sho</span>, <span class='st'>"DormandPrince45"</span>)
+    <span class='no'>solver</span> <span class='kw'>&lt;-</span> <span class='fu'>createODESolver</span>(<span class='no'>solver_factory</span>, <span class='no'>sho</span>, <span class='st'>"DormandPrince45"</span>)
     <span class='co'># solver &lt;- DormandPrince45(sho)                    # this can also be used</span>
 
     <span class='co'># Two ways of setting the tolerance</span>
     <span class='co'># solver &lt;- setTolerance(solver, tolerance)           # or this below</span>
-    <span class='fu'><a href='setTolerance-methods.html'>setTolerance</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span>  <span class='no'>tolerance</span>
+    <span class='fu'><a href='setTolerance-method.html'>setTolerance</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span>  <span class='no'>tolerance</span>
 
     <span class='co'># Two ways of initializing the solver</span>
       <span class='co'># solver &lt;- init(solver, dt)</span>
-    <span class='fu'><a href='init-methods.html'>init</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span> <span class='no'>dt</span>
+    <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>solver</span>) <span class='kw'>&lt;-</span> <span class='no'>dt</span>
 
     <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>; <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
     <span class='kw'>while</span> (<span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>sho</span>)[<span class='fl'>3</span>] <span class='kw'>&lt;=</span> <span class='fl'>500</span>) {
@@ -208,7 +232,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

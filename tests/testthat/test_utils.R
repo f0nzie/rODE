@@ -5,7 +5,7 @@ context("test utils")
 test_that("Class AbstractODESolver has the correct methods", {
 # print(showMethods2("AbstractODESolver"))
     expect_true(all(showMethods2("AbstractODESolver") %in%
-             c("getStepSize", "init", "setStepSize", "step", "initialize", "init<-")))
+             c("getStepSize", "init", "setStepSize", "step", "initialize", "init<-", "getODE")))
 })
 
 test_that("Class ODE has the correct methods", {

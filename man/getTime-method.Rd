@@ -2,7 +2,7 @@
 % Please edit documentation in R/ode_generics.R
 \name{getTime}
 \alias{getTime}
-\title{Get the elapsed time}
+\title{getTime}
 \usage{
 getTime(object, ...)
 }

@@ -86,7 +86,7 @@
       <h1>Planet orbiting. ODE solver: Euler</h1>
                         <h4 class="author">Vignette Author</h4>
             
-            <h4 class="date">2017-10-30</h4>
+            <h4 class="date">2017-11-01</h4>
           </div>
 
     
@@ -130,7 +130,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"init"</span>, <span class="st">"Planet"</span>, <span class="cf">function</span>(object, initState, ...) {
     object<span class="op">@</span>state &lt;-<span class="st"> </span>object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>state &lt;-<span class="st"> </span>initState
     <span class="co"># initialize providing the step size</span>
-    object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/init-methods.html">init</a></span>(object<span class="op">@</span>odeSolver, <span class="kw"><a href="../reference/getStepSize-method.html">getStepSize</a></span>(object<span class="op">@</span>odeSolver))
+    object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/init-method.html">init</a></span>(object<span class="op">@</span>odeSolver, <span class="kw"><a href="../reference/getStepSize-method.html">getStepSize</a></span>(object<span class="op">@</span>odeSolver))
     object<span class="op">@</span>rate &lt;-<span class="st"> </span>object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>rate
     object<span class="op">@</span>state &lt;-<span class="st"> </span>object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>state
 
@@ -181,7 +181,7 @@ PlanetApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span c
     planet &lt;-<span class="st"> </span><span class="kw">Planet</span>()
     
     planet<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setStepSize-method.html">setStepSize</a></span>(planet<span class="op">@</span>odeSolver, dt)
-    planet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/init-methods.html">init</a></span>(planet, <span class="dt">initState =</span> state)
+    planet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/init-method.html">init</a></span>(planet, <span class="dt">initState =</span> state)
     
     <span class="co"># run infinite loop. stop with ESCAPE.</span>
     <span class="cf">while</span> (planet<span class="op">@</span>state[<span class="dv">5</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">30</span>) {  <span class="co"># Earth orbit is 365 days around the sun</span>

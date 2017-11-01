@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get current state of the system — getState â€¢ rODE</title>
+<title>getState — getState â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,17 +108,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get current state of the system</h1>
+    <h1>getState</h1>
     </div>
 
     
     <p>Get current state of the system</p>
     
 
-    <pre class="usage"><span class='fu'>getState</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for ODE</span>
-<span class='fu'>getState</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>getState</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -176,7 +173,7 @@
     <span class='no'>tmax</span>     <span class='kw'>&lt;-</span> <span class='fl'>22</span>; <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
     <span class='no'>spring</span> <span class='kw'>&lt;-</span> <span class='fu'>SpringRK4</span>()
     <span class='no'>spring</span>@<span class='kw'>state</span>[<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='fl'>0</span>      <span class='co'># set time to zero, t = 0</span>
-    <span class='no'>spring</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState.html'>setState</a></span>(<span class='no'>spring</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
+    <span class='no'>spring</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState-method.html'>setState</a></span>(<span class='no'>spring</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
     <span class='co'>#  spring &lt;- setStepSize(spring, dt = dt) # using stepSize in RK4</span>
     <span class='no'>spring</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>spring</span>@<span class='kw'>odeSolver</span>, <span class='no'>dt</span>) <span class='co'># set new step size</span>
     <span class='no'>rowvec</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Defines an ODE object for any solver — ODE-class â€¢ rODE</title>
+<title>ODE class — ODE-class â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,14 +108,39 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Defines an ODE object for any solver</h1>
+    <h1>ODE class</h1>
     </div>
 
     
     <p>Defines an ODE object for any solver</p>
+<p>ODE constructor</p>
     
 
-        
+    <pre class="usage"><span class='fu'>ODE</span>()
+
+<span class='co'># S4 method for ODE</span>
+<span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODE</span>
+<span class='fu'><a href='getRate-method.html'>getRate</a></span>(<span class='no'>object</span>, <span class='no'>state</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>a class object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional parameters</p></td>
+    </tr>
+    <tr>
+      <th>state</th>
+      <td><p>current state</p></td>
+    </tr>
+    </table>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># ++++++++++++++++++++++++++++++++++++++++++++++++++      example: PendulumApp.R</span>
@@ -132,7 +157,7 @@
     <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
     <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'>Pendulum</span>()
     <span class='co'># pendulum@state[3] &lt;- 0      # set time to zero, t = 0</span>
-    <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState.html'>setState</a></span>(<span class='no'>pendulum</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
+    <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState-method.html'>setState</a></span>(<span class='no'>pendulum</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
     <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>pendulum</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>dt</span>) <span class='co'># using stepSize in RK4</span>
     <span class='no'>pendulum</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>pendulum</span>@<span class='kw'>odeSolver</span>, <span class='no'>dt</span>) <span class='co'># set new step size</span>
     <span class='no'>rowvec</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
@@ -163,7 +188,7 @@
     <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fl'>0.01</span>
     <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'>PendulumEuler</span>()
     <span class='no'>pendulum</span>@<span class='kw'>state</span>[<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='fl'>0</span>      <span class='co'># set time to zero, t = 0</span>
-    <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState.html'>setState</a></span>(<span class='no'>pendulum</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
+    <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState-method.html'>setState</a></span>(<span class='no'>pendulum</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
     <span class='no'>stepSize</span> <span class='kw'>&lt;-</span> <span class='no'>dt</span>
     <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>pendulum</span>, <span class='no'>stepSize</span>)
     <span class='no'>pendulum</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>pendulum</span>@<span class='kw'>odeSolver</span>, <span class='no'>dt</span>) <span class='co'># set new step size</span>
@@ -181,11 +206,85 @@
 }
 
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>PendulumEulerApp</span>()
-<span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='ODE-class-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='ODE-class-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'>#  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ example KeplerApp.R</span>
+<span class='co'>#  KeplerApp solves an inverse-square law model (Kepler model) using an adaptive</span>
+<span class='co'>#  stepsize algorithm.</span>
+<span class='co'>#  Application showing two planet orbiting</span>
+<span class='co'>#  File in examples: KeplerApp.R</span>
+
+<span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"Kepler.R"</span>) <span class='co'># source the class Kepler</span>
+
+<span class='no'>KeplerApp</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) {
+
+    <span class='co'># set the orbit into a predefined state.</span>
+    <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>0</span>)                                   <span class='co'># orbit radius</span>
+    <span class='no'>v</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0.25</span>)                                <span class='co'># velocity</span>
+    <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
+    <span class='no'>planet</span> <span class='kw'>&lt;-</span> <span class='fu'>Kepler</span>(<span class='no'>r</span>, <span class='no'>v</span>)                         <span class='co'># make up an ODE object</span>
+    <span class='no'>solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RK45-class.html'>RK45</a></span>(<span class='no'>planet</span>)
+    <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
+    <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
+    <span class='kw'>while</span> (<span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>planet</span>)[<span class='fl'>5</span>] <span class='kw'>&lt;=</span> <span class='fl'>10</span>) {
+        <span class='no'>rowVector</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'>list</span>(<span class='kw'>t</span>  <span class='kw'>=</span> <span class='no'>planet</span>@<span class='kw'>state</span>[<span class='fl'>5</span>],
+                               <span class='kw'>planet1.r</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>planet</span>)[<span class='fl'>1</span>],
+                               <span class='kw'>p1anet1.v</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>planet</span>)[<span class='fl'>2</span>],
+                               <span class='kw'>planet2.r</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>planet</span>)[<span class='fl'>3</span>],
+                               <span class='kw'>p1anet2.v</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>planet</span>)[<span class='fl'>4</span>])
+        <span class='no'>solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>solver</span>)
+        <span class='no'>planet</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>solver</span>)
+        <span class='no'>i</span> <span class='kw'>&lt;-</span>  <span class='no'>i</span> + <span class='fl'>1</span>
+    }
+    <span class='no'>DT</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/rbindlist'>rbindlist</a></span>(<span class='no'>rowVector</span>)
+
+    <span class='fu'>return</span>(<span class='no'>DT</span>)
+}
+
+
+<span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>KeplerApp</span>()
+<span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='ODE-class-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+
+<span class='co'># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ base class: FallingParticleODE.R</span>
+<span class='co'># Class definition for application FallingParticleODEApp.R</span>
+
+<span class='fu'>setClass</span>(<span class='st'>"FallingParticleODE"</span>, <span class='kw'>slots</span> <span class='kw'>=</span> <span class='fu'>c</span>(
+        <span class='kw'>g</span> <span class='kw'>=</span> <span class='st'>"numeric"</span>
+        ),
+        <span class='kw'>prototype</span> <span class='kw'>=</span> <span class='fu'>prototype</span>(
+            <span class='kw'>g</span> <span class='kw'>=</span> <span class='fl'>9.8</span>
+        ),
+        <span class='kw'>contains</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ODE"</span>)
+        )
+
+
+<span class='fu'>setMethod</span>(<span class='st'>"initialize"</span>, <span class='st'>"FallingParticleODE"</span>, <span class='kw'>function</span>(<span class='no'>.Object</span>, <span class='no'>...</span>) {
+    <span class='no'>.Object</span>@<span class='kw'>state</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"numeric"</span>, <span class='fl'>3</span>)
+    <span class='fu'>return</span>(<span class='no'>.Object</span>)
+})</div><div class='output co'>#&gt; [1] "initialize"</div><div class='input'>
+<span class='fu'>setMethod</span>(<span class='st'>"getState"</span>, <span class='st'>"FallingParticleODE"</span>, <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>...</span>) {
+    <span class='co'># Gets the state variables.</span>
+    <span class='fu'>return</span>(<span class='no'>object</span>@<span class='kw'>state</span>)
+})</div><div class='output co'>#&gt; [1] "getState"</div><div class='input'>
+<span class='fu'>setMethod</span>(<span class='st'>"getRate"</span>, <span class='st'>"FallingParticleODE"</span>, <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>state</span>, <span class='no'>...</span>) {
+    <span class='co'># Gets the rate of change using the argument's state variables.</span>
+    <span class='no'>object</span>@<span class='kw'>rate</span>[<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='no'>state</span>[<span class='fl'>2</span>]
+    <span class='no'>object</span>@<span class='kw'>rate</span>[<span class='fl'>2</span>] <span class='kw'>&lt;-</span> - <span class='no'>object</span>@<span class='kw'>g</span>
+    <span class='no'>object</span>@<span class='kw'>rate</span>[<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='fl'>1</span>
+
+    <span class='no'>object</span>@<span class='kw'>rate</span>
+})</div><div class='output co'>#&gt; [1] "getRate"</div><div class='input'>
+<span class='co'># constructor</span>
+<span class='no'>FallingParticleODE</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>y</span>, <span class='no'>v</span>) {
+    <span class='no'>.FallingParticleODE</span> <span class='kw'>&lt;-</span> <span class='fu'>new</span>(<span class='st'>"FallingParticleODE"</span>)
+    <span class='no'>.FallingParticleODE</span>@<span class='kw'>state</span>[<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='no'>y</span>
+    <span class='no'>.FallingParticleODE</span>@<span class='kw'>state</span>[<span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='no'>v</span>
+    <span class='no'>.FallingParticleODE</span>@<span class='kw'>state</span>[<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='fl'>0</span>
+    <span class='no'>.FallingParticleODE</span>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
             
       <li><a href="#examples">Examples</a></li>
     </ul>

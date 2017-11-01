@@ -124,7 +124,7 @@
 </li>
 <li><code><a href="reference/setStepSize-method.html">setStepSize()</a></code></li>
 <li>
-<code><a href="reference/init-methods.html">init()</a></code>, which is not the same as the <code>S4</code> class <code>initialize</code> method</li>
+<code><a href="reference/init-method.html">init()</a></code>, which is not the same as the <code>S4</code> class <code>initialize</code> method</li>
 <li>
 <code>initialize()</code>, and</li>
 <li>the constructor</li>
@@ -174,8 +174,8 @@
 AdaptiveStepApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
     ode        &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"Impulse"</span>)
     ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/RK45-class.html">RK45</a></span>(ode)
-    ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(ode_solver, <span class="fl">0.1</span>)
-    ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setTolerance-methods.html">setTolerance</a></span>(ode_solver, <span class="fl">1.0e-4</span>)
+    ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(ode_solver, <span class="fl">0.1</span>)
+    ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setTolerance-method.html">setTolerance</a></span>(ode_solver, <span class="fl">1.0e-4</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>; rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     <span class="cf">while</span> (<span class="kw"><a href="reference/getState-method.html">getState</a></span>(ode)[<span class="dv">1</span>] <span class="op">&lt;</span><span class="st"> </span><span class="dv">12</span>) {
         rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">s1 =</span> <span class="kw"><a href="reference/getState-method.html">getState</a></span>(ode)[<span class="dv">1</span>],
@@ -208,7 +208,7 @@ solution &lt;-<span class="st"> </span><span class="kw">AdaptiveStepApp</span>()
      ode &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"ODETest"</span>)                     <span class="co"># create an `ODETest` object</span>
      ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/RK45-class.html">RK45</a></span>(ode)                   <span class="co"># select the ODE solver</span>
      ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(ode_solver, <span class="dv">1</span>)      <span class="co"># set the step</span>
-     ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setTolerance-methods.html">setTolerance</a></span>(ode_solver, <span class="fl">1e-8</span>)  <span class="co"># set the tolerance</span>
+     ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setTolerance-method.html">setTolerance</a></span>(ode_solver, <span class="fl">1e-8</span>)  <span class="co"># set the tolerance</span>
      time &lt;-<span class="st">  </span><span class="dv">0</span>
      rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
      i &lt;-<span class="st"> </span><span class="dv">1</span>
@@ -326,9 +326,9 @@ KeplerEnergyApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
     dt &lt;-<span class="st"> </span><span class="fl">0.01</span>
     tol &lt;-<span class="st"> </span><span class="fl">1e-3</span>
     particle &lt;-<span class="st"> </span><span class="kw">KeplerEnergy</span>()
-    particle &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(particle, <span class="kw">c</span>(x, vx, y, vy, <span class="dv">0</span>))
+    particle &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(particle, <span class="kw">c</span>(x, vx, y, vy, <span class="dv">0</span>))
     odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/Verlet-class.html">Verlet</a></span>(particle)
-    odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(odeSolver, dt)
+    odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(odeSolver, dt)
     particle<span class="op">@</span>odeSolver &lt;-<span class="st"> </span>odeSolver
     initialEnergy &lt;-<span class="st"> </span><span class="kw"><a href="reference/getEnergy-method.html">getEnergy</a></span>(particle)
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
@@ -367,9 +367,9 @@ LogisticApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
     K  &lt;-<span class="st"> </span><span class="fl">10.0</span>     <span class="co"># carrying capacity of the environment</span>
     dt   &lt;-<span class="st"> </span><span class="fl">0.01</span>; tol  &lt;-<span class="st"> </span><span class="fl">1e-3</span>; tmax &lt;-<span class="st"> </span><span class="dv">10</span>
     population &lt;-<span class="st"> </span><span class="kw">Logistic</span>()
-    population &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(population, <span class="kw">c</span>(x, vx, <span class="dv">0</span>), r, K)
+    population &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(population, <span class="kw">c</span>(x, vx, <span class="dv">0</span>), r, K)
     odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/Verlet-class.html">Verlet</a></span>(population)
-    odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(odeSolver, dt)
+    odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(odeSolver, dt)
     population<span class="op">@</span>odeSolver &lt;-<span class="st"> </span>odeSolver
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
@@ -405,7 +405,7 @@ PendulumApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
     ode &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"ODE"</span>)
     pendulum &lt;-<span class="st"> </span><span class="kw">Pendulum</span>()
     pendulum<span class="op">@</span>state[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">0</span>      <span class="co"># set time to zero, t = 0</span>
-    pendulum &lt;-<span class="st"> </span><span class="kw"><a href="reference/setState.html">setState</a></span>(pendulum, theta, thetaDot)
+    pendulum &lt;-<span class="st"> </span><span class="kw"><a href="reference/setState-method.html">setState</a></span>(pendulum, theta, thetaDot)
     pendulum &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(pendulum, <span class="dt">dt =</span> dt) <span class="co"># using stepSize in RK4</span>
     pendulum<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(pendulum<span class="op">@</span>odeSolver, dt) <span class="co"># set new step size</span>
     rowvec &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
@@ -441,7 +441,7 @@ PlanetApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span c
     dt &lt;-<span class="st">  </span><span class="fl">0.01</span>
     planet &lt;-<span class="st"> </span><span class="kw">Planet</span>()
     planet<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(planet<span class="op">@</span>odeSolver, dt)
-    planet &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(planet, <span class="dt">initState =</span> state)
+    planet &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(planet, <span class="dt">initState =</span> state)
     rowvec &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="co"># run infinite loop. stop with ESCAPE.</span>
@@ -483,8 +483,8 @@ ProjectileApp &lt;-<span class="st"> </span><span class="cf">function</span>(<sp
     dt &lt;-<span class="st"> </span><span class="fl">0.01</span>
 
     projectile &lt;-<span class="st"> </span><span class="kw">Projectile</span>()
-    projectile &lt;-<span class="st"> </span><span class="kw"><a href="reference/setState.html">setState</a></span>(projectile, x, vx, y, vy)
-    projectile<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(projectile<span class="op">@</span>odeSolver, <span class="fl">0.123</span>)
+    projectile &lt;-<span class="st"> </span><span class="kw"><a href="reference/setState-method.html">setState</a></span>(projectile, x, vx, y, vy)
+    projectile<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(projectile<span class="op">@</span>odeSolver, <span class="fl">0.123</span>)
     projectile<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(projectile<span class="op">@</span>odeSolver, dt)
     rowV &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
@@ -590,10 +590,10 @@ SHOApp &lt;-<span class="st"> </span><span class="cf">function</span>(...) {
     x &lt;-<span class="st"> </span><span class="fl">1.0</span>; v &lt;-<span class="st"> </span><span class="dv">0</span>; k &lt;-<span class="st"> </span><span class="fl">1.0</span>; dt &lt;-<span class="st"> </span><span class="fl">0.01</span>; tolerance &lt;-<span class="st"> </span><span class="fl">1e-3</span>
     sho    &lt;-<span class="st"> </span><span class="kw">SHO</span>(x, v, k)
     solver_factory &lt;-<span class="st"> </span><span class="kw"><a href="reference/ODESolverFactory-class.html">ODESolverFactory</a></span>()
-    solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/createODESolver-method.html">createODESolver</a></span>(solver_factory, sho, <span class="st">"DormandPrince45"</span>)
+    solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/ODESolverFactory-class.html">createODESolver</a></span>(solver_factory, sho, <span class="st">"DormandPrince45"</span>)
     <span class="co"># solver &lt;- DormandPrince45(sho)                    # this can also be used</span>
-    solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setTolerance-methods.html">setTolerance</a></span>(solver, tolerance)
-    solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-methods.html">init</a></span>(solver, dt)
+    solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setTolerance-method.html">setTolerance</a></span>(solver, tolerance)
+    solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(solver, dt)
     i &lt;-<span class="st"> </span><span class="dv">1</span>; rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     <span class="cf">while</span> (sho<span class="op">@</span>state[<span class="dv">3</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">500</span>) {
         rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> sho<span class="op">@</span>state[<span class="dv">1</span>],
@@ -626,7 +626,7 @@ SpringRK4App &lt;-<span class="st"> </span><span class="cf">function</span>(<spa
     ode &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"ODE"</span>)
     spring &lt;-<span class="st"> </span><span class="kw">SpringRK4</span>()
     spring<span class="op">@</span>state[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">0</span>      <span class="co"># set time to zero, t = 0</span>
-    spring &lt;-<span class="st"> </span><span class="kw"><a href="reference/setState.html">setState</a></span>(spring, theta, thetaDot)
+    spring &lt;-<span class="st"> </span><span class="kw"><a href="reference/setState-method.html">setState</a></span>(spring, theta, thetaDot)
     spring &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(spring, <span class="dt">dt =</span> dt) <span class="co"># using stepSize in RK4</span>
     spring<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(spring<span class="op">@</span>odeSolver, dt) <span class="co"># set new step size</span>
     rowvec &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)

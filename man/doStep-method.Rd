@@ -2,7 +2,7 @@
 % Please edit documentation in R/ode_generics.R
 \name{doStep}
 \alias{doStep}
-\title{Perform a step}
+\title{doStep}
 \usage{
 doStep(object, ...)
 }

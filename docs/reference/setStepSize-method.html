@@ -6,9 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>setStepSize uses either of two step parameters: stepSize and dt
-`stepSize`` works for most of the applications
-`dt`` is used in Pendulum — setStepSize â€¢ rODE</title>
+<title>setStepSize — setStepSize â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -110,43 +108,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>setStepSize uses either of two step parameters: stepSize and dt
-`stepSize`` works for most of the applications
-`dt`` is used in Pendulum</h1>
+    <h1>setStepSize</h1>
     </div>
 
     
     <p>setStepSize uses either of two step parameters: stepSize and dt
-`stepSize`` works for most of the applications
-`dt`` is used in Pendulum</p>
-<p>#' @rdname setSolver-method
-setMethod("setSolver", "ODESolver", function(object, ode, ...) 
-    object@ode &lt;- ode
-    object@ode
-)
-Set the size of the step</p>
-<p>#' @rdname getODE-method
-setMethod("getODE", "AbstractODESolver", function(object, ...) 
-    object@ode
-)</p>
+stepSize works for most of the applications
+dt is used in Pendulum</p>
     
 
-    <pre class="usage"><span class='fu'>setStepSize</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for ODESolver</span>
-<span class='fu'>setStepSize</span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for AbstractODESolver</span>
-<span class='fu'>setStepSize</span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for DormandPrince45</span>
-<span class='fu'>setStepSize</span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for Euler</span>
-<span class='fu'>setStepSize</span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for Euler</span>
-<span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>setStepSize</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -158,10 +129,6 @@ setMethod("getODE", "AbstractODESolver", function(object, ...)
     <tr>
       <th>...</th>
       <td><p>additional parameters</p></td>
-    </tr>
-    <tr>
-      <th>stepSize</th>
-      <td><p>size of the step</p></td>
     </tr>
     </table>
     
@@ -180,7 +147,7 @@ setMethod("getODE", "AbstractODESolver", function(object, ...)
     <span class='no'>tmax</span>     <span class='kw'>&lt;-</span> <span class='fl'>22</span>; <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
     <span class='no'>spring</span> <span class='kw'>&lt;-</span> <span class='fu'>SpringRK4</span>()
     <span class='no'>spring</span>@<span class='kw'>state</span>[<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='fl'>0</span>      <span class='co'># set time to zero, t = 0</span>
-    <span class='no'>spring</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState.html'>setState</a></span>(<span class='no'>spring</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
+    <span class='no'>spring</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState-method.html'>setState</a></span>(<span class='no'>spring</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
     <span class='co'>#  spring &lt;- setStepSize(spring, dt = dt) # using stepSize in RK4</span>
     <span class='no'>spring</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'>setStepSize</span>(<span class='no'>spring</span>@<span class='kw'>odeSolver</span>, <span class='no'>dt</span>) <span class='co'># set new step size</span>
     <span class='no'>rowvec</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
@@ -212,7 +179,7 @@ setMethod("getODE", "AbstractODESolver", function(object, ...)
 
      <span class='co'># Two ways of setting the tolerance</span>
        <span class='co'># ode_solver &lt;- setTolerance(ode_solver, 1e-8)  # set the tolerance</span>
-     <span class='fu'><a href='setTolerance-methods.html'>setTolerance</a></span>(<span class='no'>ode_solver</span>) <span class='kw'>&lt;-</span>  <span class='fl'>1e-8</span>
+     <span class='fu'><a href='setTolerance-method.html'>setTolerance</a></span>(<span class='no'>ode_solver</span>) <span class='kw'>&lt;-</span>  <span class='fl'>1e-8</span>
 
      <span class='no'>time</span> <span class='kw'>&lt;-</span>  <span class='fl'>0</span>
      <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)

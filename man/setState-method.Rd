@@ -2,9 +2,7 @@
 % Please edit documentation in R/ode_generics.R
 \name{setState}
 \alias{setState}
-\title{New setState that should work with different methods
- "theta", "thetaDot":  used in PendulumApp
- "x", "vx", "y", "vy": used in ProjectileApp}
+\title{setState}
 \usage{
 setState(object, ...)
 }
