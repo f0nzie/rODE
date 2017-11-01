@@ -1,4 +1,3 @@
-# ODESolver.R
 
 #' ODESolver virtual class
 #'
@@ -6,47 +5,50 @@
 #'
 #' @param object a class object
 #' @param stepSize size of the step
+#' @param ... additional parameters
+#'
+#' @rdname ODESolver-class
 #'
 #' @include ode_generics.R
 setClass("ODESolver")
 
 
 #' Set initial values and get ready to start the solver
-#'
-#' @rdname init-method
+#' @rdname ODESolver-class
 setMethod("init", "ODESolver", function(object, stepSize, ...) {
-    object
+    NULL
 })
 
-
-#' @rdname step-method
+#' @rdname ODESolver-class
 setMethod("step", "ODESolver", function(object, ...) {
     object
 })
 
 
-#' @rdname getODE-method
+#' @rdname ODESolver-class
 setMethod("getODE", "ODESolver", function(object, ...) {
     object@ode
 })
 
 
-#' #' @rdname setSolver-method
-#' setMethod("setSolver", "ODESolver", function(object, ode, ...) {
-#'     object@ode <- ode
-#'     object@ode
-#' })
+# #' #' @rdname setSolver-method
+# #' setMethod("setSolver", "ODESolver", function(object, ode, ...) {
+# #'     object@ode <- ode
+# #'     object@ode
+# #' })
+
 
 
 #' Set the size of the step
 #'
-#' @rdname setStepSize-method
+#' @rdname ODESolver-class
 setMethod("setStepSize", "ODESolver", function(object, stepSize, ...) {
     # set the current value of the step
+    object@stepSize = stepSize
     object
 })
 
-#' @rdname getStepSize-method
+#' @rdname ODESolver-class
 setMethod("getStepSize", "ODESolver", function(object, ...) {
     # get the current value of the step
     object@stepSize
