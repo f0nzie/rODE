@@ -86,7 +86,7 @@
       <h1>Pendulum with Euler-Richardson ODE solver</h1>
                         <h4 class="author">Alfonso R. Reyes</h4>
             
-            <h4 class="date">2017-10-29</h4>
+            <h4 class="date">2017-11-01</h4>
           </div>
 
     
@@ -182,7 +182,7 @@ PendulumApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
     
     pendulum<span class="op">@</span>state[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">0</span>      <span class="co"># set time to zero, t = 0</span>
     
-    pendulum &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setState.html">setState</a></span>(pendulum, theta, thetaDot)
+    pendulum &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setState-method.html">setState</a></span>(pendulum, theta, thetaDot)
     pendulum &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setStepSize-method.html">setStepSize</a></span>(pendulum, <span class="dt">dt =</span> dt) <span class="co"># using stepSize in RK4</span>
     
     pendulum<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setStepSize-method.html">setStepSize</a></span>(pendulum<span class="op">@</span>odeSolver, dt) <span class="co"># set new step size</span>

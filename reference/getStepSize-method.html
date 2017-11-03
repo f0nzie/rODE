@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the step size — getStepSize â€¢ rODE</title>
+<title>getStepSize — getStepSize â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,23 +108,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the step size</h1>
+    <h1>getStepSize</h1>
     </div>
 
     
-    <p>Get the step size</p>
+    <p>Get the current value of the step size</p>
     
 
-    <pre class="usage"><span class='fu'>getStepSize</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for ODESolver</span>
-<span class='fu'>getStepSize</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for AbstractODESolver</span>
-<span class='fu'>getStepSize</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for DormandPrince45</span>
-<span class='fu'>getStepSize</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>getStepSize</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +148,7 @@
 
     <span class='co'># two ways to set tolerance</span>
       <span class='co'># ode_solver &lt;- setTolerance(ode_solver, 1e-6)</span>
-    <span class='fu'><a href='setTolerance-methods.html'>setTolerance</a></span>(<span class='no'>ode_solver</span>) <span class='kw'>&lt;-</span>  <span class='fl'>1e-6</span>
+    <span class='fu'><a href='setTolerance-method.html'>setTolerance</a></span>(<span class='no'>ode_solver</span>) <span class='kw'>&lt;-</span>  <span class='fl'>1e-6</span>
 
     <span class='no'>time</span> <span class='kw'>&lt;-</span>  <span class='fl'>0</span>
     <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)                   <span class='co'># row vector</span>
@@ -184,12 +175,8 @@
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>ComparisonRK45ODEApp</span>()
 <span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='getStepSize-method-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'>library</span>(<span class='no'>tidyr</span>)
+<span class='fu'>library</span>(<span class='no'>dplyr</span>)
+<span class='fu'>library</span>(<span class='no'>tidyr</span>)
 
 <span class='no'>solution.multi</span> <span class='kw'>&lt;-</span> <span class='no'>solution</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>t</span>, <span class='no'>ODE</span>, <span class='no'>exact</span>)

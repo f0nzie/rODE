@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AbstractODESolver class — AbstractODESolver â€¢ rODE</title>
+<title>AbstractODESolver class — AbstractODESolver-class â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -113,9 +113,36 @@
 
     
     <p>Defines the basic methods for all the ODE solvers.</p>
+<p>AbstractODESolver generic</p>
+<p>AbstractODESolver constructor missing</p>
+<p>AbstractODESolver constructor ODE. Uses this constructor when ODE object is passed</p>
     
 
-    <pre class="usage"><span class='fu'>AbstractODESolver</span>(<span class='no'>ode</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>AbstractODESolver</span>(<span class='no'>ode</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for AbstractODESolver</span>
+<span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for AbstractODESolver</span>
+<span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for AbstractODESolver</span>
+<span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for AbstractODESolver</span>
+<span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for AbstractODESolver</span>
+<span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>, <span class='no'>...</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+
+<span class='co'># S4 method for AbstractODESolver</span>
+<span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for missing</span>
+<span class='fu'>AbstractODESolver</span>(<span class='no'>ode</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODE</span>
+<span class='fu'>AbstractODESolver</span>(<span class='no'>ode</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -127,6 +154,18 @@
     <tr>
       <th>...</th>
       <td><p>additional parameters</p></td>
+    </tr>
+    <tr>
+      <th>object</th>
+      <td><p>a class object</p></td>
+    </tr>
+    <tr>
+      <th>stepSize</th>
+      <td><p>the size of the step</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>the step size value</p></td>
     </tr>
     </table>
     
