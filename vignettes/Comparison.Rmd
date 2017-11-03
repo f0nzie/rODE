@@ -97,20 +97,4 @@ ComparisonRK45App(verbose = TRUE)
 
 
 
-## Plots
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
-```
-
-
-## Data
-
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
 
