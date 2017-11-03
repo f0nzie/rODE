@@ -2,8 +2,7 @@ Package: rODE
 Type: Package
 Title: Ordinary Differential Equation (ODE) Solvers Written in R Using S4 Classes
 Version: 0.99.5.9000
-Author: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
-Maintainer: Alfonso R. Reyes <alfonso.reyes@oilgainsanalytics.com>
+Authors@R: person("Alfonso R.", "Reyes", role = c("aut", "cre"), email = "alfonso.reyes@oilgainsanalytics.com")
 Description: Show physics, math and engineering students how an ODE solver
     is made and how effective classes can be for the construction of
     the equations that describe natural phenomena. Inspiration for this work 
@@ -21,9 +20,10 @@ Suggests: knitr,
     rmarkdown,
     ggplot2,
     dplyr,
-    tidyr
+    tidyr,
+    covr
 RoxygenNote: 6.0.1
-Collate: 
+Collate:
     'ode_generics.R'
     'ODESolver.R'
     'ODE.R'
@@ -39,3 +39,4 @@ Collate:
     'rODE-package.r'
     'utils.R'
 VignetteBuilder: knitr
+URL: https://github.com/f0nzie/rODE

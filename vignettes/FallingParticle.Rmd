@@ -48,6 +48,10 @@ r_2 = -g  \\
 r_3 = 1
 $$
 
+```{r}
+library(rODE)
+```
+
 
 ```{r eval=FALSE}
 # This code can also be found in the `examples` folder under this name:

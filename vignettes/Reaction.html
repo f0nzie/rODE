@@ -12,7 +12,7 @@
 
 <meta name="author" content="Vignette Author" />
 
-<meta name="date" content="2017-07-12" />
+<meta name="date" content="2017-11-01" />
 
 <title>Chemical Reaction</title>
 
@@ -70,12 +70,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Chemical Reaction</h1>
 <h4 class="author"><em>Vignette Author</em></h4>
-<h4 class="date"><em>2017-07-12</em></h4>
+<h4 class="date"><em>2017-11-01</em></h4>
 
 
 
 <div id="reaction-with-rk4-solver" class="section level2">
 <h2>Reaction with RK4 solver</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co"># Reaction.R</span>
 
@@ -108,24 +109,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     )
 
 
-<span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;Reaction&quot;</span>, function(object) {
-    object@state
+<span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;Reaction&quot;</span>, <span class="cf">function</span>(object) {
+    object<span class="op">@</span>state
 })</code></pre></div>
 <pre><code>## [1] &quot;getState&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;Reaction&quot;</span>, function(object, state, ...) {
-    xxy &lt;-<span class="st"> </span>state[<span class="dv">1</span>] *<span class="st"> </span>state[<span class="dv">1</span>] *state[<span class="dv">2</span>]
-    object@rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>object@k1 *<span class="st"> </span>object@A -<span class="st"> </span>object@k2 *<span class="st"> </span>object@B *<span class="st"> </span>state[<span class="dv">1</span>] +
-<span class="st">        </span>object@k3 *<span class="st"> </span>xxy -<span class="st"> </span>object@k4 *<span class="st"> </span>state[<span class="dv">1</span>]                          <span class="co"># X rate</span>
-    object@rate[<span class="dv">2</span>] &lt;-<span class="st"> </span>object@k2 *<span class="st"> </span>object@B *<span class="st"> </span>state[<span class="dv">1</span>] -<span class="st"> </span>object@k3 *<span class="st"> </span>xxy <span class="co"># Y rate</span>
-    object@rate[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">1</span>                         <span class="co"># rate of change of time, dt/dt</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;Reaction&quot;</span>, <span class="cf">function</span>(object, state, ...) {
+    xxy &lt;-<span class="st"> </span>state[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>] <span class="op">*</span>state[<span class="dv">2</span>]
+    object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>object<span class="op">@</span>k1 <span class="op">*</span><span class="st"> </span>object<span class="op">@</span>A <span class="op">-</span><span class="st"> </span>object<span class="op">@</span>k2 <span class="op">*</span><span class="st"> </span>object<span class="op">@</span>B <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>] <span class="op">+</span>
+<span class="st">        </span>object<span class="op">@</span>k3 <span class="op">*</span><span class="st"> </span>xxy <span class="op">-</span><span class="st"> </span>object<span class="op">@</span>k4 <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>]                          <span class="co"># X rate</span>
+    object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st"> </span>object<span class="op">@</span>k2 <span class="op">*</span><span class="st"> </span>object<span class="op">@</span>B <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>object<span class="op">@</span>k3 <span class="op">*</span><span class="st"> </span>xxy <span class="co"># Y rate</span>
+    object<span class="op">@</span>rate[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">1</span>                         <span class="co"># rate of change of time, dt/dt</span>
 
-    object@rate                                                <span class="co"># time derivative</span>
+    object<span class="op">@</span>rate                                                <span class="co"># time derivative</span>
 })</code></pre></div>
 <pre><code>## [1] &quot;getRate&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># constructor</span>
-Reaction &lt;-<span class="st"> </span>function(initialConditions) {
+Reaction &lt;-<span class="st"> </span><span class="cf">function</span>(initialConditions) {
     .Reaction &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;Reaction&quot;</span>)
-    .Reaction@state &lt;-<span class="st"> </span>initialConditions
+    .Reaction<span class="op">@</span>state &lt;-<span class="st"> </span>initialConditions
     .Reaction
 }
 
@@ -138,7 +139,7 @@ Reaction &lt;-<span class="st"> </span>function(initialConditions) {
 <span class="co"># a fouth-order Runge-Kutta algorithm.</span>
 <span class="co">#</span>
 <span class="co">#</span>
-ReactionApp &lt;-<span class="st"> </span>function(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
+ReactionApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
     
     X &lt;-<span class="st"> </span><span class="dv">1</span>; Y &lt;-<span class="st"> </span><span class="dv">5</span>;
     dt &lt;-<span class="st"> </span><span class="fl">0.1</span>
@@ -146,10 +147,10 @@ ReactionApp &lt;-<span class="st"> </span>function(<span class="dt">verbose =</s
     reaction &lt;-<span class="st"> </span><span class="kw">Reaction</span>(<span class="kw">c</span>(X, Y, <span class="dv">0</span>))
     solver &lt;-<span class="st"> </span><span class="kw">RK4</span>(reaction)
     
-    while (solver@ode@state[<span class="dv">3</span>] &lt;<span class="st"> </span><span class="dv">100</span>) {
-        if (verbose)
-            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f %12f </span><span class="ch">\n</span><span class="st">&quot;</span>, solver@ode@state[<span class="dv">1</span>],
-                    solver@ode@state[<span class="dv">2</span>], solver@ode@state[<span class="dv">3</span>]))
+    <span class="cf">while</span> (solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">3</span>] <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) {
+        <span class="cf">if</span> (verbose)
+            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f %12f </span><span class="ch">\n</span><span class="st">&quot;</span>, solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">1</span>],
+                    solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">2</span>], solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">3</span>]))
         solver &lt;-<span class="st"> </span><span class="kw">step</span>(solver)
     }
     <span class="co"># at t=100, dt=0.1,  c(2.131958,     1.105316,   100.000000)</span>

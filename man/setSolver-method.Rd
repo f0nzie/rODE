@@ -2,7 +2,7 @@
 % Please edit documentation in R/ode_generics.R
 \name{setSolver<-}
 \alias{setSolver<-}
-\title{Set a solver over an ODE object}
+\title{setSolver}
 \usage{
 setSolver(object) <- value
 }

@@ -12,6 +12,11 @@ vignette: >
 ## Pendulum with Euler-Richardson ODE solver
 
 ```{r}
+library(rODE)
+```
+
+
+```{r}
 # This code can also be found in the `examples` folder under this name:
 #
 # Pendulum.R

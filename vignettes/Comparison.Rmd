@@ -14,6 +14,10 @@ vignette: >
 
 ```{r}
 library(rODE)
+```
+
+
+```{r}
 # ODETest.R
 
 

@@ -4,12 +4,17 @@ author: "Vignette Author"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chemical Reaction}
+  %\VignetteIndexEntry{ChemicalReaction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ## Reaction with RK4 solver
+
+```{r}
+library(rODE)
+```
+
 
 ```{r}
 # This code can also be found in the `examples` folder under this name:

@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd.  -->
-[![Rdoc](http://www.rdocumentation.org/badges/version/rODE)](http://www.rdocumentation.org/packages/rODE)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rODE)](https://cran.r-project.org/package=rODE) [![Travis-CI Build Status](https://travis-ci.org/f0nzie/rODE.svg?branch=master)](https://travis-ci.org/f0nzie/rODE) [![Coverage Status](https://codecov.io/gh/f0nzie/rODE/branch/master/graph/badge.svg)](https://codecov.io/gh/f0nzie/rODE)
 
 rODE
 ====
