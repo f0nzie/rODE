@@ -9,15 +9,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Projectile with RK4 solver
+## Build the Projectile class with RK4 solver
 
-```{r}
+
+```{r message=FALSE, results='hold'}
 library(rODE)
 library(ggplot2)
-```
 
-
-```{r}
 ####################
 # This code can also be found in the `examples` folder under this name:
 # 
@@ -88,6 +86,11 @@ setMethod("getRate", "Projectile", function(object, state, ...) {
 # constructor
 Projectile <- function()  new("Projectile")
 
+```
+
+## Run the application ProjectileApp
+
+```{r}
 
 # This code can also be found in the `examples` folder under this name:
 #
