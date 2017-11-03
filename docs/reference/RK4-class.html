@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RK4.R — RK4 â€¢ rODE</title>
+<title>RK4 class — RK4-class â€¢ rODE</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -108,15 +108,25 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>RK4.R</h1>
+    <h1>RK4 class</h1>
     </div>
 
     
-    <p>RK4 ODE solver</p>
+    <p>RK4 class</p>
+<p>RK4 generic</p>
 <p>RK4 class constructor</p>
     
 
     <pre class="usage"><span class='fu'>RK4</span>(<span class='no'>ode</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for RK4</span>
+<span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for RK4</span>
+<span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>, <span class='no'>...</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+
+<span class='co'># S4 method for RK4</span>
+<span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for ODE</span>
 <span class='fu'>RK4</span>(<span class='no'>ode</span>, <span class='no'>...</span>)</pre>
@@ -132,11 +142,19 @@
       <th>...</th>
       <td><p>additional parameters</p></td>
     </tr>
+    <tr>
+      <th>object</th>
+      <td><p>internal passing object</p></td>
+    </tr>
+    <tr>
+      <th>stepSize</th>
+      <td><p>the size of the step</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>value for the step</p></td>
+    </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>RK4 class</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -212,7 +230,7 @@
     <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>
     <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'>Pendulum</span>()
     <span class='co'># pendulum@state[3] &lt;- 0      # set time to zero, t = 0</span>
-    <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState.html'>setState</a></span>(<span class='no'>pendulum</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
+    <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setState-method.html'>setState</a></span>(<span class='no'>pendulum</span>, <span class='no'>theta</span>, <span class='no'>thetaDot</span>)
     <span class='no'>pendulum</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>pendulum</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>dt</span>) <span class='co'># using stepSize in RK4</span>
     <span class='no'>pendulum</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>pendulum</span>@<span class='kw'>odeSolver</span>, <span class='no'>dt</span>) <span class='co'># set new step size</span>
     <span class='no'>rowvec</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
@@ -265,9 +283,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

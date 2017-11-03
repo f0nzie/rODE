@@ -12,7 +12,7 @@
 
 <meta name="author" content="Wolfgang Christian / Alfonso R. Reyes" />
 
-<meta name="date" content="2017-07-12" />
+<meta name="date" content="2017-10-30" />
 
 <title>Falling Particle ODE</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Falling Particle ODE</h1>
 <h4 class="author"><em>Wolfgang Christian / Alfonso R. Reyes</em></h4>
-<h4 class="date"><em>2017-07-12</em></h4>
+<h4 class="date"><em>2017-10-30</em></h4>
 
 
 
@@ -100,6 +100,7 @@ r_1 = r_2 \\
 r_2 = -g  \\
 r_3 = 1
 \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co"># FallingParticleODE.R</span>
 <span class="co">#</span>
@@ -114,31 +115,31 @@ r_3 = 1
     )
 
 
-<span class="kw">setMethod</span>(<span class="st">&quot;initialize&quot;</span>, <span class="st">&quot;FallingParticleODE&quot;</span>, function(.Object, ...) {
-    .Object@state &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dv">3</span>)
+<span class="kw">setMethod</span>(<span class="st">&quot;initialize&quot;</span>, <span class="st">&quot;FallingParticleODE&quot;</span>, <span class="cf">function</span>(.Object, ...) {
+    .Object<span class="op">@</span>state &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dv">3</span>)
     <span class="kw">return</span>(.Object)
 })
 
-<span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;FallingParticleODE&quot;</span>, function(object, ...) {
+<span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;FallingParticleODE&quot;</span>, <span class="cf">function</span>(object, ...) {
     <span class="co"># Gets the state variables.</span>
-    <span class="kw">return</span>(object@state)
+    <span class="kw">return</span>(object<span class="op">@</span>state)
 })
 
-<span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;FallingParticleODE&quot;</span>, function(object, state, ...) {
+<span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;FallingParticleODE&quot;</span>, <span class="cf">function</span>(object, state, ...) {
     <span class="co"># Gets the rate of change using the argument's state variables.</span>
-    object@rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>state[<span class="dv">2</span>]
-    object@rate[<span class="dv">2</span>] &lt;-<span class="st"> </span>-<span class="st"> </span>object@g
-    object@rate[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+    object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>state[<span class="dv">2</span>]
+    object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span>object<span class="op">@</span>g
+    object<span class="op">@</span>rate[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
     
-    object@rate
+    object<span class="op">@</span>rate
 })
 
 <span class="co"># constructor</span>
-FallingParticleODE &lt;-<span class="st"> </span>function(y, v) {
+FallingParticleODE &lt;-<span class="st"> </span><span class="cf">function</span>(y, v) {
     .FallingParticleODE &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;FallingParticleODE&quot;</span>)
-    .FallingParticleODE@state[<span class="dv">1</span>] &lt;-<span class="st"> </span>y
-    .FallingParticleODE@state[<span class="dv">2</span>] &lt;-<span class="st"> </span>v
-    .FallingParticleODE@state[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
+    .FallingParticleODE<span class="op">@</span>state[<span class="dv">1</span>] &lt;-<span class="st"> </span>y
+    .FallingParticleODE<span class="op">@</span>state[<span class="dv">2</span>] &lt;-<span class="st"> </span>v
+    .FallingParticleODE<span class="op">@</span>state[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
     .FallingParticleODE
 }
 
@@ -148,7 +149,7 @@ FallingParticleODE &lt;-<span class="st"> </span>function(y, v) {
 <span class="co"># FallingParticleODEApp.R</span>
 <span class="co">#</span>
 <span class="co">#</span>
-FallingParticleODEApp &lt;-<span class="st"> </span>function(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
+FallingParticleODEApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
     <span class="kw">library</span>(ggplot2)
     
     <span class="co"># load the R class that sets up the solver for this application</span>
@@ -166,23 +167,23 @@ FallingParticleODEApp &lt;-<span class="st"> </span>function(<span class="dt">ve
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="co"># stop loop when the ball hits the ground</span>
-    while (ball@state[<span class="dv">1</span>] &gt;=<span class="st"> </span><span class="dv">0</span>) {
-        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">state1 =</span> ball@state[<span class="dv">1</span>], 
-                               <span class="dt">state2 =</span> ball@state[<span class="dv">2</span>], 
-                               <span class="dt">state3 =</span> ball@state[<span class="dv">3</span>])
+    <span class="cf">while</span> (ball<span class="op">@</span>state[<span class="dv">1</span>] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>) {
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">state1 =</span> ball<span class="op">@</span>state[<span class="dv">1</span>], 
+                               <span class="dt">state2 =</span> ball<span class="op">@</span>state[<span class="dv">2</span>], 
+                               <span class="dt">state3 =</span> ball<span class="op">@</span>state[<span class="dv">3</span>])
         solver &lt;-<span class="st"> </span><span class="kw">step</span>(solver)
-        ball &lt;-<span class="st"> </span>solver@ode
-        if (verbose) {
-            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f &quot;</span>,  ball@state[<span class="dv">1</span>], ball@rate[<span class="dv">1</span>] ))
-            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f &quot;</span>,  ball@state[<span class="dv">2</span>], ball@rate[<span class="dv">2</span>] ))
-            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f</span><span class="ch">\n</span><span class="st">&quot;</span>, ball@state[<span class="dv">3</span>], ball@rate[<span class="dv">3</span>] ))
+        ball &lt;-<span class="st"> </span>solver<span class="op">@</span>ode
+        <span class="cf">if</span> (verbose) {
+            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f &quot;</span>,  ball<span class="op">@</span>state[<span class="dv">1</span>], ball<span class="op">@</span>rate[<span class="dv">1</span>] ))
+            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f &quot;</span>,  ball<span class="op">@</span>state[<span class="dv">2</span>], ball<span class="op">@</span>rate[<span class="dv">2</span>] ))
+            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;%12f %12f</span><span class="ch">\n</span><span class="st">&quot;</span>, ball<span class="op">@</span>state[<span class="dv">3</span>], ball<span class="op">@</span>rate[<span class="dv">3</span>] ))
         }
-        i &lt;-<span class="st"> </span>i +<span class="st"> </span><span class="dv">1</span>
+        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
     }
     
-    DT &lt;-<span class="st"> </span>data.table::<span class="kw">rbindlist</span>(rowVector)
-    <span class="kw">print</span>(<span class="kw">ggplot</span>(DT, <span class="kw">aes</span>(<span class="dt">x =</span> state3, <span class="dt">y =</span> state1)) +<span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>))
-    <span class="kw">print</span>(<span class="kw">ggplot</span>(DT, <span class="kw">aes</span>(<span class="dt">x =</span> state3, <span class="dt">y =</span> state2)) +<span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>))
+    DT &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
+    <span class="kw">print</span>(<span class="kw">ggplot</span>(DT, <span class="kw">aes</span>(<span class="dt">x =</span> state3, <span class="dt">y =</span> state1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>))
+    <span class="kw">print</span>(<span class="kw">ggplot</span>(DT, <span class="kw">aes</span>(<span class="dt">x =</span> state3, <span class="dt">y =</span> state2)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>))
 }
 
 

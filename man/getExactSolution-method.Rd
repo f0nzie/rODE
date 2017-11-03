@@ -2,7 +2,7 @@
 % Please edit documentation in R/ode_generics.R
 \name{getExactSolution}
 \alias{getExactSolution}
-\title{Compare analytical and calculated solutions}
+\title{getExactSolution}
 \usage{
 getExactSolution(object, t, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ode_generics.R
 \name{getEnergy}
 \alias{getEnergy}
-\title{Get the calculated energy level}
+\title{getEnergy}
 \usage{
 getEnergy(object, ...)
 }

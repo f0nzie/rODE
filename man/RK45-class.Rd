@@ -4,7 +4,7 @@
 \name{RK45-class}
 \alias{RK45-class}
 \alias{RK45}
-\title{RK45 class}
+\title{RK45 ODE solver class}
 \usage{
 RK45(ode)
 }
@@ -12,7 +12,7 @@ RK45(ode)
 \item{ode}{and ODE object}
 }
 \description{
-RK45 class
+RK45 ODE solver class
 
 RK45 class constructor
 }

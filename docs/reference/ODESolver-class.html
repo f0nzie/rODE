@@ -113,8 +113,27 @@
 
     
     <p>A virtual class inherited by AbstractODESolver</p>
+<p>ODESolver constructor</p>
+<p>Set initial values and get ready to start the solver</p>
+<p>Set the size of the step</p>
     
 
+    <pre class="usage"><span class='fu'>ODESolver</span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODESolver</span>
+<span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODESolver</span>
+<span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODESolver</span>
+<span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODESolver</span>
+<span class='fu'><a href='setStepSize-method.html'>setStepSize</a></span>(<span class='no'>object</span>, <span class='no'>stepSize</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for ODESolver</span>
+<span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -127,7 +146,15 @@
       <th>stepSize</th>
       <td><p>size of the step</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional parameters</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>Other ODESolver helpers: <code><a href='ODESolverFactory-class.html'>ODESolverFactory-class</a></code></p>
     
 
   </div>
@@ -135,7 +162,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

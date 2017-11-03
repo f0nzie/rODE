@@ -39,3 +39,4 @@ Collate:
     'rODE-package.r'
     'utils.R'
 VignetteBuilder: knitr
+URL: https://github.com/f0nzie/rODE
