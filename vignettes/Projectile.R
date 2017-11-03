@@ -1,8 +1,7 @@
-## ------------------------------------------------------------------------
+## ----message=FALSE, results='hold'---------------------------------------
 library(rODE)
 library(ggplot2)
 
-## ------------------------------------------------------------------------
 ####################
 # This code can also be found in the `examples` folder under this name:
 # 
@@ -73,6 +72,8 @@ setMethod("getRate", "Projectile", function(object, state, ...) {
 # constructor
 Projectile <- function()  new("Projectile")
 
+
+## ------------------------------------------------------------------------
 
 # This code can also be found in the `examples` folder under this name:
 #

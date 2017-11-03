@@ -1,7 +1,5 @@
-## ------------------------------------------------------------------------
+## ----message=FALSE, results='hold'---------------------------------------
 library(rODE)
-
-## ------------------------------------------------------------------------
 # This code can also be found in the `examples` folder under this name:
 # Reaction.R
 
@@ -13,7 +11,6 @@ library(rODE)
 # * Converted to R by: Alfonso R. Reyes
 #
 # */
-
 
 setClass("Reaction", slots = c(
     k1 = "numeric",
@@ -49,9 +46,6 @@ setMethod("getRate", "Reaction", function(object, state, ...) {
     object@rate                                                # time derivative
 })
 
-
-
-
 # constructor
 Reaction <- function(initialConditions) {
     .Reaction <- new("Reaction")
@@ -60,6 +54,7 @@ Reaction <- function(initialConditions) {
 }
 
 
+## ------------------------------------------------------------------------
 # This code can also be found in the `examples` folder under this name:
 # ReactionApp.R
 #
