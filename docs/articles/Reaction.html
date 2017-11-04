@@ -51,13 +51,13 @@
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
-      <a href="../articles/Kepler.html">Kepler. Interaction between two planets.</a>
+      <a href="../articles/Kepler.html">Kepler. Interaction between two planets</a>
     </li>
     <li>
       <a href="../articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
     </li>
     <li>
-      <a href="../articles/Planet.html">Planet orbiting. ODE solver: Euler</a>
+      <a href="../articles/Planet.html">Planet orbiting with Euler ODE solver</a>
     </li>
     <li>
       <a href="../articles/Projectile.html">Projectile with RK4 solver</a>
@@ -99,16 +99,11 @@
     
     
 <div class="contents">
-<div id="reaction-with-rk4-solver" class="section level2">
+<div id="build-the-reaction-class-with-a-rk4-solver" class="section level2">
 <h2 class="hasAnchor">
-<a href="#reaction-with-rk4-solver" class="anchor"></a>Reaction with RK4 solver</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'rODE'</code></pre>
-<pre><code>## The following object is masked from 'package:stats':
-## 
-##     step</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
+<a href="#build-the-reaction-class-with-a-rk4-solver" class="anchor"></a>Build the Reaction class with a RK4 solver</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
+<span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co"># Reaction.R</span>
 
 <span class="co"># /**</span>
@@ -119,7 +114,6 @@
 <span class="co"># * Converted to R by: Alfonso R. Reyes</span>
 <span class="co">#</span>
 <span class="co"># */</span>
-
 
 <span class="kw">setClass</span>(<span class="st">"Reaction"</span>, <span class="dt">slots =</span> <span class="kw">c</span>(
     <span class="dt">k1 =</span> <span class="st">"numeric"</span>,
@@ -139,12 +133,12 @@
     <span class="dt">contains =</span> <span class="kw">c</span>(<span class="st">"ODE"</span>)
     )
 
-
 <span class="kw">setMethod</span>(<span class="st">"getState"</span>, <span class="st">"Reaction"</span>, <span class="cf">function</span>(object) {
     object<span class="op">@</span>state
-})</code></pre></div>
-<pre><code>## [1] "getState"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"Reaction"</span>, <span class="cf">function</span>(object, state, ...) {
+})
+
+
+<span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"Reaction"</span>, <span class="cf">function</span>(object, state, ...) {
     xxy &lt;-<span class="st"> </span>state[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>] <span class="op">*</span>state[<span class="dv">2</span>]
     object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>object<span class="op">@</span>k1 <span class="op">*</span><span class="st"> </span>object<span class="op">@</span>A <span class="op">-</span><span class="st"> </span>object<span class="op">@</span>k2 <span class="op">*</span><span class="st"> </span>object<span class="op">@</span>B <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>] <span class="op">+</span>
 <span class="st">        </span>object<span class="op">@</span>k3 <span class="op">*</span><span class="st"> </span>xxy <span class="op">-</span><span class="st"> </span>object<span class="op">@</span>k4 <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>]                          <span class="co"># X rate</span>
@@ -152,42 +146,54 @@
     object<span class="op">@</span>rate[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">1</span>                         <span class="co"># rate of change of time, dt/dt</span>
 
     object<span class="op">@</span>rate                                                <span class="co"># time derivative</span>
-})</code></pre></div>
-<pre><code>## [1] "getRate"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># constructor</span>
+})
+
+<span class="co"># constructor</span>
 Reaction &lt;-<span class="st"> </span><span class="cf">function</span>(initialConditions) {
     .Reaction &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"Reaction"</span>)
     .Reaction<span class="op">@</span>state &lt;-<span class="st"> </span>initialConditions
     .Reaction
-}
-
-
-<span class="co"># This code can also be found in the `examples` folder under this name:</span>
-<span class="co"># ReactionApp.R</span>
-<span class="co">#</span>
+}</code></pre></div>
+<pre><code>## [1] "getState"
+## [1] "getRate"</code></pre>
+</div>
+<div id="run-the-application-reactionapp" class="section level2">
+<h2 class="hasAnchor">
+<a href="#run-the-application-reactionapp" class="anchor"></a>Run the application ReactionApp</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># +++++++++++++++++++++++++++++++++++++++++++++++++++ application: ReactionApp.R</span>
 <span class="co"># ReactionApp solves an autocatalytic oscillating chemical</span>
 <span class="co"># reaction (Brusselator model) using</span>
-<span class="co"># a fouth-order Runge-Kutta algorithm.</span>
-<span class="co">#</span>
-<span class="co">#</span>
+<span class="co"># a fourth-order Runge-Kutta algorithm.</span>
+
+
 ReactionApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
-    
     X &lt;-<span class="st"> </span><span class="dv">1</span>; Y &lt;-<span class="st"> </span><span class="dv">5</span>;
     dt &lt;-<span class="st"> </span><span class="fl">0.1</span>
-    
+
     reaction &lt;-<span class="st"> </span><span class="kw">Reaction</span>(<span class="kw">c</span>(X, Y, <span class="dv">0</span>))
     solver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/RK4-class.html">RK4</a></span>(reaction)
-    
-    <span class="cf">while</span> (solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">3</span>] <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) {
-        <span class="cf">if</span> (verbose)
-            <span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">"%12f %12f %12f </span><span class="ch">\n</span><span class="st">"</span>, solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">1</span>],
-                    solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">2</span>], solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">3</span>]))
-        solver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/step-method.html">step</a></span>(solver)
+    rowvec &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
+    i &lt;-<span class="st"> </span><span class="dv">1</span>
+    <span class="cf">while</span> (<span class="kw"><a href="../reference/getState-method.html">getState</a></span>(reaction)[<span class="dv">3</span>] <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span>) {             <span class="co"># stop at t = 100</span>
+        rowvec[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t =</span> <span class="kw"><a href="../reference/getState-method.html">getState</a></span>(reaction)[<span class="dv">3</span>],
+                            <span class="dt">X =</span> <span class="kw"><a href="../reference/getState-method.html">getState</a></span>(reaction)[<span class="dv">1</span>],
+                            <span class="dt">Y =</span> <span class="kw"><a href="../reference/getState-method.html">getState</a></span>(reaction)[<span class="dv">2</span>])
+        solver   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/step-method.html">step</a></span>(solver)
+        reaction &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getODE-method.html">getODE</a></span>(solver)
+        i &lt;-<span class="st">  </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
     }
-    <span class="co"># at t=100, dt=0.1,  c(2.131958,     1.105316,   100.000000)</span>
+    DT &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowvec)
+    <span class="kw">return</span>(DT)
 }
 
-<span class="kw">ReactionApp</span>()</code></pre></div>
+
+solution &lt;-<span class="st"> </span><span class="kw">ReactionApp</span>()
+<span class="kw">plot</span>(solution<span class="op">$</span>t, solution<span class="op">$</span>X)</code></pre></div>
+<p><img src="Reaction_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(solution<span class="op">$</span>t, solution<span class="op">$</span>Y)</code></pre></div>
+<p><img src="Reaction_files/figure-html/unnamed-chunk-2-2.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(solution<span class="op">$</span>X, solution<span class="op">$</span>Y)</code></pre></div>
+<p><img src="Reaction_files/figure-html/unnamed-chunk-2-3.png" width="672"></p>
 </div>
 </div>
   </div>
@@ -197,7 +203,8 @@ ReactionApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#reaction-with-rk4-solver">Reaction with RK4 solver</a></li>
+<li><a href="#build-the-reaction-class-with-a-rk4-solver">Build the Reaction class with a RK4 solver</a></li>
+      <li><a href="#run-the-application-reactionapp">Run the application ReactionApp</a></li>
       </ul>
 </div>
       </div>

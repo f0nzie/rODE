@@ -80,6 +80,22 @@ You can test all applications under the `examples` folder by running the script 
 Applications
 ============
 
+-   AdaptiveStepApp
+-   ComparisonRK45App
+-   FallingParticleODE
+-   KeplerApp
+-   KeplerEnergyApp
+-   LogisticApp
+-   PendulumApp
+-   PlanetApp
+-   ProjectileApp
+-   ReactionApp
+-   RigidBodyNXFApp
+-   SHOApp
+-   SpringRK4App
+-   VanderpolApp
+-   VanderpolMuTimeControlApp
+
 AdaptiveStepApp
 ---------------
 
