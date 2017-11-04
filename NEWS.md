@@ -1,3 +1,8 @@
+# rODE 0.99.5.9004
+* 20171104
+* change badges from master to develop
+
+
 # rODE 0.99.5.9003
 * 20171103
 * add small TOC for the applications
