@@ -1,6 +1,12 @@
+# rODE 0.99.5.9003
+* 20171103
+* remove date from NEWS sections and move it as body text
+
 # rODE 0.99.5.9002
 * 20171103
+* Use only 17 examples because adding more causes a problem in 00Index producing blank lines.
 * add demo folder with 19 examples
+
 
 # rODE 0.99.5.9001
 * reorganize roxygen2 comments to have better visualization in help pages
@@ -9,17 +15,20 @@
 * add travis, coverage, cran badges
 
 
-# rODE 20170718 0.99.5.9000
+# rODE 0.99.5.9000
+* 20170718
 * change to getState() instead of internal class objects
 
-# rODE 20170712 0.99.5
+# rODE 0.99.5
+* 20170712
 * to be released to CRAN
 * change github user to f0nzie
 * testing rODE in Linux Mint 18.2. Passed.
 * add section Applications in README
 * testing rODE in osX. Passed.
 
-# rODE 20170712 9007
+# rODE 9007
+* 20170712
 * fix tests that we were using showMethods2
 * split examples in classes and applications
 * add applications to README. Includes figures.
