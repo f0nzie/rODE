@@ -90,6 +90,22 @@ coming out from the call to the R application.
 
 
 # Applications
+* AdaptiveStepApp
+* ComparisonRK45App
+* FallingParticleODE
+* KeplerApp
+* KeplerEnergyApp
+* LogisticApp
+* PendulumApp
+* PlanetApp
+* ProjectileApp
+* ReactionApp
+* RigidBodyNXFApp
+* SHOApp
+* SpringRK4App
+* VanderpolApp
+* VanderpolMuTimeControlApp
+
 
 ## AdaptiveStepApp
 
