@@ -12,7 +12,7 @@
 
 <meta name="author" content="Vignette Author" />
 
-<meta name="date" content="2017-11-01" />
+<meta name="date" content="2017-11-03" />
 
 <title>Projectile with RK4 solver</title>
 
@@ -70,15 +70,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Projectile with RK4 solver</h1>
 <h4 class="author"><em>Vignette Author</em></h4>
-<h4 class="date"><em>2017-11-01</em></h4>
+<h4 class="date"><em>2017-11-03</em></h4>
 
 
 
-<div id="projectile-with-rk4-solver" class="section level2">
-<h2>Projectile with RK4 solver</h2>
+<div id="build-the-projectile-class-with-rk4-solver" class="section level2">
+<h2>Build the Projectile class with RK4 solver</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
-<span class="kw">library</span>(ggplot2)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">####################
+<span class="kw">library</span>(ggplot2)
+
+####################
 <span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co"># </span>
 <span class="co"># Projectile.R</span>
@@ -99,25 +100,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">setMethod</span>(<span class="st">&quot;initialize&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(.Object) {
     .Object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw">RK4</span>(.Object)
     <span class="kw">return</span>(.Object)
-})</code></pre></div>
-<pre><code>## [1] &quot;initialize&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">&quot;setStepSize&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object, stepSize, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">&quot;setStepSize&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object, stepSize, ...) {
     <span class="co"># use explicit parameter declaration</span>
     <span class="co"># setStepSize generic has two step parameters: stepSize and dt</span>
     object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(object<span class="op">@</span>odeSolver, stepSize)
     object
-})</code></pre></div>
-<pre><code>## [1] &quot;setStepSize&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">&quot;step&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object) {
+})
+
+
+<span class="kw">setMethod</span>(<span class="st">&quot;step&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object) {
     object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw">step</span>(object<span class="op">@</span>odeSolver)
 
     object<span class="op">@</span>rate  &lt;-<span class="st"> </span>object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>rate
     object<span class="op">@</span>state &lt;-<span class="st"> </span>object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>state
 
     object
-})</code></pre></div>
-<pre><code>## [1] &quot;step&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">&quot;setState&quot;</span>, <span class="kw">signature</span>(<span class="st">&quot;Projectile&quot;</span>), <span class="cf">function</span>(object, x, vx, y, vy, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">&quot;setState&quot;</span>, <span class="kw">signature</span>(<span class="st">&quot;Projectile&quot;</span>), <span class="cf">function</span>(object, x, vx, y, vy, ...) {
     object<span class="op">@</span>state[<span class="dv">1</span>] &lt;-<span class="st"> </span>x
     object<span class="op">@</span>state[<span class="dv">2</span>] &lt;-<span class="st"> </span>vx
     object<span class="op">@</span>state[<span class="dv">3</span>] &lt;-<span class="st"> </span>y
@@ -126,13 +128,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
     object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>state &lt;-<span class="st"> </span>object<span class="op">@</span>state
     object
-})</code></pre></div>
-<pre><code>## [1] &quot;setState&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object) {
     object<span class="op">@</span>state
-})</code></pre></div>
-<pre><code>## [1] &quot;getState&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object, state, ...) {
+})
+
+
+<span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;Projectile&quot;</span>, <span class="cf">function</span>(object, state, ...) {
     object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>state[<span class="dv">2</span>]     <span class="co"># rate of change of x</span>
     object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">0</span>            <span class="co"># rate of change of vx</span>
     object<span class="op">@</span>rate[<span class="dv">3</span>] &lt;-<span class="st"> </span>state[<span class="dv">4</span>]     <span class="co"># rate of change of y</span>
@@ -140,13 +143,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     object<span class="op">@</span>rate[<span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">1</span>            <span class="co"># dt/dt = 1</span>
 
     object<span class="op">@</span>rate
-})</code></pre></div>
-<pre><code>## [1] &quot;getRate&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># constructor</span>
-Projectile &lt;-<span class="st"> </span><span class="cf">function</span>()  <span class="kw">new</span>(<span class="st">&quot;Projectile&quot;</span>)
+})
 
 
-<span class="co"># This code can also be found in the `examples` folder under this name:</span>
+<span class="co"># constructor</span>
+Projectile &lt;-<span class="st"> </span><span class="cf">function</span>()  <span class="kw">new</span>(<span class="st">&quot;Projectile&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;initialize&quot;
+## [1] &quot;setStepSize&quot;
+## [1] &quot;step&quot;
+## [1] &quot;setState&quot;
+## [1] &quot;getState&quot;
+## [1] &quot;getRate&quot;</code></pre>
+</div>
+<div id="run-the-application-projectileapp" class="section level2">
+<h2>Run the application ProjectileApp</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co">#</span>
 <span class="co"># ProjectileApp.R</span>
 <span class="co">#                                                      test Projectile with RK4</span>

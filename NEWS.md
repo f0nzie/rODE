@@ -1,4 +1,11 @@
-# 0.99.5.9001
+# rODE 0.99.5.9002
+* 20171103
+* add demo folder with 19 examples
+
+# rODE 0.99.5.9001
+* reorganize roxygen2 comments to have better visualization in help pages
+* add constructors to ODE, ODESOlver, ODESolverFactory
+* move class generics to its own class file
 * add travis, coverage, cran badges
 
 
@@ -6,7 +13,7 @@
 * change to getState() instead of internal class objects
 
 # rODE 20170712 0.99.5
-* to be release to CRAN
+* to be released to CRAN
 * change github user to f0nzie
 * testing rODE in Linux Mint 18.2. Passed.
 * add section Applications in README

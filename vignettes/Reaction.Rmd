@@ -9,14 +9,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Reaction with RK4 solver
+## Build the Reaction class with a RK4 solver
 
-```{r}
+
+```{r message=FALSE, results='hold'}
 library(rODE)
-```
-
-
-```{r}
 # This code can also be found in the `examples` folder under this name:
 # Reaction.R
 
@@ -28,7 +25,6 @@ library(rODE)
 # * Converted to R by: Alfonso R. Reyes
 #
 # */
-
 
 setClass("Reaction", slots = c(
     k1 = "numeric",
@@ -64,9 +60,6 @@ setMethod("getRate", "Reaction", function(object, state, ...) {
     object@rate                                                # time derivative
 })
 
-
-
-
 # constructor
 Reaction <- function(initialConditions) {
     .Reaction <- new("Reaction")
@@ -74,7 +67,11 @@ Reaction <- function(initialConditions) {
     .Reaction
 }
 
+```
 
+## Run the application ReactionApp
+
+```{r}
 # This code can also be found in the `examples` folder under this name:
 # ReactionApp.R
 #
