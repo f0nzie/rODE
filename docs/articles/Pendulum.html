@@ -51,13 +51,13 @@
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
-      <a href="../articles/Kepler.html">Kepler. Interaction between two planets.</a>
+      <a href="../articles/Kepler.html">Kepler. Interaction between two planets</a>
     </li>
     <li>
       <a href="../articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
     </li>
     <li>
-      <a href="../articles/Planet.html">Planet orbiting. ODE solver: Euler</a>
+      <a href="../articles/Planet.html">Planet orbiting with Euler ODE solver</a>
     </li>
     <li>
       <a href="../articles/Projectile.html">Projectile with RK4 solver</a>
@@ -99,16 +99,11 @@
     
     
 <div class="contents">
-<div id="pendulum-with-euler-richardson-ode-solver" class="section level2">
+<div id="define-the-ode-solver-pendulum-with-euler-richardson-ode-solver" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pendulum-with-euler-richardson-ode-solver" class="anchor"></a>Pendulum with Euler-Richardson ODE solver</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'rODE'</code></pre>
-<pre><code>## The following object is masked from 'package:stats':
-## 
-##     step</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
+<a href="#define-the-ode-solver-pendulum-with-euler-richardson-ode-solver" class="anchor"></a>Define the ODE Solver: Pendulum with Euler-Richardson ODE solver</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
+<span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co">#</span>
 <span class="co"># Pendulum.R</span>
 <span class="co">#</span>
@@ -130,48 +125,58 @@
 <span class="kw">setMethod</span>(<span class="st">"initialize"</span>, <span class="st">"Pendulum"</span>, <span class="cf">function</span>(.Object) {
     .Object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/EulerRichardson-class.html">EulerRichardson</a></span>(.Object)
     <span class="kw">return</span>(.Object)
-})</code></pre></div>
-<pre><code>## [1] "initialize"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"setStepSize"</span>, <span class="kw">signature</span>(<span class="st">"Pendulum"</span>), <span class="cf">function</span>(object, dt, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">"setStepSize"</span>, <span class="kw">signature</span>(<span class="st">"Pendulum"</span>), <span class="cf">function</span>(object, dt, ...) {
     <span class="co"># use explicit parameter declaration</span>
     <span class="co"># setStepSize generic may use two different step parameters: stepSize and dt</span>
     object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setStepSize-method.html">setStepSize</a></span>(object<span class="op">@</span>odeSolver, dt)
     object
-})</code></pre></div>
-<pre><code>## [1] "setStepSize"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"step"</span>, <span class="st">"Pendulum"</span>, <span class="cf">function</span>(object) {
+})
+
+
+<span class="kw">setMethod</span>(<span class="st">"step"</span>, <span class="st">"Pendulum"</span>, <span class="cf">function</span>(object) {
     object<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/step-method.html">step</a></span>(object<span class="op">@</span>odeSolver)
     object<span class="op">@</span>rate  &lt;-<span class="st"> </span>object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>rate
     object<span class="op">@</span>state &lt;-<span class="st"> </span>object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>state
     object
-})</code></pre></div>
-<pre><code>## [1] "step"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"setState"</span>, <span class="kw">signature</span>(<span class="st">"Pendulum"</span>), <span class="cf">function</span>(object, theta, thetaDot, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">"setState"</span>, <span class="kw">signature</span>(<span class="st">"Pendulum"</span>), <span class="cf">function</span>(object, theta, thetaDot, ...) {
     object<span class="op">@</span>state[<span class="dv">1</span>] &lt;-<span class="st"> </span>theta     <span class="co"># angle</span>
     object<span class="op">@</span>state[<span class="dv">2</span>] &lt;-<span class="st"> </span>thetaDot  <span class="co"># derivative of angle</span>
     <span class="co">#                              state[3] is time</span>
     object<span class="op">@</span>odeSolver<span class="op">@</span>ode<span class="op">@</span>state &lt;-<span class="st"> </span>object<span class="op">@</span>state
     object
-})</code></pre></div>
-<pre><code>## [1] "setState"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getState"</span>, <span class="st">"Pendulum"</span>, <span class="cf">function</span>(object) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">"getState"</span>, <span class="st">"Pendulum"</span>, <span class="cf">function</span>(object) {
     object<span class="op">@</span>state
-})</code></pre></div>
-<pre><code>## [1] "getState"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"Pendulum"</span>, <span class="cf">function</span>(object, state, ...) {
+})
+
+
+<span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"Pendulum"</span>, <span class="cf">function</span>(object, state, ...) {
     object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>state[<span class="dv">2</span>]     <span class="co"># rate of change of angle</span>
     object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="op">-</span>object<span class="op">@</span>omega0Squared <span class="op">*</span><span class="st"> </span><span class="kw">sin</span>(state[<span class="dv">1</span>]) <span class="co"># rate of change dtheta</span>
     object<span class="op">@</span>rate[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">1</span>            <span class="co"># rate of change of time, dt/dt</span>
 
     object<span class="op">@</span>rate
-})</code></pre></div>
-<pre><code>## [1] "getRate"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># constructor</span>
-Pendulum &lt;-<span class="st"> </span><span class="cf">function</span>()  <span class="kw">new</span>(<span class="st">"Pendulum"</span>)
+})
 
 
-
-<span class="co"># #############</span>
+<span class="co"># constructor</span>
+Pendulum &lt;-<span class="st"> </span><span class="cf">function</span>()  <span class="kw">new</span>(<span class="st">"Pendulum"</span>)</code></pre></div>
+<pre><code>## [1] "initialize"
+## [1] "setStepSize"
+## [1] "step"
+## [1] "setState"
+## [1] "getState"
+## [1] "getRate"</code></pre>
+</div>
+<div id="run-the-application-pendulumapp" class="section level2">
+<h2 class="hasAnchor">
+<a href="#run-the-application-pendulumapp" class="anchor"></a>Run the application PendulumApp</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># #############</span>
 <span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co">#</span>
 <span class="co"># PendulumApp.R</span>
@@ -225,7 +230,8 @@ PendulumApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#pendulum-with-euler-richardson-ode-solver">Pendulum with Euler-Richardson ODE solver</a></li>
+<li><a href="#define-the-ode-solver-pendulum-with-euler-richardson-ode-solver">Define the ODE Solver: Pendulum with Euler-Richardson ODE solver</a></li>
+      <li><a href="#run-the-application-pendulumapp">Run the application PendulumApp</a></li>
       </ul>
 </div>
       </div>

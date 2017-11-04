@@ -1,5 +1,7 @@
 # rODE 0.99.5.9003
 * 20171103
+* add small TOC for the applications
+* improve vignette Reaction with plots
 * remove date from NEWS sections and move it as body text
 
 # rODE 0.99.5.9002

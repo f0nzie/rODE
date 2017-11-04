@@ -51,13 +51,13 @@
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
-      <a href="../articles/Kepler.html">Kepler. Interaction between two planets.</a>
+      <a href="../articles/Kepler.html">Kepler. Interaction between two planets</a>
     </li>
     <li>
       <a href="../articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
     </li>
     <li>
-      <a href="../articles/Planet.html">Planet orbiting. ODE solver: Euler</a>
+      <a href="../articles/Planet.html">Planet orbiting with Euler ODE solver</a>
     </li>
     <li>
       <a href="../articles/Projectile.html">Projectile with RK4 solver</a>
@@ -99,17 +99,15 @@
     
     
 <div class="contents">
-<div id="comparison-of-solutions-rk45" class="section level2">
+<div id="build-the-ode-class" class="section level2">
 <h2 class="hasAnchor">
-<a href="#comparison-of-solutions-rk45" class="anchor"></a>Comparison of solutions: RK45</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'rODE'</code></pre>
-<pre><code>## The following object is masked from 'package:stats':
-## 
-##     step</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ODETest.R</span>
+<a href="#build-the-ode-class" class="anchor"></a>Build the ODE class</h2>
+<div id="comparison-of-solutions-rk45" class="section level3">
+<h3 class="hasAnchor">
+<a href="#comparison-of-solutions-rk45" class="anchor"></a>Comparison of solutions: RK45</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
 
+<span class="co"># ODETest.R</span>
 
 <span class="kw">setClass</span>(<span class="st">"ODETest"</span>, <span class="dt">slots =</span> <span class="kw">c</span>(
     <span class="dt">n     =</span> <span class="st">"numeric"</span>           <span class="co"># counts the number of getRate evaluations</span>
@@ -117,37 +115,44 @@
     <span class="dt">contains =</span> <span class="kw">c</span>(<span class="st">"ODE"</span>)
     )
 
-
 <span class="kw">setMethod</span>(<span class="st">"initialize"</span>, <span class="st">"ODETest"</span>, <span class="cf">function</span>(.Object, ...) {
     .Object<span class="op">@</span>n &lt;-<span class="st">  </span><span class="dv">0</span>
     .Object<span class="op">@</span>state &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.0</span>, <span class="fl">0.0</span>)
     <span class="kw">return</span>(.Object)
-})</code></pre></div>
-<pre><code>## [1] "initialize"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getExactSolution"</span>, <span class="st">"ODETest"</span>, <span class="cf">function</span>(object, t, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">"getExactSolution"</span>, <span class="st">"ODETest"</span>, <span class="cf">function</span>(object, t, ...) {
     <span class="co"># analytical solution</span>
     <span class="kw">return</span>(<span class="fl">5.0</span> <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>t))
-})</code></pre></div>
-<pre><code>## [1] "getExactSolution"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getState"</span>, <span class="st">"ODETest"</span>, <span class="cf">function</span>(object, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">"getState"</span>, <span class="st">"ODETest"</span>, <span class="cf">function</span>(object, ...) {
     object<span class="op">@</span>state
-})</code></pre></div>
-<pre><code>## [1] "getState"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"ODETest"</span>, <span class="cf">function</span>(object, state, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"ODETest"</span>, <span class="cf">function</span>(object, state, ...) {
     object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]
     object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st">  </span><span class="dv">1</span>            <span class="co"># rate of change of time, dt/dt</span>
 
     object<span class="op">@</span>n &lt;-<span class="st"> </span>object<span class="op">@</span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
     object<span class="op">@</span>rate
-})</code></pre></div>
-<pre><code>## [1] "getRate"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># constructor</span>
+})
+
+<span class="co"># constructor</span>
 ODETest &lt;-<span class="st"> </span><span class="cf">function</span>() {
     odetest &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"ODETest"</span>)
     odetest
-}
-
-<span class="co"># This script can also be found in:</span>
+}</code></pre></div>
+<pre><code>## [1] "initialize"
+## [1] "getExactSolution"
+## [1] "getState"
+## [1] "getRate"</code></pre>
+</div>
+</div>
+<div id="application-comparisonrk45app" class="section level2">
+<h2 class="hasAnchor">
+<a href="#application-comparisonrk45app" class="anchor"></a>Application: ComparisonRK45App</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This script can also be found in:</span>
 <span class="co"># ComparisonRK45App.R</span>
 <span class="co"># </span>
 <span class="co"># Compares the solution by the RK45 ODE solver versus the analytical solution</span>
@@ -280,176 +285,6 @@ ComparisonRK45App &lt;-<span class="st"> </span><span class="cf">function</span>
 ## time= 53.250756 xl=  1.053471e-09 error=  1.053471e-09 n=    0 
 ## rate steps evaluated # 0</code></pre>
 </div>
-<div id="plots" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plots" class="anchor"></a>Plots</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)
-<span class="kw">plot</span>(<span class="dv">10</span><span class="op">:</span><span class="dv">1</span>)</code></pre></div>
-<p><img src="Comparison_files/figure-html/unnamed-chunk-3-1.png" width="672"><img src="Comparison_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
-</div>
-<div id="data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h2>
-<table class="table">
-<thead><tr class="header">
-<th></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td>Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td>Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108.0</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td>Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258.0</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td>Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td>Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225.0</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td>Duster 360</td>
-<td align="right">14.3</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">245</td>
-<td align="right">3.21</td>
-<td align="right">3.570</td>
-<td align="right">15.84</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td>Merc 240D</td>
-<td align="right">24.4</td>
-<td align="right">4</td>
-<td align="right">146.7</td>
-<td align="right">62</td>
-<td align="right">3.69</td>
-<td align="right">3.190</td>
-<td align="right">20.00</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td>Merc 230</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">140.8</td>
-<td align="right">95</td>
-<td align="right">3.92</td>
-<td align="right">3.150</td>
-<td align="right">22.90</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td>Merc 280</td>
-<td align="right">19.2</td>
-<td align="right">6</td>
-<td align="right">167.6</td>
-<td align="right">123</td>
-<td align="right">3.92</td>
-<td align="right">3.440</td>
-<td align="right">18.30</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
   </div>
 
@@ -458,9 +293,8 @@ ComparisonRK45App &lt;-<span class="st"> </span><span class="cf">function</span>
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#comparison-of-solutions-rk45">Comparison of solutions: RK45</a></li>
-      <li><a href="#plots">Plots</a></li>
-      <li><a href="#data">Data</a></li>
+<li><a href="#build-the-ode-class">Build the ODE class</a></li>
+      <li><a href="#application-comparisonrk45app">Application: ComparisonRK45App</a></li>
       </ul>
 </div>
       </div>
