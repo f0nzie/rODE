@@ -51,13 +51,13 @@
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
-      <a href="../articles/Kepler.html">Kepler. Interaction between two planets.</a>
+      <a href="../articles/Kepler.html">Kepler. Interaction between two planets</a>
     </li>
     <li>
       <a href="../articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
     </li>
     <li>
-      <a href="../articles/Planet.html">Planet orbiting. ODE solver: Euler</a>
+      <a href="../articles/Planet.html">Planet orbiting with Euler ODE solver</a>
     </li>
     <li>
       <a href="../articles/Projectile.html">Projectile with RK4 solver</a>
@@ -101,7 +101,7 @@
 <div class="contents">
 <div id="the-fallingparticleode-class-using-the-euler-ode-solver" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-fallingparticleode-class-using-the-euler-ode-solver" class="anchor"></a>The FallingParticleODE class using the EUler ODE solver</h2>
+<a href="#the-fallingparticleode-class-using-the-euler-ode-solver" class="anchor"></a>The FallingParticleODE class using the Euler ODE solver</h2>
 <p>Because this is free fall of a particle in one-dimension, for vertical motion, we use Newton’s second law:</p>
 <p><span class="math display">\[
 m \frac{d^2y} {dt^2} = F
@@ -126,13 +126,14 @@ r_1 = r_2 \\
 r_2 = -g  \\
 r_3 = 1
 \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'rODE'</code></pre>
-<pre><code>## The following object is masked from 'package:stats':
-## 
-##     step</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
+</div>
+<div id="build-the-fallingparticleode-class" class="section level2">
+<h2 class="hasAnchor">
+<a href="#build-the-fallingparticleode-class" class="anchor"></a>Build the FallingParticleODE class</h2>
+<p>We don’t indicate the ODE solver at this time. That is done in the application in the next section.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
+
+<span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co"># FallingParticleODE.R</span>
 <span class="co">#</span>
 
@@ -144,7 +145,6 @@ r_3 = 1
     ),
     <span class="dt">contains =</span> <span class="kw">c</span>(<span class="st">"ODE"</span>)
     )
-
 
 <span class="kw">setMethod</span>(<span class="st">"initialize"</span>, <span class="st">"FallingParticleODE"</span>, <span class="cf">function</span>(.Object, ...) {
     .Object<span class="op">@</span>state &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"numeric"</span>, <span class="dv">3</span>)
@@ -172,10 +172,15 @@ FallingParticleODE &lt;-<span class="st"> </span><span class="cf">function</span
     .FallingParticleODE<span class="op">@</span>state[<span class="dv">2</span>] &lt;-<span class="st"> </span>v
     .FallingParticleODE<span class="op">@</span>state[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
     .FallingParticleODE
-}
-
-
-<span class="co"># This code can also be found in the `examples` folder under this name:</span>
+}</code></pre></div>
+<pre><code>## [1] "initialize"
+## [1] "getState"
+## [1] "getRate"</code></pre>
+</div>
+<div id="run-the-application-fallingparticleodeapp" class="section level2">
+<h2 class="hasAnchor">
+<a href="#run-the-application-fallingparticleodeapp" class="anchor"></a>Run the application FallingParticleODEApp</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co"># </span>
 <span class="co"># FallingParticleODEApp.R</span>
 <span class="co">#</span>
@@ -219,29 +224,7 @@ FallingParticleODEApp &lt;-<span class="st"> </span><span class="cf">function</s
 
 
 <span class="kw">FallingParticleODEApp</span>()</code></pre></div>
-</div>
-<div id="plots" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plots" class="anchor"></a>Plots</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggplot(DT, aes(x = state3, y = state1)) + geom_line(col = "blue")</span>
-<span class="co"># ggplot(DT, aes(x = state3, y = state2)) + geom_line(col = "red")</span></code></pre></div>
-</div>
-<div id="data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h2>
-<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, and tables, e.g. using <code><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">knitr::kable()</a></code>.</p>
-</div>
-<div id="the-fallingparticleode-application" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-fallingparticleode-application" class="anchor"></a>The FallingParticleODE application</h2>
-<p>The complete R script can be found in the examples folder of this package. At the bottom of the document</p>
-</div>
-<div class="footnotes">
-<hr>
-<ol>
-<li id="fn1"><p>A footnote here.<a href="#fnref1">↩</a></p></li>
-</ol>
+<p><img src="FallingParticle_files/figure-html/unnamed-chunk-2-1.png" width="672"><img src="FallingParticle_files/figure-html/unnamed-chunk-2-2.png" width="672"></p>
 </div>
 </div>
   </div>
@@ -251,10 +234,9 @@ FallingParticleODEApp &lt;-<span class="st"> </span><span class="cf">function</s
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#the-fallingparticleode-class-using-the-euler-ode-solver">The FallingParticleODE class using the EUler ODE solver</a></li>
-      <li><a href="#plots">Plots</a></li>
-      <li><a href="#data">Data</a></li>
-      <li><a href="#the-fallingparticleode-application">The FallingParticleODE application</a></li>
+<li><a href="#the-fallingparticleode-class-using-the-euler-ode-solver">The FallingParticleODE class using the Euler ODE solver</a></li>
+      <li><a href="#build-the-fallingparticleode-class">Build the FallingParticleODE class</a></li>
+      <li><a href="#run-the-application-fallingparticleodeapp">Run the application FallingParticleODEApp</a></li>
       </ul>
 </div>
       </div>

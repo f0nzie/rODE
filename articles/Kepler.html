@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kepler. Interaction between two planets. • rODE</title>
+<title>Kepler. Interaction between two planets • rODE</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -51,13 +51,13 @@
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
-      <a href="../articles/Kepler.html">Kepler. Interaction between two planets.</a>
+      <a href="../articles/Kepler.html">Kepler. Interaction between two planets</a>
     </li>
     <li>
       <a href="../articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
     </li>
     <li>
-      <a href="../articles/Planet.html">Planet orbiting. ODE solver: Euler</a>
+      <a href="../articles/Planet.html">Planet orbiting with Euler ODE solver</a>
     </li>
     <li>
       <a href="../articles/Projectile.html">Projectile with RK4 solver</a>
@@ -90,7 +90,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Kepler. Interaction between two planets.</h1>
+      <h1>Kepler. Interaction between two planets</h1>
                         <h4 class="author">Alfonso R. Reyes</h4>
             
             <h4 class="date">2017-11-03</h4>
@@ -102,17 +102,12 @@
 <div id="the-kepler-class" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-kepler-class" class="anchor"></a>The Kepler class</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)</code></pre></div>
-<pre><code>## 
-## Attaching package: 'rODE'</code></pre>
-<pre><code>## The following object is masked from 'package:stats':
-## 
-##     step</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
+
+<span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co">#</span>
 <span class="co"># Kepler.R</span>
 <span class="co">#</span>
-
 
 <span class="kw">setClass</span>(<span class="st">"Kepler"</span>, <span class="dt">slots =</span> <span class="kw">c</span>(
     <span class="dt">GM =</span> <span class="st">"numeric"</span>
@@ -124,14 +119,15 @@
     .Object<span class="op">@</span>GM &lt;-<span class="st"> </span><span class="fl">1.0</span>                 <span class="co"># gravitation constant times combined mass</span>
     .Object<span class="op">@</span>state &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"numeric"</span>, <span class="dv">5</span>)  <span class="co"># x, vx, y, vy, t</span>
     <span class="kw">return</span>(.Object)
-})</code></pre></div>
-<pre><code>## [1] "initialize"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getState"</span>, <span class="st">"Kepler"</span>, <span class="cf">function</span>(object, ...) {
+})
+
+
+<span class="kw">setMethod</span>(<span class="st">"getState"</span>, <span class="st">"Kepler"</span>, <span class="cf">function</span>(object, ...) {
     <span class="co"># Gets the state variables.</span>
     <span class="kw">return</span>(object<span class="op">@</span>state)
-})</code></pre></div>
-<pre><code>## [1] "getState"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"Kepler"</span>, <span class="cf">function</span>(object, state, ...) {
+})
+
+<span class="kw">setMethod</span>(<span class="st">"getRate"</span>, <span class="st">"Kepler"</span>, <span class="cf">function</span>(object, state, ...) {
     <span class="co"># Computes the rate using the given state.</span>
     r2 &lt;-<span class="st"> </span>state[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>state[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>state[<span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>state[<span class="dv">3</span>]  <span class="co"># distance squared</span>
     r3 &lt;-<span class="st"> </span>r2 <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(r2)   <span class="co"># distance cubed</span>
@@ -142,9 +138,9 @@
     object<span class="op">@</span>rate[<span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">1</span>   <span class="co"># time derivative</span>
 
     object<span class="op">@</span>rate
-})</code></pre></div>
-<pre><code>## [1] "getRate"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># constructor</span>
+})
+
+<span class="co"># constructor</span>
 Kepler &lt;-<span class="st"> </span><span class="cf">function</span>(r, v) {
     kepler &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"Kepler"</span>)
     kepler<span class="op">@</span>state[<span class="dv">1</span>] =<span class="st"> </span>r[<span class="dv">1</span>]
@@ -153,9 +149,15 @@ Kepler &lt;-<span class="st"> </span><span class="cf">function</span>(r, v) {
     kepler<span class="op">@</span>state[<span class="dv">4</span>] =<span class="st"> </span>v[<span class="dv">2</span>]
     kepler<span class="op">@</span>state[<span class="dv">5</span>] =<span class="st"> </span><span class="dv">0</span>
     <span class="kw">return</span>(kepler)
-}
-
-<span class="co"># This code can also be found in the `examples` folder under this name:</span>
+}</code></pre></div>
+<pre><code>## [1] "initialize"
+## [1] "getState"
+## [1] "getRate"</code></pre>
+</div>
+<div id="run-the-application-keplerapp" class="section level2">
+<h2 class="hasAnchor">
+<a href="#run-the-application-keplerapp" class="anchor"></a>Run the application KeplerApp</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This code can also be found in the `examples` folder under this name:</span>
 <span class="co"># KeplerApp.R</span>
 <span class="co">#</span>
 KeplerApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
@@ -382,6 +384,7 @@ KeplerApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span c
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#the-kepler-class">The Kepler class</a></li>
+      <li><a href="#run-the-application-keplerapp">Run the application KeplerApp</a></li>
       </ul>
 </div>
       </div>

@@ -1,9 +1,7 @@
-## ------------------------------------------------------------------------
+## ----message=FALSE, results="hold"---------------------------------------
 library(rODE)
 
-## ------------------------------------------------------------------------
 # ODETest.R
-
 
 setClass("ODETest", slots = c(
     n     = "numeric"           # counts the number of getRate evaluations
@@ -11,24 +9,20 @@ setClass("ODETest", slots = c(
     contains = c("ODE")
     )
 
-
 setMethod("initialize", "ODETest", function(.Object, ...) {
     .Object@n <-  0
     .Object@state <- c(5.0, 0.0)
     return(.Object)
 })
 
-
 setMethod("getExactSolution", "ODETest", function(object, t, ...) {
     # analytical solution
     return(5.0 * exp(-t))
 })
 
-
 setMethod("getState", "ODETest", function(object, ...) {
     object@state
 })
-
 
 setMethod("getRate", "ODETest", function(object, state, ...) {
     object@rate[1] <- - state[1]
@@ -38,12 +32,13 @@ setMethod("getRate", "ODETest", function(object, state, ...) {
     object@rate
 })
 
-
 # constructor
 ODETest <- function() {
     odetest <- new("ODETest")
     odetest
 }
+
+## ------------------------------------------------------------------------
 
 # This script can also be found in:
 # ComparisonRK45App.R
@@ -77,11 +72,4 @@ ComparisonRK45App <- function(verbose = FALSE) {
 
 
 ComparisonRK45App(verbose = TRUE)
-
-## ---- fig.show='hold'----------------------------------------------------
-plot(1:10)
-plot(10:1)
-
-## ---- echo=FALSE, results='asis'-----------------------------------------
-knitr::kable(head(mtcars, 10))
 
