@@ -1,12 +1,13 @@
 # ODETest.R
-# Base class for examples:
+# Called as base class for examples:
 #                         ComparisonRK45App.R
 #                         ComparisonRK45ODEApp.R
 
 #' ODETest as an example of ODE class inheritance
 #'
 #' ODETest is a base class for examples ComparisonRK45App.R and
-#' ComparisonRK45ODEApp.R
+#' ComparisonRK45ODEApp.R. ODETest also uses an environment variable to store
+#' the rate counts.
 #'
 #' @rdname ODE-class-example
 #' @include ODE.R
@@ -16,7 +17,6 @@ setClass("ODETest", slots = c(
     ),
     contains = c("ODE")
     )
-
 
 setMethod("initialize", "ODETest", function(.Object, ...) {
     .Object@stack$rateCounts <-  0              # counter for rate calculations
