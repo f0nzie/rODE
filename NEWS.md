@@ -1,3 +1,9 @@
+# rODE 0.99.5.9004
+* 20171104
+* push feature site built with pkgdown to gh-pages
+* change badges from master to develop
+
+
 # rODE 0.99.5.9003
 * 20171103
 * add small TOC for the applications
