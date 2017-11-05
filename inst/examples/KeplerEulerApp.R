@@ -14,7 +14,7 @@ KeplerEulerApp <- function(verbose = FALSE) {
     dt <- 0.01
     tol <- 1e-3
 
-    particle <- Kepler()                           # create a Kepler object
+    particle <- Kepler()                           # create a Kepler ODE object
 
     # Two ways of initializing the ODE object
       # particle <- init(particle, c(x, vx, y, vy, 0)) # set initial values

@@ -54,7 +54,6 @@ KeplerDormandPrince45App <- function(verbose = FALSE) {
     return(DT)
 }
 
-
 solution <- KeplerDormandPrince45App()
 plot(solution)
 
