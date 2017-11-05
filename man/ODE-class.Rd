@@ -127,7 +127,6 @@ KeplerApp <- function(verbose = FALSE) {
     return(DT)
 }
 
-
 solution <- KeplerApp()
 plot(solution)
 

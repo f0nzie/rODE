@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alfonso R. Reyes" />
 
-<meta name="date" content="2017-11-03" />
+<meta name="date" content="2017-11-05" />
 
 <title>Comparison of ODE solvers</title>
 
@@ -70,14 +70,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Comparison of ODE solvers</h1>
 <h4 class="author"><em>Alfonso R. Reyes</em></h4>
-<h4 class="date"><em>2017-11-03</em></h4>
+<h4 class="date"><em>2017-11-05</em></h4>
 
 
 
 <div id="build-the-ode-class" class="section level2">
 <h2>Build the ODE class</h2>
-<div id="comparison-of-solutions-rk45" class="section level3">
-<h3>Comparison of solutions: RK45</h3>
+<div id="comparison-of-solutions-rk45-vs-analytical-solution" class="section level3">
+<h3>Comparison of solutions: RK45 vs analytical solution</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
 
 <span class="co"># ODETest.R</span>
@@ -89,7 +89,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     )
 
 <span class="kw">setMethod</span>(<span class="st">&quot;initialize&quot;</span>, <span class="st">&quot;ODETest&quot;</span>, <span class="cf">function</span>(.Object, ...) {
-    .Object<span class="op">@</span>n &lt;-<span class="st">  </span><span class="dv">0</span>
+    .Object<span class="op">@</span>n     &lt;-<span class="st">  </span><span class="dv">0</span>
     .Object<span class="op">@</span>state &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.0</span>, <span class="fl">0.0</span>)
     <span class="kw">return</span>(.Object)
 })
@@ -104,10 +104,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 })
 
 <span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;ODETest&quot;</span>, <span class="cf">function</span>(object, state, ...) {
-    object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]
+    object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="op">-</span>state[<span class="dv">1</span>]
     object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st">  </span><span class="dv">1</span>            <span class="co"># rate of change of time, dt/dt</span>
-
-    object<span class="op">@</span>n &lt;-<span class="st"> </span>object<span class="op">@</span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    object<span class="op">@</span>n       &lt;-<span class="st">  </span>object<span class="op">@</span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
     object<span class="op">@</span>rate
 })
 
@@ -124,21 +123,18 @@ ODETest &lt;-<span class="st"> </span><span class="cf">function</span>() {
 </div>
 <div id="application-comparisonrk45app" class="section level2">
 <h2>Application: ComparisonRK45App</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This script can also be found in:</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This script can also be found under ./demo</span>
 <span class="co"># ComparisonRK45App.R</span>
 <span class="co"># </span>
 <span class="co"># Compares the solution by the RK45 ODE solver versus the analytical solution</span>
 
 ComparisonRK45App &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
     ode &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;ODETest&quot;</span>)
-    
     ode_solver &lt;-<span class="st"> </span><span class="kw">RK45</span>(ode)
-    
     ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, <span class="dv">1</span>)
     ode_solver &lt;-<span class="st"> </span><span class="kw">setTolerance</span>(ode_solver, <span class="fl">1e-8</span>)
     
     time &lt;-<span class="st">  </span><span class="dv">0</span>
-    
     <span class="cf">while</span> (time <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>) {
         ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)
         stepSize &lt;-<span class="st">  </span>ode_solver<span class="op">@</span>stepSize     <span class="co"># update the step size</span>
@@ -256,6 +252,9 @@ ComparisonRK45App &lt;-<span class="st"> </span><span class="cf">function</span>
 ## time= 49.469456 xl=  9.691675e-10 error=  9.691675e-10 n=    0 
 ## time= 53.250756 xl=  1.053471e-09 error=  1.053471e-09 n=    0 
 ## rate steps evaluated # 0</code></pre>
+<blockquote>
+<p>Notes. In this example, the number of iterations does not return from <code>ode_solver@ode@n</code> that is part of the class <code>ODETest</code>. We will try to fix this in another example.</p>
+</blockquote>
 </div>
 
 

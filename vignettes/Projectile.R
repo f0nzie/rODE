@@ -64,7 +64,6 @@ setMethod("getRate", "Projectile", function(object, state, ...) {
     object@rate[3] <- state[4]     # rate of change of y
     object@rate[4] <- - object@g   # rate of change of vy
     object@rate[5] <- 1            # dt/dt = 1
-
     object@rate
 })
 
@@ -74,7 +73,6 @@ Projectile <- function()  new("Projectile")
 
 
 ## ------------------------------------------------------------------------
-
 # This code can also be found in the `examples` folder under this name:
 #
 # ProjectileApp.R
@@ -88,7 +86,6 @@ ProjectileApp <- function(verbose = FALSE) {
     dt <- 0.01
     
     projectile <- Projectile()
-    
     projectile <- setState(projectile, x, vx, y, vy)
     projectile@odeSolver <- init(projectile@odeSolver, 0.123)
     projectile@odeSolver <- setStepSize(projectile@odeSolver, dt)
@@ -114,7 +111,5 @@ ProjectileApp <- function(verbose = FALSE) {
     print(qplot(state1, state5, data = datatable))
 }
 
-
 ProjectileApp()
-
 

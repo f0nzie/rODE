@@ -67,7 +67,7 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     init(odeSolver) <-  dt
 
     particle@odeSolver <- odeSolver
-    initialEnergy <- getEnergy(particle)
+    initialEnergy      <- getEnergy(particle)
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) <= 1.20) {
@@ -85,7 +85,6 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     return(DT)
 }
 
-
 solution <- KeplerEnergyApp()
 plot(solution)
 
@@ -100,7 +99,8 @@ LogisticApp <- function(verbose = FALSE) {
     r  <- 2        # Malthusian parameter (rate of maximum population growth)
     K  <- 10.0     # carrying capacity of the environment
     dt   <- 0.01; tol  <- 1e-3; tmax <- 10
-    population <- Logistic()
+
+    population <- Logistic()                # create a Logistic ODE object
 
     # Two ways of initializing the object
       # population <- init(population, c(x, vx, 0), r, K)
@@ -108,7 +108,7 @@ LogisticApp <- function(verbose = FALSE) {
                               r = r,
                               K = K)
 
-    odeSolver <- Verlet(population)
+    odeSolver <- Verlet(population)        # select the solver
 
     # Two ways of initializing the solver
       # odeSolver <- init(odeSolver, dt)
@@ -159,7 +159,7 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     init(odeSolver) <-  dt
 
     particle@odeSolver <- odeSolver
-    initialEnergy <- getEnergy(particle)
+    initialEnergy      <- getEnergy(particle)
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) <= 1.20) {
@@ -177,7 +177,6 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     return(DT)
 }
 
-
 solution <- KeplerEnergyApp()
 plot(solution)
 
@@ -192,7 +191,8 @@ LogisticApp <- function(verbose = FALSE) {
     r  <- 2        # Malthusian parameter (rate of maximum population growth)
     K  <- 10.0     # carrying capacity of the environment
     dt   <- 0.01; tol  <- 1e-3; tmax <- 10
-    population <- Logistic()
+
+    population <- Logistic()                # create a Logistic ODE object
 
     # Two ways of initializing the object
       # population <- init(population, c(x, vx, 0), r, K)
@@ -200,7 +200,7 @@ LogisticApp <- function(verbose = FALSE) {
                               r = r,
                               K = K)
 
-    odeSolver <- Verlet(population)
+    odeSolver <- Verlet(population)        # select the solver
 
     # Two ways of initializing the solver
       # odeSolver <- init(odeSolver, dt)

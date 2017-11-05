@@ -10,7 +10,7 @@ setClass("ODETest", slots = c(
     )
 
 setMethod("initialize", "ODETest", function(.Object, ...) {
-    .Object@n <-  0
+    .Object@n     <-  0
     .Object@state <- c(5.0, 0.0)
     return(.Object)
 })
@@ -25,10 +25,9 @@ setMethod("getState", "ODETest", function(object, ...) {
 })
 
 setMethod("getRate", "ODETest", function(object, state, ...) {
-    object@rate[1] <- - state[1]
+    object@rate[1] <- -state[1]
     object@rate[2] <-  1            # rate of change of time, dt/dt
-
-    object@n <- object@n + 1
+    object@n       <-  object@n + 1
     object@rate
 })
 
@@ -39,22 +38,18 @@ ODETest <- function() {
 }
 
 ## ------------------------------------------------------------------------
-
-# This script can also be found in:
+# This script can also be found under ./demo
 # ComparisonRK45App.R
 # 
 # Compares the solution by the RK45 ODE solver versus the analytical solution
 
 ComparisonRK45App <- function(verbose = FALSE) {
     ode <- new("ODETest")
-    
     ode_solver <- RK45(ode)
-    
     ode_solver <- setStepSize(ode_solver, 1)
     ode_solver <- setTolerance(ode_solver, 1e-8)
     
     time <-  0
-    
     while (time < 50) {
         ode_solver <- step(ode_solver)
         stepSize <-  ode_solver@stepSize     # update the step size
