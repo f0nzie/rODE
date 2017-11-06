@@ -55,7 +55,7 @@ ODETest <- function() {
 ```
 
 
-## Application: ComparisonRK45App
+## Build and run the application ComparisonRK45App
 
 ```{r}
 # This script can also be found under ./demo

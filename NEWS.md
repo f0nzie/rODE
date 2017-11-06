@@ -1,5 +1,9 @@
 # rODE 0.99.5.9004
-* 20171104
+* 20171105 - 
+
+
+# rODE 0.99.5.9004
+* 20171104 - test if badges update build status
 * push feature site built with pkgdown to gh-pages
 * change badges from master to develop
 
