@@ -32,7 +32,7 @@ setClass("EulerError", slots = c(
 
 setMethod("initialize", "EulerError", function(.Object, ...) {
     .Object@stack$n <-  0               # "n" belongs to the class environment
-    .Object@state   <- c(0.0, 1.0)
+    .Object@state   <- c(0.0, 0.0)
     return(.Object)
 })
 
@@ -48,7 +48,7 @@ setMethod("getState", "EulerError", function(object, ...) {
 setMethod("getRate", "EulerError", function(object, state, ...) {
     object@rate[1] <- 1
     object@rate[2] <- state[1] + state[2]
-    object@stack$n <-  object@stack$n + 1       # add 1 to the rate count
+    object@stack$n <- object@stack$n + 1       # add 1 to the rate count
     object@rate
 })
 
@@ -60,27 +60,34 @@ EulerError <- function() {
 ```
 
 ```{r}
+xmax     <- 1
+stepSize <- 0.01
+n_steps  <- as.integer((xmax + stepSize / 2) / stepSize)
+
 # class implementation
 EulerErrorApp <- function(verbose = FALSE) {
     ode        <- new("EulerError")
     ode_solver <- Euler(ode)
-    ode_solver <- setStepSize(ode_solver, 0.1)
+    ode_solver <- setStepSize(ode_solver, stepSize)
     
     cat(sprintf("%10s %14s %14s %5s \n", "time", "xl", "error", "n"))   # header
     time <-  0
-    while (time < 50) {
+    steps <- 0
+    while (steps < n_steps) {
         ode_solver <- step(ode_solver)
-        stepSize   <- ode_solver@stepSize     # update the step size
-        time       <- time + stepSize
+        # time       <- time + ode_solver@stepSize
         state      <- getState(ode_solver@ode)
+        steps      <- ode_solver@ode@stack$n
         if (verbose)
-            cat(sprintf("%10f %14e %14e %5d \n", 
-                        time, 
+            # cat(sprintf("%10f %14e %14e %5d \n",
+            cat(sprintf("%10f %14e %5d \n",                         
+                        # time, 
+                        state[2],
                         state[1], 
-                        state[1] - getExactSolution(ode_solver@ode, time),
-                        ode_solver@ode@stack$n))
+                        # state[1] - getExactSolution(ode_solver@ode, time),
+                        steps))
     }
-    cat("rate steps evaluated #", ode_solver@ode@stack$n)
+    cat("rate steps evaluated #", steps)
 }
 
 EulerErrorApp(verbose = TRUE)
