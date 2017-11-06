@@ -104,20 +104,57 @@ get_error <- function(stepSize) {
     df <- EulerErrorApp(stepSize)
     last_row <- df[nrow(df),]
     error <- (last_row$TrueY - last_row$y) / last_row$TrueY
-    error
+    c(step = stepSize, error = error)
 }
 
 step_sizes <- c(1, 0.5, 0.25, 0.1, 0.01, 0.001, 0.0001)
-#get_error(0.1)
-errors <- sapply(step_sizes, get_error)
+errors <- data.frame(t(sapply(step_sizes, get_error)))
 errors
+library(ggplot2)
+
+ggplot(errors, aes(x=step, y=error)) +
+    geom_line() +
+    geom_point() +
+    scale_y_log10() +
+    scale_x_log10()
+    
 ```
 
 ```{r}
 library(ggplot2)
 
+ggplot(errors, aes(x=step, y=error)) +
+    geom_line() +
+    geom_point()
+```
+
+
+
+```{r}
+
+
 plot(step_sizes, errors, log = "xy", type = "l", ylim = c(0.0001, 1))
 points(step_sizes, errors)
+```
+
+
+```{r}
+# http://ggplot2.tidyverse.org/reference/annotation_logticks.html
+# Make a log-log plot (without log ticks)
+a <- ggplot(errors, aes(step_sizes, error)) +
+ geom_point(na.rm = TRUE) +
+    geom_line()+
+ scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ theme_bw()
+a + annotation_logticks(sides = "lrbt") + 
+    theme(panel.grid.minor = element_blank())   # hide the minor grids
 ```
 
 
