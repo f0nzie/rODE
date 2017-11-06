@@ -1,5 +1,5 @@
 ---
-title: "Error with Euler method"
+title: "Error vs step size with Euler method"
 author: "Alfonso R. Reyes"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -8,6 +8,8 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+## A challenge
 
 Given the differential equation:
 
@@ -95,6 +97,7 @@ EulerErrorApp <- function(stepSize = 0.1) {
 ## Calculate the error for each step size
 
 ```{r}
+# get the error at the last row of the dataframe
 df <- EulerErrorApp(stepSize = 0.1)
 last_row <- df[nrow(df),]
 error <- (last_row$TrueY - last_row$y) / last_row$TrueY
@@ -104,7 +107,7 @@ get_error <- function(stepSize) {
     df <- EulerErrorApp(stepSize)
     last_row <- df[nrow(df),]
     error <- (last_row$TrueY - last_row$y) / last_row$TrueY
-    c(step = stepSize, error = error)
+    c(step = stepSize, error = error, n_steps = last_row$steps)
 }
 
 step_sizes <- c(1, 0.5, 0.25, 0.1, 0.01, 0.001, 0.0001)
@@ -134,5 +137,21 @@ a + annotation_logticks(sides = "lrbt") +
 
 
 
+```{r}
+a <- ggplot(errors, aes(n_steps, step_sizes)) +
+ geom_point(na.rm = TRUE) +
+    geom_line()+
+ scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ scale_y_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+ ) +
+ theme_bw()
+a + annotation_logticks(sides = "lrbt") + 
+    theme(panel.grid.minor = element_blank())   # hide the minor grids
+```
 
 
