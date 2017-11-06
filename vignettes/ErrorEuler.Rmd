@@ -23,6 +23,7 @@ at these step sizes: 1, 0.5, 0.25, 0.1, 0.01, 0.001, 0.0001; and plot the the st
 
 ```{r message=FALSE, results="hold"}
 library(rODE)
+library(ggplot2)
 
 setClass("EulerError", slots = c(
     stack = "environment"           # environment object inside the class
@@ -89,16 +90,15 @@ EulerErrorApp <- function(stepSize = 0.1) {
     }
     data.table::rbindlist(rowVector)
 }
-
-df <- EulerErrorApp(stepSize = 0.1)
-last_row <- df[nrow(df),]
-last_row
-# tail(df)
-error <- (last_row$TrueY - last_row$y) / last_row$TrueY
-print(error)
 ```
 
+## Calculate the error for each step size
+
 ```{r}
+df <- EulerErrorApp(stepSize = 0.1)
+last_row <- df[nrow(df),]
+error <- (last_row$TrueY - last_row$y) / last_row$TrueY
+
 # function that gets the error for different step sizes
 get_error <- function(stepSize) {
     df <- EulerErrorApp(stepSize)
@@ -110,37 +110,12 @@ get_error <- function(stepSize) {
 step_sizes <- c(1, 0.5, 0.25, 0.1, 0.01, 0.001, 0.0001)
 errors <- data.frame(t(sapply(step_sizes, get_error)))
 errors
-library(ggplot2)
-
-ggplot(errors, aes(x=step, y=error)) +
-    geom_line() +
-    geom_point() +
-    scale_y_log10() +
-    scale_x_log10()
-    
-```
-
-```{r}
-library(ggplot2)
-
-ggplot(errors, aes(x=step, y=error)) +
-    geom_line() +
-    geom_point()
 ```
 
 
+## Plot the errors vs step size
 
 ```{r}
-
-
-plot(step_sizes, errors, log = "xy", type = "l", ylim = c(0.0001, 1))
-points(step_sizes, errors)
-```
-
-
-```{r}
-# http://ggplot2.tidyverse.org/reference/annotation_logticks.html
-# Make a log-log plot (without log ticks)
 a <- ggplot(errors, aes(step_sizes, error)) +
  geom_point(na.rm = TRUE) +
     geom_line()+
