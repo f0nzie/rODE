@@ -92,6 +92,35 @@ EulerErrorApp <- function(stepSize = 0.1) {
 
 df <- EulerErrorApp(stepSize = 0.1)
 last_row <- df[nrow(df),]
+last_row
 # tail(df)
+error <- (last_row$TrueY - last_row$y) / last_row$TrueY
+print(error)
 ```
+
+```{r}
+# function that gets the error for different step sizes
+get_error <- function(stepSize) {
+    df <- EulerErrorApp(stepSize)
+    last_row <- df[nrow(df),]
+    error <- (last_row$TrueY - last_row$y) / last_row$TrueY
+    error
+}
+
+step_sizes <- c(1, 0.5, 0.25, 0.1, 0.01, 0.001, 0.0001)
+#get_error(0.1)
+errors <- sapply(step_sizes, get_error)
+errors
+```
+
+```{r}
+library(ggplot2)
+
+plot(step_sizes, errors, log = "xy", type = "l", ylim = c(0.0001, 1))
+points(step_sizes, errors)
+```
+
+
+
+
 
