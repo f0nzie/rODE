@@ -32,7 +32,7 @@ setClass("EulerError", slots = c(
 
 setMethod("initialize", "EulerError", function(.Object, ...) {
     .Object@stack$n <-  0               # "n" belongs to the class environment
-    .Object@state   <- c(0.0, 0.0)
+    .Object@state   <- vector("numeric", 1)
     return(.Object)
 })
 
@@ -46,45 +46,46 @@ setMethod("getState", "EulerError", function(object, ...) {
 })
 
 setMethod("getRate", "EulerError", function(object, state, ...) {
-    object@rate[1] <- 1
-    object@rate[2] <- state[1] + state[2]
+    object@rate[1] <- state[1] + state[2]      # x + y
+    object@rate[2] <- 1                        # dx/dx
     object@stack$n <- object@stack$n + 1       # add 1 to the rate count
     object@rate
 })
 
 # constructor
-EulerError <- function() {
-    odetest <- new("EulerError")
-    return(odetest)
+EulerError <- function(y) {
+    .EulerError <- new("EulerError")
+    .EulerError@state[1] = y        # y 
+    .EulerError@state[2] = 0        # x = t
+    return(.EulerError)
 }
 ```
 
 ```{r}
-xmax     <- 1
-stepSize <- 0.01
-n_steps  <- as.integer((xmax + stepSize / 2) / stepSize)
-
 # class implementation
 EulerErrorApp <- function(verbose = FALSE) {
-    ode        <- new("EulerError")
+    initial_y <- 0
+    xmax      <- 1
+    stepSize  <- 0.01
+    n_steps   <- as.integer((xmax + stepSize / 2) / stepSize)
+    
+    ode        <- EulerError(initial_y)
     ode_solver <- Euler(ode)
     ode_solver <- setStepSize(ode_solver, stepSize)
     
-    cat(sprintf("%10s %14s %14s %5s \n", "time", "xl", "error", "n"))   # header
-    time <-  0
+    cat(sprintf("%10s %14s %14s %5s \n", "x", "y", "TrueY", "n"))   # header
     steps <- 0
     while (steps < n_steps) {
         ode_solver <- step(ode_solver)
-        # time       <- time + ode_solver@stepSize
         state      <- getState(ode_solver@ode)
         steps      <- ode_solver@ode@stack$n
         if (verbose)
-            # cat(sprintf("%10f %14e %14e %5d \n",
-            cat(sprintf("%10f %14e %5d \n",                         
-                        # time, 
-                        state[2],
-                        state[1], 
+            cat(sprintf("%10f %14e %14e %5d \n",
+            # cat(sprintf("%10f %14e %5d \n",                         
+                        state[2],     # x = t
+                        state[1],     # y
                         # state[1] - getExactSolution(ode_solver@ode, time),
+                        getExactSolution(ode_solver@ode, state[2]),
                         steps))
     }
     cat("rate steps evaluated #", steps)
