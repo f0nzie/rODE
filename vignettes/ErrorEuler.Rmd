@@ -63,34 +63,35 @@ EulerError <- function(y) {
 
 ```{r}
 # class implementation
-EulerErrorApp <- function(verbose = FALSE) {
+EulerErrorApp <- function(stepSize = 0.1) {
     initial_y <- 0
     xmax      <- 1
-    stepSize  <- 0.01
+    stepSize  <- stepSize
     n_steps   <- as.integer((xmax + stepSize / 2) / stepSize)
     
     ode        <- EulerError(initial_y)
     ode_solver <- Euler(ode)
     ode_solver <- setStepSize(ode_solver, stepSize)
     
-    cat(sprintf("%10s %14s %14s %5s \n", "x", "y", "TrueY", "n"))   # header
     steps <- 0
+    rowVector <- vector("list")
+    i <-  1
     while (steps < n_steps) {
         ode_solver <- step(ode_solver)
         state      <- getState(ode_solver@ode)
         steps      <- ode_solver@ode@stack$n
-        if (verbose)
-            cat(sprintf("%10f %14e %14e %5d \n",
-            # cat(sprintf("%10f %14e %5d \n",                         
-                        state[2],     # x = t
-                        state[1],     # y
-                        # state[1] - getExactSolution(ode_solver@ode, time),
-                        getExactSolution(ode_solver@ode, state[2]),
-                        steps))
+        rowVector[[i]] <- list(
+                            x = state[2],     # x = t
+                            y = state[1],     # y
+                            TrueY = getExactSolution(ode_solver@ode, state[2]),
+                            steps = steps)
+        i <- i + 1
     }
-    cat("rate steps evaluated #", steps)
+    data.table::rbindlist(rowVector)
 }
 
-EulerErrorApp(verbose = TRUE)
+df <- EulerErrorApp(stepSize = 0.1)
+last_row <- df[nrow(df),]
+# tail(df)
 ```
 
