@@ -25,7 +25,7 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     init(odeSolver) <-  dt
 
     particle@odeSolver <- odeSolver
-    initialEnergy <- getEnergy(particle)
+    initialEnergy      <- getEnergy(particle)
     rowVector <- vector("list")
     i <- 1
     while (getTime(particle) <= 1.20) {
@@ -42,7 +42,6 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowVector)
     return(DT)
 }
-
 
 solution <- KeplerEnergyApp()
 plot(solution)

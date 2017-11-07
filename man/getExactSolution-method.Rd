@@ -21,7 +21,8 @@ Compare analytical and calculated solutions
 # Compares the solution by the RK45 ODE solver versus the analytical solution
 # Example file: ComparisonRK45App.R
 # ODE Solver:   Runge-Kutta 45
-# Class:        RK45
+# ODE class :   RK45
+# Base class:   ODETest
 
 importFromExamples("ODETest.R")
 
@@ -42,12 +43,13 @@ importFromExamples("ODETest.R")
                                 s1 = getState(ode)[1],
                                 s2 = getState(ode)[2],
                                 xs = getExactSolution(ode, time),
-                                rc = getRateCounts(ode),
-                                time = time)
-         ode_solver <- step(ode_solver)       # advance one step
-         stepSize <- getStepSize(ode_solver)
+                                counts = getRateCounts(ode),
+                                time   = time
+                                )
+         ode_solver <- step(ode_solver)           # advance one step
+         stepSize   <- getStepSize(ode_solver)
          time <- time + stepSize
-         ode <- getODE(ode_solver)                     # get updated ODE object
+         ode  <- getODE(ode_solver)                     # get updated ODE object
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results
@@ -56,24 +58,24 @@ importFromExamples("ODETest.R")
 solution <- ComparisonRK45App()                          # run the example
 plot(solution)
 # ODETest.R
-# Base class for examples:
+# Called as base class for examples:
 #                         ComparisonRK45App.R
 #                         ComparisonRK45ODEApp.R
 
 #' ODETest as an example of ODE class inheritance
 #'
 #' ODETest is a base class for examples ComparisonRK45App.R and
-#' ComparisonRK45ODEApp.R
+#' ComparisonRK45ODEApp.R. ODETest also uses an environment variable to store
+#' the rate counts.
 #'
 #' @rdname ODE-class-example
 #' @include ODE.R
 setClass("ODETest", slots = c(
     n     = "numeric",           # counts the number of getRate evaluations
-    stack = "environment"        # environnment to keep stack
+    stack = "environment"        # environnment object to accumulate rate counts
     ),
     contains = c("ODE")
     )
-
 
 setMethod("initialize", "ODETest", function(.Object, ...) {
     .Object@stack$rateCounts <-  0              # counter for rate calculations
@@ -95,8 +97,8 @@ setMethod("getState", "ODETest", function(object, ...) {
 setMethod("getRate", "ODETest", function(object, state, ...) {
     object@rate[1] <- - state[1]
     object@rate[2] <-  1            # rate of change of time, dt/dt
-    # accumulate how many the rate has been called to calculate
-    object@stack$rateCounts <- object@stack$rateCounts + 1          # use stack
+    # accumulate how many times the rate has been called to calculate
+    object@stack$rateCounts <- object@stack$rateCounts + 1
     object@state <- state
     object@rate
 })
@@ -107,7 +109,6 @@ setMethod("getRateCounts", "ODETest", function(object, ...) {
     # use environment stack to accumulate rate counts
     object@stack$rateCounts
 })
-
 
 # constructor
 ODETest <- function() {

@@ -21,7 +21,8 @@ RK45 class constructor
 # Compares the solution by the RK45 ODE solver versus the analytical solution
 # Example file: ComparisonRK45App.R
 # ODE Solver:   Runge-Kutta 45
-# Class:        RK45
+# ODE class :   RK45
+# Base class:   ODETest
 
 importFromExamples("ODETest.R")
 
@@ -42,12 +43,13 @@ importFromExamples("ODETest.R")
                                 s1 = getState(ode)[1],
                                 s2 = getState(ode)[2],
                                 xs = getExactSolution(ode, time),
-                                rc = getRateCounts(ode),
-                                time = time)
-         ode_solver <- step(ode_solver)       # advance one step
-         stepSize <- getStepSize(ode_solver)
+                                counts = getRateCounts(ode),
+                                time   = time
+                                )
+         ode_solver <- step(ode_solver)           # advance one step
+         stepSize   <- getStepSize(ode_solver)
          time <- time + stepSize
-         ode <- getODE(ode_solver)                     # get updated ODE object
+         ode  <- getODE(ode_solver)                     # get updated ODE object
          i <- i + 1
      }
      return(data.table::rbindlist(rowVector))    # a data table with the results
@@ -87,7 +89,6 @@ KeplerApp <- function(verbose = FALSE) {
 
     return(DT)
 }
-
 
 solution <- KeplerApp()
 plot(solution)
