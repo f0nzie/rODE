@@ -103,6 +103,7 @@ setMethod("getRate", "ODETest", function(object, state, ...) {
     object@rate
 })
 
+
 #' @rdname getRateCounts-method
 setMethod("getRateCounts", "ODETest", function(object, ...) {
     # use environment stack to accumulate rate counts
