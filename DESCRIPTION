@@ -21,7 +21,8 @@ Suggests: knitr,
     ggplot2,
     dplyr,
     tidyr,
-    covr
+    covr,
+    scales
 RoxygenNote: 6.0.1
 Collate:
     'ode_generics.R'
