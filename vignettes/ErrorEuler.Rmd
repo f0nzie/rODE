@@ -135,7 +135,7 @@ a + annotation_logticks(sides = "lrbt") +
     theme(panel.grid.minor = element_blank())   # hide the minor grids
 ```
 
-
+## Plot the number of steps vs. step size
 
 ```{r}
 a <- ggplot(errors, aes(n_steps, step_sizes)) +
