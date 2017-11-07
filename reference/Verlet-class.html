@@ -71,6 +71,9 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
+      <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
+    </li>
+    <li>
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
@@ -186,7 +189,7 @@
     <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>odeSolver</span>) <span class='kw'>&lt;-</span>  <span class='no'>dt</span>
 
     <span class='no'>particle</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='no'>odeSolver</span>
-    <span class='no'>initialEnergy</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getEnergy-method.html'>getEnergy</a></span>(<span class='no'>particle</span>)
+    <span class='no'>initialEnergy</span>      <span class='kw'>&lt;-</span> <span class='fu'><a href='getEnergy-method.html'>getEnergy</a></span>(<span class='no'>particle</span>)
     <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
     <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
     <span class='kw'>while</span> (<span class='fu'><a href='getTime-method.html'>getTime</a></span>(<span class='no'>particle</span>) <span class='kw'>&lt;=</span> <span class='fl'>1.20</span>) {
@@ -204,7 +207,6 @@
     <span class='fu'>return</span>(<span class='no'>DT</span>)
 }
 
-
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>KeplerEnergyApp</span>()</div><div class='output co'>#&gt; <span class='message'>Found more than one class "Verlet" in cache; using the first, from namespace 'rODE'</span></div><div class='output co'>#&gt; <span class='message'>Also defined by ‘.GlobalEnv’</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='Verlet-class-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># +++++++++++++++++++++++++++++++++++++++++++++++++++   application:  Logistic.R</span>
 <span class='co'># Simulates the logistic equation</span>
@@ -217,7 +219,8 @@
     <span class='no'>r</span>  <span class='kw'>&lt;-</span> <span class='fl'>2</span>        <span class='co'># Malthusian parameter (rate of maximum population growth)</span>
     <span class='no'>K</span>  <span class='kw'>&lt;-</span> <span class='fl'>10.0</span>     <span class='co'># carrying capacity of the environment</span>
     <span class='no'>dt</span>   <span class='kw'>&lt;-</span> <span class='fl'>0.01</span>; <span class='no'>tol</span>  <span class='kw'>&lt;-</span> <span class='fl'>1e-3</span>; <span class='no'>tmax</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
-    <span class='no'>population</span> <span class='kw'>&lt;-</span> <span class='fu'>Logistic</span>()
+
+    <span class='no'>population</span> <span class='kw'>&lt;-</span> <span class='fu'>Logistic</span>()                <span class='co'># create a Logistic ODE object</span>
 
     <span class='co'># Two ways of initializing the object</span>
       <span class='co'># population &lt;- init(population, c(x, vx, 0), r, K)</span>
@@ -225,7 +228,7 @@
                               <span class='kw'>r</span> <span class='kw'>=</span> <span class='no'>r</span>,
                               <span class='kw'>K</span> <span class='kw'>=</span> <span class='no'>K</span>)
 
-    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'>Verlet</span>(<span class='no'>population</span>)
+    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'>Verlet</span>(<span class='no'>population</span>)        <span class='co'># select the solver</span>
 
     <span class='co'># Two ways of initializing the solver</span>
       <span class='co'># odeSolver &lt;- init(odeSolver, dt)</span>
@@ -274,7 +277,7 @@
     <span class='fu'><a href='init-method.html'>init</a></span>(<span class='no'>odeSolver</span>) <span class='kw'>&lt;-</span>  <span class='no'>dt</span>
 
     <span class='no'>particle</span>@<span class='kw'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='no'>odeSolver</span>
-    <span class='no'>initialEnergy</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getEnergy-method.html'>getEnergy</a></span>(<span class='no'>particle</span>)
+    <span class='no'>initialEnergy</span>      <span class='kw'>&lt;-</span> <span class='fu'><a href='getEnergy-method.html'>getEnergy</a></span>(<span class='no'>particle</span>)
     <span class='no'>rowVector</span> <span class='kw'>&lt;-</span> <span class='fu'>vector</span>(<span class='st'>"list"</span>)
     <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
     <span class='kw'>while</span> (<span class='fu'><a href='getTime-method.html'>getTime</a></span>(<span class='no'>particle</span>) <span class='kw'>&lt;=</span> <span class='fl'>1.20</span>) {
@@ -292,7 +295,6 @@
     <span class='fu'>return</span>(<span class='no'>DT</span>)
 }
 
-
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>KeplerEnergyApp</span>()</div><div class='output co'>#&gt; <span class='message'>Found more than one class "Verlet" in cache; using the first, from namespace 'rODE'</span></div><div class='output co'>#&gt; <span class='message'>Also defined by ‘.GlobalEnv’</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='Verlet-class-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># +++++++++++++++++++++++++++++++++++++++++++++++++++   application:  Logistic.R</span>
 <span class='co'># Simulates the logistic equation</span>
@@ -305,7 +307,8 @@
     <span class='no'>r</span>  <span class='kw'>&lt;-</span> <span class='fl'>2</span>        <span class='co'># Malthusian parameter (rate of maximum population growth)</span>
     <span class='no'>K</span>  <span class='kw'>&lt;-</span> <span class='fl'>10.0</span>     <span class='co'># carrying capacity of the environment</span>
     <span class='no'>dt</span>   <span class='kw'>&lt;-</span> <span class='fl'>0.01</span>; <span class='no'>tol</span>  <span class='kw'>&lt;-</span> <span class='fl'>1e-3</span>; <span class='no'>tmax</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
-    <span class='no'>population</span> <span class='kw'>&lt;-</span> <span class='fu'>Logistic</span>()
+
+    <span class='no'>population</span> <span class='kw'>&lt;-</span> <span class='fu'>Logistic</span>()                <span class='co'># create a Logistic ODE object</span>
 
     <span class='co'># Two ways of initializing the object</span>
       <span class='co'># population &lt;- init(population, c(x, vx, 0), r, K)</span>
@@ -313,7 +316,7 @@
                               <span class='kw'>r</span> <span class='kw'>=</span> <span class='no'>r</span>,
                               <span class='kw'>K</span> <span class='kw'>=</span> <span class='no'>K</span>)
 
-    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'>Verlet</span>(<span class='no'>population</span>)
+    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'>Verlet</span>(<span class='no'>population</span>)        <span class='co'># select the solver</span>
 
     <span class='co'># Two ways of initializing the solver</span>
       <span class='co'># odeSolver &lt;- init(odeSolver, dt)</span>

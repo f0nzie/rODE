@@ -71,6 +71,9 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
+      <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
+    </li>
+    <li>
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
@@ -157,7 +160,8 @@
 <span class='co'># Compares the solution by the RK45 ODE solver versus the analytical solution</span>
 <span class='co'># Example file: ComparisonRK45App.R</span>
 <span class='co'># ODE Solver:   Runge-Kutta 45</span>
-<span class='co'># Class:        RK45</span>
+<span class='co'># ODE class :   RK45</span>
+<span class='co'># Base class:   ODETest</span>
 
 <span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"ODETest.R"</span>)
 
@@ -178,12 +182,13 @@
                                 <span class='kw'>s1</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>1</span>],
                                 <span class='kw'>s2</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
                                 <span class='kw'>xs</span> <span class='kw'>=</span> <span class='fu'><a href='getExactSolution-method.html'>getExactSolution</a></span>(<span class='no'>ode</span>, <span class='no'>time</span>),
-                                <span class='kw'>rc</span> <span class='kw'>=</span> <span class='fu'><a href='getRateCounts-method.html'>getRateCounts</a></span>(<span class='no'>ode</span>),
-                                <span class='kw'>time</span> <span class='kw'>=</span> <span class='no'>time</span>)
-         <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>ode_solver</span>)       <span class='co'># advance one step</span>
-         <span class='no'>stepSize</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>ode_solver</span>)
+                                <span class='kw'>counts</span> <span class='kw'>=</span> <span class='fu'><a href='getRateCounts-method.html'>getRateCounts</a></span>(<span class='no'>ode</span>),
+                                <span class='kw'>time</span>   <span class='kw'>=</span> <span class='no'>time</span>
+                                )
+         <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>ode_solver</span>)           <span class='co'># advance one step</span>
+         <span class='no'>stepSize</span>   <span class='kw'>&lt;-</span> <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>ode_solver</span>)
          <span class='no'>time</span> <span class='kw'>&lt;-</span> <span class='no'>time</span> + <span class='no'>stepSize</span>
-         <span class='no'>ode</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>ode_solver</span>)                     <span class='co'># get updated ODE object</span>
+         <span class='no'>ode</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>ode_solver</span>)                     <span class='co'># get updated ODE object</span>
          <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='no'>i</span> + <span class='fl'>1</span>
      }
      <span class='fu'>return</span>(<span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/rbindlist'>rbindlist</a></span>(<span class='no'>rowVector</span>))    <span class='co'># a data table with the results</span>
@@ -245,7 +250,6 @@
     <span class='no'>DT</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/rbindlist'>rbindlist</a></span>(<span class='no'>rowVector</span>)
     <span class='fu'>return</span>(<span class='no'>DT</span>)
 }
-
 
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>KeplerDormandPrince45App</span>()
 <span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='setTolerance-method-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>

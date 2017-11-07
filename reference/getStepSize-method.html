@@ -71,6 +71,9 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
+      <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
+    </li>
+    <li>
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
@@ -141,8 +144,14 @@
 <span class='co'># Updates the ODE state instead of using the internal state in the ODE solver</span>
 <span class='co'># Also plots the solver solution versus the analytical solution at a</span>
 <span class='co'># tolerance of 1e-6</span>
+<span class='co'># Example file: ComparisonRK45ODEApp.R</span>
 <span class='co'># ODE Solver:   Runge-Kutta 45</span>
-<span class='co'># Class:        RK45</span>
+<span class='co'># ODE class :   RK45</span>
+<span class='co'># Base class:   ODETest</span>
+
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'>library</span>(<span class='no'>dplyr</span>)
+<span class='fu'>library</span>(<span class='no'>tidyr</span>)
 
 <span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"ODETest.R"</span>)
 
@@ -160,16 +169,16 @@
     <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>    <span class='co'># counter</span>
     <span class='kw'>while</span> (<span class='no'>time</span> <span class='kw'>&lt;</span> <span class='fl'>50</span>) {
         <span class='co'># add solution objects to a row vector</span>
-        <span class='no'>rowVector</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'>list</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
-                               <span class='kw'>ODE</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>1</span>],
-                               <span class='kw'>s2</span>  <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
+        <span class='no'>rowVector</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'>list</span>(<span class='kw'>t</span>     <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
+                               <span class='kw'>ODE</span>   <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>1</span>],
+                               <span class='kw'>s2</span>    <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
                                <span class='kw'>exact</span> <span class='kw'>=</span> <span class='fu'><a href='getExactSolution-method.html'>getExactSolution</a></span>(<span class='no'>ode</span>, <span class='no'>time</span>),
                                <span class='kw'>rate.counts</span> <span class='kw'>=</span> <span class='fu'><a href='getRateCounts-method.html'>getRateCounts</a></span>(<span class='no'>ode</span>),
                                <span class='kw'>time</span> <span class='kw'>=</span> <span class='no'>time</span> )
         <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>ode_solver</span>)            <span class='co'># advance solver one step</span>
         <span class='no'>stepSize</span> <span class='kw'>&lt;-</span>  <span class='fu'>getStepSize</span>(<span class='no'>ode_solver</span>)      <span class='co'># get the current step size</span>
         <span class='no'>time</span>  <span class='kw'>&lt;-</span> <span class='no'>time</span> + <span class='no'>stepSize</span>
-        <span class='no'>ode</span>   <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>ode_solver</span>)                    <span class='co'># get updated ODE object</span>
+        <span class='no'>ode</span>   <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>ode_solver</span>)               <span class='co'># get updated ODE object</span>
         <span class='no'>state</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)                    <span class='co'># get the `state` vector</span>
         <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='no'>i</span> + <span class='fl'>1</span>                                <span class='co'># add a row vector</span>
     }
@@ -179,17 +188,19 @@
 
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>ComparisonRK45ODEApp</span>()
 <span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='getStepSize-method-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='fu'>library</span>(<span class='no'>tidyr</span>)
 
+<span class='co'># aditional plot for analytics solution vs. RK45 solver</span>
 <span class='no'>solution.multi</span> <span class='kw'>&lt;-</span> <span class='no'>solution</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>t</span>, <span class='no'>ODE</span>, <span class='no'>exact</span>)
-<span class='fu'>plot</span>(<span class='no'>solution.multi</span>)</div><div class='img'><img src='getStepSize-method-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>solution.2x1</span> <span class='kw'>&lt;-</span> <span class='no'>solution.multi</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/gather'>gather</a></span>(<span class='no'>key</span>, <span class='no'>value</span>, -<span class='no'>t</span>)
+<span class='fu'>plot</span>(<span class='no'>solution.multi</span>)             <span class='co'># 3x3 plot</span></div><div class='img'><img src='getStepSize-method-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># plot comparative curves analytical vs ODE solver</span>
+<span class='no'>solution.2x1</span> <span class='kw'>&lt;-</span> <span class='no'>solution.multi</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/gather'>gather</a></span>(<span class='no'>key</span>, <span class='no'>value</span>, -<span class='no'>t</span>)         <span class='co'># make a table of 3 variables. key: ODE/exact</span>
+
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>solution.2x1</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>t</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>key</span>))
-<span class='no'>g</span> <span class='kw'>&lt;-</span>  <span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"ODE vs Exact solution"</span>,
-                                     <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"tolerance = 1E-6"</span>)
+<span class='no'>g</span> <span class='kw'>&lt;-</span>  <span class='no'>g</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
+    <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>labs</a></span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"ODE vs Exact solution"</span>,
+         <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>"tolerance = 1E-6"</span>)
 <span class='fu'>print</span>(<span class='no'>g</span>)</div><div class='img'><img src='getStepSize-method-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 
 
