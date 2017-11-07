@@ -1,3 +1,9 @@
+# # rODE 0.99.5.9006
+* 20171107
+* add new vignette `Muskat-MBal`
+
+
+
 # rODE 0.99.5.9005
 * 20171105 - 20171106
 * add vignette `ErrorEuler` that shows using an internal accumulator in the ODE solver class.
