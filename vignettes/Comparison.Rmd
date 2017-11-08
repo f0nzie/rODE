@@ -14,6 +14,12 @@ vignette: >
 
 ### Comparison of solutions: RK45 vs analytical solution
 
+For the differential equation:
+
+$$\dfrac{dy}{dt} = -5 \, e^{-t}$$
+the analytical solution is:
+$$y(t) = 5 \, e^{-t}$$
+
 ```{r message=FALSE, results="hold"}
 library(rODE)
 
