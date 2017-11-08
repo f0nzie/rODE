@@ -78,7 +78,7 @@ get_error <- function(stepSize) {
     df <- EulerErrorApp(stepSize)
     last_row <- df[nrow(df),]
     error <- (last_row$TrueY - last_row$y) / last_row$TrueY
-    c(step = stepSize, error = error, n_steps = last_row$steps)
+    c(step = stepSize, odeY = last_row$y ,TrueY = last_row$TrueY, error = error, n_steps = last_row$steps)
 }
 
 step_sizes <- c(1, 0.5, 0.25, 0.1, 0.01, 0.001, 0.0001)
