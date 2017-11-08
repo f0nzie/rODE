@@ -7,8 +7,11 @@ $$\dfrac{dy}{dt} = y + 2t$$
 the general analytical solution is:
 $$y(t) = C_1e^{t} - 2t - 2$$
 
-Find the errors if: 
+Find the errors given this initial condition: 
 $$y(0) = 1$$
+which allows to find:
+$$C_1 = 3$$
+
 
 ```{r message=FALSE, results="hold"}
 library(rODE)
@@ -81,7 +84,7 @@ ComparisonEulerApp <- function(stepSize) {
 # get a summary table for different step sizes
 get_table <- function(stepSize) {
     dt <- ComparisonEulerApp(stepSize)
-    dt[round(t,2) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    dt[round(t,1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
 }
 
 step_sizes <- c(0.2, 0.1, 0.05)
@@ -101,7 +104,7 @@ ComparisonRK4App <- function(stepSize) {
     i <-  1
     while (time < 5) {
         state <- getState(ode_solver@ode)
-        time <- state[2]
+        time  <- state[2]
         error <- getExactSolution(ode_solver@ode, time) - state[1]
         rowVector[[i]] <- list(step_size = stepSize, 
                                t = time, 
@@ -120,13 +123,16 @@ ComparisonRK4App <- function(stepSize) {
 # get a summary table for different step sizes
 get_table <- function(stepSize) {
     dt <- ComparisonRK4App(stepSize)
-    dt[round(t,2) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    dt[round(t, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
 }
 
 step_sizes <- c(0.2, 0.1, 0.05)
 dt_li <- lapply(step_sizes, get_table)
 data.table::rbindlist(dt_li)
 ```
+
+We see above that we are repeating code when the only parameter that is being changed is the ODE solver. In these cases is more convenient to use the function `ODESolverFactory`.
+
 
 ## Using a solver factory
 
@@ -166,6 +172,7 @@ create_table <- function(stepSize, solver) {
 }
 ```
 
+### Euler
 ```{r}
 # Create summary table for ODE solver Euler
 step_sizes <- c(0.2, 0.1, 0.05)
@@ -173,7 +180,7 @@ dt_li <- lapply(step_sizes, create_table, solver = "Euler")
 data.table::rbindlist(dt_li)
 ```
 
-
+### Verlet
 
 ```{r}
 # Create summary table for ODE solver Verlet
@@ -182,6 +189,7 @@ dt_li <- lapply(step_sizes, create_table, solver = "Verlet")
 data.table::rbindlist(dt_li)
 ```
 
+### Euler-Richardson
 ```{r}
 # Create summary table for ODE solver EulerRichardson
 step_sizes <- c(0.2, 0.1, 0.05)
@@ -189,12 +197,16 @@ dt_li <- lapply(step_sizes, create_table, solver = "EulerRichardson")
 data.table::rbindlist(dt_li)
 ```
 
+### Runge-Kutta
+
 ```{r}
 # Create summary table for ODE solver RK4
 step_sizes <- c(0.2, 0.1, 0.05)
 dt_li <- lapply(step_sizes, create_table, solver = "RK4")
 data.table::rbindlist(dt_li)
 ```
+
+### Runge-Kutta 45
 
 ```{r}
 # Create summary table for ODE solver RK45
