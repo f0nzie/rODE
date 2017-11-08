@@ -54,8 +54,6 @@ setClass("MuskatODE", slots = c(
 
 setMethod("initialize", "MuskatODE", function(.Object, ...) {
     .Object@stack$n <-  0               
-    # .Object@state   <- vector("numeric", 1)
-    # .Object@state   <- c(1.0, 0.0)      # initial value
     return(.Object)
 })
 
