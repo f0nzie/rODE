@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Vignette Author" />
+
+<meta name="date" content="2017-11-08" />
+
+<title>Muskat Material Balance</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Muskat Material Balance</h1>
+<h4 class="author"><em>Vignette Author</em></h4>
+<h4 class="date"><em>2017-11-08</em></h4>
+
+
+
+<p>For the Muskat’s Material Balance equation:</p>
+<p><span class="math display">\[\newcommand{\numD}{{\dfrac {S_o}{B_o B_g} \dfrac {dR_s}{dP} +  
+\dfrac {S_o}{B_o} \dfrac {k_g}{k_o} \dfrac {\mu_o}{\mu_g} \dfrac {dB_o}{dP} + 
+(1 - S_o - S_w) \dfrac {1}{B_g} \dfrac {dB_g}{dP} }}\]</span></p>
+<p><span class="math display">\[\dfrac {dS_o}{dP} = \dfrac {\numD} {1 + \dfrac {k_g}{k_o} \dfrac {\mu_o}{\mu_g} }\]</span></p>
+<p>All the terms on the right side are function of pressure (<span class="math inline">\(P\)</span>) and saturation (<span class="math inline">\(S\)</span>), the equation could be reduced to:</p>
+<p><span class="math display">\[ \dfrac{dS}{dP} = f(P, S)\]</span></p>
+<p>A first-order ordinary diferential equation (<em>ODE</em>).</p>
+<p>With analytical solution:</p>
+<p><span class="math display">\[y(x) = C_1e^x-2x-2\]</span></p>
+<div id="plot-a-range-of-values-for-a-given-step-size" class="section level2">
+<h2>Plot a range of values for a given step size</h2>
+<p>Given the ODE: <span class="math display">\[ \dfrac{dS}{dP} = (2P +  S)\]</span></p>
+<p>Find the first saturation values if the initial conditions are <span class="math inline">\(P_o\)</span> = 0, and <span class="math inline">\(S_o\)</span> = 1.</p>
+<div id="we-will-use-the-euler-ode-solver" class="section level3">
+<h3>We will use the Euler ODE solver</h3>
+<p>The analytical solution for the the differential equation given the initial conditions is: <span class="math display">\[S(P) = 3e^P-2P-2\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the ODE object</span>
+
+<span class="kw">library</span>(rODE)
+<span class="kw">library</span>(ggplot2)
+
+<span class="kw">setClass</span>(<span class="st">&quot;MuskatODE&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(
+    <span class="dt">stack =</span> <span class="st">&quot;environment&quot;</span>                <span class="co"># environment object inside the class</span>
+    ),
+    <span class="dt">contains =</span> <span class="kw">c</span>(<span class="st">&quot;ODE&quot;</span>)
+    )
+
+<span class="kw">setMethod</span>(<span class="st">&quot;initialize&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(.Object, ...) {
+    .Object<span class="op">@</span>stack<span class="op">$</span>n &lt;-<span class="st">  </span><span class="dv">0</span>               
+    .Object<span class="op">@</span>state   &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dv">1</span>)
+    <span class="kw">return</span>(.Object)
+})
+
+<span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(object, ...) {
+    object<span class="op">@</span>state
+})
+
+<span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(object, state, ...) {
+    object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>state[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>state[<span class="dv">2</span>]         <span class="co"># 2P + S</span>
+    object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">1</span>                               <span class="co"># dP/dP</span>
+    object<span class="op">@</span>stack<span class="op">$</span>n &lt;-<span class="st"> </span>object<span class="op">@</span>stack<span class="op">$</span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span>              <span class="co"># add 1 to the rate count</span>
+    object<span class="op">@</span>rate
+})
+
+<span class="co"># constructor</span>
+MuskatODE &lt;-<span class="st"> </span><span class="cf">function</span>(P, S) {
+    .MuskatEuler &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;MuskatODE&quot;</span>)
+    .MuskatEuler<span class="op">@</span>state[<span class="dv">1</span>] =<span class="st"> </span>S        <span class="co"># S</span>
+    .MuskatEuler<span class="op">@</span>state[<span class="dv">2</span>] =<span class="st"> </span>P        <span class="co"># P = t</span>
+    <span class="kw">return</span>(.MuskatEuler)
+}</code></pre></div>
+<pre><code>## [1] &quot;initialize&quot;
+## [1] &quot;getState&quot;
+## [1] &quot;getRate&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># class implementation</span>
+MuskatEulerApp &lt;-<span class="st"> </span><span class="cf">function</span>(p_max, stepSize) {
+    initial_P &lt;-<span class="st"> </span><span class="dv">0</span>
+    initial_S &lt;-<span class="st"> </span><span class="dv">1</span>
+    
+    xmax      &lt;-<span class="st"> </span>p_max
+    stepSize  &lt;-<span class="st"> </span>stepSize
+    n_steps   &lt;-<span class="st"> </span><span class="kw">as.integer</span>((xmax <span class="op">+</span><span class="st"> </span>stepSize <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>stepSize)
+    
+    ode        &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(initial_P, initial_S)
+    ode_solver &lt;-<span class="st"> </span><span class="kw">Euler</span>(ode)
+    ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)
+    
+    steps &lt;-<span class="st"> </span><span class="dv">0</span>
+    rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)
+    i &lt;-<span class="st">  </span><span class="dv">1</span>
+    <span class="cf">while</span> (steps <span class="op">&lt;</span><span class="st"> </span>n_steps) {
+        ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)
+        state      &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)
+        steps      &lt;-<span class="st"> </span>ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(
+                            <span class="dt">P =</span> state[<span class="dv">2</span>],     <span class="co"># x = t</span>
+                            <span class="dt">S =</span> state[<span class="dv">1</span>],     <span class="co"># y</span>
+                            <span class="dt">steps =</span> steps)
+        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    }
+    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the saturations at different pressures up to Pmax=0.2</span>
+df &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(<span class="dt">p_max =</span> <span class="fl">0.2</span>, <span class="dt">stepSize =</span> <span class="fl">0.005</span>)
+df</code></pre></div>
+<pre><code>##         P        S steps
+##  1: 0.005 1.005000     1
+##  2: 0.010 1.010075     2
+##  3: 0.015 1.015225     3
+##  4: 0.020 1.020452     4
+##  5: 0.025 1.025754     5
+##  6: 0.030 1.031133     6
+##  7: 0.035 1.036588     7
+##  8: 0.040 1.042121     8
+##  9: 0.045 1.047732     9
+## 10: 0.050 1.053420    10
+## 11: 0.055 1.059187    11
+## 12: 0.060 1.065033    12
+## 13: 0.065 1.070959    13
+## 14: 0.070 1.076963    14
+## 15: 0.075 1.083048    15
+## 16: 0.080 1.089213    16
+## 17: 0.085 1.095460    17
+## 18: 0.090 1.101787    18
+## 19: 0.095 1.108196    19
+## 20: 0.100 1.114687    20
+## 21: 0.105 1.121260    21
+## 22: 0.110 1.127916    22
+## 23: 0.115 1.134656    23
+## 24: 0.120 1.141479    24
+## 25: 0.125 1.148387    25
+## 26: 0.130 1.155379    26
+## 27: 0.135 1.162456    27
+## 28: 0.140 1.169618    28
+## 29: 0.145 1.176866    29
+## 30: 0.150 1.184200    30
+## 31: 0.155 1.191621    31
+## 32: 0.160 1.199129    32
+## 33: 0.165 1.206725    33
+## 34: 0.170 1.214409    34
+## 35: 0.175 1.222181    35
+## 36: 0.180 1.230042    36
+## 37: 0.185 1.237992    37
+## 38: 0.190 1.246032    38
+## 39: 0.195 1.254162    39
+## 40: 0.200 1.262383    40
+##         P        S steps</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot saturation vs pressure</span>
+<span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(P, S)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the last row of the dataframe</span>
+df &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(<span class="dt">p_max =</span> <span class="fl">0.25</span>, <span class="dt">stepSize =</span> <span class="fl">0.1</span>)
+last_row &lt;-<span class="st"> </span>df[<span class="kw">nrow</span>(df),]
+last_row</code></pre></div>
+<pre><code>##      P    S steps
+## 1: 0.2 1.23     2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">last_saturation &lt;-<span class="st"> </span>last_row<span class="op">$</span>S</code></pre></div>
+</div>
+</div>
+<div id="compare-the-last-saturation-value-at-different-step-sizes" class="section level2">
+<h2>Compare the last saturation value at different step sizes</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># function that gets the error for different step sizes</span>
+get_last_saturation &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
+    df &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(<span class="dt">p_max =</span> <span class="fl">0.25</span>, stepSize)
+    last_row &lt;-<span class="st"> </span>df[<span class="kw">nrow</span>(df),]
+    last_saturation &lt;-<span class="st"> </span>last_row<span class="op">$</span>S
+    <span class="kw">c</span>(<span class="dt">step_size =</span> stepSize, <span class="dt">Sat =</span> last_saturation, <span class="dt">n_steps =</span> last_row<span class="op">$</span>steps)
+}
+
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.001</span>, <span class="fl">0.0001</span>, <span class="fl">1e-5</span>, <span class="fl">5e-6</span>)
+last_sat   &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(step_sizes, get_last_saturation)))
+last_sat</code></pre></div>
+<pre><code>##   step_size      Sat n_steps
+## 1     5e-01 1.500000       1
+## 2     1e-01 1.230000       2
+## 3     5e-02 1.328845       5
+## 4     1e-02 1.347296      25
+## 5     5e-03 1.349677      50
+## 6     1e-03 1.351595     250
+## 7     1e-04 1.352028    2500
+## 8     1e-05 1.352071   25000
+## 9     5e-06 1.352074   50000</code></pre>
+</div>
+<div id="what-is-the-saturation-at-p0.1-and-p0.2" class="section level2">
+<h2>What is the saturation at P=0.1 and P=0.2</h2>
+</div>
+<div id="find-the-saturation-end-values-using-runge-kutta" class="section level2">
+<h2>Find the saturation end values using Runge-Kutta</h2>
+<p>Using the ODE implementation for the differential equation:</p>
+<p>xx_____</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># class implementation</span>
+MuskatRK4App &lt;-<span class="st"> </span><span class="cf">function</span>(p_max, stepSize) {
+    initial_S &lt;-<span class="st"> </span><span class="dv">1</span>
+    initial_P &lt;-<span class="st"> </span><span class="dv">0</span>
+    
+    xmax      &lt;-<span class="st"> </span>p_max
+    stepSize  &lt;-<span class="st"> </span>stepSize
+    n_steps   &lt;-<span class="st"> </span><span class="kw">as.integer</span>((xmax <span class="op">+</span><span class="st"> </span>stepSize <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>stepSize)
+    
+    ode        &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(initial_P, initial_S)
+    ode_solver &lt;-<span class="st"> </span><span class="kw">EulerRichardson</span>(ode)
+    ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)
+    
+    steps &lt;-<span class="st"> </span><span class="dv">0</span>
+    rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)
+    i &lt;-<span class="st">  </span><span class="dv">1</span>
+    <span class="cf">while</span> (steps <span class="op">&lt;</span><span class="st"> </span>n_steps) {
+        ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)
+        state      &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)
+        steps      &lt;-<span class="st"> </span>ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(
+                            <span class="dt">P =</span> state[<span class="dv">2</span>],     <span class="co"># x = t</span>
+                            <span class="dt">S =</span> state[<span class="dv">1</span>],     <span class="co"># y</span>
+                            <span class="dt">steps =</span> steps)
+        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    }
+    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># function that gets the error for different step sizes</span>
+get_last_saturation &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
+    df &lt;-<span class="st"> </span><span class="kw">MuskatRK4App</span>(<span class="dt">p_max =</span> <span class="fl">0.25</span>, stepSize)
+    last_row &lt;-<span class="st"> </span>df[<span class="kw">nrow</span>(df),]
+    last_saturation &lt;-<span class="st"> </span>last_row<span class="op">$</span>S
+    <span class="kw">c</span>(<span class="dt">step_size =</span> stepSize, <span class="dt">Sat =</span> last_saturation, <span class="dt">n_steps =</span> last_row<span class="op">$</span>steps)
+}
+
+<span class="co"># step_sizes &lt;- c(0.1, 0.05, 0.01, 0.005, 0.001, 0.0001, 1e-5, 5e-6)</span>
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.001</span>, <span class="fl">0.0001</span>, <span class="fl">1e-5</span>, <span class="fl">5e-6</span>)
+last_sat   &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(step_sizes, get_last_saturation)))
+last_sat</code></pre></div>
+<pre><code>##   step_size      Sat n_steps
+## 1     5e-01 1.875000       2
+## 2     1e-01 1.115000       2
+## 3     5e-02 1.185293       6
+## 4     1e-02 1.156478      26
+## 5     5e-03 1.149444      50
+## 6     1e-03 1.149445     250
+## 7     1e-04 1.149445    2500
+## 8     1e-05 1.149445   25000
+## 9     5e-06 1.149445   50000</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
