@@ -155,10 +155,7 @@ MuskatRK4App <- function(stepSize) {
     }
     data.table::rbindlist(rowVector)
 }
-```
 
-
-```{r}
 # get a summary table for different step sizes
 get_table <- function(stepSize) {
     dt <- MuskatRK4App(stepSize)
@@ -247,26 +244,28 @@ dt_li <- lapply(step_sizes, create_table, solver = "RK45")
 data.table::rbindlist(dt_li)
 ```
 
+And so on. We could this better. We will show how to do this using nested `lapply` functions.
 
 ## What about doing all in one step
 
 ```{r}
 step_sizes <- c(0.2, 0.1, 0.05)
-solvers <- c("Euler", "RK4")
+solvers <- c("Euler", "EulerRichardson", "Verlet", "RK4")
 ```
-
 
 
 ```{r}
 df_li <- lapply(solvers, function(svr)
             lapply(step_sizes, function(stepsz) create_table(stepsz, svr)))
-# df_id <- data.table::rbindlist(listOfDataFrames, idcol = TRUE)
 
-df_li
+df_all <- data.table::rbindlist(unlist(df_li, recursive = FALSE))
+df_all
 ```
 
 ```{r}
-data.table::rbindlist(unlist(df_li, recursive = FALSE))
+ggplot(df_all, aes(x = P, y = rel_err, group = step_size)) +
+    geom_line() +
+    facet_grid(step_size ~ solver)
 ```
 
 
