@@ -94,7 +94,7 @@ MuskatEulerApp <- function(stepSize) {
     rowVector <- vector("list")
     pres <-  0
     i    <-  1
-    while (pres < 5) {
+    while (pres < 0.5) {
         state <- getState(ode_solver@ode)
         pres <- state[2]
         error <- getExactSolution(ode_solver@ode, pres) - state[1]
@@ -119,7 +119,7 @@ MuskatEulerApp <- function(stepSize) {
 # get a summary table for different step sizes
 get_table <- function(stepSize) {
     dt <- MuskatEulerApp(stepSize)
-    dt[round(P, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]   # round at 1 decimal
+    dt[round(P, 2) %in% c(0.10, 0.20, 0.30, 0.40, 0.5)]   # round at 1 decimal
 }
 # vector with some step sizes
 step_sizes <- c(0.2, 0.1, 0.05)
@@ -138,7 +138,7 @@ MuskatRK4App <- function(stepSize) {
     rowVector <- vector("list")
     pres <-  0
     i    <-  1
-    while (pres < 5) {
+    while (pres < 0.5) {
         state <- getState(ode_solver@ode)
         pres <- state[2]
         error <- getExactSolution(ode_solver@ode, pres) - state[1]
@@ -159,7 +159,7 @@ MuskatRK4App <- function(stepSize) {
 # get a summary table for different step sizes
 get_table <- function(stepSize) {
     dt <- MuskatRK4App(stepSize)
-    dt[round(P, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    dt[round(P, 2) %in% c(0.10, 0.20, 0.30, 0.40, 0.5)]
 }
 
 step_sizes <- c(0.2, 0.1, 0.05)
@@ -181,7 +181,7 @@ ComparisonMuskatODEApp <- function(solver, stepSize) {
     rowVector  <- vector("list")
     pres <-  0
     i    <-  1
-    while (pres < 5.001) {
+    while (pres < 0.5001) {
         state <- getState(ode_solver@ode)
         pres  <- state[2]
         error <- getExactSolution(ode_solver@ode, pres) - state[1]
@@ -202,10 +202,15 @@ ComparisonMuskatODEApp <- function(solver, stepSize) {
 }
 
 # get a summary table for different step sizes
+# create_table <- function(stepSize, solver) {
+#     dt <- ComparisonMuskatODEApp(solver, stepSize)
+#     dt[round(P, 2) %in% c(0.10, 0.20, 0.30, 0.40, 0.5)]
+# }
+
 create_table <- function(stepSize, solver) {
     dt <- ComparisonMuskatODEApp(solver, stepSize)
-    # dt
-    dt[round(P, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    if (!solver == "RK45") dt[round(P, 2) %in% c(0.10, 0.20, 0.30, 0.40, 0.5)]
+    else dt
 }
 ```
 
@@ -240,6 +245,8 @@ data.table::rbindlist(dt_li)
 ```{r}
 # Create summary table for ODE solver RK45
 step_sizes <- c(0.2, 0.1, 0.05)
+
+# do not round because RK45 makes variable step sizes
 dt_li <- lapply(step_sizes, create_table, solver = "RK45")
 data.table::rbindlist(dt_li)
 ```
