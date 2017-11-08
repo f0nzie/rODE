@@ -1,3 +1,5 @@
+# This example uses ODESolverFactory
+
 importFromExamples("SHO.R")
 
 # SHOApp.R
