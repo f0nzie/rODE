@@ -7,8 +7,7 @@
 #' @param ... additional parameters
 #'
 #' @rdname EulerRichardson-class
-.EulerRichardson <- setClass("EulerRichardson",
-                    slots = c(
+.EulerRichardson <- setClass("EulerRichardson", slots = c(
                         midstate = "numeric"      # this is the midpoint slot
                     ),
                         contains = c("AbstractODESolver")
@@ -68,13 +67,13 @@ setMethod("step", "EulerRichardson", function(object, ...) {
 #' EulerRichardson constructor ODE
 #'
 #' @rdname EulerRichardson-class
-#' @importFrom methods new
+#'
 #' @export
 setMethod("EulerRichardson", signature(ode = "ODE"), function(ode, ...) {
     # constructor for Euler-Richardson ODE solver
-    eulerRichardson <- .EulerRichardson(ode = ode)
-    eulerRichardson <- init(eulerRichardson, eulerRichardson@stepSize)                         # diff 5
-    return(eulerRichardson)
+    .eulerRichardson <- .EulerRichardson(ode = ode)
+    .eulerRichardson <- init(.eulerRichardson, .eulerRichardson@stepSize)                         # diff 5
+    return(.eulerRichardson)
 })
 
 
