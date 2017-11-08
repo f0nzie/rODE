@@ -7,8 +7,9 @@
 #' @param ... additional parameters
 #'
 #' @rdname EulerRichardson-class
-.EulerRichardson <- setClass("EulerRichardson", slots = c(
-                      midstate = "numeric"          # this is the midpoint slot
+.EulerRichardson <- setClass("EulerRichardson",
+                    slots = c(
+                        midstate = "numeric"      # this is the midpoint slot
                     ),
                         contains = c("AbstractODESolver")
                     )
