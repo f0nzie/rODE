@@ -53,7 +53,7 @@ setMethod("step", "EulerRichardson", function(object, ...) {
         # estimate the state at the midpoint
         object@midstate[i] <- state[i] + rate[i] * dt2
     }
-
+    # calculate for the whole rate vector
     rate <- getRate(object@ode, object@midstate) # rate based on midpoint
 
     for (i in 1:object@numEqn) {
