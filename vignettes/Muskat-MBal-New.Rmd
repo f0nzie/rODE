@@ -9,6 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## Muskat's Material Balance Equation
+
 For the Muskat's Material Balance equation:
 
 $$\newcommand{\numD}{{\dfrac {S_o}{B_o B_g} \dfrac {dR_s}{dP} +  
@@ -22,83 +24,87 @@ All the terms on the right side are function of pressure ($P$) and saturation ($
 
 $$ \dfrac{dS}{dP} = f(P, S)$$
 
-A first-order ordinary diferential equation (*ODE*).
-
-With analytical solution:
+A first-order ordinary diferential equation (*ODE*) with the general analytical solution:
 
 $$y(x) = C_1e^x-2x-2$$
 
-## Plot a range of values for a given step size
+##  Solving the 1st Order Differential Equation (ODE)
 
-Given the ODE:
+Given the following ODE that represents a particular reservoir:
 $$ \dfrac{dS}{dP} = (2P +  S)$$
 
-Find the first saturation values if the initial conditions are $P_o$ = 0, and $S_o$ = 1.
+We wish to find the first saturation values if the initial conditions are:
 
-The analytical solution for the the differential equation given the initial conditions is:
+$P_o$ = 0, and $S_o$ = 1.
+
+
+The analytical solution for the differential equation, given the initial conditions, is:
 $$S(P) = 3e^P-2P-2$$
-
-
-## Build the ODE object
-Since we know the analytical solution, we will add a method `getExactSolution` to return the exact values at any given P.
+## Building the ODE for Material Balance
+Since we know the analytical solution, we will add a method `getExactSolution` to return the exact values at any given P. Then we will compare the exact solution versus the numerical solutions from the available ODE solvers in `rODE`.
 
 ```{r message=FALSE, results="hold"}
 # the ODE object
-
 library(rODE)
 library(ggplot2)
 
+# class declaration
 setClass("MuskatODE", slots = c(
-    stack = "environment"                # environment object inside the class
+    stack = "environment"                  # environment object inside the class
     ),
     contains = c("ODE")
     )
-
+# Initialization method
 setMethod("initialize", "MuskatODE", function(.Object, ...) {
     .Object@stack$n <-  0               
     return(.Object)
 })
-
+# The exact solution method
 setMethod("getExactSolution", "MuskatODE", function(object, t, ...) {
     # analytical solution
-    return(3 * exp(t) - 2 *t - 2)       # constant C1 = 3 
+    return(3 * exp(t) - 2 *t - 2)                             # constant C1 = 3 
 })
-
+# obtain the state of the ODE
 setMethod("getState", "MuskatODE", function(object, ...) {
-    object@state
+    object@state                                      # return the state
 })
-
+# the differential equation is entered here. 
 setMethod("getRate", "MuskatODE", function(object, state, ...) {
     object@rate[1] <- state[1] + 2 * state[2]         # 2P + S
     object@rate[2] <- 1                               # dP/dP
     object@stack$n <- object@stack$n + 1              # add 1 to the rate count
-    object@rate
+    object@rate                                       # return the rate
 })
-
 # constructor
 MuskatODE <- function(P, S) {
     .MuskatEuler <- new("MuskatODE")
-    .MuskatEuler@state[1] = S        # S
-    .MuskatEuler@state[2] = P        # P = t
+    .MuskatEuler@state[1] = S        # S         state[1] is saturation
+    .MuskatEuler@state[2] = P        # P = t     state[2] is pressure
     return(.MuskatEuler)
 }
 ```
 
 ## Implementing the Euler solver
+After we define the differential equation  in shape of code, or ODE object, we move to build the iterative routine for the differential equation. We start with the given initial conditions, $P =0$, and $S=1$, stopping the iterations at $P = 0.5$. 
+
+Since we don't know the size of the infinitesimal step $\delta P$ to use in the solver, we are given three different step sizes `0.2, 0.1, 0.05`. Depending of the accuracy of the solution, at the end a satisfactory step size will be selected.
+
+As we go calculating the numerical solution with the Euler method, we are also getting the exact result from the analytical solution $S(P) = 3e^P-2P-2$, using both to find the error and the relative error. The number of steps that the ODE solver takes is also recorded.
 
 ```{r}
+# application that uses the Muskat ODE solver above
 MuskatEulerApp <- function(stepSize) {
-    ode <- MuskatODE(0, 1)               # initial state  S(0) = 1
-    ode_solver <- Euler(ode)
+    ode <- MuskatODE(0, 1)                      # initial state  S(0) = 1; P = 0
+    ode_solver <- Euler(ode)                    # use the Euler ODE solver
     ode_solver <- setStepSize(ode_solver, stepSize)
-    rowVector <- vector("list")
-    pres <-  0
-    i    <-  1
+    rowVector <- vector("list")      # calculation will be added to rowVector
+    pres <-  0                       # P = 0
+    i    <-  1                       # index of the iterations
     while (pres < 0.5) {
-        state <- getState(ode_solver@ode)
-        pres <- state[2]
+        state <- getState(ode_solver@ode)  
+        pres  <- state[2]
         error <- getExactSolution(ode_solver@ode, pres) - state[1]
-        rowVector[[i]] <- list(step_size = stepSize, 
+        rowVector[[i]] <- list(step_size = stepSize,  # vector with calculations
                                P = pres, 
                                S = state[1], 
                                exact = getExactSolution(ode_solver@ode, pres),
@@ -106,10 +112,10 @@ MuskatEulerApp <- function(stepSize) {
                                rel_err = error / getExactSolution(ode_solver@ode, pres),
                                steps = ode_solver@ode@stack$n
                                )
-        ode_solver <- step(ode_solver)
-        i <- i + 1
+        ode_solver <- step(ode_solver)                 # advance solver one step
+        i <- i + 1                                     # advance iteration
     }
-    data.table::rbindlist(rowVector)
+    data.table::rbindlist(rowVector)                   # results in data table
 }
 ```
 
