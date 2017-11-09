@@ -302,6 +302,8 @@ ggplot(subset(df_all, solver %in% c("RK4", "RK45") & step_size %in% c(0.1, 0.05)
     facet_grid(step_size ~ solver) 
 ```
 
+It turns out that `RK45` is the more accurate of all the solvers tested here. The relative error at a step value of 0.05 is in the order of 1E-8 to 1 E-12, while RK4 for the same step size, the relative error ranges between 1E-8 to 9E-8; still good. In fact, we could choose with some peace of mind RK4, unless the response is unstable that merits the switch to an adaptive step solver such as RK45.
+
 
 
 
