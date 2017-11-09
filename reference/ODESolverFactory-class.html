@@ -71,6 +71,9 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
+      <a href="../articles/Comparison_naode.html">Comparison of ODE solvers: Example NAODE</a>
+    </li>
+    <li>
       <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
     </li>
     <li>
@@ -78,6 +81,9 @@
     </li>
     <li>
       <a href="../articles/Kepler.html">Kepler. Interaction between two planets</a>
+    </li>
+    <li>
+      <a href="../articles/Muskat-MBal.html">Muskat Material Balance</a>
     </li>
     <li>
       <a href="../articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
@@ -164,7 +170,9 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"SHO.R"</span>)
+    <pre class="examples"><div class='input'><span class='co'># This example uses ODESolverFactory</span>
+
+<span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"SHO.R"</span>)
 
 <span class='co'># SHOApp.R</span>
 <span class='no'>SHOApp</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
@@ -198,6 +206,8 @@
 
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>SHOApp</span>()
 <span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='input'>
+
+<span class='co'># This example uses ODESolverFactory</span>
 
 <span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"SHO.R"</span>)
 
