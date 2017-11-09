@@ -71,6 +71,9 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
+      <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
+    </li>
+    <li>
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
@@ -145,7 +148,8 @@
 <span class='co'># Compares the solution by the RK45 ODE solver versus the analytical solution</span>
 <span class='co'># Example file: ComparisonRK45App.R</span>
 <span class='co'># ODE Solver:   Runge-Kutta 45</span>
-<span class='co'># Class:        RK45</span>
+<span class='co'># ODE class :   RK45</span>
+<span class='co'># Base class:   ODETest</span>
 
 <span class='fu'><a href='importFromExamples.html'>importFromExamples</a></span>(<span class='st'>"ODETest.R"</span>)
 
@@ -166,12 +170,13 @@
                                 <span class='kw'>s1</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>1</span>],
                                 <span class='kw'>s2</span> <span class='kw'>=</span> <span class='fu'><a href='getState-method.html'>getState</a></span>(<span class='no'>ode</span>)[<span class='fl'>2</span>],
                                 <span class='kw'>xs</span> <span class='kw'>=</span> <span class='fu'>getExactSolution</span>(<span class='no'>ode</span>, <span class='no'>time</span>),
-                                <span class='kw'>rc</span> <span class='kw'>=</span> <span class='fu'><a href='getRateCounts-method.html'>getRateCounts</a></span>(<span class='no'>ode</span>),
-                                <span class='kw'>time</span> <span class='kw'>=</span> <span class='no'>time</span>)
-         <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>ode_solver</span>)       <span class='co'># advance one step</span>
-         <span class='no'>stepSize</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>ode_solver</span>)
+                                <span class='kw'>counts</span> <span class='kw'>=</span> <span class='fu'><a href='getRateCounts-method.html'>getRateCounts</a></span>(<span class='no'>ode</span>),
+                                <span class='kw'>time</span>   <span class='kw'>=</span> <span class='no'>time</span>
+                                )
+         <span class='no'>ode_solver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='step-method.html'>step</a></span>(<span class='no'>ode_solver</span>)           <span class='co'># advance one step</span>
+         <span class='no'>stepSize</span>   <span class='kw'>&lt;-</span> <span class='fu'><a href='getStepSize-method.html'>getStepSize</a></span>(<span class='no'>ode_solver</span>)
          <span class='no'>time</span> <span class='kw'>&lt;-</span> <span class='no'>time</span> + <span class='no'>stepSize</span>
-         <span class='no'>ode</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>ode_solver</span>)                     <span class='co'># get updated ODE object</span>
+         <span class='no'>ode</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='getODE-method.html'>getODE</a></span>(<span class='no'>ode_solver</span>)                     <span class='co'># get updated ODE object</span>
          <span class='no'>i</span> <span class='kw'>&lt;-</span> <span class='no'>i</span> + <span class='fl'>1</span>
      }
      <span class='fu'>return</span>(<span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/rbindlist'>rbindlist</a></span>(<span class='no'>rowVector</span>))    <span class='co'># a data table with the results</span>
@@ -179,24 +184,24 @@
 <span class='co'># show solution</span>
 <span class='no'>solution</span> <span class='kw'>&lt;-</span> <span class='fu'>ComparisonRK45App</span>()                          <span class='co'># run the example</span>
 <span class='fu'>plot</span>(<span class='no'>solution</span>)</div><div class='img'><img src='getExactSolution-method-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># ODETest.R</span>
-<span class='co'># Base class for examples:</span>
+<span class='co'># Called as base class for examples:</span>
 <span class='co'>#                         ComparisonRK45App.R</span>
 <span class='co'>#                         ComparisonRK45ODEApp.R</span>
 
 <span class='co'>#' ODETest as an example of ODE class inheritance</span>
 <span class='co'>#'</span>
 <span class='co'>#' ODETest is a base class for examples ComparisonRK45App.R and</span>
-<span class='co'>#' ComparisonRK45ODEApp.R</span>
+<span class='co'>#' ComparisonRK45ODEApp.R. ODETest also uses an environment variable to store</span>
+<span class='co'>#' the rate counts.</span>
 <span class='co'>#'</span>
 <span class='co'>#' @rdname ODE-class-example</span>
 <span class='co'>#' @include ODE.R</span>
 <span class='fu'>setClass</span>(<span class='st'>"ODETest"</span>, <span class='kw'>slots</span> <span class='kw'>=</span> <span class='fu'>c</span>(
     <span class='kw'>n</span>     <span class='kw'>=</span> <span class='st'>"numeric"</span>,           <span class='co'># counts the number of getRate evaluations</span>
-    <span class='kw'>stack</span> <span class='kw'>=</span> <span class='st'>"environment"</span>        <span class='co'># environnment to keep stack</span>
+    <span class='kw'>stack</span> <span class='kw'>=</span> <span class='st'>"environment"</span>        <span class='co'># environnment object to accumulate rate counts</span>
     ),
     <span class='kw'>contains</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ODE"</span>)
     )
-
 
 <span class='fu'>setMethod</span>(<span class='st'>"initialize"</span>, <span class='st'>"ODETest"</span>, <span class='kw'>function</span>(<span class='no'>.Object</span>, <span class='no'>...</span>) {
     <span class='no'>.Object</span>@<span class='kw'>stack</span>$<span class='no'>rateCounts</span> <span class='kw'>&lt;-</span>  <span class='fl'>0</span>              <span class='co'># counter for rate calculations</span>
@@ -215,8 +220,8 @@
 <span class='fu'>setMethod</span>(<span class='st'>"getRate"</span>, <span class='st'>"ODETest"</span>, <span class='kw'>function</span>(<span class='no'>object</span>, <span class='no'>state</span>, <span class='no'>...</span>) {
     <span class='no'>object</span>@<span class='kw'>rate</span>[<span class='fl'>1</span>] <span class='kw'>&lt;-</span> - <span class='no'>state</span>[<span class='fl'>1</span>]
     <span class='no'>object</span>@<span class='kw'>rate</span>[<span class='fl'>2</span>] <span class='kw'>&lt;-</span>  <span class='fl'>1</span>            <span class='co'># rate of change of time, dt/dt</span>
-    <span class='co'># accumulate how many the rate has been called to calculate</span>
-    <span class='no'>object</span>@<span class='kw'>stack</span>$<span class='no'>rateCounts</span> <span class='kw'>&lt;-</span> <span class='no'>object</span>@<span class='kw'>stack</span>$<span class='no'>rateCounts</span> + <span class='fl'>1</span>          <span class='co'># use stack</span>
+    <span class='co'># accumulate how many times the rate has been called to calculate</span>
+    <span class='no'>object</span>@<span class='kw'>stack</span>$<span class='no'>rateCounts</span> <span class='kw'>&lt;-</span> <span class='no'>object</span>@<span class='kw'>stack</span>$<span class='no'>rateCounts</span> + <span class='fl'>1</span>
     <span class='no'>object</span>@<span class='kw'>state</span> <span class='kw'>&lt;-</span> <span class='no'>state</span>
     <span class='no'>object</span>@<span class='kw'>rate</span>
 })</div><div class='output co'>#&gt; [1] "getRate"</div><div class='input'>
@@ -226,7 +231,6 @@
     <span class='co'># use environment stack to accumulate rate counts</span>
     <span class='no'>object</span>@<span class='kw'>stack</span>$<span class='no'>rateCounts</span>
 })</div><div class='output co'>#&gt; [1] "getRateCounts"</div><div class='input'>
-
 <span class='co'># constructor</span>
 <span class='no'>ODETest</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>() {
     <span class='no'>odetest</span> <span class='kw'>&lt;-</span> <span class='fu'>new</span>(<span class='st'>"ODETest"</span>)

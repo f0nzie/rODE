@@ -8,7 +8,7 @@
 #'
 #' @rdname EulerRichardson-class
 .EulerRichardson <- setClass("EulerRichardson", slots = c(
-                      midstate = "numeric"          # this is the midpoint slot
+                        midstate = "numeric"      # this is the midpoint slot
                     ),
                         contains = c("AbstractODESolver")
                     )
@@ -52,38 +52,33 @@ setMethod("step", "EulerRichardson", function(object, ...) {
         # estimate the state at the midpoint
         object@midstate[i] <- state[i] + rate[i] * dt2
     }
-
+    # calculate for the whole rate vector at the midstate
     rate <- getRate(object@ode, object@midstate) # rate based on midpoint
-
+    # recalculate the final state for the new rate
     for (i in 1:object@numEqn) {
         state[i] <- state[i] + object@stepSize * rate[i] # calc new state
     }
-
-    object@ode@state <- state       # return state and rate for new iter
+    object@ode@state <- state       # return state and rate for new iteration
     object@ode@rate  <- rate
-    object                          # use this object to reassign in R
+    object
 })
-
-
-
 
 
 #' EulerRichardson constructor ODE
 #'
 #' @rdname EulerRichardson-class
-#' @importFrom methods new
+#'
 #' @export
 setMethod("EulerRichardson", signature(ode = "ODE"), function(ode, ...) {
     # constructor for Euler-Richardson ODE solver
-    eulerRichardson <- .EulerRichardson(ode = ode)
-    eulerRichardson <- init(eulerRichardson, eulerRichardson@stepSize)                         # diff 5
-    return(eulerRichardson)
+    .eulerRichardson <- .EulerRichardson(ode = ode)
+    .eulerRichardson <- init(.eulerRichardson, .eulerRichardson@stepSize)                         # diff 5
+    return(.eulerRichardson)
 })
 
 
 
 # EulerRichardson.R
-
 
 # * An Euler-Richardson (midpoint) method ODE solver.
 # *

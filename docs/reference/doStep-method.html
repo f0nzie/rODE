@@ -71,6 +71,9 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
+      <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
+    </li>
+    <li>
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
@@ -183,7 +186,8 @@
     <span class='no'>r</span>  <span class='kw'>&lt;-</span> <span class='fl'>2</span>        <span class='co'># Malthusian parameter (rate of maximum population growth)</span>
     <span class='no'>K</span>  <span class='kw'>&lt;-</span> <span class='fl'>10.0</span>     <span class='co'># carrying capacity of the environment</span>
     <span class='no'>dt</span>   <span class='kw'>&lt;-</span> <span class='fl'>0.01</span>; <span class='no'>tol</span>  <span class='kw'>&lt;-</span> <span class='fl'>1e-3</span>; <span class='no'>tmax</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
-    <span class='no'>population</span> <span class='kw'>&lt;-</span> <span class='fu'>Logistic</span>()
+
+    <span class='no'>population</span> <span class='kw'>&lt;-</span> <span class='fu'>Logistic</span>()                <span class='co'># create a Logistic ODE object</span>
 
     <span class='co'># Two ways of initializing the object</span>
       <span class='co'># population &lt;- init(population, c(x, vx, 0), r, K)</span>
@@ -191,7 +195,7 @@
                               <span class='kw'>r</span> <span class='kw'>=</span> <span class='no'>r</span>,
                               <span class='kw'>K</span> <span class='kw'>=</span> <span class='no'>K</span>)
 
-    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Verlet-class.html'>Verlet</a></span>(<span class='no'>population</span>)
+    <span class='no'>odeSolver</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Verlet-class.html'>Verlet</a></span>(<span class='no'>population</span>)        <span class='co'># select the solver</span>
 
     <span class='co'># Two ways of initializing the solver</span>
       <span class='co'># odeSolver &lt;- init(odeSolver, dt)</span>

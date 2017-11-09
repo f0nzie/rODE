@@ -45,6 +45,8 @@ setMethod("createODESolver", "ODESolverFactory", function(object, ode, solverNam
         return(DormandPrince45(ode))
     else if (object@solverName == "euler")
         return(Euler(ode))
+    else if (object@solverName == "eulerrichardson")
+        return(EulerRichardson(ode))
     else if (object@solverName == "verlet")
         return(Verlet(ode))
     else

@@ -37,6 +37,8 @@ This is a factory method that creates an ODESolver using a name.
 ODESolverFactory constructor
 }
 \examples{
+# This example uses ODESolverFactory
+
 importFromExamples("SHO.R")
 
 # SHOApp.R
@@ -72,6 +74,8 @@ SHOApp <- function(...) {
 solution <- SHOApp()
 plot(solution)
 
+
+# This example uses ODESolverFactory
 
 importFromExamples("SHO.R")
 

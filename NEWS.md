@@ -1,3 +1,15 @@
+# # rODE 0.99.5.9006
+* 20171107-20171107
+* Plot the errors between the ODE solver solutions
+* Create a one-step approach using two nested lapply functions iterating through the all the solvers and all the step sizes.
+* Using a ODEFactory to send only the name of the solvers instead of composing an implementation for each of the solvers
+* Show two solvers first: Euler and Runge-Kutta. Compare results
+* Start with Euler solver
+* select step sizes to be 0.2., 0.1, 0.05
+* add new vignette `Muskat-MBal`
+
+
+
 # rODE 0.99.5.9005
 * 20171105 - 20171106
 * add vignette `ErrorEuler` that shows using an internal accumulator in the ODE solver class.

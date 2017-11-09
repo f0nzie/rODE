@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alfonso R. Reyes" />
 
-<meta name="date" content="2017-11-06" />
+<meta name="date" content="2017-11-08" />
 
 <title>Comparison of ODE solvers</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Comparison of ODE solvers</h1>
 <h4 class="author"><em>Alfonso R. Reyes</em></h4>
-<h4 class="date"><em>2017-11-06</em></h4>
+<h4 class="date"><em>2017-11-08</em></h4>
 
 
 
@@ -78,6 +78,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>Build the ODE class (without class accumulator)</h2>
 <div id="comparison-of-solutions-rk45-vs-analytical-solution" class="section level3">
 <h3>Comparison of solutions: RK45 vs analytical solution</h3>
+<p>For the differential equation:</p>
+<p><span class="math display">\[\dfrac{dy}{dt} = -5 \, e^{-t}\]</span> the analytical solution is: <span class="math display">\[y(t) = 5 \, e^{-t}\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rODE)
 
 <span class="co"># ODETest.R</span>

@@ -48,6 +48,9 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
+      <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
+    </li>
+    <li>
       <a href="../articles/FallingParticle.html">Falling Particle ODE</a>
     </li>
     <li>
@@ -93,7 +96,7 @@
       <h1>Projectile with RK4 solver</h1>
                         <h4 class="author">Vignette Author</h4>
             
-            <h4 class="date">2017-11-04</h4>
+            <h4 class="date">2017-11-07</h4>
           </div>
 
     
@@ -167,7 +170,6 @@
     object<span class="op">@</span>rate[<span class="dv">3</span>] &lt;-<span class="st"> </span>state[<span class="dv">4</span>]     <span class="co"># rate of change of y</span>
     object<span class="op">@</span>rate[<span class="dv">4</span>] &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span>object<span class="op">@</span>g   <span class="co"># rate of change of vy</span>
     object<span class="op">@</span>rate[<span class="dv">5</span>] &lt;-<span class="st"> </span><span class="dv">1</span>            <span class="co"># dt/dt = 1</span>
-
     object<span class="op">@</span>rate
 })
 
@@ -197,7 +199,6 @@ ProjectileApp &lt;-<span class="st"> </span><span class="cf">function</span>(<sp
     dt &lt;-<span class="st"> </span><span class="fl">0.01</span>
     
     projectile &lt;-<span class="st"> </span><span class="kw">Projectile</span>()
-    
     projectile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setState-method.html">setState</a></span>(projectile, x, vx, y, vy)
     projectile<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/init-method.html">init</a></span>(projectile<span class="op">@</span>odeSolver, <span class="fl">0.123</span>)
     projectile<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setStepSize-method.html">setStepSize</a></span>(projectile<span class="op">@</span>odeSolver, dt)
@@ -222,7 +223,6 @@ ProjectileApp &lt;-<span class="st"> </span><span class="cf">function</span>(<sp
     <span class="kw">print</span>(<span class="kw">qplot</span>(state1, state3, <span class="dt">data =</span> datatable))
     <span class="kw">print</span>(<span class="kw">qplot</span>(state1, state5, <span class="dt">data =</span> datatable))
 }
-
 
 <span class="kw">ProjectileApp</span>()</code></pre></div>
 <p><img src="Projectile_files/figure-html/unnamed-chunk-2-1.png" width="672"><img src="Projectile_files/figure-html/unnamed-chunk-2-2.png" width="672"></p>
