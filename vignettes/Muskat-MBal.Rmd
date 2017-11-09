@@ -9,6 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+Biblio
+http://www.pe.tamu.edu/blasingame/data/z_zCourse_Archive/P620_08C/P620_08C_Lec_(for_class)/P620_Mod3_FunFld_07_DifEq_MlPhs_(for_class).pdf
+
+
 ## Muskat's Material Balance Equation
 
 For the Muskat's Material Balance equation:
