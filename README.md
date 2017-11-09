@@ -9,7 +9,11 @@ The goal of `rODE` is to explore R and its `S4` classes and its differences with
 
 This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.
 
-`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at <http://opensourcephysics.org>.
+`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at <http://opensourcephysics.org>. I highly recommended the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375). It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorrithms, math and physics.
+
+-   citation `(J.H. Abou-Kassem L. Mattar, 1990)`
+
+-   A correlation developed with Artificial Neural Networks (Ann10) by Kamyab et al. `(Bahadori, 2016)`
 
 The ODE solvers implemented in R so far:
 
@@ -131,7 +135,7 @@ solution <- AdaptiveStepApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-3-1.png)
+![](man/figures/README-unnamed-chunk-4-1.png)
 
 ComparisonRK45App
 -----------------
@@ -173,7 +177,7 @@ solution <- ComparisonRK45App()                          # run the example
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-4-1.png)
+![](man/figures/README-unnamed-chunk-5-1.png)
 
 FallingParticleODE
 ------------------
@@ -211,7 +215,7 @@ solution <- FallingParticleODEApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-5-1.png)
+![](man/figures/README-unnamed-chunk-6-1.png)
 
 KeplerApp
 ---------
@@ -255,7 +259,7 @@ solution <- KeplerApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-6-1.png)
+![](man/figures/README-unnamed-chunk-7-1.png)
 
 KeplerEnergyApp
 ---------------
@@ -303,7 +307,7 @@ solution <- KeplerEnergyApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-7-1.png)
+![](man/figures/README-unnamed-chunk-8-1.png)
 
 LogisticApp
 -----------
@@ -341,7 +345,7 @@ solution <- LogisticApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-8-1.png)
+![](man/figures/README-unnamed-chunk-9-1.png)
 
 PendulumApp
 -----------
@@ -381,7 +385,7 @@ solution <- PendulumApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-9-1.png)
+![](man/figures/README-unnamed-chunk-10-1.png)
 
 PlanetApp
 ---------
@@ -426,7 +430,7 @@ solution <- solution[select_rows,]
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-10-1.png)
+![](man/figures/README-unnamed-chunk-11-1.png)
 
 ProjectileApp
 -------------
@@ -467,7 +471,7 @@ solution <- ProjectileApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-11-1.png)
+![](man/figures/README-unnamed-chunk-12-1.png)
 
 ReactionApp
 -----------
@@ -503,7 +507,7 @@ solution <- ReactionApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-12-1.png)
+![](man/figures/README-unnamed-chunk-13-1.png)
 
 RigidBodyNXFApp
 ---------------
@@ -547,7 +551,7 @@ solution <- RigidBodyNXFApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-13-1.png)
+![](man/figures/README-unnamed-chunk-14-1.png)
 
 SHOApp
 ------
@@ -581,7 +585,7 @@ solution <- SHOApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-14-1.png)
+![](man/figures/README-unnamed-chunk-15-1.png)
 
 SpringRK4App
 ------------
@@ -621,7 +625,7 @@ solution <- SpringRK4App()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-15-1.png)
+![](man/figures/README-unnamed-chunk-16-1.png)
 
 VanderpolApp
 ------------
@@ -658,7 +662,7 @@ solution <- VanderpolApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-16-1.png)
+![](man/figures/README-unnamed-chunk-17-1.png)
 
 VanderpolMuTimeControlApp
 -------------------------
@@ -697,4 +701,13 @@ solution <- VanderpolMuTimeControlApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-17-1.png)
+![](man/figures/README-unnamed-chunk-18-1.png)
+
+References
+----------
+
+The following books and papers were consulted during the development of this package:
+
+\[1\] A. Bahadori. *Fluid Phase Behavior for Conventional and Unconventional Oil and Gas Reservoirs*. ISBN 978-0-12-803437-8. Houston, Texas: Gulf Publishing, 2016. &lt;URL: <https://books.google.com/books?id=BwXeDAAAQBAJ>&gt;.
+
+\[2\] P. D. J.H. Abou-Kassem L. Mattar. "Computer Calculations Of Compressibility Of Natural Gas". In: *Petroleum Society of Canada* (1990). Sat Sep 01 01:00:00 BST 1990. DOI: 10.2118/90-05-10. &lt;URL: <http://10.2118/90-05-10>&gt;.

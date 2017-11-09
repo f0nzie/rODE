@@ -15,6 +15,16 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-"
 )
+ options("citation_format" = "pandoc")
+```
+
+
+```{r echo=FALSE, warning=FALSE}
+suppressPackageStartupMessages(library(knitcitations))
+knitcitations::cleanbib()
+knitcitations:::cite_options(hyperlink=TRUE)
+bib_file1 <- system.file("doc", "rODE_biblio.bib", package = "rODE")
+bib1 <- read.bibtex(bib_file1)
 ```
 
 
@@ -24,7 +34,12 @@ The goal of `rODE` is to explore R and its `S4` classes and its differences with
 
 This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.
 
-`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at http://opensourcephysics.org.
+`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at http://opensourcephysics.org. I highly recommended the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375). It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorrithms, math and physics.
+
+* citation ``r citep(bib1[c("Abou-Kassem1990")])``
+
+* A correlation developed with Artificial Neural Networks (Ann10) by Kamyab et al. ``r citep(bib1[c("bahadori")])``
+
 
 The ODE solvers implemented in R so far:
 
@@ -666,3 +681,11 @@ plot(solution)
 
 ```
 
+
+## References
+The following books and papers were consulted during the development of this package:
+
+
+```{r results="asis", echo=FALSE}
+knitcitations::bibliography(style="citation")
+```
