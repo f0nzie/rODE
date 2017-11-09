@@ -1,3 +1,7 @@
+# # rODE 0.99.5.9007
+* 20171109-201711
+* 
+
 # # rODE 0.99.5.9006
 * 20171107-20171107
 * Plot the errors between the ODE solver solutions
@@ -7,8 +11,6 @@
 * Start with Euler solver
 * select step sizes to be 0.2., 0.1, 0.05
 * add new vignette `Muskat-MBal`
-
-
 
 # rODE 0.99.5.9005
 * 20171105 - 20171106
