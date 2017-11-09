@@ -7,13 +7,23 @@ rODE
 
 The goal of `rODE` is to explore R and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
 
+Motivation
+----------
+
 This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.
 
-`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at <http://opensourcephysics.org>. I highly recommended the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375). It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorrithms, math and physics.
+`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at <http://opensourcephysics.org>. I highly recommended the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375), `(Gould, Tobochnik, and Christian, 2017)`. It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.
 
--   citation `(J.H. Abou-Kassem L. Mattar, 1990)`
+Additionally:
 
--   A correlation developed with Artificial Neural Networks (Ann10) by Kamyab et al. `(Bahadori, 2016)`
+-   The beatiful introduction to computers and numerical methods for petroleum engineering *"Using the Computer to Solve Petroleum Engineering Problems"* by Melvin Nobles", `(Nobles, 1974)`
+-   Some examples and analytical solutions were borrowed from *"Numerical Solution of Ordinary Differential Equations"*, `(Atkinson, Han, and Stewart, 2009)`.
+-   The paper *"Numerical Reservoir Simulation Using an Ordinary-Differential-Equations Integrator"*, `(Sincovec, 1975)`.
+-   The thesis *"Numerical Methods For Solution of Diﬀerential Equations"*, `(Ritschel, 2013)`.
+-   The paper "On Dormand-Prince Method" where I could learn about the Dormand-Prince ODE solver, `(Kimura, 2009)`.
+-   The paper "A Family of Embedded Runge-Kutta formulae", `(Dormand and Prince, 1980)`, where you can see the derivation of the ODE solver `RK-45`.
+-   The paper on solving ODEs in R `(Soetaert, Petzoldt, and Setzer, 2010)`.
+-   The paper *"Behind and beyond the Matlab ODE suite"* `(Ashino, Nagase, and Vaillancourt, 2000)`.
 
 The ODE solvers implemented in R so far:
 
@@ -708,6 +718,20 @@ References
 
 The following books and papers were consulted during the development of this package:
 
-\[1\] A. Bahadori. *Fluid Phase Behavior for Conventional and Unconventional Oil and Gas Reservoirs*. ISBN 978-0-12-803437-8. Houston, Texas: Gulf Publishing, 2016. &lt;URL: <https://books.google.com/books?id=BwXeDAAAQBAJ>&gt;.
+\[1\] R. Ashino, M. Nagase and R. Vaillancourt. "Behind and beyond the Matlab ODE suite". In: *Computers & Mathematics with Applications* 40.4-5 (Aug. 2000), pp. 491-512. DOI: 10.1016/s0898-1221(00)00175-9.
 
-\[2\] P. D. J.H. Abou-Kassem L. Mattar. "Computer Calculations Of Compressibility Of Natural Gas". In: *Petroleum Society of Canada* (1990). Sat Sep 01 01:00:00 BST 1990. DOI: 10.2118/90-05-10. &lt;URL: <http://10.2118/90-05-10>&gt;.
+\[2\] K. Atkinson, W. Han and D. E. Stewart. *Numerical Solution of Ordinary Differential Equations*. Wiley, 2009. ISBN: 978-0-470-04294-6.
+
+\[3\] J. R. Dormand and P. J. Prince. "A family of embedded Runge-Kutta formulae". In: *Journal of computational and applied mathematics* 6.1 (Mar. 1980), pp. 19-26. DOI: 10.1016/0771-050x(80)90013-3.
+
+\[4\] H. Gould, J. Tobochnik and W. Christian. *An Introduction to Computer Simulation Methods: Applications To Physical Systems*. CreateSpace Independent Publishing Platform, 2017. ISBN: 978-1974427475.
+
+\[5\] T. Kimura. "On dormand-prince method". In: *Retrieved April* 27 (2009), p. 2014. &lt;URL: <http://depa.fquim.unam.mx/amyd/archivero/DormandPrince_19856.pdf>&gt;.
+
+\[6\] M. A. Nobles. *Using the Computer to Solve Petroleum Engineering Problems*. Gulf Publishing Co, 1974. ISBN: 978-0872018860.
+
+\[7\] T. Ritschel. "Numerical Methods For Solution of Di<U+FB00>erential Equations". Cand. thesis. DTU supervisor: John Bagterp Jørgensen, <jbjo@dtu.dk>, DTU Compute. Technical University of Denmark, Department of Applied Mathematics and Computer Science, 2013, p. 224. &lt;URL: <http://www.compute.dtu.dk/English.aspx>&gt;.
+
+\[8\] R. Sincovec. "Numerical Reservoir Simulation Using an Ordinary-Differential-Equations Integrator". In: *Society of Petroleum Engineers Journal* 15.03 (Jun. 1975), pp. 255-264. DOI: 10.2118/5104-pa.
+
+\[9\] K. Soetaert, T. Petzoldt and R. W. Setzer. "Solving differential equations in R: package deSolve". In: *Journal of Statistical Software* 33 (2010).
