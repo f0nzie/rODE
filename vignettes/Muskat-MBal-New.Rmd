@@ -1,6 +1,6 @@
 ---
 title: "Muskat Material Balance"
-author: "Vignette Author"
+author: "Alfonso R. Reyes"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -183,7 +183,7 @@ dt_li <- lapply(step_sizes, get_table)
 data.table::rbindlist(dt_li)
 ```
 
-We see above that we are repeating code when the only parameter needed to be changed is the ODE solver. In cases where we want to test different ODE solvers it is more convenient to use the function `ODESolverFactory` and send the solver as a parameter.
+We see above that we are repeating code when the only parameter needed to be changed is the ODE solver. In cases where we want to test different ODE solvers it is more convenient to use the function `ODESolverFactory` and send the solver (Euler, RK4, Verlet, etc.), as a parameter.
 
 
 ## Using a solver factory

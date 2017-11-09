@@ -12,7 +12,7 @@
 
 <meta name="author" content="Vignette Author" />
 
-<meta name="date" content="2017-11-08" />
+<meta name="date" content="2017-11-09" />
 
 <title>Muskat Material Balance</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Muskat Material Balance</h1>
 <h4 class="author"><em>Vignette Author</em></h4>
-<h4 class="date"><em>2017-11-08</em></h4>
+<h4 class="date"><em>2017-11-09</em></h4>
 
 
 
@@ -88,9 +88,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>Plot a range of values for a given step size</h2>
 <p>Given the ODE: <span class="math display">\[ \dfrac{dS}{dP} = (2P +  S)\]</span></p>
 <p>Find the first saturation values if the initial conditions are <span class="math inline">\(P_o\)</span> = 0, and <span class="math inline">\(S_o\)</span> = 1.</p>
-<div id="we-will-use-the-euler-ode-solver" class="section level3">
-<h3>We will use the Euler ODE solver</h3>
 <p>The analytical solution for the the differential equation given the initial conditions is: <span class="math display">\[S(P) = 3e^P-2P-2\]</span></p>
+</div>
+<div id="build-the-ode-object" class="section level2">
+<h2>Build the ODE object</h2>
+<p>Since we know the analytical solution, we will add a method <code>getExactSolution</code> to return the exact values at any given P.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the ODE object</span>
 
 <span class="kw">library</span>(rODE)
@@ -104,8 +106,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="kw">setMethod</span>(<span class="st">&quot;initialize&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(.Object, ...) {
     .Object<span class="op">@</span>stack<span class="op">$</span>n &lt;-<span class="st">  </span><span class="dv">0</span>               
-    .Object<span class="op">@</span>state   &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="dv">1</span>)
     <span class="kw">return</span>(.Object)
+})
+
+<span class="kw">setMethod</span>(<span class="st">&quot;getExactSolution&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(object, t, ...) {
+    <span class="co"># analytical solution</span>
+    <span class="kw">return</span>(<span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(t) <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span>t <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)       <span class="co"># constant C1 = 3 </span>
 })
 
 <span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(object, ...) {
@@ -127,176 +133,550 @@ MuskatODE &lt;-<span class="st"> </span><span class="cf">function</span>(P, S) {
     <span class="kw">return</span>(.MuskatEuler)
 }</code></pre></div>
 <pre><code>## [1] &quot;initialize&quot;
+## [1] &quot;getExactSolution&quot;
 ## [1] &quot;getState&quot;
 ## [1] &quot;getRate&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># class implementation</span>
-MuskatEulerApp &lt;-<span class="st"> </span><span class="cf">function</span>(p_max, stepSize) {
-    initial_P &lt;-<span class="st"> </span><span class="dv">0</span>
-    initial_S &lt;-<span class="st"> </span><span class="dv">1</span>
-    
-    xmax      &lt;-<span class="st"> </span>p_max
-    stepSize  &lt;-<span class="st"> </span>stepSize
-    n_steps   &lt;-<span class="st"> </span><span class="kw">as.integer</span>((xmax <span class="op">+</span><span class="st"> </span>stepSize <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>stepSize)
-    
-    ode        &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(initial_P, initial_S)
+</div>
+<div id="implementing-the-euler-solver" class="section level2">
+<h2>Implementing the Euler solver</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MuskatEulerApp &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
+    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)               <span class="co"># initial state  S(0) = 1</span>
     ode_solver &lt;-<span class="st"> </span><span class="kw">Euler</span>(ode)
     ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)
-    
-    steps &lt;-<span class="st"> </span><span class="dv">0</span>
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)
-    i &lt;-<span class="st">  </span><span class="dv">1</span>
-    <span class="cf">while</span> (steps <span class="op">&lt;</span><span class="st"> </span>n_steps) {
+    pres &lt;-<span class="st">  </span><span class="dv">0</span>
+    i    &lt;-<span class="st">  </span><span class="dv">1</span>
+    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {
+        state &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)
+        pres &lt;-<span class="st"> </span>state[<span class="dv">2</span>]
+        error &lt;-<span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">step_size =</span> stepSize, 
+                               <span class="dt">P =</span> pres, 
+                               <span class="dt">S =</span> state[<span class="dv">1</span>], 
+                               <span class="dt">exact =</span> <span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">error =</span> error, 
+                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
+                               )
         ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)
-        state      &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)
-        steps      &lt;-<span class="st"> </span>ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
-        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(
-                            <span class="dt">P =</span> state[<span class="dv">2</span>],     <span class="co"># x = t</span>
-                            <span class="dt">S =</span> state[<span class="dv">1</span>],     <span class="co"># y</span>
-                            <span class="dt">steps =</span> steps)
         i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
     }
     data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the saturations at different pressures up to Pmax=0.2</span>
-df &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(<span class="dt">p_max =</span> <span class="fl">0.2</span>, <span class="dt">stepSize =</span> <span class="fl">0.005</span>)
-df</code></pre></div>
-<pre><code>##         P        S steps
-##  1: 0.005 1.005000     1
-##  2: 0.010 1.010075     2
-##  3: 0.015 1.015225     3
-##  4: 0.020 1.020452     4
-##  5: 0.025 1.025754     5
-##  6: 0.030 1.031133     6
-##  7: 0.035 1.036588     7
-##  8: 0.040 1.042121     8
-##  9: 0.045 1.047732     9
-## 10: 0.050 1.053420    10
-## 11: 0.055 1.059187    11
-## 12: 0.060 1.065033    12
-## 13: 0.065 1.070959    13
-## 14: 0.070 1.076963    14
-## 15: 0.075 1.083048    15
-## 16: 0.080 1.089213    16
-## 17: 0.085 1.095460    17
-## 18: 0.090 1.101787    18
-## 19: 0.095 1.108196    19
-## 20: 0.100 1.114687    20
-## 21: 0.105 1.121260    21
-## 22: 0.110 1.127916    22
-## 23: 0.115 1.134656    23
-## 24: 0.120 1.141479    24
-## 25: 0.125 1.148387    25
-## 26: 0.130 1.155379    26
-## 27: 0.135 1.162456    27
-## 28: 0.140 1.169618    28
-## 29: 0.145 1.176866    29
-## 30: 0.150 1.184200    30
-## 31: 0.155 1.191621    31
-## 32: 0.160 1.199129    32
-## 33: 0.165 1.206725    33
-## 34: 0.170 1.214409    34
-## 35: 0.175 1.222181    35
-## 36: 0.180 1.230042    36
-## 37: 0.185 1.237992    37
-## 38: 0.190 1.246032    38
-## 39: 0.195 1.254162    39
-## 40: 0.200 1.262383    40
-##         P        S steps</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot saturation vs pressure</span>
-<span class="kw">library</span>(ggplot2)
-<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(P, S)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the last row of the dataframe</span>
-df &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(<span class="dt">p_max =</span> <span class="fl">0.25</span>, <span class="dt">stepSize =</span> <span class="fl">0.1</span>)
-last_row &lt;-<span class="st"> </span>df[<span class="kw">nrow</span>(df),]
-last_row</code></pre></div>
-<pre><code>##      P    S steps
-## 1: 0.2 1.23     2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">last_saturation &lt;-<span class="st"> </span>last_row<span class="op">$</span>S</code></pre></div>
-</div>
-</div>
-<div id="compare-the-last-saturation-value-at-different-step-sizes" class="section level2">
-<h2>Compare the last saturation value at different step sizes</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># function that gets the error for different step sizes</span>
-get_last_saturation &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
-    df &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(<span class="dt">p_max =</span> <span class="fl">0.25</span>, stepSize)
-    last_row &lt;-<span class="st"> </span>df[<span class="kw">nrow</span>(df),]
-    last_saturation &lt;-<span class="st"> </span>last_row<span class="op">$</span>S
-    <span class="kw">c</span>(<span class="dt">step_size =</span> stepSize, <span class="dt">Sat =</span> last_saturation, <span class="dt">n_steps =</span> last_row<span class="op">$</span>steps)
+<div id="summary-table-for-euler" class="section level3">
+<h3>Summary table for Euler</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get a summary table for different step sizes</span>
+get_table &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
+    dt &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(stepSize)
+    dt[<span class="kw">round</span>(P, <span class="dv">1</span>) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>, <span class="fl">4.0</span>, <span class="fl">5.0</span>)]   <span class="co"># round at 1 decimal</span>
 }
-
-step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.001</span>, <span class="fl">0.0001</span>, <span class="fl">1e-5</span>, <span class="fl">5e-6</span>)
-last_sat   &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(step_sizes, get_last_saturation)))
-last_sat</code></pre></div>
-<pre><code>##   step_size      Sat n_steps
-## 1     5e-01 1.500000       1
-## 2     1e-01 1.230000       2
-## 3     5e-02 1.328845       5
-## 4     1e-02 1.347296      25
-## 5     5e-03 1.349677      50
-## 6     1e-03 1.351595     250
-## 7     1e-04 1.352028    2500
-## 8     1e-05 1.352071   25000
-## 9     5e-06 1.352074   50000</code></pre>
+<span class="co"># vector with some step sizes</span>
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)
+dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, get_table)    <span class="co"># create a data table </span>
+data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)              <span class="co"># bind the data tables</span></code></pre></div>
+<pre><code>##     step_size    P          S      exact       error    rel_err steps
+##  1:      0.20 1.00   3.464960   4.154845   0.6898855 0.16604360     5
+##  2:      0.20 2.00  12.575209  16.167168   3.5919590 0.22217614    10
+##  3:      0.20 3.00  38.221065  52.256611  14.0355460 0.26858891    15
+##  4:      0.20 4.00 105.012800 153.794450  48.7816503 0.31718733    20
+##  5:      0.20 5.00 274.188650 433.239477 159.0508274 0.36711989    25
+##  6:      0.10 1.00   3.781227   4.154845   0.3736181 0.08992347    10
+##  7:      0.10 2.00  14.182500  16.167168   1.9846684 0.12275919    20
+##  8:      0.10 3.00  44.348207  52.256611   7.9084040 0.15133787    30
+##  9:      0.10 4.00 125.777767 153.794450  28.0166834 0.18216966    40
+## 10:      0.10 5.00 340.172559 433.239477  93.0669187 0.21481634    50
+## 11:      0.05 0.95   3.680851   3.857129   0.1762784 0.04570197    19
+## 12:      0.05 1.00   3.959893   4.154845   0.1949524 0.04692169    20
+## 13:      0.05 1.95  14.214253  15.186063   0.9718093 0.06399350    39
+## 14:      0.05 2.00  15.119966  16.167168   1.0472022 0.06477338    40
+## 15:      0.05 3.00  48.037558  52.256611   4.2190531 0.08073721    60
+## 16:      0.05 3.05  50.739436  55.246033   4.5065977 0.08157324    61
+## 17:      0.05 4.00 138.684323 153.794450  15.1101269 0.09824884    80
+## 18:      0.05 4.05 146.018539 162.092371  16.0738318 0.09916464    81
+## 19:      0.05 5.00 382.503774 433.239477  50.7357038 0.11710776   100
+## 20:      0.05 5.05 402.128962 455.967393  53.8384312 0.11807518   101</code></pre>
 </div>
-<div id="what-is-the-saturation-at-p0.1-and-p0.2" class="section level2">
-<h2>What is the saturation at P=0.1 and P=0.2</h2>
 </div>
-<div id="find-the-saturation-end-values-using-runge-kutta" class="section level2">
-<h2>Find the saturation end values using Runge-Kutta</h2>
-<p>Using the ODE implementation for the differential equation:</p>
-<p>xx_____</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># class implementation</span>
-MuskatRK4App &lt;-<span class="st"> </span><span class="cf">function</span>(p_max, stepSize) {
-    initial_S &lt;-<span class="st"> </span><span class="dv">1</span>
-    initial_P &lt;-<span class="st"> </span><span class="dv">0</span>
-    
-    xmax      &lt;-<span class="st"> </span>p_max
-    stepSize  &lt;-<span class="st"> </span>stepSize
-    n_steps   &lt;-<span class="st"> </span><span class="kw">as.integer</span>((xmax <span class="op">+</span><span class="st"> </span>stepSize <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>stepSize)
-    
-    ode        &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(initial_P, initial_S)
-    ode_solver &lt;-<span class="st"> </span><span class="kw">EulerRichardson</span>(ode)
+<div id="solve-muskats-equation-using-runge-kutta" class="section level2">
+<h2>Solve Muskat’s Equation using Runge-Kutta</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MuskatRK4App &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
+    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)
+    ode_solver &lt;-<span class="st"> </span><span class="kw">RK4</span>(ode)
     ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)
-    
-    steps &lt;-<span class="st"> </span><span class="dv">0</span>
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)
-    i &lt;-<span class="st">  </span><span class="dv">1</span>
-    <span class="cf">while</span> (steps <span class="op">&lt;</span><span class="st"> </span>n_steps) {
+    pres &lt;-<span class="st">  </span><span class="dv">0</span>
+    i    &lt;-<span class="st">  </span><span class="dv">1</span>
+    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) {
+        state &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)
+        pres &lt;-<span class="st"> </span>state[<span class="dv">2</span>]
+        error &lt;-<span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">step_size =</span> stepSize, 
+                               <span class="dt">P =</span> pres, 
+                               <span class="dt">S =</span> state[<span class="dv">1</span>], 
+                               <span class="dt">exact =</span> <span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">error =</span> error, 
+                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
+                               )
         ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)
-        state      &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)
-        steps      &lt;-<span class="st"> </span>ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
-        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(
-                            <span class="dt">P =</span> state[<span class="dv">2</span>],     <span class="co"># x = t</span>
-                            <span class="dt">S =</span> state[<span class="dv">1</span>],     <span class="co"># y</span>
-                            <span class="dt">steps =</span> steps)
         i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
     }
     data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># function that gets the error for different step sizes</span>
-get_last_saturation &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
-    df &lt;-<span class="st"> </span><span class="kw">MuskatRK4App</span>(<span class="dt">p_max =</span> <span class="fl">0.25</span>, stepSize)
-    last_row &lt;-<span class="st"> </span>df[<span class="kw">nrow</span>(df),]
-    last_saturation &lt;-<span class="st"> </span>last_row<span class="op">$</span>S
-    <span class="kw">c</span>(<span class="dt">step_size =</span> stepSize, <span class="dt">Sat =</span> last_saturation, <span class="dt">n_steps =</span> last_row<span class="op">$</span>steps)
 }
 
-<span class="co"># step_sizes &lt;- c(0.1, 0.05, 0.01, 0.005, 0.001, 0.0001, 1e-5, 5e-6)</span>
-step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.001</span>, <span class="fl">0.0001</span>, <span class="fl">1e-5</span>, <span class="fl">5e-6</span>)
-last_sat   &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(step_sizes, get_last_saturation)))
-last_sat</code></pre></div>
-<pre><code>##   step_size      Sat n_steps
-## 1     5e-01 1.875000       2
-## 2     1e-01 1.115000       2
-## 3     5e-02 1.185293       6
-## 4     1e-02 1.156478      26
-## 5     5e-03 1.149444      50
-## 6     1e-03 1.149445     250
-## 7     1e-04 1.149445    2500
-## 8     1e-05 1.149445   25000
-## 9     5e-06 1.149445   50000</code></pre>
+<span class="co"># get a summary table for different step sizes</span>
+get_table &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {
+    dt &lt;-<span class="st"> </span><span class="kw">MuskatRK4App</span>(stepSize)
+    dt[<span class="kw">round</span>(P, <span class="dv">1</span>) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>, <span class="fl">4.0</span>, <span class="fl">5.0</span>)]
+}
+
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)
+dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, get_table)
+data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</code></pre></div>
+<pre><code>##     step_size    P          S      exact        error      rel_err steps
+##  1:      0.20 1.00   4.154753   4.154845 9.207556e-05 2.216101e-05    20
+##  2:      0.20 2.00  16.166668  16.167168 5.005718e-04 3.096224e-05    40
+##  3:      0.20 3.00  52.254570  52.256611 2.041031e-03 3.905786e-05    60
+##  4:      0.20 4.00 153.787053 153.794450 7.397423e-03 4.809941e-05    80
+##  5:      0.20 5.00 433.214342 433.239477 2.513521e-02 5.801689e-05   100
+##  6:      0.10 1.00   4.154839   4.154845 6.252972e-06 1.504983e-06    40
+##  7:      0.10 2.00  16.167134  16.167168 3.399467e-05 2.102698e-06    80
+##  8:      0.10 3.00  52.256472  52.256611 1.386106e-04 2.652498e-06   120
+##  9:      0.10 4.00 153.793948 153.794450 5.023766e-04 3.266546e-06   160
+## 10:      0.10 5.00 433.237770 433.239477 1.707001e-03 3.940086e-06   200
+## 11:      0.05 0.95   3.857129   3.857129 3.681617e-07 9.544967e-08    76
+## 12:      0.05 1.00   4.154845   4.154845 4.074081e-07 9.805615e-08    80
+## 13:      0.05 1.95  15.186061  15.186063 2.054206e-06 1.352692e-07   156
+## 14:      0.05 2.00  16.167166  16.167168 2.214900e-06 1.369999e-07   160
+## 15:      0.05 3.00  52.256602  52.256611 9.031084e-06 1.728218e-07   240
+## 16:      0.05 3.05  55.246024  55.246033 9.652353e-06 1.747158e-07   244
+## 17:      0.05 4.00 153.794417 153.794450 3.273204e-05 2.128298e-07   320
+## 18:      0.05 4.05 162.092336 162.092371 3.484038e-05 2.149415e-07   324
+## 19:      0.05 5.00 433.239366 433.239477 1.112186e-04 2.567140e-07   400
+## 20:      0.05 5.05 455.967275 455.967393 1.180901e-04 2.589881e-07   404</code></pre>
+<p>We see above that we are repeating code when the only parameter needed to be changed is the ODE solver. In cases where we want to test different ODE solvers it is more convenient to use the function <code>ODESolverFactory</code> and send the solver as a parameter.</p>
+</div>
+<div id="using-a-solver-factory" class="section level2">
+<h2>Using a solver factory</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ComparisonMuskatODEApp &lt;-<span class="st"> </span><span class="cf">function</span>(solver, stepSize) {
+    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)
+    solver_factory &lt;-<span class="st"> </span><span class="kw">ODESolverFactory</span>()
+    ode_solver &lt;-<span class="st"> </span><span class="kw">createODESolver</span>(solver_factory, ode, solver)
+    ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)
+    rowVector  &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)
+    pres &lt;-<span class="st">  </span><span class="dv">0</span>
+    i    &lt;-<span class="st">  </span><span class="dv">1</span>
+    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span><span class="fl">5.001</span>) {
+        state &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)
+        pres  &lt;-<span class="st"> </span>state[<span class="dv">2</span>]
+        error &lt;-<span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">solver =</span> solver,
+                               <span class="dt">step_size =</span> stepSize, 
+                               <span class="dt">P =</span> pres, 
+                               <span class="dt">S =</span> state[<span class="dv">1</span>], 
+                               <span class="dt">exact =</span> <span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">error =</span> error, 
+                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
+                               )
+        ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)
+        pres &lt;-<span class="st"> </span>pres <span class="op">+</span><span class="st"> </span><span class="kw">getStepSize</span>(ode_solver)    <span class="co"># step size retrievd from ODE solver</span>
+        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    }
+    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
+}
+
+<span class="co"># get a summary table for different step sizes</span>
+create_table &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize, solver) {
+    dt &lt;-<span class="st"> </span><span class="kw">ComparisonMuskatODEApp</span>(solver, stepSize)
+    <span class="co"># dt</span>
+    dt[<span class="kw">round</span>(P, <span class="dv">1</span>) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>, <span class="fl">4.0</span>, <span class="fl">5.0</span>)]
+}</code></pre></div>
+<div id="euler" class="section level3">
+<h3>Euler</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create summary table for ODE solver Euler</span>
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)
+dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;Euler&quot;</span>)
+data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</code></pre></div>
+<pre><code>##     solver step_size    P          S      exact       error    rel_err
+##  1:  Euler      0.20 1.00   3.464960   4.154845   0.6898855 0.16604360
+##  2:  Euler      0.20 2.00  12.575209  16.167168   3.5919590 0.22217614
+##  3:  Euler      0.20 3.00  38.221065  52.256611  14.0355460 0.26858891
+##  4:  Euler      0.20 4.00 105.012800 153.794450  48.7816503 0.31718733
+##  5:  Euler      0.20 5.00 274.188650 433.239477 159.0508274 0.36711989
+##  6:  Euler      0.10 1.00   3.781227   4.154845   0.3736181 0.08992347
+##  7:  Euler      0.10 2.00  14.182500  16.167168   1.9846684 0.12275919
+##  8:  Euler      0.10 3.00  44.348207  52.256611   7.9084040 0.15133787
+##  9:  Euler      0.10 4.00 125.777767 153.794450  28.0166834 0.18216966
+## 10:  Euler      0.10 5.00 340.172559 433.239477  93.0669187 0.21481634
+## 11:  Euler      0.05 0.95   3.680851   3.857129   0.1762784 0.04570197
+## 12:  Euler      0.05 1.00   3.959893   4.154845   0.1949524 0.04692169
+## 13:  Euler      0.05 1.95  14.214253  15.186063   0.9718093 0.06399350
+## 14:  Euler      0.05 2.00  15.119966  16.167168   1.0472022 0.06477338
+## 15:  Euler      0.05 3.00  48.037558  52.256611   4.2190531 0.08073721
+## 16:  Euler      0.05 3.05  50.739436  55.246033   4.5065977 0.08157324
+## 17:  Euler      0.05 4.00 138.684323 153.794450  15.1101269 0.09824884
+## 18:  Euler      0.05 4.05 146.018539 162.092371  16.0738318 0.09916464
+## 19:  Euler      0.05 5.00 382.503774 433.239477  50.7357038 0.11710776
+##     steps
+##  1:     5
+##  2:    10
+##  3:    15
+##  4:    20
+##  5:    25
+##  6:    10
+##  7:    20
+##  8:    30
+##  9:    40
+## 10:    50
+## 11:    19
+## 12:    20
+## 13:    39
+## 14:    40
+## 15:    60
+## 16:    61
+## 17:    80
+## 18:    81
+## 19:   100</code></pre>
+</div>
+<div id="euler-richardson" class="section level3">
+<h3>Euler-Richardson</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create summary table for ODE solver EulerRichardson</span>
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)
+dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;EulerRichardson&quot;</span>)
+data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</code></pre></div>
+<pre><code>##              solver step_size    P          S      exact        error
+##  1: EulerRichardson      0.20 1.00   4.108124   4.154845  0.046720996
+##  2: EulerRichardson      0.20 2.00  15.913894  16.167168  0.253274051
+##  3: EulerRichardson      0.20 3.00  51.226861  52.256611  1.029749903
+##  4: EulerRichardson      0.20 4.00 150.072920 153.794450  3.721529754
+##  5: EulerRichardson      0.20 5.00 420.630389 433.239477 12.609088782
+##  6: EulerRichardson      0.10 1.00   4.142243   4.154845  0.012602946
+##  7: EulerRichardson      0.10 2.00  16.098705  16.167168  0.068463771
+##  8: EulerRichardson      0.10 3.00  51.977671  52.256611  0.278940081
+##  9: EulerRichardson      0.10 4.00 152.784247 153.794450  1.010202860
+## 10: EulerRichardson      0.10 5.00 429.809608 433.239477  3.429869746
+## 11: EulerRichardson      0.05 0.95   3.854172   3.857129  0.002957122
+## 12: EulerRichardson      0.05 1.00   4.151573   4.154845  0.003272322
+## 13: EulerRichardson      0.05 1.95  15.169566  15.186063  0.016496342
+## 14: EulerRichardson      0.05 2.00  16.149382  16.167168  0.017786619
+## 15: EulerRichardson      0.05 3.00  52.184102  52.256611  0.072509016
+## 16: EulerRichardson      0.05 3.05  55.168537  55.246033  0.077496299
+## 17: EulerRichardson      0.05 4.00 153.531703 153.794450  0.262747199
+## 18: EulerRichardson      0.05 4.05 161.812703 162.092371  0.279668463
+## 19: EulerRichardson      0.05 5.00 432.346880 433.239477  0.892597084
+##          rel_err steps
+##  1: 0.0112449418    10
+##  2: 0.0156659500    20
+##  3: 0.0197056389    30
+##  4: 0.0241980758    40
+##  5: 0.0291042009    50
+##  6: 0.0030333127    20
+##  7: 0.0042347410    40
+##  8: 0.0053378908    60
+##  9: 0.0065685261    80
+## 10: 0.0079167987   100
+## 11: 0.0007666641    38
+## 12: 0.0007875918    40
+## 13: 0.0010862817    78
+## 14: 0.0011001691    80
+## 15: 0.0013875568   120
+## 16: 0.0014027487   122
+## 17: 0.0017084310   160
+## 18: 0.0017253647   162
+## 19: 0.0020602857   200</code></pre>
+</div>
+<div id="runge-kutta" class="section level3">
+<h3>Runge-Kutta</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create summary table for ODE solver RK4</span>
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)
+dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;RK4&quot;</span>)
+data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</code></pre></div>
+<pre><code>##     solver step_size    P          S      exact        error      rel_err
+##  1:    RK4      0.20 1.00   4.154753   4.154845 9.207556e-05 2.216101e-05
+##  2:    RK4      0.20 2.00  16.166668  16.167168 5.005718e-04 3.096224e-05
+##  3:    RK4      0.20 3.00  52.254570  52.256611 2.041031e-03 3.905786e-05
+##  4:    RK4      0.20 4.00 153.787053 153.794450 7.397423e-03 4.809941e-05
+##  5:    RK4      0.20 5.00 433.214342 433.239477 2.513521e-02 5.801689e-05
+##  6:    RK4      0.10 1.00   4.154839   4.154845 6.252972e-06 1.504983e-06
+##  7:    RK4      0.10 2.00  16.167134  16.167168 3.399467e-05 2.102698e-06
+##  8:    RK4      0.10 3.00  52.256472  52.256611 1.386106e-04 2.652498e-06
+##  9:    RK4      0.10 4.00 153.793948 153.794450 5.023766e-04 3.266546e-06
+## 10:    RK4      0.10 5.00 433.237770 433.239477 1.707001e-03 3.940086e-06
+## 11:    RK4      0.05 0.95   3.857129   3.857129 3.681617e-07 9.544967e-08
+## 12:    RK4      0.05 1.00   4.154845   4.154845 4.074081e-07 9.805615e-08
+## 13:    RK4      0.05 1.95  15.186061  15.186063 2.054206e-06 1.352692e-07
+## 14:    RK4      0.05 2.00  16.167166  16.167168 2.214900e-06 1.369999e-07
+## 15:    RK4      0.05 3.00  52.256602  52.256611 9.031084e-06 1.728218e-07
+## 16:    RK4      0.05 3.05  55.246024  55.246033 9.652353e-06 1.747158e-07
+## 17:    RK4      0.05 4.00 153.794417 153.794450 3.273204e-05 2.128298e-07
+## 18:    RK4      0.05 4.05 162.092336 162.092371 3.484038e-05 2.149415e-07
+## 19:    RK4      0.05 5.00 433.239366 433.239477 1.112186e-04 2.567140e-07
+##     steps
+##  1:    20
+##  2:    40
+##  3:    60
+##  4:    80
+##  5:   100
+##  6:    40
+##  7:    80
+##  8:   120
+##  9:   160
+## 10:   200
+## 11:    76
+## 12:    80
+## 13:   156
+## 14:   160
+## 15:   240
+## 16:   244
+## 17:   320
+## 18:   324
+## 19:   400</code></pre>
+</div>
+<div id="runge-kutta-45" class="section level3">
+<h3>Runge-Kutta 45</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create summary table for ODE solver RK45</span>
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)
+dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;RK45&quot;</span>)
+data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</code></pre></div>
+<pre><code>##     solver step_size         P          S      exact        error
+##  1:   RK45      0.20 0.9522982   3.870380   3.870381 2.875062e-07
+##  2:   RK45      0.20 2.0391724  16.974395  16.974396 1.213611e-06
+##  3:   RK45      0.20 3.0453665  54.962460  54.962464 3.629974e-06
+##  4:   RK45      0.20 3.9703209 149.063962 149.063972 9.407265e-06
+##  5:   RK45      0.20 4.9806881 424.762134 424.762160 2.612840e-05
+##  6:   RK45      0.10 1.0343657   4.371232   4.371232 2.791563e-07
+##  7:   RK45      0.10 1.9779529  15.727889  15.727890 1.027767e-06
+##  8:   RK45      0.10 2.9865304  51.477359  51.477362 3.106420e-06
+##  9:   RK45      0.10 4.0151469 156.264003 156.264012 8.999481e-06
+## 10:   RK45      0.05 0.9956097   4.127902   4.127903 2.849226e-07
+## 11:   RK45      0.05 2.9589687  49.916298  49.916301 3.151893e-06
+## 12:   RK45      0.05 3.9975217 153.393964 153.393973 9.221170e-06
+##          rel_err steps
+##  1: 7.428370e-08    35
+##  2: 7.149655e-08    87
+##  3: 6.604459e-08   145
+##  4: 6.310891e-08   204
+##  5: 6.151302e-08   286
+##  6: 6.386215e-08    41
+##  7: 6.534679e-08    82
+##  8: 6.034536e-08   140
+##  9: 5.759151e-08   210
+## 10: 6.902357e-08    41
+## 11: 6.314357e-08   140
+## 12: 6.011429e-08   210</code></pre>
+<p>And so on. We could this better. We will show how to do this using nested <code>lapply</code> functions.</p>
+</div>
+</div>
+<div id="what-about-doing-all-in-one-step" class="section level2">
+<h2>What about doing all in one step</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># vectors for the solvers and step sizes</span>
+step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)
+solvers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Euler&quot;</span>, <span class="st">&quot;EulerRichardson&quot;</span>, <span class="st">&quot;Verlet&quot;</span>, <span class="st">&quot;RK4&quot;</span>, <span class="st">&quot;RK45&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># nested lapply to iterate through solvers and step sizes</span>
+df_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(solvers, <span class="cf">function</span>(svr)
+            <span class="kw">lapply</span>(step_sizes, <span class="cf">function</span>(stepsz) <span class="kw">create_table</span>(stepsz, svr)))
+
+<span class="co"># join the resulting dataframes</span>
+df_all &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">rbindlist</span>(<span class="kw">unlist</span>(df_li, <span class="dt">recursive =</span> <span class="ot">FALSE</span>))
+df_all</code></pre></div>
+<pre><code>##              solver step_size         P          S      exact        error
+##  1:           Euler      0.20 1.0000000   3.464960   4.154845 6.898855e-01
+##  2:           Euler      0.20 2.0000000  12.575209  16.167168 3.591959e+00
+##  3:           Euler      0.20 3.0000000  38.221065  52.256611 1.403555e+01
+##  4:           Euler      0.20 4.0000000 105.012800 153.794450 4.878165e+01
+##  5:           Euler      0.20 5.0000000 274.188650 433.239477 1.590508e+02
+##  6:           Euler      0.10 1.0000000   3.781227   4.154845 3.736181e-01
+##  7:           Euler      0.10 2.0000000  14.182500  16.167168 1.984668e+00
+##  8:           Euler      0.10 3.0000000  44.348207  52.256611 7.908404e+00
+##  9:           Euler      0.10 4.0000000 125.777767 153.794450 2.801668e+01
+## 10:           Euler      0.10 5.0000000 340.172559 433.239477 9.306692e+01
+## 11:           Euler      0.05 0.9500000   3.680851   3.857129 1.762784e-01
+## 12:           Euler      0.05 1.0000000   3.959893   4.154845 1.949524e-01
+## 13:           Euler      0.05 1.9500000  14.214253  15.186063 9.718093e-01
+## 14:           Euler      0.05 2.0000000  15.119966  16.167168 1.047202e+00
+## 15:           Euler      0.05 3.0000000  48.037558  52.256611 4.219053e+00
+## 16:           Euler      0.05 3.0500000  50.739436  55.246033 4.506598e+00
+## 17:           Euler      0.05 4.0000000 138.684323 153.794450 1.511013e+01
+## 18:           Euler      0.05 4.0500000 146.018539 162.092371 1.607383e+01
+## 19:           Euler      0.05 5.0000000 382.503774 433.239477 5.073570e+01
+## 20: EulerRichardson      0.20 1.0000000   4.108124   4.154845 4.672100e-02
+## 21: EulerRichardson      0.20 2.0000000  15.913894  16.167168 2.532741e-01
+## 22: EulerRichardson      0.20 3.0000000  51.226861  52.256611 1.029750e+00
+## 23: EulerRichardson      0.20 4.0000000 150.072920 153.794450 3.721530e+00
+## 24: EulerRichardson      0.20 5.0000000 420.630389 433.239477 1.260909e+01
+## 25: EulerRichardson      0.10 1.0000000   4.142243   4.154845 1.260295e-02
+## 26: EulerRichardson      0.10 2.0000000  16.098705  16.167168 6.846377e-02
+## 27: EulerRichardson      0.10 3.0000000  51.977671  52.256611 2.789401e-01
+## 28: EulerRichardson      0.10 4.0000000 152.784247 153.794450 1.010203e+00
+## 29: EulerRichardson      0.10 5.0000000 429.809608 433.239477 3.429870e+00
+## 30: EulerRichardson      0.05 0.9500000   3.854172   3.857129 2.957122e-03
+## 31: EulerRichardson      0.05 1.0000000   4.151573   4.154845 3.272322e-03
+## 32: EulerRichardson      0.05 1.9500000  15.169566  15.186063 1.649634e-02
+## 33: EulerRichardson      0.05 2.0000000  16.149382  16.167168 1.778662e-02
+## 34: EulerRichardson      0.05 3.0000000  52.184102  52.256611 7.250902e-02
+## 35: EulerRichardson      0.05 3.0500000  55.168537  55.246033 7.749630e-02
+## 36: EulerRichardson      0.05 4.0000000 153.531703 153.794450 2.627472e-01
+## 37: EulerRichardson      0.05 4.0500000 161.812703 162.092371 2.796685e-01
+## 38: EulerRichardson      0.05 5.0000000 432.346880 433.239477 8.925971e-01
+## 39:          Verlet      0.20 1.0000000   3.613792   4.154845 5.410535e-01
+## 40:          Verlet      0.20 2.0000000  13.094383  16.167168 3.072785e+00
+## 41:          Verlet      0.20 3.0000000  39.661767  52.256611 1.259484e+01
+## 42:          Verlet      0.20 4.0000000 108.746560 153.794450 4.504789e+01
+## 43:          Verlet      0.20 5.0000000 283.628272 433.239477 1.496112e+02
+## 44:          Verlet      0.10 1.0000000   3.860915   4.154845 2.939310e-01
+## 45:          Verlet      0.10 2.0000000  14.468875  16.167168 1.698293e+00
+## 46:          Verlet      0.10 3.0000000  45.170677  52.256611 7.085934e+00
+## 47:          Verlet      0.10 4.0000000 127.990729 153.794450 2.580372e+01
+## 48:          Verlet      0.10 5.0000000 345.992101 433.239477 8.724738e+01
+## 49:          Verlet      0.05 0.9500000   3.719024   3.857129 1.381046e-01
+## 50:          Verlet      0.05 1.0000000   4.001226   4.154845 1.536199e-01
+## 51:          Verlet      0.05 1.9500000  14.356872  15.186063 8.291905e-01
+## 52:          Verlet      0.05 2.0000000  15.270966  16.167168 8.962024e-01
+## 53:          Verlet      0.05 3.0000000  48.479537  52.256611 3.777073e+00
+## 54:          Verlet      0.05 3.0500000  51.204764  55.246033 4.041269e+00
+## 55:          Verlet      0.05 4.0000000 139.898359 153.794450 1.389609e+01
+## 56:          Verlet      0.05 4.0500000 147.294527 162.092371 1.479784e+01
+## 57:          Verlet      0.05 5.0000000 385.766305 433.239477 4.747317e+01
+## 58:             RK4      0.20 1.0000000   4.154753   4.154845 9.207556e-05
+## 59:             RK4      0.20 2.0000000  16.166668  16.167168 5.005718e-04
+## 60:             RK4      0.20 3.0000000  52.254570  52.256611 2.041031e-03
+## 61:             RK4      0.20 4.0000000 153.787053 153.794450 7.397423e-03
+## 62:             RK4      0.20 5.0000000 433.214342 433.239477 2.513521e-02
+## 63:             RK4      0.10 1.0000000   4.154839   4.154845 6.252972e-06
+## 64:             RK4      0.10 2.0000000  16.167134  16.167168 3.399467e-05
+## 65:             RK4      0.10 3.0000000  52.256472  52.256611 1.386106e-04
+## 66:             RK4      0.10 4.0000000 153.793948 153.794450 5.023766e-04
+## 67:             RK4      0.10 5.0000000 433.237770 433.239477 1.707001e-03
+## 68:             RK4      0.05 0.9500000   3.857129   3.857129 3.681617e-07
+## 69:             RK4      0.05 1.0000000   4.154845   4.154845 4.074081e-07
+## 70:             RK4      0.05 1.9500000  15.186061  15.186063 2.054206e-06
+## 71:             RK4      0.05 2.0000000  16.167166  16.167168 2.214900e-06
+## 72:             RK4      0.05 3.0000000  52.256602  52.256611 9.031084e-06
+## 73:             RK4      0.05 3.0500000  55.246024  55.246033 9.652353e-06
+## 74:             RK4      0.05 4.0000000 153.794417 153.794450 3.273204e-05
+## 75:             RK4      0.05 4.0500000 162.092336 162.092371 3.484038e-05
+## 76:             RK4      0.05 5.0000000 433.239366 433.239477 1.112186e-04
+## 77:            RK45      0.20 0.9522982   3.870380   3.870381 2.875062e-07
+## 78:            RK45      0.20 2.0391724  16.974395  16.974396 1.213611e-06
+## 79:            RK45      0.20 3.0453665  54.962460  54.962464 3.629974e-06
+## 80:            RK45      0.20 3.9703209 149.063962 149.063972 9.407265e-06
+## 81:            RK45      0.20 4.9806881 424.762134 424.762160 2.612840e-05
+## 82:            RK45      0.10 1.0343657   4.371232   4.371232 2.791563e-07
+## 83:            RK45      0.10 1.9779529  15.727889  15.727890 1.027767e-06
+## 84:            RK45      0.10 2.9865304  51.477359  51.477362 3.106420e-06
+## 85:            RK45      0.10 4.0151469 156.264003 156.264012 8.999481e-06
+## 86:            RK45      0.05 0.9956097   4.127902   4.127903 2.849226e-07
+## 87:            RK45      0.05 2.9589687  49.916298  49.916301 3.151893e-06
+## 88:            RK45      0.05 3.9975217 153.393964 153.393973 9.221170e-06
+##              solver step_size         P          S      exact        error
+##          rel_err steps
+##  1: 1.660436e-01     5
+##  2: 2.221761e-01    10
+##  3: 2.685889e-01    15
+##  4: 3.171873e-01    20
+##  5: 3.671199e-01    25
+##  6: 8.992347e-02    10
+##  7: 1.227592e-01    20
+##  8: 1.513379e-01    30
+##  9: 1.821697e-01    40
+## 10: 2.148163e-01    50
+## 11: 4.570197e-02    19
+## 12: 4.692169e-02    20
+## 13: 6.399350e-02    39
+## 14: 6.477338e-02    40
+## 15: 8.073721e-02    60
+## 16: 8.157324e-02    61
+## 17: 9.824884e-02    80
+## 18: 9.916464e-02    81
+## 19: 1.171078e-01   100
+## 20: 1.124494e-02    10
+## 21: 1.566595e-02    20
+## 22: 1.970564e-02    30
+## 23: 2.419808e-02    40
+## 24: 2.910420e-02    50
+## 25: 3.033313e-03    20
+## 26: 4.234741e-03    40
+## 27: 5.337891e-03    60
+## 28: 6.568526e-03    80
+## 29: 7.916799e-03   100
+## 30: 7.666641e-04    38
+## 31: 7.875918e-04    40
+## 32: 1.086282e-03    78
+## 33: 1.100169e-03    80
+## 34: 1.387557e-03   120
+## 35: 1.402749e-03   122
+## 36: 1.708431e-03   160
+## 37: 1.725365e-03   162
+## 38: 2.060286e-03   200
+## 39: 1.302223e-01    10
+## 40: 1.900633e-01    20
+## 41: 2.410191e-01    30
+## 42: 2.929097e-01    40
+## 43: 3.453314e-01    50
+## 44: 7.074414e-02    20
+## 45: 1.050458e-01    40
+## 46: 1.355988e-01    60
+## 47: 1.677806e-01    80
+## 48: 2.013837e-01   100
+## 49: 3.580503e-02    38
+## 50: 3.697368e-02    40
+## 51: 5.460207e-02    78
+## 52: 5.543348e-02    80
+## 53: 7.227934e-02   120
+## 54: 7.315039e-02   122
+## 55: 9.035496e-02   160
+## 56: 9.129266e-02   162
+## 57: 1.095772e-01   200
+## 58: 2.216101e-05    20
+## 59: 3.096224e-05    40
+## 60: 3.905786e-05    60
+## 61: 4.809941e-05    80
+## 62: 5.801689e-05   100
+## 63: 1.504983e-06    40
+## 64: 2.102698e-06    80
+## 65: 2.652498e-06   120
+## 66: 3.266546e-06   160
+## 67: 3.940086e-06   200
+## 68: 9.544967e-08    76
+## 69: 9.805615e-08    80
+## 70: 1.352692e-07   156
+## 71: 1.369999e-07   160
+## 72: 1.728218e-07   240
+## 73: 1.747158e-07   244
+## 74: 2.128298e-07   320
+## 75: 2.149415e-07   324
+## 76: 2.567140e-07   400
+## 77: 7.428370e-08    35
+## 78: 7.149655e-08    87
+## 79: 6.604459e-08   145
+## 80: 6.310891e-08   204
+## 81: 6.151302e-08   286
+## 82: 6.386215e-08    41
+## 83: 6.534679e-08    82
+## 84: 6.034536e-08   140
+## 85: 5.759151e-08   210
+## 86: 6.902357e-08    41
+## 87: 6.314357e-08   140
+## 88: 6.011429e-08   210
+##          rel_err steps</code></pre>
+<div id="plot-the-error-of-the-solvers" class="section level3">
+<h3>Plot the error of the solvers</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_all, <span class="kw">aes</span>(<span class="dt">x =</span> P, <span class="dt">y =</span> rel_err, <span class="dt">group =</span> step_size, <span class="dt">fill =</span> solver )) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_grid</span>(step_size <span class="op">~</span><span class="st"> </span>solver)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>In this last plot we want to compare the relative error of the ODE solvers that show the least error: RK4 and RK45. At the same time, we will exclude the step size of 0.2 since its error magnitude would hide those of the smaller steps.</p>
+</div>
+<div id="plot-rk4-vs-rk45" class="section level3">
+<h3>Plot RK4 vs RK45</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="kw">subset</span>(df_all, solver <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;RK4&quot;</span>, <span class="st">&quot;RK45&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>step_size <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.05</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> P, <span class="dt">y =</span> rel_err, <span class="dt">group =</span> step_size, <span class="dt">fill =</span> solver )) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_grid</span>(step_size <span class="op">~</span><span class="st"> </span>solver) </code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
 </div>
 
 

@@ -1,57 +1,57 @@
 ## ----message=FALSE, results="hold"---------------------------------------
 # the ODE object
-
 library(rODE)
 library(ggplot2)
 
+# class declaration
 setClass("MuskatODE", slots = c(
-    stack = "environment"                # environment object inside the class
+    stack = "environment"                  # environment object inside the class
     ),
     contains = c("ODE")
     )
-
+# Initialization method
 setMethod("initialize", "MuskatODE", function(.Object, ...) {
     .Object@stack$n <-  0               
     return(.Object)
 })
-
+# The exact solution method
 setMethod("getExactSolution", "MuskatODE", function(object, t, ...) {
     # analytical solution
-    return(3 * exp(t) - 2 *t - 2)       # constant C1 = 3 
+    return(3 * exp(t) - 2 *t - 2)                             # constant C1 = 3 
 })
-
+# obtain the state of the ODE
 setMethod("getState", "MuskatODE", function(object, ...) {
-    object@state
+    object@state                                      # return the state
 })
-
+# the differential equation is entered here. 
 setMethod("getRate", "MuskatODE", function(object, state, ...) {
     object@rate[1] <- state[1] + 2 * state[2]         # 2P + S
     object@rate[2] <- 1                               # dP/dP
     object@stack$n <- object@stack$n + 1              # add 1 to the rate count
-    object@rate
+    object@rate                                       # return the rate
 })
-
 # constructor
 MuskatODE <- function(P, S) {
     .MuskatEuler <- new("MuskatODE")
-    .MuskatEuler@state[1] = S        # S
-    .MuskatEuler@state[2] = P        # P = t
+    .MuskatEuler@state[1] = S        # S         state[1] is saturation
+    .MuskatEuler@state[2] = P        # P = t     state[2] is pressure
     return(.MuskatEuler)
 }
 
 ## ------------------------------------------------------------------------
+# application that uses the Muskat ODE solver above
 MuskatEulerApp <- function(stepSize) {
-    ode <- MuskatODE(0, 1)               # initial state  S(0) = 1
-    ode_solver <- Euler(ode)
+    ode <- MuskatODE(0, 1)                      # initial state  S(0) = 1; P = 0
+    ode_solver <- Euler(ode)                    # use the Euler ODE solver
     ode_solver <- setStepSize(ode_solver, stepSize)
-    rowVector <- vector("list")
-    pres <-  0
-    i    <-  1
-    while (pres < 5) {
-        state <- getState(ode_solver@ode)
-        pres <- state[2]
+    rowVector <- vector("list")      # calculation will be added to rowVector
+    pres <-  0                       # P = 0
+    i    <-  1                       # index of the iterations
+    while (pres < 0.5) {
+        state <- getState(ode_solver@ode)  
+        pres  <- state[2]
         error <- getExactSolution(ode_solver@ode, pres) - state[1]
-        rowVector[[i]] <- list(step_size = stepSize, 
+        rowVector[[i]] <- list(step_size = stepSize,  # vector with calculations
                                P = pres, 
                                S = state[1], 
                                exact = getExactSolution(ode_solver@ode, pres),
@@ -59,17 +59,17 @@ MuskatEulerApp <- function(stepSize) {
                                rel_err = error / getExactSolution(ode_solver@ode, pres),
                                steps = ode_solver@ode@stack$n
                                )
-        ode_solver <- step(ode_solver)
-        i <- i + 1
+        ode_solver <- step(ode_solver)                 # advance solver one step
+        i <- i + 1                                     # advance iteration
     }
-    data.table::rbindlist(rowVector)
+    data.table::rbindlist(rowVector)                   # results in data table
 }
 
 ## ------------------------------------------------------------------------
 # get a summary table for different step sizes
 get_table <- function(stepSize) {
     dt <- MuskatEulerApp(stepSize)
-    dt[round(P, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]   # round at 1 decimal
+    dt[round(P, 2) %in% c(0.10, 0.20, 0.30, 0.40, 0.5)]  
 }
 # vector with some step sizes
 step_sizes <- c(0.2, 0.1, 0.05)
@@ -81,10 +81,10 @@ MuskatRK4App <- function(stepSize) {
     ode <- MuskatODE(0, 1)
     ode_solver <- RK4(ode)
     ode_solver <- setStepSize(ode_solver, stepSize)
-    rowVector <- vector("list")
+    rowVector  <- vector("list")
     pres <-  0
     i    <-  1
-    while (pres < 5) {
+    while (pres < 0.5) {
         state <- getState(ode_solver@ode)
         pres <- state[2]
         error <- getExactSolution(ode_solver@ode, pres) - state[1]
@@ -101,13 +101,11 @@ MuskatRK4App <- function(stepSize) {
     }
     data.table::rbindlist(rowVector)
 }
-
 # get a summary table for different step sizes
 get_table <- function(stepSize) {
     dt <- MuskatRK4App(stepSize)
-    dt[round(P, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    dt[round(P, 2) %in% c(0.10, 0.20, 0.30, 0.40, 0.5)]
 }
-
 step_sizes <- c(0.2, 0.1, 0.05)
 dt_li <- lapply(step_sizes, get_table)
 data.table::rbindlist(dt_li)
@@ -121,7 +119,7 @@ ComparisonMuskatODEApp <- function(solver, stepSize) {
     rowVector  <- vector("list")
     pres <-  0
     i    <-  1
-    while (pres < 5.001) {
+    while (pres < 0.5001) {
         state <- getState(ode_solver@ode)
         pres  <- state[2]
         error <- getExactSolution(ode_solver@ode, pres) - state[1]
@@ -140,12 +138,11 @@ ComparisonMuskatODEApp <- function(solver, stepSize) {
     }
     data.table::rbindlist(rowVector)
 }
-
 # get a summary table for different step sizes
 create_table <- function(stepSize, solver) {
     dt <- ComparisonMuskatODEApp(solver, stepSize)
-    # dt
-    dt[round(P, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    if (!solver == "RK45") dt[round(P, 2) %in% c(0.10, 0.20, 0.30, 0.40, 0.5)]
+    else dt
 }
 
 ## ------------------------------------------------------------------------
@@ -169,6 +166,8 @@ data.table::rbindlist(dt_li)
 ## ------------------------------------------------------------------------
 # Create summary table for ODE solver RK45
 step_sizes <- c(0.2, 0.1, 0.05)
+
+# do not round because RK45 makes variable step sizes
 dt_li <- lapply(step_sizes, create_table, solver = "RK45")
 data.table::rbindlist(dt_li)
 
