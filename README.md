@@ -5,16 +5,16 @@
 rODE
 ====
 
-The goal of `rODE` is to explore R and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
+The goal of `rODE` is to explore `R` and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
 
 Motivation
 ----------
 
-This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.
+This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available in the package. The objective is learning while coding R, understanding the physics and using the math.
 
-`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at <http://opensourcephysics.org>. I highly recommended the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375), `(Gould, Tobochnik, and Christian, 2017)`. It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.
+`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at it at <http://opensourcephysics.org>. I highly recommend the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375), `(Gould, Tobochnik, and Christian, 2017)`. It has helped me a lot in understanding the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.
 
-Additionally:
+Additionally I have consulted these sources during the developing of the package `rODE`:
 
 -   The beatiful introduction to computers and numerical methods for petroleum engineering *"Using the Computer to Solve Petroleum Engineering Problems"* by Melvin Nobles", `(Nobles, 1974)`
 -   Some examples and analytical solutions were borrowed from *"Numerical Solution of Ordinary Differential Equations"*, `(Atkinson, Han, and Stewart, 2009)`.
@@ -25,24 +25,28 @@ Additionally:
 -   The paper on solving ODEs in R `(Soetaert, Petzoldt, and Setzer, 2010)`.
 -   The paper *"Behind and beyond the Matlab ODE suite"* `(Ashino, Nagase, and Vaillancourt, 2000)`.
 
+ODE solvers in this package
+---------------------------
+
 The ODE solvers implemented in R so far:
 
 -   Euler
 -   Euler-Richardson
+-   Verlet
 -   RK4
 -   RK45, Dormand-Prince45
--   Verlet
 
 Installation
 ------------
 
-You can install the latest version of `rODE` from github with:
+You can install the latest development version of `rODE` from github with:
 
 ``` r
-devtools::install_github("f0nzie/rODE")
+# install from the *develop* branch
+devtools::install_github("f0nzie/rODE", ref = "develop")
 ```
 
-Or from `CRAN`:
+Or the `stable` version from `CRAN`:
 
 ``` r
 install.packages("rODE")
@@ -144,7 +148,7 @@ solution <- AdaptiveStepApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-4-1.png)
+![](man/figures/README-unnamed-chunk-5-1.png)
 
 ComparisonRK45App
 -----------------
@@ -186,7 +190,7 @@ solution <- ComparisonRK45App()                          # run the example
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-5-1.png)
+![](man/figures/README-unnamed-chunk-6-1.png)
 
 FallingParticleODE
 ------------------
@@ -224,7 +228,7 @@ solution <- FallingParticleODEApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-6-1.png)
+![](man/figures/README-unnamed-chunk-7-1.png)
 
 KeplerApp
 ---------
@@ -265,7 +269,7 @@ solution <- KeplerApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-7-1.png)
+![](man/figures/README-unnamed-chunk-8-1.png)
 
 KeplerEnergyApp
 ---------------
@@ -312,7 +316,7 @@ solution <- KeplerEnergyApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-8-1.png)
+![](man/figures/README-unnamed-chunk-9-1.png)
 
 LogisticApp
 -----------
@@ -350,7 +354,7 @@ solution <- LogisticApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-9-1.png)
+![](man/figures/README-unnamed-chunk-10-1.png)
 
 PendulumApp
 -----------
@@ -390,7 +394,7 @@ solution <- PendulumApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-10-1.png)
+![](man/figures/README-unnamed-chunk-11-1.png)
 
 PlanetApp
 ---------
@@ -434,7 +438,7 @@ solution <- solution[select_rows,]
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-11-1.png)
+![](man/figures/README-unnamed-chunk-12-1.png)
 
 ProjectileApp
 -------------
@@ -474,7 +478,7 @@ solution <- ProjectileApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-12-1.png)
+![](man/figures/README-unnamed-chunk-13-1.png)
 
 ReactionApp
 -----------
@@ -509,7 +513,7 @@ solution <- ReactionApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-13-1.png)
+![](man/figures/README-unnamed-chunk-14-1.png)
 
 RigidBodyNXFApp
 ---------------
@@ -552,7 +556,7 @@ solution <- RigidBodyNXFApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-14-1.png)
+![](man/figures/README-unnamed-chunk-15-1.png)
 
 SHOApp
 ------
@@ -586,7 +590,7 @@ solution <- SHOApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-15-1.png)
+![](man/figures/README-unnamed-chunk-16-1.png)
 
 SpringRK4App
 ------------
@@ -626,7 +630,7 @@ solution <- SpringRK4App()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-16-1.png)
+![](man/figures/README-unnamed-chunk-17-1.png)
 
 VanderpolApp
 ------------
@@ -662,7 +666,7 @@ solution <- VanderpolApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-17-1.png)
+![](man/figures/README-unnamed-chunk-18-1.png)
 
 VanderpolMuTimeControlApp
 -------------------------
@@ -701,7 +705,7 @@ solution <- VanderpolMuTimeControlApp()
 plot(solution)
 ```
 
-![](man/figures/README-unnamed-chunk-18-1.png)
+![](man/figures/README-unnamed-chunk-19-1.png)
 
 References
 ----------

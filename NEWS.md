@@ -1,4 +1,8 @@
-# # rODE 0.99.5.9007
+# rODE 0.99.5.9008
+* 20171109-201711__
+* release to CRAN as 0.99.6
+
+# rODE 0.99.5.9007
 * 20171109-20171109
 * add exercise using the ODE Solver RK4. find the saturation value at pressure of 3 with a time step 0.05
 * remove Google citations URL link because they do not work
@@ -6,7 +10,7 @@
 * add knitcitations and some bibliography
 * move NAODE vignette to notebooks
 
-# # rODE 0.99.5.9006
+# rODE 0.99.5.9006
 * 20171107-20171107
 * Plot the errors between the ODE solver solutions
 * Create a one-step approach using two nested lapply functions iterating through the all the solvers and all the step sizes.

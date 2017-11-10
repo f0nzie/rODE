@@ -30,15 +30,15 @@ bib1 <- read.bibtex(bib_file1)
 
 # rODE
 
-The goal of `rODE` is to explore R and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
+The goal of `rODE` is to explore `R` and its `S4` classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (`ODE`).
 
 ## Motivation
 
-This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.
+This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available in the package. The objective is learning while coding R, understanding the physics and using the math.
 
-`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at http://opensourcephysics.org. I highly recommended the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375), ``r citep(bib1[c("Gould2017")])``. It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.
+`rODE` has been inspired on the extraordinary physics library for computer simulations **OpenSourcePhyisics**. Take a look at it at  http://opensourcephysics.org. I highly recommend the book [An Introduction to Computer Simulation Methods: Applications To Physical Systems](https://www.compadre.org/OSP/items/detail.cfm?ID=7375), ``r citep(bib1[c("Gould2017")])``. It has helped me a lot in understanding the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.
 
-Additionally:
+Additionally I have consulted these sources during the developing of the package `rODE`:
 
 * The beatiful introduction to computers and numerical methods for petroleum engineering *"Using the Computer to Solve Petroleum Engineering Problems"* by Melvin Nobles", ``r citep(bib1[c("Nobles1974")])``
 * Some examples and analytical solutions were borrowed from *"Numerical Solution of Ordinary Differential Equations"*, ``r citep(bib1[c("Atkinson2009")])``.
@@ -50,23 +50,25 @@ Additionally:
 * The paper *"Behind and beyond the Matlab ODE suite"* ``r citep(bib1[c("Ashino2000")])``.
 
 
+## ODE solvers in this package
 The ODE solvers implemented in R so far:
 
 * Euler
 * Euler-Richardson
+* Verlet
 * RK4
 * RK45, Dormand-Prince45
-* Verlet
 
 
 ## Installation
-You can install the latest version of `rODE` from github with:
+You can install the latest development version of `rODE` from github with:
 
-```{r gh-installation, eval = FALSE}
-devtools::install_github("f0nzie/rODE")
+```{r, eval = FALSE}
+# install from the *develop* branch
+devtools::install_github("f0nzie/rODE", ref = "develop")
 ```
 
-Or from `CRAN`:
+Or the `stable` version from `CRAN`:
 
 ```{r eval=FALSE}
 install.packages("rODE")

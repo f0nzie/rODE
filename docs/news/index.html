@@ -124,6 +124,62 @@
     </div>
 
     <div class="contents">
+    <div id="rode-0-99-5-9008" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rode-0-99-5-9008" class="anchor"></a>rODE 0.99.5.9008</h1>
+<ul>
+<li>20171109-201711__</li>
+<li>release to CRAN as 0.99.6</li>
+</ul>
+</div>
+    <div id="rode-0-99-5-9007" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rode-0-99-5-9007" class="anchor"></a>rODE 0.99.5.9007</h1>
+<ul>
+<li>20171109-20171109</li>
+<li>add exercise using the ODE Solver RK4. find the saturation value at pressure of 3 with a time step 0.05</li>
+<li>remove Google citations URL link because they do not work</li>
+<li>add file <code>rODE_biblio.bib</code> edited with JabRef</li>
+<li>add knitcitations and some bibliography</li>
+<li>move NAODE vignette to notebooks</li>
+</ul>
+</div>
+    <div id="rode-0-99-5-9006" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rode-0-99-5-9006" class="anchor"></a>rODE 0.99.5.9006</h1>
+<ul>
+<li>20171107-20171107</li>
+<li>Plot the errors between the ODE solver solutions</li>
+<li>Create a one-step approach using two nested lapply functions iterating through the all the solvers and all the step sizes.</li>
+<li>Using a ODEFactory to send only the name of the solvers instead of composing an implementation for each of the solvers</li>
+<li>Show two solvers first: Euler and Runge-Kutta. Compare results</li>
+<li>Start with Euler solver</li>
+<li>select step sizes to be 0.2., 0.1, 0.05</li>
+<li>add new vignette <code>Muskat-MBal</code>
+</li>
+</ul>
+</div>
+    <div id="rode-0-99-5-9005" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rode-0-99-5-9005" class="anchor"></a>rODE 0.99.5.9005</h1>
+<ul>
+<li>20171105 - 20171106</li>
+<li>add vignette <code>ErrorEuler</code> that shows using an internal accumulator in the ODE solver class.</li>
+<li>
+<code>ErrorEuler</code> is similar to <code>ODETest</code> but differs in the way the loop has been built. The constructor receives an argument for the initial conditions of the variables. The loop is not controlled by time -as in <code>ODETest</code>-, but by the number of steps. The objective is to calculate and plot the step size versus the error. Two log-log plots are produced. A exact solution value is also calculated to find the error.</li>
+<li>modify vignette <code>Comparison</code> that shows the use of the internal accumulator.</li>
+</ul>
+</div>
+    <div id="rode-0-99-5-9004" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rode-0-99-5-9004" class="anchor"></a>rODE 0.99.5.9004</h1>
+<ul>
+<li>20171104</li>
+<li>test if badges update build status</li>
+<li>push feature site built with pkgdown to gh-pages</li>
+<li>change badges from master to develop</li>
+</ul>
+</div>
     <div id="rode-0-99-5-9003" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rode-0-99-5-9003" class="anchor"></a>rODE 0.99.5.9003</h1>
@@ -173,16 +229,6 @@
 <li>testing rODE in osX. Passed.</li>
 </ul>
 </div>
-    <div id="rode-0-99-4-9006" class="section level1">
-<h1 class="hasAnchor">
-<a href="#rode-0-99-4-9006" class="anchor"></a>rODE 0.99.4.9006</h1>
-<ul>
-<li>add NEWS.md</li>
-<li>add file cran-comments.md</li>
-<li>add pre-commit hook for README in Windows</li>
-<li>couple of changes in README</li>
-</ul>
-</div>
     <div id="rode-0-99-4-9005" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rode-0-99-4-9005" class="anchor"></a>rODE 0.99.4.9005</h1>
@@ -199,8 +245,13 @@
 <li>Add new example SHOApp.R</li>
 </ul>
 </div>
-    NA
-    NA
+    <div id="rode-0-99-4" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rode-0-99-4" class="anchor"></a>rODE 0.99.4</h1>
+<ul>
+<li>Released by CRAN on May 28, 2017</li>
+</ul>
+</div>
     NA
     </div>
   </div>
@@ -209,15 +260,18 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#rode-0-99-5-9008">0.99.5.9008</a></li>
+        <li><a href="#rode-0-99-5-9007">0.99.5.9007</a></li>
+        <li><a href="#rode-0-99-5-9006">0.99.5.9006</a></li>
+        <li><a href="#rode-0-99-5-9005">0.99.5.9005</a></li>
+        <li><a href="#rode-0-99-5-9004">0.99.5.9004</a></li>
         <li><a href="#rode-0-99-5-9003">0.99.5.9003</a></li>
         <li><a href="#rode-0-99-5-9002">0.99.5.9002</a></li>
         <li><a href="#rode-0-99-5-9001">0.99.5.9001</a></li>
         <li><a href="#rode-0-99-5-9000">0.99.5.9000</a></li>
         <li><a href="#rode-0-99-5">0.99.5</a></li>
-        <li><a href="#rode-0-99-4-9006">0.99.4.9006</a></li>
         <li><a href="#rode-0-99-4-9005">0.99.4.9005</a></li>
-        <li><a href="#NA">NA</a></li>
-        <li><a href="#NA">NA</a></li>
+        <li><a href="#rode-0-99-4">0.99.4</a></li>
         <li><a href="#NA">NA</a></li>
       </ul>
     </div>
