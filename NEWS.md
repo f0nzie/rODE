@@ -1,5 +1,9 @@
+# rODE 0.99.6
+* 20171110
+* approved by CRAN as 0.99.6
+
 # rODE 0.99.5.9008
-* 20171109-201711__
+* 20171110
 * release to CRAN as 0.99.6
 
 # rODE 0.99.5.9007
@@ -43,13 +47,11 @@
 * Use only 17 examples because adding more causes a problem in 00Index producing blank lines.
 * add demo folder with 19 examples
 
-
 # rODE 0.99.5.9001
 * reorganize roxygen2 comments to have better visualization in help pages
 * add constructors to ODE, ODESOlver, ODESolverFactory
 * move class generics to its own class file
 * add travis, coverage, cran badges
-
 
 # rODE 0.99.5.9000
 * 20170718
