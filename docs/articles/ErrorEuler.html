@@ -57,6 +57,9 @@
       <a href="../articles/Kepler.html">Kepler. Interaction between two planets</a>
     </li>
     <li>
+      <a href="../articles/Muskat-MBal.html">Muskat Material Balance</a>
+    </li>
+    <li>
       <a href="../articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
     </li>
     <li>
@@ -96,7 +99,7 @@
       <h1>Error vs step size with Euler method</h1>
                         <h4 class="author">Alfonso R. Reyes</h4>
             
-            <h4 class="date">2017-11-07</h4>
+            <h4 class="date">2017-11-09</h4>
           </div>
 
     
@@ -197,20 +200,20 @@ get_error &lt;-<span class="st"> </span><span class="cf">function</span>(stepSiz
     df &lt;-<span class="st"> </span><span class="kw">EulerErrorApp</span>(stepSize)
     last_row &lt;-<span class="st"> </span>df[<span class="kw">nrow</span>(df),]
     error &lt;-<span class="st"> </span>(last_row<span class="op">$</span>TrueY <span class="op">-</span><span class="st"> </span>last_row<span class="op">$</span>y) <span class="op">/</span><span class="st"> </span>last_row<span class="op">$</span>TrueY
-    <span class="kw">c</span>(<span class="dt">step =</span> stepSize, <span class="dt">error =</span> error, <span class="dt">n_steps =</span> last_row<span class="op">$</span>steps)
+    <span class="kw">c</span>(<span class="dt">step =</span> stepSize, <span class="dt">odeY =</span> last_row<span class="op">$</span>y ,<span class="dt">TrueY =</span> last_row<span class="op">$</span>TrueY, <span class="dt">error =</span> error, <span class="dt">n_steps =</span> last_row<span class="op">$</span>steps)
 }
 
 step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>, <span class="fl">0.01</span>, <span class="fl">0.001</span>, <span class="fl">0.0001</span>)
 errors &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">sapply</span>(step_sizes, get_error)))
 errors</code></pre></div>
-<pre><code>##     step        error n_steps
-## 1 1.0000 1.0000000000       1
-## 2 0.5000 0.6519472022       2
-## 3 0.2500 0.3854692789       4
-## 4 0.1000 0.1733851024      10
-## 5 0.0100 0.0187502990     100
-## 6 0.0010 0.0018904783    1000
-## 7 0.0001 0.0001892038   10000</code></pre>
+<pre><code>##     step      odeY     TrueY        error n_steps
+## 1 1.0000 0.0000000 0.7182818 1.0000000000       1
+## 2 0.5000 0.2500000 0.7182818 0.6519472022       2
+## 3 0.2500 0.4414062 0.7182818 0.3854692789       4
+## 4 0.1000 0.5937425 0.7182818 0.1733851024      10
+## 5 0.0100 0.7048138 0.7182818 0.0187502990     100
+## 6 0.0010 0.7169239 0.7182818 0.0018904783    1000
+## 7 0.0001 0.7181459 0.7182818 0.0001892038   10000</code></pre>
 </div>
 <div id="plot-the-errors-vs-step-size" class="section level2">
 <h2 class="hasAnchor">

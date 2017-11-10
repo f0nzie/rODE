@@ -57,6 +57,9 @@
       <a href="articles/Kepler.html">Kepler. Interaction between two planets</a>
     </li>
     <li>
+      <a href="articles/Muskat-MBal.html">Muskat Material Balance</a>
+    </li>
+    <li>
       <a href="articles/Pendulum.html">Pendulum with Euler-Richardson ODE solver</a>
     </li>
     <li>
@@ -103,8 +106,23 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#rode" class="anchor"></a>rODE</h1></div>
 <p>The goal of <code>rODE</code> is to explore R and its <code>S4</code> classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (<code>ODE</code>).</p>
+<div id="motivation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#motivation" class="anchor"></a>Motivation</h2>
 <p>This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.</p>
-<p><code>rODE</code> has been inspired on the extraordinary physics library for computer simulations <strong>OpenSourcePhyisics</strong>. Take a look at <a href="http://opensourcephysics.org" class="uri">http://opensourcephysics.org</a>.</p>
+<p><code>rODE</code> has been inspired on the extraordinary physics library for computer simulations <strong>OpenSourcePhyisics</strong>. Take a look at <a href="http://opensourcephysics.org" class="uri">http://opensourcephysics.org</a>. I highly recommended the book <a href="https://www.compadre.org/OSP/items/detail.cfm?ID=7375">An Introduction to Computer Simulation Methods: Applications To Physical Systems</a>, <code>(Gould, Tobochnik, and Christian, 2017)</code>. It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.</p>
+<p>Additionally:</p>
+<ul>
+<li>The beatiful introduction to computers and numerical methods for petroleum engineering <em>“Using the Computer to Solve Petroleum Engineering Problems”</em> by Melvin Nobles“, <code>(Nobles, 1974)</code>
+</li>
+<li>Some examples and analytical solutions were borrowed from <em>“Numerical Solution of Ordinary Differential Equations”</em>, <code>(Atkinson, Han, and Stewart, 2009)</code>.</li>
+<li>The paper <em>“Numerical Reservoir Simulation Using an Ordinary-Differential-Equations Integrator”</em>, <code>(Sincovec, 1975)</code>.</li>
+<li>The thesis <em>“Numerical Methods For Solution of Diﬀerential Equations”</em>, <code>(Ritschel, 2013)</code>.</li>
+<li>The paper “On Dormand-Prince Method” where I could learn about the Dormand-Prince ODE solver, <code>(Kimura, 2009)</code>.</li>
+<li>The paper “A Family of Embedded Runge-Kutta formulae”, <code>(Dormand and Prince, 1980)</code>, where you can see the derivation of the ODE solver <code>RK-45</code>.</li>
+<li>The paper on solving ODEs in R <code>(Soetaert, Petzoldt, and Setzer, 2010)</code>.</li>
+<li>The paper <em>“Behind and beyond the Matlab ODE suite”</em> <code>(Ashino, Nagase, and Vaillancourt, 2000)</code>.</li>
+</ul>
 <p>The ODE solvers implemented in R so far:</p>
 <ul>
 <li>Euler</li>
@@ -113,6 +131,7 @@
 <li>RK45, Dormand-Prince45</li>
 <li>Verlet</li>
 </ul>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -214,11 +233,10 @@ AdaptiveStepApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
     }
     <span class="kw">return</span>(data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector))
 }
-
 <span class="co"># run application</span>
 solution &lt;-<span class="st"> </span><span class="kw">AdaptiveStepApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="672"></p>
 </div>
 <div id="comparisonrk45app" class="section level2">
 <h2 class="hasAnchor">
@@ -236,9 +254,9 @@ solution &lt;-<span class="st"> </span><span class="kw">AdaptiveStepApp</span>()
      ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/RK45-class.html">RK45</a></span>(ode)                   <span class="co"># select the ODE solver</span>
      ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(ode_solver, <span class="dv">1</span>)      <span class="co"># set the step</span>
      ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setTolerance-method.html">setTolerance</a></span>(ode_solver, <span class="fl">1e-8</span>)  <span class="co"># set the tolerance</span>
-     time &lt;-<span class="st">  </span><span class="dv">0</span>
      rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
-     i &lt;-<span class="st"> </span><span class="dv">1</span>
+     time &lt;-<span class="st">  </span><span class="dv">0</span>
+     i    &lt;-<span class="st"> </span><span class="dv">1</span>
      <span class="cf">while</span> (time <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>) {
          rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t  =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>state[<span class="dv">2</span>],
                                 <span class="dt">s1 =</span> <span class="kw"><a href="reference/getState-method.html">getState</a></span>(ode_solver<span class="op">@</span>ode)[<span class="dv">1</span>],
@@ -257,7 +275,7 @@ solution &lt;-<span class="st"> </span><span class="kw">AdaptiveStepApp</span>()
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">ComparisonRK45App</span>()                          <span class="co"># run the example</span>
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div id="fallingparticleode" class="section level2">
 <h2 class="hasAnchor">
@@ -271,8 +289,8 @@ FallingParticleODEApp &lt;-<span class="st"> </span><span class="cf">function</s
     <span class="co"># initial values</span>
     initial_y &lt;-<span class="st"> </span><span class="dv">10</span>
     initial_v &lt;-<span class="st"> </span><span class="dv">0</span>
-    dt &lt;-<span class="st"> </span><span class="fl">0.01</span>
-    ball &lt;-<span class="st"> </span><span class="kw">FallingParticleODE</span>(initial_y, initial_v)
+    dt        &lt;-<span class="st"> </span><span class="fl">0.01</span>
+    ball   &lt;-<span class="st"> </span><span class="kw">FallingParticleODE</span>(initial_y, initial_v)
     solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/Euler-class.html">Euler</a></span>(ball)                        <span class="co"># set the ODE solver</span>
     solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(solver, dt)            <span class="co"># set the step</span>
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
@@ -292,7 +310,7 @@ FallingParticleODEApp &lt;-<span class="st"> </span><span class="cf">function</s
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">FallingParticleODEApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="672"></p>
 </div>
 <div id="keplerapp" class="section level2">
 <h2 class="hasAnchor">
@@ -306,15 +324,12 @@ solution &lt;-<span class="st"> </span><span class="kw">FallingParticleODEApp</s
 <span class="kw"><a href="reference/importFromExamples.html">importFromExamples</a></span>(<span class="st">"Kepler.R"</span>) <span class="co"># source the class Kepler</span>
 
 KeplerApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
-
     <span class="co"># set the orbit into a predefined state.</span>
-    r &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>)                                   <span class="co"># orbit radius</span>
-    v &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>)                                <span class="co"># velocity</span>
+    r  &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>)                                   <span class="co"># orbit radius</span>
+    v  &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>)                                <span class="co"># velocity</span>
     dt &lt;-<span class="st"> </span><span class="fl">0.1</span>
-
     planet &lt;-<span class="st"> </span><span class="kw">Kepler</span>(r, v)
     solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/RK45-class.html">RK45</a></span>(planet)
-
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="cf">while</span> (planet<span class="op">@</span>state[<span class="dv">5</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">10</span>) {
@@ -333,7 +348,7 @@ KeplerApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span c
 
 solution &lt;-<span class="st"> </span><span class="kw">KeplerApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div id="keplerenergyapp" class="section level2">
 <h2 class="hasAnchor">
@@ -346,11 +361,11 @@ solution &lt;-<span class="st"> </span><span class="kw">KeplerApp</span>()
 
 KeplerEnergyApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
     <span class="co"># initial values</span>
-    x  &lt;-<span class="st"> </span><span class="dv">1</span>
-    vx &lt;-<span class="st"> </span><span class="dv">0</span>
-    y  &lt;-<span class="st"> </span><span class="dv">0</span>
-    vy &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>pi
-    dt &lt;-<span class="st"> </span><span class="fl">0.01</span>
+    x   &lt;-<span class="st"> </span><span class="dv">1</span>
+    vx  &lt;-<span class="st"> </span><span class="dv">0</span>
+    y   &lt;-<span class="st"> </span><span class="dv">0</span>
+    vy  &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>pi
+    dt  &lt;-<span class="st"> </span><span class="fl">0.01</span>
     tol &lt;-<span class="st"> </span><span class="fl">1e-3</span>
     particle &lt;-<span class="st"> </span><span class="kw">KeplerEnergy</span>()
     particle &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(particle, <span class="kw">c</span>(x, vx, y, vy, <span class="dv">0</span>))
@@ -375,10 +390,9 @@ KeplerEnergyApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
     <span class="kw">return</span>(DT)
 }
 
-
 solution &lt;-<span class="st"> </span><span class="kw">KeplerEnergyApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div id="logisticapp" class="section level2">
 <h2 class="hasAnchor">
@@ -392,7 +406,7 @@ LogisticApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
     vx &lt;-<span class="st"> </span><span class="dv">0</span>
     r  &lt;-<span class="st"> </span><span class="dv">2</span>        <span class="co"># Malthusian parameter (rate of maximum population growth)</span>
     K  &lt;-<span class="st"> </span><span class="fl">10.0</span>     <span class="co"># carrying capacity of the environment</span>
-    dt   &lt;-<span class="st"> </span><span class="fl">0.01</span>; tol  &lt;-<span class="st"> </span><span class="fl">1e-3</span>; tmax &lt;-<span class="st"> </span><span class="dv">10</span>
+    dt &lt;-<span class="st"> </span><span class="fl">0.01</span>; tol  &lt;-<span class="st"> </span><span class="fl">1e-3</span>; tmax &lt;-<span class="st"> </span><span class="dv">10</span>
     population &lt;-<span class="st"> </span><span class="kw">Logistic</span>()
     population &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(population, <span class="kw">c</span>(x, vx, <span class="dv">0</span>), r, K)
     odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/Verlet-class.html">Verlet</a></span>(population)
@@ -401,7 +415,7 @@ LogisticApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="cf">while</span> (<span class="kw"><a href="reference/getTime-method.html">getTime</a></span>(population) <span class="op">&lt;=</span><span class="st"> </span>tmax) {
-        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t =</span> <span class="kw"><a href="reference/getTime-method.html">getTime</a></span>(population),
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t  =</span> <span class="kw"><a href="reference/getTime-method.html">getTime</a></span>(population),
                                <span class="dt">s1 =</span> population<span class="op">@</span>state[<span class="dv">1</span>],
                                <span class="dt">s2 =</span> population<span class="op">@</span>state[<span class="dv">2</span>])
         population &lt;-<span class="st"> </span><span class="kw"><a href="reference/doStep-method.html">doStep</a></span>(population)
@@ -413,7 +427,7 @@ LogisticApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">LogisticApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="pendulumapp" class="section level2">
 <h2 class="hasAnchor">
@@ -426,9 +440,9 @@ solution &lt;-<span class="st"> </span><span class="kw">LogisticApp</span>()
 
 PendulumApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
     <span class="co"># initial values</span>
-    theta &lt;-<span class="st"> </span><span class="fl">0.2</span>
+    theta    &lt;-<span class="st"> </span><span class="fl">0.2</span>
     thetaDot &lt;-<span class="st"> </span><span class="dv">0</span>
-    dt &lt;-<span class="st"> </span><span class="fl">0.1</span>
+    dt       &lt;-<span class="st"> </span><span class="fl">0.1</span>
     ode &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">"ODE"</span>)
     pendulum &lt;-<span class="st"> </span><span class="kw">Pendulum</span>()
     pendulum<span class="op">@</span>state[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">0</span>      <span class="co"># set time to zero, t = 0</span>
@@ -438,8 +452,8 @@ PendulumApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
     rowvec &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="cf">while</span> (pendulum<span class="op">@</span>state[<span class="dv">3</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">40</span>)    {
-        rowvec[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t  =</span> pendulum<span class="op">@</span>state[<span class="dv">3</span>],    <span class="co"># time</span>
-                            <span class="dt">theta =</span> pendulum<span class="op">@</span>state[<span class="dv">1</span>], <span class="co"># angle</span>
+        rowvec[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t     =</span> pendulum<span class="op">@</span>state[<span class="dv">3</span>],    <span class="co"># time</span>
+                            <span class="dt">theta =</span> pendulum<span class="op">@</span>state[<span class="dv">1</span>],    <span class="co"># angle</span>
                             <span class="dt">thetadot =</span> pendulum<span class="op">@</span>state[<span class="dv">2</span>]) <span class="co"># derivative of angle</span>
         pendulum &lt;-<span class="st"> </span><span class="kw"><a href="reference/step-method.html">step</a></span>(pendulum)
         i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
@@ -450,7 +464,7 @@ PendulumApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">PendulumApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="672"></p>
 </div>
 <div id="planetapp" class="section level2">
 <h2 class="hasAnchor">
@@ -486,13 +500,12 @@ PlanetApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span c
     DT &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowvec)
     <span class="kw">return</span>(DT)
 }
-
 <span class="co"># run the application</span>
 solution &lt;-<span class="st"> </span><span class="kw">PlanetApp</span>()
 select_rows &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(solution), <span class="dv">10</span>)      <span class="co"># do not overplot</span>
 solution &lt;-<span class="st"> </span>solution[select_rows,]
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="672"></p>
 </div>
 <div id="projectileapp" class="section level2">
 <h2 class="hasAnchor">
@@ -508,7 +521,6 @@ ProjectileApp &lt;-<span class="st"> </span><span class="cf">function</span>(<sp
     x &lt;-<span class="st"> </span><span class="dv">0</span>; vx &lt;-<span class="st"> </span><span class="dv">10</span>; y &lt;-<span class="st"> </span><span class="dv">0</span>; vy &lt;-<span class="st"> </span><span class="dv">10</span>
     state &lt;-<span class="st"> </span><span class="kw">c</span>(x, vx, y, vy, <span class="dv">0</span>)                        <span class="co"># state vector</span>
     dt &lt;-<span class="st"> </span><span class="fl">0.01</span>
-
     projectile &lt;-<span class="st"> </span><span class="kw">Projectile</span>()
     projectile &lt;-<span class="st"> </span><span class="kw"><a href="reference/setState-method.html">setState</a></span>(projectile, x, vx, y, vy)
     projectile<span class="op">@</span>odeSolver &lt;-<span class="st"> </span><span class="kw"><a href="reference/init-method.html">init</a></span>(projectile<span class="op">@</span>odeSolver, <span class="fl">0.123</span>)
@@ -516,7 +528,7 @@ ProjectileApp &lt;-<span class="st"> </span><span class="cf">function</span>(<sp
     rowV &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="cf">while</span> (projectile<span class="op">@</span>state[<span class="dv">3</span>] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>)    {
-        rowV[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t =</span> projectile<span class="op">@</span>state[<span class="dv">5</span>],
+        rowV[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t  =</span> projectile<span class="op">@</span>state[<span class="dv">5</span>],
                           <span class="dt">x  =</span> projectile<span class="op">@</span>state[<span class="dv">1</span>],
                           <span class="dt">vx =</span> projectile<span class="op">@</span>state[<span class="dv">2</span>],
                           <span class="dt">y  =</span> projectile<span class="op">@</span>state[<span class="dv">3</span>],     <span class="co"># vertical position</span>
@@ -530,7 +542,7 @@ ProjectileApp &lt;-<span class="st"> </span><span class="cf">function</span>(<sp
 
 solution &lt;-<span class="st"> </span><span class="kw">ProjectileApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="672"></p>
 </div>
 <div id="reactionapp" class="section level2">
 <h2 class="hasAnchor">
@@ -543,9 +555,8 @@ solution &lt;-<span class="st"> </span><span class="kw">ProjectileApp</span>()
 <span class="kw"><a href="reference/importFromExamples.html">importFromExamples</a></span>(<span class="st">"Reaction.R"</span>)      <span class="co"># source the class</span>
 
 ReactionApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>) {
-    X &lt;-<span class="st"> </span><span class="dv">1</span>; Y &lt;-<span class="st"> </span><span class="dv">5</span>;
+    X  &lt;-<span class="st"> </span><span class="dv">1</span>; Y &lt;-<span class="st"> </span><span class="dv">5</span>;
     dt &lt;-<span class="st"> </span><span class="fl">0.1</span>
-
     reaction &lt;-<span class="st"> </span><span class="kw">Reaction</span>(<span class="kw">c</span>(X, Y, <span class="dv">0</span>))
     solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/RK4-class.html">RK4</a></span>(reaction)
     rowvec &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
@@ -563,7 +574,7 @@ ReactionApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
 
 solution &lt;-<span class="st"> </span><span class="kw">ReactionApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="rigidbodynxfapp" class="section level2">
 <h2 class="hasAnchor">
@@ -580,8 +591,7 @@ RigidBodyNXFApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
     y1 &lt;-<span class="st"> </span><span class="dv">0</span>   <span class="co"># initial y1 value</span>
     y2 &lt;-<span class="st"> </span><span class="dv">1</span>    <span class="co"># initial y2 value</span>
     y3 &lt;-<span class="st"> </span><span class="dv">1</span>    <span class="co"># initial y3 value</span>
-    dt        &lt;-<span class="st"> </span><span class="fl">0.01</span> <span class="co"># delta time for step</span>
-
+    dt &lt;-<span class="st"> </span><span class="fl">0.01</span> <span class="co"># delta time for step</span>
     body &lt;-<span class="st"> </span><span class="kw">RigidBodyNXF</span>(y1, y2, y3)
     solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/Euler-class.html">Euler</a></span>(body)
     solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/setStepSize-method.html">setStepSize</a></span>(solver, dt)
@@ -604,7 +614,7 @@ RigidBodyNXFApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
 <span class="co"># get the data table from the app</span>
 solution &lt;-<span class="st"> </span><span class="kw">RigidBodyNXFApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="672"></p>
 </div>
 <div id="shoapp" class="section level2">
 <h2 class="hasAnchor">
@@ -635,7 +645,7 @@ SHOApp &lt;-<span class="st"> </span><span class="cf">function</span>(...) {
 
 solution &lt;-<span class="st"> </span><span class="kw">SHOApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="672"></p>
 </div>
 <div id="springrk4app" class="section level2">
 <h2 class="hasAnchor">
@@ -672,7 +682,7 @@ SpringRK4App &lt;-<span class="st"> </span><span class="cf">function</span>(<spa
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">SpringRK4App</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="672"></p>
 </div>
 <div id="vanderpolapp" class="section level2">
 <h2 class="hasAnchor">
@@ -692,7 +702,7 @@ VanderpolApp &lt;-<span class="st"> </span><span class="cf">function</span>(<spa
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="cf">while</span> (rigid_body<span class="op">@</span>state[<span class="dv">3</span>] <span class="op">&lt;=</span><span class="st"> </span><span class="dv">20</span>) {
-        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t =</span>  rigid_body<span class="op">@</span>state[<span class="dv">3</span>],
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t  =</span> rigid_body<span class="op">@</span>state[<span class="dv">3</span>],
                                <span class="dt">y1 =</span> rigid_body<span class="op">@</span>state[<span class="dv">1</span>],
                                <span class="dt">y2 =</span> rigid_body<span class="op">@</span>state[<span class="dv">2</span>])
         solver &lt;-<span class="st"> </span><span class="kw"><a href="reference/step-method.html">step</a></span>(solver)
@@ -702,11 +712,10 @@ VanderpolApp &lt;-<span class="st"> </span><span class="cf">function</span>(<spa
     DT &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
     <span class="kw">return</span>(DT)
 }
-
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">VanderpolApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="672"></p>
 </div>
 <div id="vanderpolmutimecontrolapp" class="section level2">
 <h2 class="hasAnchor">
@@ -727,7 +736,7 @@ VanderpolMuTimeControlApp &lt;-<span class="st"> </span><span class="cf">functio
     rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
     i &lt;-<span class="st"> </span><span class="dv">1</span>
     <span class="cf">while</span> (rigid_body<span class="op">@</span>state[<span class="dv">3</span>] <span class="op">&lt;=</span><span class="st"> </span>tmax) {
-        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t =</span>  rigid_body<span class="op">@</span>state[<span class="dv">3</span>],
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">t  =</span> rigid_body<span class="op">@</span>state[<span class="dv">3</span>],
                                <span class="dt">y1 =</span> rigid_body<span class="op">@</span>state[<span class="dv">1</span>],
                                <span class="dt">y2 =</span> rigid_body<span class="op">@</span>state[<span class="dv">2</span>]
                                )
@@ -742,7 +751,21 @@ VanderpolMuTimeControlApp &lt;-<span class="st"> </span><span class="cf">functio
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">VanderpolMuTimeControlApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-18-1.png" width="672"></p>
+</div>
+<div id="references" class="section level2">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+<p>The following books and papers were consulted during the development of this package:</p>
+<p>[1] R. Ashino, M. Nagase and R. Vaillancourt. “Behind and beyond the Matlab ODE suite”. In: <em>Computers &amp; Mathematics with Applications</em> 40.4-5 (Aug. 2000), pp. 491-512. DOI: 10.1016/s0898-1221(00)00175-9.</p>
+<p>[2] K. Atkinson, W. Han and D. E. Stewart. <em>Numerical Solution of Ordinary Differential Equations</em>. Wiley, 2009. ISBN: 978-0-470-04294-6.</p>
+<p>[3] J. R. Dormand and P. J. Prince. “A family of embedded Runge-Kutta formulae”. In: <em>Journal of computational and applied mathematics</em> 6.1 (Mar. 1980), pp. 19-26. DOI: 10.1016/0771-050x(80)90013-3.</p>
+<p>[4] H. Gould, J. Tobochnik and W. Christian. <em>An Introduction to Computer Simulation Methods: Applications To Physical Systems</em>. CreateSpace Independent Publishing Platform, 2017. ISBN: 978-1974427475.</p>
+<p>[5] T. Kimura. “On dormand-prince method”. In: <em>Retrieved April</em> 27 (2009), p. 2014. &lt;URL: <a href="http://depa.fquim.unam.mx/amyd/archivero/DormandPrince_19856.pdf" class="uri">http://depa.fquim.unam.mx/amyd/archivero/DormandPrince_19856.pdf</a>&gt;.</p>
+<p>[6] M. A. Nobles. <em>Using the Computer to Solve Petroleum Engineering Problems</em>. Gulf Publishing Co, 1974. ISBN: 978-0872018860.</p>
+<p>[7] T. Ritschel. “Numerical Methods For Solution of Di<u>erential Equations”. Cand. thesis. DTU supervisor: John Bagterp Jørgensen, <a href="mailto:jbjo@dtu.dk">jbjo@dtu.dk</a>, DTU Compute. Technical University of Denmark, Department of Applied Mathematics and Computer Science, 2013, p. 224. &lt;URL: <a href="http://www.compute.dtu.dk/English.aspx" class="uri">http://www.compute.dtu.dk/English.aspx</a>&gt;.</u></p>
+<p>[8] R. Sincovec. “Numerical Reservoir Simulation Using an Ordinary-Differential-Equations Integrator”. In: <em>Society of Petroleum Engineers Journal</em> 15.03 (Jun. 1975), pp. 255-264. DOI: 10.2118/5104-pa.</p>
+<p>[9] K. Soetaert, T. Petzoldt and R. W. Setzer. “Solving differential equations in R: package deSolve”. In: <em>Journal of Statistical Software</em> 33 (2010).</p>
 </div>
 </div>
 </div>

@@ -1,3 +1,11 @@
+# # rODE 0.99.5.9007
+* 20171109-20171109
+* add exercise using the ODE Solver RK4. find the saturation value at pressure of 3 with a time step 0.05
+* remove Google citations URL link because they do not work
+* add file `rODE_biblio.bib` edited with JabRef
+* add knitcitations and some bibliography
+* move NAODE vignette to notebooks
+
 # # rODE 0.99.5.9006
 * 20171107-20171107
 * Plot the errors between the ODE solver solutions
@@ -8,20 +16,17 @@
 * select step sizes to be 0.2., 0.1, 0.05
 * add new vignette `Muskat-MBal`
 
-
-
 # rODE 0.99.5.9005
 * 20171105 - 20171106
 * add vignette `ErrorEuler` that shows using an internal accumulator in the ODE solver class.
 * `ErrorEuler` is similar to `ODETest` but differs in the way the loop has been built. The constructor receives an argument for the initial conditions of the variables. The loop is not controlled by time -as in `ODETest`-, but by the number of steps. The objective is to calculate and plot the step size versus the error. Two log-log plots are produced. A exact solution value is also calculated to find the error.
 * modify vignette `Comparison` that shows the use of the internal accumulator.
 
-
 # rODE 0.99.5.9004
-* 20171104 - test if badges update build status
+* 20171104
+* test if badges update build status
 * push feature site built with pkgdown to gh-pages
 * change badges from master to develop
-
 
 # rODE 0.99.5.9003
 * 20171103

@@ -119,61 +119,52 @@ $(document).ready(function () {
 </div>
 
 
-<p>In this vignette we will use the example from the book “Numerical Solutions of Ordinary Differential Equations” by Atkinson, Han and Stewart. <a href="https://books.google.com/books/about/Numerical_Solution_of_Ordinary_Different.html?id=SBvQ4ThK930C">Google Books</a></p>
-<div id="build-the-ode-class-without-class-accumulator" class="section level2">
-<h2>Build the ODE class (without class accumulator)</h2>
-<div id="comparison-of-solutions-rk45-vs-analytical-solution" class="section level3">
-<h3>Comparison of solutions: RK45 vs analytical solution</h3>
 <p>For the differential equation:</p>
-<p><span class="math display">\[\dfrac{dy}{dt} = - y\]</span> the analytical solution is: <span class="math display">\[y(t) = e^{-t}\]</span></p>
-<p>Find the errors if: <span class="math display">\[y(0) = 1\]</span></p>
+<p><span class="math display">\[\dfrac{dy}{dt} = y + 2t\]</span> the general analytical solution is: <span class="math display">\[y(t) = C_1e^{t} - 2t - 2\]</span></p>
+<p>Find the errors given this initial condition: <span class="math display">\[y(0) = 1\]</span> which allows to find: <span class="math display">\[C_1 = 3\]</span></p>
 <pre class="r"><code>library(rODE)
 
-# ODETest.R
-
-setClass(&quot;ODETest&quot;, slots = c(
+setClass(&quot;MuskatTest&quot;, slots = c(
     stack = &quot;environment&quot;           # environment object inside the class
     ),
     contains = c(&quot;ODE&quot;)
     )
 
-setMethod(&quot;initialize&quot;, &quot;ODETest&quot;, function(.Object, ...) {
+setMethod(&quot;initialize&quot;, &quot;MuskatTest&quot;, function(.Object, ...) {
     .Object@stack$n &lt;-  0               # &quot;n&quot; belongs to the class environment
-    .Object@state   &lt;- c(1.0, 0.0)
+    .Object@state   &lt;- c(1.0, 0.0)      # initial value
     return(.Object)
 })
 
-setMethod(&quot;getExactSolution&quot;, &quot;ODETest&quot;, function(object, t, ...) {
+setMethod(&quot;getExactSolution&quot;, &quot;MuskatTest&quot;, function(object, t, ...) {
     # analytical solution
-    return(exp(-t))
+    return(3 * exp(t) - 2 *t - 2)       # constant C1 = 3 
 })
 
-setMethod(&quot;getState&quot;, &quot;ODETest&quot;, function(object, ...) {
+setMethod(&quot;getState&quot;, &quot;MuskatTest&quot;, function(object, ...) {
     object@state
 })
 
-setMethod(&quot;getRate&quot;, &quot;ODETest&quot;, function(object, state, ...) {
-    object@rate[1] &lt;- -state[1]
+setMethod(&quot;getRate&quot;, &quot;MuskatTest&quot;, function(object, state, ...) {
+    object@rate[1] &lt;- state[1] + 2 * state[2]
     object@rate[2] &lt;-  1                        # rate of change of time, dt/dt
     object@stack$n &lt;-  object@stack$n + 1       # add 1 to the rate count
     object@rate
 })
 
 # constructor
-ODETest &lt;- function() {
-    odetest &lt;- new(&quot;ODETest&quot;)
+MuskatTest &lt;- function() {
+    odetest &lt;- new(&quot;MuskatTest&quot;)
     odetest
 }</code></pre>
 <pre><code>## [1] &quot;initialize&quot;
 ## [1] &quot;getExactSolution&quot;
 ## [1] &quot;getState&quot;
 ## [1] &quot;getRate&quot;</code></pre>
-</div>
-</div>
 <div id="euler" class="section level2">
 <h2>Euler</h2>
 <pre class="r"><code>ComparisonEulerApp &lt;- function(stepSize) {
-    ode &lt;- new(&quot;ODETest&quot;)
+    ode &lt;- new(&quot;MuskatTest&quot;)
     ode_solver &lt;- Euler(ode)
     ode_solver &lt;- setStepSize(ode_solver, stepSize)
     time &lt;-  0
@@ -186,6 +177,7 @@ ODETest &lt;- function() {
         rowVector[[i]] &lt;- list(step_size = stepSize, 
                                t = time, 
                                y_t = state[1], 
+                               exact = getExactSolution(ode_solver@ode, time),
                                error = error, 
                                rel_err = error / getExactSolution(ode_solver@ode, time),
                                steps = ode_solver@ode@stack$n
@@ -194,45 +186,42 @@ ODETest &lt;- function() {
         i &lt;- i + 1
     }
     data.table::rbindlist(rowVector)
-}
-dt &lt;- ComparisonEulerApp(stepSize = 0.2)
-dt[round(t,1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]</code></pre>
-<pre><code>##    step_size t         y_t       error   rel_err steps
-## 1:       0.2 1 0.327680000 0.040199441 0.1092734     5
-## 2:       0.2 2 0.107374182 0.027961101 0.2066061    10
-## 3:       0.2 3 0.035184372 0.014602696 0.2933030    15
-## 4:       0.2 4 0.011529215 0.006786424 0.3705262    20
-## 5:       0.2 5 0.003777893 0.002960054 0.4393109    25</code></pre>
+}</code></pre>
 <pre class="r"><code># get a summary table for different step sizes
 get_table &lt;- function(stepSize) {
     dt &lt;- ComparisonEulerApp(stepSize)
-    dt[round(t,2) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    dt[round(t,1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
 }
 
 step_sizes &lt;- c(0.2, 0.1, 0.05)
 dt_li &lt;- lapply(step_sizes, get_table)
 data.table::rbindlist(dt_li)</code></pre>
-<pre><code>##     step_size t         y_t        error    rel_err steps
-##  1:      0.20 1 0.327680000 0.0401994412 0.10927341     5
-##  2:      0.20 2 0.107374182 0.0279611008 0.20660614    10
-##  3:      0.20 3 0.035184372 0.0146026963 0.29330300    15
-##  4:      0.20 4 0.011529215 0.0067864238 0.37052619    20
-##  5:      0.20 5 0.003777893 0.0029600538 0.43931094    25
-##  6:      0.10 1 0.348678440 0.0192010011 0.05219373    10
-##  7:      0.10 2 0.121576655 0.0137586286 0.10166328    20
-##  8:      0.10 3 0.042391158 0.0073959101 0.14855083    30
-##  9:      0.10 4 0.014780883 0.0035347559 0.19299114    40
-## 10:      0.10 5 0.005153775 0.0015841718 0.23511194    50
-## 11:      0.05 1 0.358485922 0.0093935188 0.02553423    20
-## 12:      0.05 2 0.128512157 0.0068231267 0.05041647    40
-## 13:      0.05 3 0.046069799 0.0037172694 0.07466335    60
-## 14:      0.05 4 0.016515374 0.0018002645 0.09829111    80
-## 15:      0.05 5 0.005920529 0.0008174178 0.12131555   100</code></pre>
+<pre><code>##     step_size    t        y_t      exact       error    rel_err steps
+##  1:      0.20 1.00   3.464960   4.154845   0.6898855 0.16604360     5
+##  2:      0.20 2.00  12.575209  16.167168   3.5919590 0.22217614    10
+##  3:      0.20 3.00  38.221065  52.256611  14.0355460 0.26858891    15
+##  4:      0.20 4.00 105.012800 153.794450  48.7816503 0.31718733    20
+##  5:      0.20 5.00 274.188650 433.239477 159.0508274 0.36711989    25
+##  6:      0.10 1.00   3.781227   4.154845   0.3736181 0.08992347    10
+##  7:      0.10 2.00  14.182500  16.167168   1.9846684 0.12275919    20
+##  8:      0.10 3.00  44.348207  52.256611   7.9084040 0.15133787    30
+##  9:      0.10 4.00 125.777767 153.794450  28.0166834 0.18216966    40
+## 10:      0.10 5.00 340.172559 433.239477  93.0669187 0.21481634    50
+## 11:      0.05 0.95   3.680851   3.857129   0.1762784 0.04570197    19
+## 12:      0.05 1.00   3.959893   4.154845   0.1949524 0.04692169    20
+## 13:      0.05 1.95  14.214253  15.186063   0.9718093 0.06399350    39
+## 14:      0.05 2.00  15.119966  16.167168   1.0472022 0.06477338    40
+## 15:      0.05 3.00  48.037558  52.256611   4.2190531 0.08073721    60
+## 16:      0.05 3.05  50.739436  55.246033   4.5065977 0.08157324    61
+## 17:      0.05 4.00 138.684323 153.794450  15.1101269 0.09824884    80
+## 18:      0.05 4.05 146.018539 162.092371  16.0738318 0.09916464    81
+## 19:      0.05 5.00 382.503774 433.239477  50.7357038 0.11710776   100
+## 20:      0.05 5.05 402.128962 455.967393  53.8384312 0.11807518   101</code></pre>
 </div>
 <div id="using-rk4" class="section level2">
 <h2>Using RK4</h2>
 <pre class="r"><code>ComparisonRK4App &lt;- function(stepSize) {
-    ode &lt;- new(&quot;ODETest&quot;)
+    ode &lt;- new(&quot;MuskatTest&quot;)
     ode_solver &lt;- RK4(ode)
     ode_solver &lt;- setStepSize(ode_solver, stepSize)
     time &lt;-  0
@@ -240,11 +229,12 @@ data.table::rbindlist(dt_li)</code></pre>
     i &lt;-  1
     while (time &lt; 5) {
         state &lt;- getState(ode_solver@ode)
-        time &lt;- state[2]
+        time  &lt;- state[2]
         error &lt;- getExactSolution(ode_solver@ode, time) - state[1]
         rowVector[[i]] &lt;- list(step_size = stepSize, 
                                t = time, 
                                y_t = state[1], 
+                               exact = getExactSolution(ode_solver@ode, time),
                                error = error, 
                                rel_err = error / getExactSolution(ode_solver@ode, time),
                                steps = ode_solver@ode@stack$n
@@ -258,28 +248,211 @@ data.table::rbindlist(dt_li)</code></pre>
 # get a summary table for different step sizes
 get_table &lt;- function(stepSize) {
     dt &lt;- ComparisonRK4App(stepSize)
-    dt[round(t,2) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+    dt[round(t, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
 }
 
 step_sizes &lt;- c(0.2, 0.1, 0.05)
 dt_li &lt;- lapply(step_sizes, get_table)
 data.table::rbindlist(dt_li)</code></pre>
-<pre><code>##     step_size t         y_t         error       rel_err steps
-##  1:      0.20 1 0.367885238 -5.796954e-06 -1.575775e-05    20
-##  2:      0.20 2 0.135339548 -4.265194e-06 -3.151576e-05    40
-##  3:      0.20 3 0.049789422 -2.353634e-06 -4.727401e-05    60
-##  4:      0.20 4 0.018316793 -1.154481e-06 -6.303251e-05    80
-##  5:      0.20 5 0.006738478 -5.308913e-07 -7.879125e-05   100
-##  6:      0.10 1 0.367879774 -3.332411e-07 -9.058431e-07    40
-##  7:      0.10 2 0.135335528 -2.451852e-07 -1.811687e-06    80
-##  8:      0.10 3 0.049787204 -1.352979e-07 -2.717532e-06   120
-##  9:      0.10 4 0.018315705 -6.636447e-08 -3.623377e-06   160
-## 10:      0.10 5 0.006737978 -3.051767e-08 -4.529224e-06   200
-## 11:      0.05 1 0.367879461 -1.997610e-08 -5.430066e-08    80
-## 12:      0.05 2 0.135335298 -1.469759e-08 -1.086013e-07   160
-## 13:      0.05 3 0.049787076 -8.110413e-09 -1.629020e-07   240
-## 14:      0.05 4 0.018315643 -3.978206e-09 -2.172027e-07   320
-## 15:      0.05 5 0.006737949 -1.829375e-09 -2.715033e-07   400</code></pre>
+<pre><code>##     step_size    t        y_t      exact        error      rel_err steps
+##  1:      0.20 1.00   4.154753   4.154845 9.207556e-05 2.216101e-05    20
+##  2:      0.20 2.00  16.166668  16.167168 5.005718e-04 3.096224e-05    40
+##  3:      0.20 3.00  52.254570  52.256611 2.041031e-03 3.905786e-05    60
+##  4:      0.20 4.00 153.787053 153.794450 7.397423e-03 4.809941e-05    80
+##  5:      0.20 5.00 433.214342 433.239477 2.513521e-02 5.801689e-05   100
+##  6:      0.10 1.00   4.154839   4.154845 6.252972e-06 1.504983e-06    40
+##  7:      0.10 2.00  16.167134  16.167168 3.399467e-05 2.102698e-06    80
+##  8:      0.10 3.00  52.256472  52.256611 1.386106e-04 2.652498e-06   120
+##  9:      0.10 4.00 153.793948 153.794450 5.023766e-04 3.266546e-06   160
+## 10:      0.10 5.00 433.237770 433.239477 1.707001e-03 3.940086e-06   200
+## 11:      0.05 0.95   3.857129   3.857129 3.681617e-07 9.544967e-08    76
+## 12:      0.05 1.00   4.154845   4.154845 4.074081e-07 9.805615e-08    80
+## 13:      0.05 1.95  15.186061  15.186063 2.054206e-06 1.352692e-07   156
+## 14:      0.05 2.00  16.167166  16.167168 2.214900e-06 1.369999e-07   160
+## 15:      0.05 3.00  52.256602  52.256611 9.031084e-06 1.728218e-07   240
+## 16:      0.05 3.05  55.246024  55.246033 9.652353e-06 1.747158e-07   244
+## 17:      0.05 4.00 153.794417 153.794450 3.273204e-05 2.128298e-07   320
+## 18:      0.05 4.05 162.092336 162.092371 3.484038e-05 2.149415e-07   324
+## 19:      0.05 5.00 433.239366 433.239477 1.112186e-04 2.567140e-07   400
+## 20:      0.05 5.05 455.967275 455.967393 1.180901e-04 2.589881e-07   404</code></pre>
+<p>We see above that we are repeating code when the only parameter that is being changed is the ODE solver. In these cases is more convenient to use the function <code>ODESolverFactory</code>.</p>
+</div>
+<div id="using-a-solver-factory" class="section level2">
+<h2>Using a solver factory</h2>
+<pre class="r"><code>ComparisonApp &lt;- function(solver, stepSize) {
+    ode &lt;- new(&quot;MuskatTest&quot;)
+    solver_factory &lt;- ODESolverFactory()
+    ode_solver &lt;- createODESolver(solver_factory, ode, solver)
+    ode_solver &lt;- setStepSize(ode_solver, stepSize)
+    rowVector &lt;- vector(&quot;list&quot;)
+    time &lt;-  0
+    i &lt;-  1
+    while (time &lt; 5.001) {
+        state &lt;- getState(ode_solver@ode)
+        time  &lt;- state[2]
+        error &lt;- getExactSolution(ode_solver@ode, time) - state[1]
+        rowVector[[i]] &lt;- list(step_size = stepSize, 
+                               t = time, 
+                               y_t = state[1], 
+                               exact = getExactSolution(ode_solver@ode, time),
+                               error = error, 
+                               rel_err = error / getExactSolution(ode_solver@ode, time),
+                               steps = ode_solver@ode@stack$n
+                               )
+        ode_solver &lt;- step(ode_solver)
+        time &lt;- time + getStepSize(ode_solver)    # step size retrievd from ODE solver
+        i &lt;- i + 1
+    }
+    data.table::rbindlist(rowVector)
+}
+
+# get a summary table for different step sizes
+create_table &lt;- function(stepSize, solver) {
+    dt &lt;- ComparisonApp(solver, stepSize)
+    # dt
+    dt[round(t, 1) %in% c(1.0, 2.0, 3.0, 4.0, 5.0)]
+}</code></pre>
+<div id="euler-1" class="section level3">
+<h3>Euler</h3>
+<pre class="r"><code># Create summary table for ODE solver Euler
+step_sizes &lt;- c(0.2, 0.1, 0.05)
+dt_li &lt;- lapply(step_sizes, create_table, solver = &quot;Euler&quot;)
+data.table::rbindlist(dt_li)</code></pre>
+<pre><code>##     step_size    t        y_t      exact       error    rel_err steps
+##  1:      0.20 1.00   3.464960   4.154845   0.6898855 0.16604360     5
+##  2:      0.20 2.00  12.575209  16.167168   3.5919590 0.22217614    10
+##  3:      0.20 3.00  38.221065  52.256611  14.0355460 0.26858891    15
+##  4:      0.20 4.00 105.012800 153.794450  48.7816503 0.31718733    20
+##  5:      0.20 5.00 274.188650 433.239477 159.0508274 0.36711989    25
+##  6:      0.10 1.00   3.781227   4.154845   0.3736181 0.08992347    10
+##  7:      0.10 2.00  14.182500  16.167168   1.9846684 0.12275919    20
+##  8:      0.10 3.00  44.348207  52.256611   7.9084040 0.15133787    30
+##  9:      0.10 4.00 125.777767 153.794450  28.0166834 0.18216966    40
+## 10:      0.10 5.00 340.172559 433.239477  93.0669187 0.21481634    50
+## 11:      0.05 0.95   3.680851   3.857129   0.1762784 0.04570197    19
+## 12:      0.05 1.00   3.959893   4.154845   0.1949524 0.04692169    20
+## 13:      0.05 1.95  14.214253  15.186063   0.9718093 0.06399350    39
+## 14:      0.05 2.00  15.119966  16.167168   1.0472022 0.06477338    40
+## 15:      0.05 3.00  48.037558  52.256611   4.2190531 0.08073721    60
+## 16:      0.05 3.05  50.739436  55.246033   4.5065977 0.08157324    61
+## 17:      0.05 4.00 138.684323 153.794450  15.1101269 0.09824884    80
+## 18:      0.05 4.05 146.018539 162.092371  16.0738318 0.09916464    81
+## 19:      0.05 5.00 382.503774 433.239477  50.7357038 0.11710776   100</code></pre>
+</div>
+<div id="verlet" class="section level3">
+<h3>Verlet</h3>
+<pre class="r"><code># Create summary table for ODE solver Verlet
+step_sizes &lt;- c(0.2, 0.1, 0.05)
+dt_li &lt;- lapply(step_sizes, create_table, solver = &quot;Verlet&quot;)
+data.table::rbindlist(dt_li)</code></pre>
+<pre><code>##     step_size    t        y_t      exact       error    rel_err steps
+##  1:      0.20 1.00   3.613792   4.154845   0.5410535 0.13022229    10
+##  2:      0.20 2.00  13.094383  16.167168   3.0727854 0.19006330    20
+##  3:      0.20 3.00  39.661767  52.256611  12.5948439 0.24101915    30
+##  4:      0.20 4.00 108.746560 153.794450  45.0478903 0.29290973    40
+##  5:      0.20 5.00 283.628272 433.239477 149.6112057 0.34533142    50
+##  6:      0.10 1.00   3.860915   4.154845   0.2939310 0.07074414    20
+##  7:      0.10 2.00  14.468875  16.167168   1.6982935 0.10504582    40
+##  8:      0.10 3.00  45.170677  52.256611   7.0859338 0.13559880    60
+##  9:      0.10 4.00 127.990729 153.794450  25.8037206 0.16778057    80
+## 10:      0.10 5.00 345.992101 433.239477  87.2473760 0.20138372   100
+## 11:      0.05 0.95   3.719024   3.857129   0.1381046 0.03580503    38
+## 12:      0.05 1.00   4.001226   4.154845   0.1536199 0.03697368    40
+## 13:      0.05 1.95  14.356872  15.186063   0.8291905 0.05460207    78
+## 14:      0.05 2.00  15.270966  16.167168   0.8962024 0.05543348    80
+## 15:      0.05 3.00  48.479537  52.256611   3.7770734 0.07227934   120
+## 16:      0.05 3.05  51.204764  55.246033   4.0412691 0.07315039   122
+## 17:      0.05 4.00 139.898359 153.794450  13.8960909 0.09035496   160
+## 18:      0.05 4.05 147.294527 162.092371  14.7978439 0.09129266   162
+## 19:      0.05 5.00 385.766305 433.239477  47.4731723 0.10957721   200</code></pre>
+</div>
+<div id="euler-richardson" class="section level3">
+<h3>Euler-Richardson</h3>
+<pre class="r"><code># Create summary table for ODE solver EulerRichardson
+step_sizes &lt;- c(0.2, 0.1, 0.05)
+dt_li &lt;- lapply(step_sizes, create_table, solver = &quot;EulerRichardson&quot;)
+data.table::rbindlist(dt_li)</code></pre>
+<pre><code>##     step_size    t        y_t      exact        error      rel_err steps
+##  1:      0.20 1.00   4.108124   4.154845  0.046720996 0.0112449418    10
+##  2:      0.20 2.00  15.913894  16.167168  0.253274051 0.0156659500    20
+##  3:      0.20 3.00  51.226861  52.256611  1.029749903 0.0197056389    30
+##  4:      0.20 4.00 150.072920 153.794450  3.721529754 0.0241980758    40
+##  5:      0.20 5.00 420.630389 433.239477 12.609088782 0.0291042009    50
+##  6:      0.10 1.00   4.142243   4.154845  0.012602946 0.0030333127    20
+##  7:      0.10 2.00  16.098705  16.167168  0.068463771 0.0042347410    40
+##  8:      0.10 3.00  51.977671  52.256611  0.278940081 0.0053378908    60
+##  9:      0.10 4.00 152.784247 153.794450  1.010202860 0.0065685261    80
+## 10:      0.10 5.00 429.809608 433.239477  3.429869746 0.0079167987   100
+## 11:      0.05 0.95   3.854172   3.857129  0.002957122 0.0007666641    38
+## 12:      0.05 1.00   4.151573   4.154845  0.003272322 0.0007875918    40
+## 13:      0.05 1.95  15.169566  15.186063  0.016496342 0.0010862817    78
+## 14:      0.05 2.00  16.149382  16.167168  0.017786619 0.0011001691    80
+## 15:      0.05 3.00  52.184102  52.256611  0.072509016 0.0013875568   120
+## 16:      0.05 3.05  55.168537  55.246033  0.077496299 0.0014027487   122
+## 17:      0.05 4.00 153.531703 153.794450  0.262747199 0.0017084310   160
+## 18:      0.05 4.05 161.812703 162.092371  0.279668463 0.0017253647   162
+## 19:      0.05 5.00 432.346880 433.239477  0.892597084 0.0020602857   200</code></pre>
+</div>
+<div id="runge-kutta" class="section level3">
+<h3>Runge-Kutta</h3>
+<pre class="r"><code># Create summary table for ODE solver RK4
+step_sizes &lt;- c(0.2, 0.1, 0.05)
+dt_li &lt;- lapply(step_sizes, create_table, solver = &quot;RK4&quot;)
+data.table::rbindlist(dt_li)</code></pre>
+<pre><code>##     step_size    t        y_t      exact        error      rel_err steps
+##  1:      0.20 1.00   4.154753   4.154845 9.207556e-05 2.216101e-05    20
+##  2:      0.20 2.00  16.166668  16.167168 5.005718e-04 3.096224e-05    40
+##  3:      0.20 3.00  52.254570  52.256611 2.041031e-03 3.905786e-05    60
+##  4:      0.20 4.00 153.787053 153.794450 7.397423e-03 4.809941e-05    80
+##  5:      0.20 5.00 433.214342 433.239477 2.513521e-02 5.801689e-05   100
+##  6:      0.10 1.00   4.154839   4.154845 6.252972e-06 1.504983e-06    40
+##  7:      0.10 2.00  16.167134  16.167168 3.399467e-05 2.102698e-06    80
+##  8:      0.10 3.00  52.256472  52.256611 1.386106e-04 2.652498e-06   120
+##  9:      0.10 4.00 153.793948 153.794450 5.023766e-04 3.266546e-06   160
+## 10:      0.10 5.00 433.237770 433.239477 1.707001e-03 3.940086e-06   200
+## 11:      0.05 0.95   3.857129   3.857129 3.681617e-07 9.544967e-08    76
+## 12:      0.05 1.00   4.154845   4.154845 4.074081e-07 9.805615e-08    80
+## 13:      0.05 1.95  15.186061  15.186063 2.054206e-06 1.352692e-07   156
+## 14:      0.05 2.00  16.167166  16.167168 2.214900e-06 1.369999e-07   160
+## 15:      0.05 3.00  52.256602  52.256611 9.031084e-06 1.728218e-07   240
+## 16:      0.05 3.05  55.246024  55.246033 9.652353e-06 1.747158e-07   244
+## 17:      0.05 4.00 153.794417 153.794450 3.273204e-05 2.128298e-07   320
+## 18:      0.05 4.05 162.092336 162.092371 3.484038e-05 2.149415e-07   324
+## 19:      0.05 5.00 433.239366 433.239477 1.112186e-04 2.567140e-07   400</code></pre>
+</div>
+<div id="runge-kutta-45" class="section level3">
+<h3>Runge-Kutta 45</h3>
+<pre class="r"><code># Create summary table for ODE solver RK45
+step_sizes &lt;- c(0.2, 0.1, 0.05)
+dt_li &lt;- lapply(step_sizes, create_table, solver = &quot;RK45&quot;)
+data.table::rbindlist(dt_li)</code></pre>
+<pre><code>##     step_size         t        y_t      exact        error      rel_err
+##  1:      0.20 0.9522982   3.870380   3.870381 2.875062e-07 7.428370e-08
+##  2:      0.20 2.0391724  16.974395  16.974396 1.213611e-06 7.149655e-08
+##  3:      0.20 3.0453665  54.962460  54.962464 3.629974e-06 6.604459e-08
+##  4:      0.20 3.9703209 149.063962 149.063972 9.407265e-06 6.310891e-08
+##  5:      0.20 4.9806881 424.762134 424.762160 2.612840e-05 6.151302e-08
+##  6:      0.10 1.0343657   4.371232   4.371232 2.791563e-07 6.386215e-08
+##  7:      0.10 1.9779529  15.727889  15.727890 1.027767e-06 6.534679e-08
+##  8:      0.10 2.9865304  51.477359  51.477362 3.106420e-06 6.034536e-08
+##  9:      0.10 4.0151469 156.264003 156.264012 8.999481e-06 5.759151e-08
+## 10:      0.05 0.9956097   4.127902   4.127903 2.849226e-07 6.902357e-08
+## 11:      0.05 2.9589687  49.916298  49.916301 3.151893e-06 6.314357e-08
+## 12:      0.05 3.9975217 153.393964 153.393973 9.221170e-06 6.011429e-08
+##     steps
+##  1:    35
+##  2:    87
+##  3:   145
+##  4:   204
+##  5:   286
+##  6:    41
+##  7:    82
+##  8:   140
+##  9:   210
+## 10:    41
+## 11:   140
+## 12:   210</code></pre>
+</div>
 </div>
 
 
