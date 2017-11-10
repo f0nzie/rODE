@@ -197,3 +197,47 @@ ggplot(subset(df_all, solver %in% c("RK4", "RK45") & step_size %in% c(0.1, 0.05)
     geom_area(stat = "identity") + 
     facet_grid(step_size ~ solver) 
 
+## ------------------------------------------------------------------------
+MuskatODEApp <- function(solver, stepSize, pmax) {
+    ode <- MuskatODE(0, 1)
+    solver_factory <- ODESolverFactory()
+    ode_solver <- createODESolver(solver_factory, ode, solver)
+    ode_solver <- setStepSize(ode_solver, stepSize)
+    rowVector  <- vector("list")
+    pres <-  0
+    i    <-  1
+    while (pres < pmax) {
+        state <- getState(ode_solver@ode)
+        pres  <- state[2]
+        error <- getExactSolution(ode_solver@ode, pres) - state[1]
+        rowVector[[i]] <- list(solver = solver,
+                               step_size = stepSize, 
+                               P = pres, 
+                               S = state[1], 
+                               exact = getExactSolution(ode_solver@ode, pres),
+                               error = error, 
+                               rel_err = error / getExactSolution(ode_solver@ode, pres),
+                               steps = ode_solver@ode@stack$n
+                               )
+        ode_solver <- step(ode_solver)
+        pres <- pres + getStepSize(ode_solver)    # step size retrievd from ODE solver
+        i <- i + 1
+    }
+    data.table::rbindlist(rowVector)
+}
+
+solver   <- "RK4"
+stepSize <- 0.05
+pmax     <- 3.0
+dt <- MuskatODEApp(solver, stepSize, pmax)
+dt
+
+
+## ------------------------------------------------------------------------
+last_row <- tail(dt, 1)
+last_row
+
+## ------------------------------------------------------------------------
+ggplot(dt, aes(x = P, y = S)) +
+    geom_point()
+
