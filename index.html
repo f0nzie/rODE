@@ -105,13 +105,13 @@
 <div id="rode" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#rode" class="anchor"></a>rODE</h1></div>
-<p>The goal of <code>rODE</code> is to explore R and its <code>S4</code> classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (<code>ODE</code>).</p>
+<p>The goal of <code>rODE</code> is to explore <code>R</code> and its <code>S4</code> classes and its differences with Java and Python classes while exploring physics simulations by solving ordinary differential equations (<code>ODE</code>).</p>
 <div id="motivation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motivation" class="anchor"></a>Motivation</h2>
-<p>This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available. The objective is learning while doing.</p>
-<p><code>rODE</code> has been inspired on the extraordinary physics library for computer simulations <strong>OpenSourcePhyisics</strong>. Take a look at <a href="http://opensourcephysics.org" class="uri">http://opensourcephysics.org</a>. I highly recommended the book <a href="https://www.compadre.org/OSP/items/detail.cfm?ID=7375">An Introduction to Computer Simulation Methods: Applications To Physical Systems</a>, <code>(Gould, Tobochnik, and Christian, 2017)</code>. It has helped me a lot to understand the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.</p>
-<p>Additionally:</p>
+<p>This is not your typical black-box ODE solver. You really have to develop your ODE algorithm using any of the ODE solvers available in the package. The objective is learning while coding R, understanding the physics and using the math.</p>
+<p><code>rODE</code> has been inspired on the extraordinary physics library for computer simulations <strong>OpenSourcePhyisics</strong>. Take a look at it at <a href="http://opensourcephysics.org" class="uri">http://opensourcephysics.org</a>. I highly recommend the book <a href="https://www.compadre.org/OSP/items/detail.cfm?ID=7375">An Introduction to Computer Simulation Methods: Applications To Physical Systems</a>, <code>(Gould, Tobochnik, and Christian, 2017)</code>. It has helped me a lot in understanding the physics behind ordinary differential equations. The book briliantly combines code, algorithms, math and physics.</p>
+<p>Additionally I have consulted these sources during the developing of the package <code>rODE</code>:</p>
 <ul>
 <li>The beatiful introduction to computers and numerical methods for petroleum engineering <em>“Using the Computer to Solve Petroleum Engineering Problems”</em> by Melvin Nobles“, <code>(Nobles, 1974)</code>
 </li>
@@ -123,21 +123,26 @@
 <li>The paper on solving ODEs in R <code>(Soetaert, Petzoldt, and Setzer, 2010)</code>.</li>
 <li>The paper <em>“Behind and beyond the Matlab ODE suite”</em> <code>(Ashino, Nagase, and Vaillancourt, 2000)</code>.</li>
 </ul>
+</div>
+<div id="ode-solvers-in-this-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#ode-solvers-in-this-package" class="anchor"></a>ODE solvers in this package</h2>
 <p>The ODE solvers implemented in R so far:</p>
 <ul>
 <li>Euler</li>
 <li>Euler-Richardson</li>
+<li>Verlet</li>
 <li>RK4</li>
 <li>RK45, Dormand-Prince45</li>
-<li>Verlet</li>
 </ul>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the latest version of <code>rODE</code> from github with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"f0nzie/rODE"</span>)</code></pre></div>
-<p>Or from <code>CRAN</code>:</p>
+<p>You can install the latest development version of <code>rODE</code> from github with:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install from the *develop* branch</span>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"f0nzie/rODE"</span>, <span class="dt">ref =</span> <span class="st">"develop"</span>)</code></pre></div>
+<p>Or the <code>stable</code> version from <code>CRAN</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"rODE"</span>)</code></pre></div>
 </div>
 <div id="examples" class="section level2">
@@ -236,7 +241,7 @@ AdaptiveStepApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
 <span class="co"># run application</span>
 solution &lt;-<span class="st"> </span><span class="kw">AdaptiveStepApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div id="comparisonrk45app" class="section level2">
 <h2 class="hasAnchor">
@@ -275,7 +280,7 @@ solution &lt;-<span class="st"> </span><span class="kw">AdaptiveStepApp</span>()
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">ComparisonRK45App</span>()                          <span class="co"># run the example</span>
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="672"></p>
 </div>
 <div id="fallingparticleode" class="section level2">
 <h2 class="hasAnchor">
@@ -310,7 +315,7 @@ FallingParticleODEApp &lt;-<span class="st"> </span><span class="cf">function</s
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">FallingParticleODEApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div id="keplerapp" class="section level2">
 <h2 class="hasAnchor">
@@ -348,7 +353,7 @@ KeplerApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span c
 
 solution &lt;-<span class="st"> </span><span class="kw">KeplerApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div id="keplerenergyapp" class="section level2">
 <h2 class="hasAnchor">
@@ -392,7 +397,7 @@ KeplerEnergyApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
 
 solution &lt;-<span class="st"> </span><span class="kw">KeplerEnergyApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="logisticapp" class="section level2">
 <h2 class="hasAnchor">
@@ -427,7 +432,7 @@ LogisticApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">LogisticApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="672"></p>
 </div>
 <div id="pendulumapp" class="section level2">
 <h2 class="hasAnchor">
@@ -464,7 +469,7 @@ PendulumApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">PendulumApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="672"></p>
 </div>
 <div id="planetapp" class="section level2">
 <h2 class="hasAnchor">
@@ -505,7 +510,7 @@ solution &lt;-<span class="st"> </span><span class="kw">PlanetApp</span>()
 select_rows &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(solution), <span class="dv">10</span>)      <span class="co"># do not overplot</span>
 solution &lt;-<span class="st"> </span>solution[select_rows,]
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="672"></p>
 </div>
 <div id="projectileapp" class="section level2">
 <h2 class="hasAnchor">
@@ -542,7 +547,7 @@ ProjectileApp &lt;-<span class="st"> </span><span class="cf">function</span>(<sp
 
 solution &lt;-<span class="st"> </span><span class="kw">ProjectileApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="reactionapp" class="section level2">
 <h2 class="hasAnchor">
@@ -574,7 +579,7 @@ ReactionApp &lt;-<span class="st"> </span><span class="cf">function</span>(<span
 
 solution &lt;-<span class="st"> </span><span class="kw">ReactionApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="672"></p>
 </div>
 <div id="rigidbodynxfapp" class="section level2">
 <h2 class="hasAnchor">
@@ -614,7 +619,7 @@ RigidBodyNXFApp &lt;-<span class="st"> </span><span class="cf">function</span>(<
 <span class="co"># get the data table from the app</span>
 solution &lt;-<span class="st"> </span><span class="kw">RigidBodyNXFApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="672"></p>
 </div>
 <div id="shoapp" class="section level2">
 <h2 class="hasAnchor">
@@ -645,7 +650,7 @@ SHOApp &lt;-<span class="st"> </span><span class="cf">function</span>(...) {
 
 solution &lt;-<span class="st"> </span><span class="kw">SHOApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="672"></p>
 </div>
 <div id="springrk4app" class="section level2">
 <h2 class="hasAnchor">
@@ -682,7 +687,7 @@ SpringRK4App &lt;-<span class="st"> </span><span class="cf">function</span>(<spa
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">SpringRK4App</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="672"></p>
 </div>
 <div id="vanderpolapp" class="section level2">
 <h2 class="hasAnchor">
@@ -715,7 +720,7 @@ VanderpolApp &lt;-<span class="st"> </span><span class="cf">function</span>(<spa
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">VanderpolApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-18-1.png" width="672"></p>
 </div>
 <div id="vanderpolmutimecontrolapp" class="section level2">
 <h2 class="hasAnchor">
@@ -751,7 +756,7 @@ VanderpolMuTimeControlApp &lt;-<span class="st"> </span><span class="cf">functio
 <span class="co"># show solution</span>
 solution &lt;-<span class="st"> </span><span class="kw">VanderpolMuTimeControlApp</span>()
 <span class="kw">plot</span>(solution)</code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-18-1.png" width="672"></p>
+<p><img src="reference/figures/README-unnamed-chunk-19-1.png" width="672"></p>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
