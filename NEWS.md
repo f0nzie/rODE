@@ -1,5 +1,5 @@
 # # rODE 0.99.5.9007
-* 20171109-201711
+* 20171109-20171109
 * add exercise using the ODE Solver RK4. find the saturation value at pressure of 3 with a time step 0.05
 * remove Google citations URL link because they do not work
 * add file `rODE_biblio.bib` edited with JabRef
@@ -23,10 +23,10 @@
 * modify vignette `Comparison` that shows the use of the internal accumulator.
 
 # rODE 0.99.5.9004
-* 20171104 - test if badges update build status
+* 20171104
+* test if badges update build status
 * push feature site built with pkgdown to gh-pages
 * change badges from master to develop
-
 
 # rODE 0.99.5.9003
 * 20171103
