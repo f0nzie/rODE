@@ -139,7 +139,6 @@ AdaptiveStepApp <- function(verbose = FALSE) {
     }
     return(data.table::rbindlist(rowVector))
 }
-
 # run application
 solution <- AdaptiveStepApp()
 plot(solution)
@@ -164,9 +163,9 @@ importFromExamples("ODETest.R")
      ode_solver <- RK45(ode)                   # select the ODE solver
      ode_solver <- setStepSize(ode_solver, 1)      # set the step
      ode_solver <- setTolerance(ode_solver, 1e-8)  # set the tolerance
-     time <-  0
      rowVector <- vector("list")
-     i <- 1
+     time <-  0
+     i    <- 1
      while (time < 50) {
          rowVector[[i]] <- list(t  = ode_solver@ode@state[2],
                                 s1 = getState(ode_solver@ode)[1],
@@ -202,8 +201,8 @@ FallingParticleODEApp <- function(verbose = FALSE) {
     # initial values
     initial_y <- 10
     initial_v <- 0
-    dt <- 0.01
-    ball <- FallingParticleODE(initial_y, initial_v)
+    dt        <- 0.01
+    ball   <- FallingParticleODE(initial_y, initial_v)
     solver <- Euler(ball)                        # set the ODE solver
     solver <- setStepSize(solver, dt)            # set the step
     rowVector <- vector("list")
@@ -240,15 +239,12 @@ library(rODE)
 importFromExamples("Kepler.R") # source the class Kepler
 
 KeplerApp <- function(verbose = FALSE) {
-
     # set the orbit into a predefined state.
-    r <- c(2, 0)                                   # orbit radius
-    v <- c(0, 0.25)                                # velocity
+    r  <- c(2, 0)                                   # orbit radius
+    v  <- c(0, 0.25)                                # velocity
     dt <- 0.1
-
     planet <- Kepler(r, v)
     solver <- RK45(planet)
-
     rowVector <- vector("list")
     i <- 1
     while (planet@state[5] <= 10) {
@@ -283,11 +279,11 @@ importFromExamples("KeplerEnergy.R") # source the class Kepler
 
 KeplerEnergyApp <- function(verbose = FALSE) {
     # initial values
-    x  <- 1
-    vx <- 0
-    y  <- 0
-    vy <- 2 * pi
-    dt <- 0.01
+    x   <- 1
+    vx  <- 0
+    y   <- 0
+    vy  <- 2 * pi
+    dt  <- 0.01
     tol <- 1e-3
     particle <- KeplerEnergy()
     particle <- init(particle, c(x, vx, y, vy, 0))
@@ -312,7 +308,6 @@ KeplerEnergyApp <- function(verbose = FALSE) {
     return(DT)
 }
 
-
 solution <- KeplerEnergyApp()
 plot(solution)
 ```
@@ -332,7 +327,7 @@ LogisticApp <- function(verbose = FALSE) {
     vx <- 0
     r  <- 2        # Malthusian parameter (rate of maximum population growth)
     K  <- 10.0     # carrying capacity of the environment
-    dt   <- 0.01; tol  <- 1e-3; tmax <- 10
+    dt <- 0.01; tol  <- 1e-3; tmax <- 10
     population <- Logistic()
     population <- init(population, c(x, vx, 0), r, K)
     odeSolver <- Verlet(population)
@@ -341,7 +336,7 @@ LogisticApp <- function(verbose = FALSE) {
     rowVector <- vector("list")
     i <- 1
     while (getTime(population) <= tmax) {
-        rowVector[[i]] <- list(t = getTime(population),
+        rowVector[[i]] <- list(t  = getTime(population),
                                s1 = population@state[1],
                                s2 = population@state[2])
         population <- doStep(population)
@@ -369,9 +364,9 @@ importFromExamples("Pendulum.R")      # source the class
 
 PendulumApp <- function(verbose = FALSE) {
     # initial values
-    theta <- 0.2
+    theta    <- 0.2
     thetaDot <- 0
-    dt <- 0.1
+    dt       <- 0.1
     ode <- new("ODE")
     pendulum <- Pendulum()
     pendulum@state[3] <- 0      # set time to zero, t = 0
@@ -381,8 +376,8 @@ PendulumApp <- function(verbose = FALSE) {
     rowvec <- vector("list")
     i <- 1
     while (pendulum@state[3] <= 40)    {
-        rowvec[[i]] <- list(t  = pendulum@state[3],    # time
-                            theta = pendulum@state[1], # angle
+        rowvec[[i]] <- list(t     = pendulum@state[3],    # time
+                            theta = pendulum@state[1],    # angle
                             thetadot = pendulum@state[2]) # derivative of angle
         pendulum <- step(pendulum)
         i <- i + 1
@@ -432,7 +427,6 @@ PlanetApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowvec)
     return(DT)
 }
-
 # run the application
 solution <- PlanetApp()
 select_rows <- seq(1, nrow(solution), 10)      # do not overplot
@@ -457,7 +451,6 @@ ProjectileApp <- function(verbose = FALSE) {
     x <- 0; vx <- 10; y <- 0; vy <- 10
     state <- c(x, vx, y, vy, 0)                        # state vector
     dt <- 0.01
-
     projectile <- Projectile()
     projectile <- setState(projectile, x, vx, y, vy)
     projectile@odeSolver <- init(projectile@odeSolver, 0.123)
@@ -465,7 +458,7 @@ ProjectileApp <- function(verbose = FALSE) {
     rowV <- vector("list")
     i <- 1
     while (projectile@state[3] >= 0)    {
-        rowV[[i]] <- list(t = projectile@state[5],
+        rowV[[i]] <- list(t  = projectile@state[5],
                           x  = projectile@state[1],
                           vx = projectile@state[2],
                           y  = projectile@state[3],     # vertical position
@@ -495,9 +488,8 @@ library(rODE)
 importFromExamples("Reaction.R")      # source the class
 
 ReactionApp <- function(verbose = FALSE) {
-    X <- 1; Y <- 5;
+    X  <- 1; Y <- 5;
     dt <- 0.1
-
     reaction <- Reaction(c(X, Y, 0))
     solver <- RK4(reaction)
     rowvec <- vector("list")
@@ -535,8 +527,7 @@ RigidBodyNXFApp <- function(verbose = FALSE) {
     y1 <- 0   # initial y1 value
     y2 <- 1    # initial y2 value
     y3 <- 1    # initial y3 value
-    dt        <- 0.01 # delta time for step
-
+    dt <- 0.01 # delta time for step
     body <- RigidBodyNXF(y1, y2, y3)
     solver <- Euler(body)
     solver <- setStepSize(solver, dt)
@@ -656,7 +647,7 @@ VanderpolApp <- function(verbose = FALSE) {
     rowVector <- vector("list")
     i <- 1
     while (rigid_body@state[3] <= 20) {
-        rowVector[[i]] <- list(t =  rigid_body@state[3],
+        rowVector[[i]] <- list(t  = rigid_body@state[3],
                                y1 = rigid_body@state[1],
                                y2 = rigid_body@state[2])
         solver <- step(solver)
@@ -666,7 +657,6 @@ VanderpolApp <- function(verbose = FALSE) {
     DT <- data.table::rbindlist(rowVector)
     return(DT)
 }
-
 # show solution
 solution <- VanderpolApp()
 plot(solution)
@@ -694,7 +684,7 @@ VanderpolMuTimeControlApp <- function(verbose = FALSE) {
     rowVector <- vector("list")
     i <- 1
     while (rigid_body@state[3] <= tmax) {
-        rowVector[[i]] <- list(t =  rigid_body@state[3],
+        rowVector[[i]] <- list(t  = rigid_body@state[3],
                                y1 = rigid_body@state[1],
                                y2 = rigid_body@state[2]
                                )
