@@ -48,9 +48,6 @@
       <a href="../articles/Comparison.html">Comparison of ODE solvers</a>
     </li>
     <li>
-      <a href="../articles/Comparison_naode.html">Comparison of ODE solvers: Example NAODE</a>
-    </li>
-    <li>
       <a href="../articles/ErrorEuler.html">Error vs step size with Euler method</a>
     </li>
     <li>
@@ -108,6 +105,7 @@
     
     
 <div class="contents">
+<p>Biblio <a href="http://www.pe.tamu.edu/blasingame/data/z_zCourse_Archive/P620_08C/P620_08C_Lec_(for_class)/P620_Mod3_FunFld_07_DifEq_MlPhs_(for_class).pdf" class="uri">http://www.pe.tamu.edu/blasingame/data/z_zCourse_Archive/P620_08C/P620_08C_Lec_(for_class)/P620_Mod3_FunFld_07_DifEq_MlPhs_(for_class).pdf</a></p>
 <div id="muskats-material-balance-equation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#muskats-material-balance-equation" class="anchor"></a>Muskat’s Material Balance Equation</h2>
@@ -599,7 +597,182 @@ df_all</code></pre></div>
 <span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">facet_grid</span>(step_size <span class="op">~</span><span class="st"> </span>solver) </code></pre></div>
 <p><img src="Muskat-MBal_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p>It turns out that <code>RK45</code> is the more accurate of all the solvers tested here. The relative error at a step value of 0.05 is in the order of 1E-8 to 1 E-12, while RK4 for the same step size, the relative error ranges between 1E-8 to 9E-8; still good. In fact, we could choose with some peace of mind RK4, unless the response is unstable that merits the switch to an adaptive step solver such as RK45. RK4 is widely used by its balance of accuracy and computational speed.</p>
 </div>
+</div>
+<div id="exercise-using-the-ode-solver-rk4-find-the-saturation-value-at-pressure-of-3-with-a-time-step-0-05" class="section level2">
+<h2 class="hasAnchor">
+<a href="#exercise-using-the-ode-solver-rk4-find-the-saturation-value-at-pressure-of-3-with-a-time-step-0-05" class="anchor"></a>Exercise: Using the ODE Solver RK4, find the saturation value at pressure of 3 with a time step 0.05</h2>
+<p>Since the conditions in the equation have not change, we will use the same ODE object above <code>MuskatODE</code>.</p>
+<p><span class="math display">\[ \dfrac{dS}{dP} = (2P +  S)\]</span></p>
+<p>We are given the pressure value of <span class="math inline">\(P = 3\)</span> and the step size of 0.05. We would need to give only minor touches to the ODE solver algorithm.</p>
+<p>This time, we will add an additional parameter to the Muskat application: the pressure of interest or <code>pmax</code>, so could solve similar problems.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MuskatODEApp &lt;-<span class="st"> </span><span class="cf">function</span>(solver, stepSize, pmax) {
+    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)
+    solver_factory &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ODESolverFactory-class.html">ODESolverFactory</a></span>()
+    ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ODESolverFactory-class.html">createODESolver</a></span>(solver_factory, ode, solver)
+    ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/setStepSize-method.html">setStepSize</a></span>(ode_solver, stepSize)
+    rowVector  &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">"list"</span>)
+    pres &lt;-<span class="st">  </span><span class="dv">0</span>
+    i    &lt;-<span class="st">  </span><span class="dv">1</span>
+    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span>pmax) {
+        state &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getState-method.html">getState</a></span>(ode_solver<span class="op">@</span>ode)
+        pres  &lt;-<span class="st"> </span>state[<span class="dv">2</span>]
+        error &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getExactSolution-method.html">getExactSolution</a></span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]
+        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">solver =</span> solver,
+                               <span class="dt">step_size =</span> stepSize, 
+                               <span class="dt">P =</span> pres, 
+                               <span class="dt">S =</span> state[<span class="dv">1</span>], 
+                               <span class="dt">exact =</span> <span class="kw"><a href="../reference/getExactSolution-method.html">getExactSolution</a></span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">error =</span> error, 
+                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/getExactSolution-method.html">getExactSolution</a></span>(ode_solver<span class="op">@</span>ode, pres),
+                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n
+                               )
+        ode_solver &lt;-<span class="st"> </span><span class="kw"><a href="../reference/step-method.html">step</a></span>(ode_solver)
+        pres &lt;-<span class="st"> </span>pres <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/getStepSize-method.html">getStepSize</a></span>(ode_solver)    <span class="co"># step size retrievd from ODE solver</span>
+        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    }
+    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)
+}
+
+solver   &lt;-<span class="st"> "RK4"</span>
+stepSize &lt;-<span class="st"> </span><span class="fl">0.05</span>
+pmax     &lt;-<span class="st"> </span><span class="fl">3.0</span>
+dt &lt;-<span class="st"> </span><span class="kw">MuskatODEApp</span>(solver, stepSize, pmax)
+dt</code></pre></div>
+<pre><code>##     solver step_size    P         S     exact        error      rel_err
+##  1:    RK4      0.05 0.00  1.000000  1.000000 0.000000e+00 0.000000e+00
+##  2:    RK4      0.05 0.05  1.053813  1.053813 7.878072e-09 7.475776e-09
+##  3:    RK4      0.05 0.10  1.115513  1.115513 1.656398e-08 1.484876e-08
+##  4:    RK4      0.05 0.15  1.185503  1.185503 2.611985e-08 2.203272e-08
+##  5:    RK4      0.05 0.20  1.264208  1.264208 3.661206e-08 2.896046e-08
+##  6:    RK4      0.05 0.25  1.352076  1.352076 4.811150e-08 3.558342e-08
+##  7:    RK4      0.05 0.30  1.449576  1.449576 6.069387e-08 4.187007e-08
+##  8:    RK4      0.05 0.35  1.557203  1.557203 7.444000e-08 4.780367e-08
+##  9:    RK4      0.05 0.40  1.675474  1.675474 8.943613e-08 5.337960e-08
+## 10:    RK4      0.05 0.45  1.804936  1.804937 1.057743e-07 5.860279e-08
+## 11:    RK4      0.05 0.50  1.946164  1.946164 1.235528e-07 6.348528e-08
+## 12:    RK4      0.05 0.55  2.099759  2.099759 1.428762e-07 6.804409e-08
+## 13:    RK4      0.05 0.60  2.266356  2.266356 1.638563e-07 7.229944e-08
+## 14:    RK4      0.05 0.65  2.446622  2.446622 1.866122e-07 7.627339e-08
+## 15:    RK4      0.05 0.70  2.641258  2.641258 2.112708e-07 7.998868e-08
+## 16:    RK4      0.05 0.75  2.851000  2.851000 2.379673e-07 8.346802e-08
+## 17:    RK4      0.05 0.80  3.076623  3.076623 2.668461e-07 8.673343e-08
+## 18:    RK4      0.05 0.85  3.318940  3.318941 2.980605e-07 8.980592e-08
+## 19:    RK4      0.05 0.90  3.578809  3.578809 3.317743e-07 9.270522e-08
+## 20:    RK4      0.05 0.95  3.857129  3.857129 3.681617e-07 9.544967e-08
+## 21:    RK4      0.05 1.00  4.154845  4.154845 4.074081e-07 9.805615e-08
+## 22:    RK4      0.05 1.05  4.472953  4.472953 4.497112e-07 1.005401e-07
+## 23:    RK4      0.05 1.10  4.812498  4.812498 4.952812e-07 1.029156e-07
+## 24:    RK4      0.05 1.15  5.174578  5.174579 5.443418e-07 1.051954e-07
+## 25:    RK4      0.05 1.20  5.560350  5.560351 5.971313e-07 1.073909e-07
+## 26:    RK4      0.05 1.25  5.971028  5.971029 6.539030e-07 1.095126e-07
+## 27:    RK4      0.05 1.30  6.407889  6.407890 7.149265e-07 1.115697e-07
+## 28:    RK4      0.05 1.35  6.872276  6.872277 7.804885e-07 1.135706e-07
+## 29:    RK4      0.05 1.40  7.365599  7.365600 8.508941e-07 1.155227e-07
+## 30:    RK4      0.05 1.45  7.889343  7.889344 9.264676e-07 1.174328e-07
+## 31:    RK4      0.05 1.50  8.445066  8.445067 1.007554e-06 1.193068e-07
+## 32:    RK4      0.05 1.55  9.034409  9.034411 1.094519e-06 1.211500e-07
+## 33:    RK4      0.05 1.60  9.659096  9.659097 1.187754e-06 1.229674e-07
+## 34:    RK4      0.05 1.65 10.320938 10.320939 1.287671e-06 1.247630e-07
+## 35:    RK4      0.05 1.70 11.021841 11.021842 1.394713e-06 1.265408e-07
+## 36:    RK4      0.05 1.75 11.763807 11.763808 1.509345e-06 1.283041e-07
+## 37:    RK4      0.05 1.80 12.548941 12.548942 1.632066e-06 1.300561e-07
+## 38:    RK4      0.05 1.85 13.379457 13.379459 1.763404e-06 1.317993e-07
+## 39:    RK4      0.05 1.90 14.257681 14.257683 1.903918e-06 1.335363e-07
+## 40:    RK4      0.05 1.95 15.186061 15.186063 2.054206e-06 1.352692e-07
+## 41:    RK4      0.05 2.00 16.167166 16.167168 2.214900e-06 1.369999e-07
+## 42:    RK4      0.05 2.05 17.203701 17.203703 2.386672e-06 1.387301e-07
+## 43:    RK4      0.05 2.10 18.298507 18.298510 2.570235e-06 1.404615e-07
+## 44:    RK4      0.05 2.15 19.454572 19.454575 2.766348e-06 1.421952e-07
+## 45:    RK4      0.05 2.20 20.675038 20.675040 2.975814e-06 1.439327e-07
+## 46:    RK4      0.05 2.25 21.963204 21.963208 3.199487e-06 1.456748e-07
+## 47:    RK4      0.05 2.30 23.322544 23.322547 3.438273e-06 1.474227e-07
+## 48:    RK4      0.05 2.35 24.756705 24.756709 3.693134e-06 1.491771e-07
+## 49:    RK4      0.05 2.40 26.269525 26.269529 3.965091e-06 1.509388e-07
+## 50:    RK4      0.05 2.45 27.865036 27.865040 4.255227e-06 1.527085e-07
+## 51:    RK4      0.05 2.50 29.547477 29.547482 4.564691e-06 1.544866e-07
+## 52:    RK4      0.05 2.55 31.321306 31.321311 4.894703e-06 1.562739e-07
+## 53:    RK4      0.05 2.60 33.191209 33.191214 5.246555e-06 1.580706e-07
+## 54:    RK4      0.05 2.65 35.162110 35.162116 5.621619e-06 1.598772e-07
+## 55:    RK4      0.05 2.70 37.239189 37.239195 6.021353e-06 1.616939e-07
+## 56:    RK4      0.05 2.75 39.427889 39.427896 6.447297e-06 1.635212e-07
+## 57:    RK4      0.05 2.80 41.733933 41.733940 6.901091e-06 1.653592e-07
+## 58:    RK4      0.05 2.85 44.163338 44.163346 7.384470e-06 1.672081e-07
+## 59:    RK4      0.05 2.90 46.722428 46.722436 7.899274e-06 1.690681e-07
+## 60:    RK4      0.05 2.95 49.417853 49.417861 8.447456e-06 1.709393e-07
+## 61:    RK4      0.05 3.00 52.256602 52.256611 9.031084e-06 1.728218e-07
+##     solver step_size    P         S     exact        error      rel_err
+##     steps
+##  1:     0
+##  2:     4
+##  3:     8
+##  4:    12
+##  5:    16
+##  6:    20
+##  7:    24
+##  8:    28
+##  9:    32
+## 10:    36
+## 11:    40
+## 12:    44
+## 13:    48
+## 14:    52
+## 15:    56
+## 16:    60
+## 17:    64
+## 18:    68
+## 19:    72
+## 20:    76
+## 21:    80
+## 22:    84
+## 23:    88
+## 24:    92
+## 25:    96
+## 26:   100
+## 27:   104
+## 28:   108
+## 29:   112
+## 30:   116
+## 31:   120
+## 32:   124
+## 33:   128
+## 34:   132
+## 35:   136
+## 36:   140
+## 37:   144
+## 38:   148
+## 39:   152
+## 40:   156
+## 41:   160
+## 42:   164
+## 43:   168
+## 44:   172
+## 45:   176
+## 46:   180
+## 47:   184
+## 48:   188
+## 49:   192
+## 50:   196
+## 51:   200
+## 52:   204
+## 53:   208
+## 54:   212
+## 55:   216
+## 56:   220
+## 57:   224
+## 58:   228
+## 59:   232
+## 60:   236
+## 61:   240
+##     steps</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">last_row &lt;-<span class="st"> </span><span class="kw">tail</span>(dt, <span class="dv">1</span>)
+last_row</code></pre></div>
+<pre><code>##    solver step_size P       S    exact        error      rel_err steps
+## 1:    RK4      0.05 3 52.2566 52.25661 9.031084e-06 1.728218e-07   240</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dt, <span class="kw">aes</span>(<span class="dt">x =</span> P, <span class="dt">y =</span> S)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="Muskat-MBal_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
 </div>
 </div>
   </div>
@@ -615,6 +788,7 @@ df_all</code></pre></div>
       <li><a href="#solve-muskats-equation-using-runge-kutta">Solve Muskat’s Equation using Runge-Kutta</a></li>
       <li><a href="#using-a-solver-factory">Using a solver factory</a></li>
       <li><a href="#what-about-doing-all-in-one-step">What about doing all in one step</a></li>
+      <li><a href="#exercise-using-the-ode-solver-rk4-find-the-saturation-value-at-pressure-of-3-with-a-time-step-0-05">Exercise: Using the ODE Solver RK4, find the saturation value at pressure of 3 with a time step 0.05</a></li>
       </ul>
 </div>
       </div>
