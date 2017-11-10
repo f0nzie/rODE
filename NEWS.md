@@ -1,5 +1,9 @@
 # # rODE 0.99.5.9007
 * 20171109-201711
+* add exercise using the ODE Solver RK4. find the saturation value at pressure of 3 with a time step 0.05
+* remove Google citations URL link because they do not work
+* add file `rODE_biblio.bib` edited with JabRef
+* add knitcitations and some bibliography
 * move NAODE vignette to notebooks
 
 # # rODE 0.99.5.9006
