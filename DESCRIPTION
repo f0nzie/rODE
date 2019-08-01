@@ -1,7 +1,7 @@
 Package: rODE
 Type: Package
 Title: Ordinary Differential Equation (ODE) Solvers Written in R Using S4 Classes
-Version: 0.99.6
+Version: 0.100.0.9000
 Authors@R: person("Alfonso R.", "Reyes", role = c("aut", "cre"), email = "alfonso.reyes@oilgainsanalytics.com")
 Description: Show physics, math and engineering students how an ODE solver
     is made and how effective R classes can be for the construction of
@@ -23,7 +23,7 @@ Suggests: knitr,
     tidyr,
     covr,
     scales
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Collate:
     'ode_generics.R'
     'ODESolver.R'

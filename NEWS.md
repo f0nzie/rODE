@@ -1,3 +1,9 @@
+# rODE 0.100.0.9000
+* 20190731
+* Create doc/ folder with `> devtools::install(build_vignettes = TRUE)`
+* Build vignettes with `devtools::build_vignettes()`. 
+* Problem with `knitcitations` and `doc/` folder
+
 # rODE 0.99.6.9000
 * 20171110-201711__
 * 
