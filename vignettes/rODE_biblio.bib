@@ -51,7 +51,7 @@ The purpose of my B.Sc. thesis was to implement a Runge-Kutta Toolbox in both C 
 Implementation of Runge-Kutta Methods
 Implementation of MPI Routine for Parallel Simulations
 Comparison of Simulation Times in C and Matlab
- 
+
 Runge-Kutta Methods
 Runge-Kutta methods are used for obtaining approximate solutions to ordinary differential equations. There are several classes of Runge-Kutta methods with different properties. This project treats five Runge-Kutta methods which are Explicit Runge-Kutta methods (ERK) and Explicitly Singly Diagonally Implicit Runge-Kutta methods (ESDIRK). The five methods treated and compared are
 Explicit or Forward Euler method (RK1)
@@ -59,12 +59,12 @@ The Classical Runge-Kutta method (RK4)
 The Runge-Kutta-Fehlberg method (RKF45)
 The Dormand-Prince method (DOPRI54)
 ESDIRK23
- 
+
 Parallel Simulations
 The thesis presents an example of use for the Runge-Kutta methods which is simulation of production of biomass using different control strategies. In this example, some parameters in the model of the biomass production may be subject to measurement errors. Carrying out simulations for pertubated parameter sets to allows for exaimation of the sensitivity to these pertubations. This is examined for different control strategies.
- 
+
 These simulations are independent of each other and are thus perfectly fit for parallel simulation. The thesis examines the effectivity of Matlabs implementation of parallel simulation and two implementations of parallel simulations in C using the Message Parsing Interface (MPI).
- 
+
 Comparison of Simulation Times in C and Matlab
 Simulation times are compared for the biomass production example mentioned above. The comparison includes both sequential and parallel simulations and for the example described above, it shows that simulations in C are carried out between 80 and 300 times faster, compared to Matlab.},
 }
