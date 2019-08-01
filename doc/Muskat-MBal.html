@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Alfonso R. Reyes" />
+
+<meta name="date" content="2019-07-31" />
+
+<title>Muskat Material Balance</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Muskat Material Balance</h1>
+<h4 class="author">Alfonso R. Reyes</h4>
+<h4 class="date">2019-07-31</h4>
+
+
+
+<p>Biblio <a href="http://www.pe.tamu.edu/blasingame/data/z_zCourse_Archive/P620_08C/P620_08C_Lec_(for_class)/P620_Mod3_FunFld_07_DifEq_MlPhs_(for_class).pdf" class="uri">http://www.pe.tamu.edu/blasingame/data/z_zCourse_Archive/P620_08C/P620_08C_Lec_(for_class)/P620_Mod3_FunFld_07_DifEq_MlPhs_(for_class).pdf</a></p>
+<div id="muskats-material-balance-equation" class="section level2">
+<h2>Muskat’s Material Balance Equation</h2>
+<p>For the Muskat’s Material Balance equation:</p>
+<p><span class="math display">\[\newcommand{\numD}{{\dfrac {S_o}{B_o B_g} \dfrac {dR_s}{dP} +  
+\dfrac {S_o}{B_o} \dfrac {k_g}{k_o} \dfrac {\mu_o}{\mu_g} \dfrac {dB_o}{dP} + 
+(1 - S_o - S_w) \dfrac {1}{B_g} \dfrac {dB_g}{dP} }}\]</span></p>
+<p><span class="math display">\[\dfrac {dS_o}{dP} = \dfrac {\numD} {1 + \dfrac {k_g}{k_o} \dfrac {\mu_o}{\mu_g} }\]</span></p>
+<p>All the terms on the right side are function of pressure (<span class="math inline">\(P\)</span>) and saturation (<span class="math inline">\(S\)</span>), the equation could be reduced to:</p>
+<p><span class="math display">\[ \dfrac{dS}{dP} = f(P, S)\]</span></p>
+<p>A first-order ordinary diferential equation (<em>ODE</em>) with the general analytical solution:</p>
+<p><span class="math display">\[y(x) = C_1e^x-2x-2\]</span></p>
+</div>
+<div id="solving-the-1st-order-differential-equation-ode" class="section level2">
+<h2>Solving the 1st Order Differential Equation (ODE)</h2>
+<p>Given the following ODE that represents a particular reservoir: <span class="math display">\[ \dfrac{dS}{dP} = (2P +  S)\]</span></p>
+<p>We wish to find the first saturation values if the initial conditions are:</p>
+<p><span class="math inline">\(P_o\)</span> = 0, and <span class="math inline">\(S_o\)</span> = 1.</p>
+<p>The analytical solution for the differential equation, given the initial conditions, is: <span class="math display">\[S(P) = 3e^P-2P-2\]</span> ## Building the ODE for Material Balance Since we know the analytical solution, we will add a method <code>getExactSolution</code> to return the exact values at any given P. Then we will compare the exact solution versus the numerical solutions from the available ODE solvers in <code>rODE</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># the ODE object</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(rODE)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># class declaration</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">setClass</span>(<span class="st">&quot;MuskatODE&quot;</span>, <span class="dt">slots =</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="dt">stack =</span> <span class="st">&quot;environment&quot;</span>                  <span class="co"># environment object inside the class</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    ),</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="dt">contains =</span> <span class="kw">c</span>(<span class="st">&quot;ODE&quot;</span>)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">    )</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># Initialization method</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">setMethod</span>(<span class="st">&quot;initialize&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(.Object, ...) {</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    .Object<span class="op">@</span>stack<span class="op">$</span>n &lt;-<span class="st">  </span><span class="dv">0</span>               </a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="kw">return</span>(.Object)</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">})</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"># The exact solution method</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="kw">setMethod</span>(<span class="st">&quot;getExactSolution&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(object, t, ...) {</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">    <span class="co"># analytical solution</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">    <span class="kw">return</span>(<span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(t) <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span>t <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)                             <span class="co"># constant C1 = 3 </span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">})</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co"># obtain the state of the ODE</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="kw">setMethod</span>(<span class="st">&quot;getState&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(object, ...) {</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">    object<span class="op">@</span>state                                      <span class="co"># return the state</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">})</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co"># the differential equation is entered here. </span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="kw">setMethod</span>(<span class="st">&quot;getRate&quot;</span>, <span class="st">&quot;MuskatODE&quot;</span>, <span class="cf">function</span>(object, state, ...) {</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">    object<span class="op">@</span>rate[<span class="dv">1</span>] &lt;-<span class="st"> </span>state[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>state[<span class="dv">2</span>]         <span class="co"># 2P + S</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">    object<span class="op">@</span>rate[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">1</span>                               <span class="co"># dP/dP</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">    object<span class="op">@</span>stack<span class="op">$</span>n &lt;-<span class="st"> </span>object<span class="op">@</span>stack<span class="op">$</span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span>              <span class="co"># add 1 to the rate count</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">    object<span class="op">@</span>rate                                       <span class="co"># return the rate</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">})</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co"># constructor</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">MuskatODE &lt;-<span class="st"> </span><span class="cf">function</span>(P, S) {</a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">    .MuskatEuler &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;MuskatODE&quot;</span>)</a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">    .MuskatEuler<span class="op">@</span>state[<span class="dv">1</span>] =<span class="st"> </span>S        <span class="co"># S         state[1] is saturation</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">    .MuskatEuler<span class="op">@</span>state[<span class="dv">2</span>] =<span class="st"> </span>P        <span class="co"># P = t     state[2] is pressure</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">    <span class="kw">return</span>(.MuskatEuler)</a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">}</a></code></pre></div>
+</div>
+<div id="implementing-the-euler-solver" class="section level2">
+<h2>Implementing the Euler solver</h2>
+<p>After we define the differential equation in shape of code, or ODE object, we move to build the iterative routine for the differential equation. We start with the given initial conditions, <span class="math inline">\(P =0\)</span>, and <span class="math inline">\(S=1\)</span>, stopping the iterations at <span class="math inline">\(P = 0.5\)</span>.</p>
+<p>Since we don’t know the size of the infinitesimal step <span class="math inline">\(\Delta P\)</span> to use in the solver, we are given three different step sizes <code>0.2, 0.1, 0.05</code>. Depending of the accuracy of the solution, at the end a satisfactory step size will be selected.</p>
+<p>As we go calculating the numerical solution with the Euler method, we are also getting the exact result from the analytical solution <span class="math inline">\(S(P) = 3e^P-2P-2\)</span>, using both to find the error and the relative error. The number of steps that the ODE solver takes is also recorded.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># application that uses the Muskat ODE solver above</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">MuskatEulerApp &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)                      <span class="co"># initial state  S(0) = 1; P = 0</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    ode_solver &lt;-<span class="st"> </span><span class="kw">Euler</span>(ode)                    <span class="co"># use the Euler ODE solver</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    rowVector &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)      <span class="co"># calculation will be added to rowVector</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    pres &lt;-<span class="st">  </span><span class="dv">0</span>                       <span class="co"># P = 0</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    i    &lt;-<span class="st">  </span><span class="dv">1</span>                       <span class="co"># index of the iterations</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span>) {</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        state &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)  </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">        pres  &lt;-<span class="st"> </span>state[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">        error &lt;-<span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">step_size =</span> stepSize,  <span class="co"># vector with calculations</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">                               <span class="dt">P =</span> pres, </a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">                               <span class="dt">S =</span> state[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">                               <span class="dt">exact =</span> <span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">                               <span class="dt">error =</span> error, </a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">                               )</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">        ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)                 <span class="co"># advance solver one step</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>                                     <span class="co"># advance iteration</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">    }</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)                   <span class="co"># results in data table</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">}</a></code></pre></div>
+<div id="summary-table" class="section level3">
+<h3>Summary table</h3>
+<p>After the iteration model is completed, it is time to analyze the results stored in the table. We do this by sending the three step sizes for <span class="math inline">\(\Delta P\)</span> using the function <code>lapply</code>. Since we don’t want to see all the intermediate steps, we will limit the result table to display only the solutions at <span class="math inline">\(P\)</span> equal <code>0.10, 0.20, 0.30, 0.40, 0.5</code>.</p>
+<p>The table has these columns or variables:</p>
+<ul>
+<li><code>step_size</code>: size of the step for the solver.</li>
+<li><code>P</code>: pressure</li>
+<li><code>S</code>: saturation</li>
+<li><code>exact</code>: exact value from the analytical solution</li>
+<li><code>error</code>: difference between the analytical solution and the numerical solution</li>
+<li><code>rel_err</code>: relative error</li>
+<li><code>steps</code>: number of steps taken by the solver</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># get a summary table for different step sizes</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">get_table &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    dt &lt;-<span class="st"> </span><span class="kw">MuskatEulerApp</span>(stepSize)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    dt[<span class="kw">round</span>(P, <span class="dv">2</span>) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.10</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>, <span class="fl">0.40</span>, <span class="fl">0.5</span>)]  </a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># vector with some step sizes</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, get_table)    <span class="co"># create a data table </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)              <span class="co"># bind the data tables</span></a></code></pre></div>
+<pre><code>##     step_size   P        S    exact       error     rel_err steps
+##  1:      0.20 0.2 1.200000 1.264208 0.064208274 0.050789317     1
+##  2:      0.20 0.4 1.520000 1.675474 0.155474093 0.092794089     2
+##  3:      0.10 0.1 1.100000 1.115513 0.015512754 0.013906389     1
+##  4:      0.10 0.2 1.230000 1.264208 0.034208274 0.027059050     2
+##  5:      0.10 0.3 1.393000 1.449576 0.056576423 0.039029624     3
+##  6:      0.10 0.4 1.592300 1.675474 0.083174093 0.049642124     4
+##  7:      0.10 0.5 1.831530 1.946164 0.114633812 0.058902448     5
+##  8:      0.05 0.1 1.107500 1.115513 0.008012754 0.007183023     2
+##  9:      0.05 0.2 1.246519 1.264208 0.017689524 0.013992571     4
+## 10:      0.05 0.3 1.420287 1.449576 0.029289501 0.020205558     6
+## 11:      0.05 0.4 1.632366 1.675474 0.043107762 0.025728695     8
+## 12:      0.05 0.5 1.886684 1.946164 0.059479932 0.030562654    10</code></pre>
+<p>We can see from the table that for the smaller step size of <code>0.05</code> at <span class="math inline">\(P = 0.5\)</span>, we get a relative error of approximately <code>0.0306</code>, or 3%. We willimprove this by using improved solvers.</p>
+</div>
+</div>
+<div id="solve-muskats-equation-using-runge-kutta" class="section level2">
+<h2>Solve Muskat’s Equation using Runge-Kutta</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">MuskatRK4App &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    ode_solver &lt;-<span class="st"> </span><span class="kw">RK4</span>(ode)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    rowVector  &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">    pres &lt;-<span class="st">  </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">    i    &lt;-<span class="st">  </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span>) {</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">        state &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">        pres &lt;-<span class="st"> </span>state[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">        error &lt;-<span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">step_size =</span> stepSize, </a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">                               <span class="dt">P =</span> pres, </a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">                               <span class="dt">S =</span> state[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">                               <span class="dt">exact =</span> <span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">                               <span class="dt">error =</span> error, </a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb5-18" data-line-number="18">                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n</a>
+<a class="sourceLine" id="cb5-19" data-line-number="19">                               )</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">        ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)</a>
+<a class="sourceLine" id="cb5-21" data-line-number="21">        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">    }</a>
+<a class="sourceLine" id="cb5-23" data-line-number="23">    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)</a>
+<a class="sourceLine" id="cb5-24" data-line-number="24">}</a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co"># get a summary table for different step sizes</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26">get_table &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize) {</a>
+<a class="sourceLine" id="cb5-27" data-line-number="27">    dt &lt;-<span class="st"> </span><span class="kw">MuskatRK4App</span>(stepSize)</a>
+<a class="sourceLine" id="cb5-28" data-line-number="28">    dt[<span class="kw">round</span>(P, <span class="dv">2</span>) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.10</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>, <span class="fl">0.40</span>, <span class="fl">0.5</span>)]</a>
+<a class="sourceLine" id="cb5-29" data-line-number="29">}</a>
+<a class="sourceLine" id="cb5-30" data-line-number="30">step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb5-31" data-line-number="31">dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, get_table)</a>
+<a class="sourceLine" id="cb5-32" data-line-number="32">data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</a></code></pre></div>
+<pre><code>##     step_size   P        S    exact        error      rel_err steps
+##  1:      0.20 0.2 1.264200 1.264208 8.274481e-06 6.545188e-06     4
+##  2:      0.20 0.4 1.675454 1.675474 2.021292e-05 1.206400e-05     8
+##  3:      0.10 0.1 1.115512 1.115513 2.542269e-07 2.279014e-07     4
+##  4:      0.10 0.2 1.264208 1.264208 5.619284e-07 4.444904e-07     8
+##  5:      0.10 0.3 1.449575 1.449576 9.315404e-07 6.426294e-07    12
+##  6:      0.10 0.4 1.675473 1.675474 1.372682e-06 8.192796e-07    16
+##  7:      0.10 0.5 1.946162 1.946164 1.896310e-06 9.743835e-07    20
+##  8:      0.05 0.1 1.115513 1.115513 1.656398e-08 1.484876e-08     8
+##  9:      0.05 0.2 1.264208 1.264208 3.661206e-08 2.896046e-08    16
+## 10:      0.05 0.3 1.449576 1.449576 6.069387e-08 4.187007e-08    24
+## 11:      0.05 0.4 1.675474 1.675474 8.943613e-08 5.337960e-08    32
+## 12:      0.05 0.5 1.946164 1.946164 1.235528e-07 6.348528e-08    40</code></pre>
+<p>We see above that we are repeating code when the only parameter needed to be changed is the ODE solver. In cases where we want to test different ODE solvers it is more convenient to use the function <code>ODESolverFactory</code> and send the solver (Euler, RK4, Verlet, etc.), as a parameter.</p>
+</div>
+<div id="using-a-solver-factory" class="section level2">
+<h2>Using a solver factory</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">ComparisonMuskatODEApp &lt;-<span class="st"> </span><span class="cf">function</span>(solver, stepSize) {</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    solver_factory &lt;-<span class="st"> </span><span class="kw">ODESolverFactory</span>()</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    ode_solver &lt;-<span class="st"> </span><span class="kw">createODESolver</span>(solver_factory, ode, solver)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">    ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    rowVector  &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    pres &lt;-<span class="st">  </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    i    &lt;-<span class="st">  </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5001</span>) {</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">        state &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">        pres  &lt;-<span class="st"> </span>state[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">        error &lt;-<span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">solver =</span> solver,</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">                               <span class="dt">step_size =</span> stepSize, </a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">                               <span class="dt">P =</span> pres, </a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">                               <span class="dt">S =</span> state[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">                               <span class="dt">exact =</span> <span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">                               <span class="dt">error =</span> error, </a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21">                               )</a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">        ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">        pres &lt;-<span class="st"> </span>pres <span class="op">+</span><span class="st"> </span><span class="kw">getStepSize</span>(ode_solver)    <span class="co"># step size retrievd from ODE solver</span></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">    }</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26">    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)</a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">}</a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co"># get a summary table for different step sizes</span></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29">create_table &lt;-<span class="st"> </span><span class="cf">function</span>(stepSize, solver) {</a>
+<a class="sourceLine" id="cb7-30" data-line-number="30">    dt &lt;-<span class="st"> </span><span class="kw">ComparisonMuskatODEApp</span>(solver, stepSize)</a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">    <span class="cf">if</span> (<span class="op">!</span>solver <span class="op">==</span><span class="st"> &quot;RK45&quot;</span>) dt[<span class="kw">round</span>(P, <span class="dv">2</span>) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.10</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>, <span class="fl">0.40</span>, <span class="fl">0.5</span>)]</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">    <span class="cf">else</span> dt</a>
+<a class="sourceLine" id="cb7-33" data-line-number="33">}</a></code></pre></div>
+<div id="euler" class="section level3">
+<h3>Euler</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Create summary table for ODE solver Euler</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;Euler&quot;</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</a></code></pre></div>
+<pre><code>##     solver step_size   P        S    exact       error     rel_err steps
+##  1:  Euler      0.20 0.2 1.200000 1.264208 0.064208274 0.050789317     1
+##  2:  Euler      0.20 0.4 1.520000 1.675474 0.155474093 0.092794089     2
+##  3:  Euler      0.10 0.1 1.100000 1.115513 0.015512754 0.013906389     1
+##  4:  Euler      0.10 0.2 1.230000 1.264208 0.034208274 0.027059050     2
+##  5:  Euler      0.10 0.3 1.393000 1.449576 0.056576423 0.039029624     3
+##  6:  Euler      0.10 0.4 1.592300 1.675474 0.083174093 0.049642124     4
+##  7:  Euler      0.10 0.5 1.831530 1.946164 0.114633812 0.058902448     5
+##  8:  Euler      0.05 0.1 1.107500 1.115513 0.008012754 0.007183023     2
+##  9:  Euler      0.05 0.2 1.246519 1.264208 0.017689524 0.013992571     4
+## 10:  Euler      0.05 0.3 1.420287 1.449576 0.029289501 0.020205558     6
+## 11:  Euler      0.05 0.4 1.632366 1.675474 0.043107762 0.025728695     8
+## 12:  Euler      0.05 0.5 1.886684 1.946164 0.059479932 0.030562654    10</code></pre>
+</div>
+<div id="euler-richardson" class="section level3">
+<h3>Euler-Richardson</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Create summary table for ODE solver EulerRichardson</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;EulerRichardson&quot;</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</a></code></pre></div>
+<pre><code>##              solver step_size   P        S    exact        error
+##  1: EulerRichardson      0.20 0.2 1.260000 1.264208 0.0042082745
+##  2: EulerRichardson      0.20 0.4 1.665200 1.675474 0.0102740929
+##  3: EulerRichardson      0.10 0.1 1.115000 1.115513 0.0005127542
+##  4: EulerRichardson      0.10 0.2 1.263075 1.264208 0.0011332745
+##  5: EulerRichardson      0.10 0.3 1.447698 1.449576 0.0018785477
+##  6: EulerRichardson      0.10 0.4 1.672706 1.675474 0.0027679410
+##  7: EulerRichardson      0.10 0.5 1.942340 1.946164 0.0038235143
+##  8: EulerRichardson      0.05 0.1 1.115380 1.115513 0.0001330667
+##  9: EulerRichardson      0.05 0.2 1.263914 1.264208 0.0002941171
+## 10: EulerRichardson      0.05 0.3 1.449089 1.449576 0.0004875646
+## 11: EulerRichardson      0.05 0.4 1.674756 1.675474 0.0007184419
+## 12: EulerRichardson      0.05 0.5 1.945171 1.946164 0.0009924815
+##          rel_err steps
+##  1: 0.0033287826     2
+##  2: 0.0061320512     4
+##  3: 0.0004596579     2
+##  4: 0.0008964302     4
+##  5: 0.0012959287     6
+##  6: 0.0016520345     8
+##  7: 0.0019646415    10
+##  8: 0.0001192875     4
+##  9: 0.0002326492     8
+## 10: 0.0003363497    12
+## 11: 0.0004287992    16
+## 12: 0.0005099681    20</code></pre>
+</div>
+<div id="runge-kutta" class="section level3">
+<h3>Runge-Kutta</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Create summary table for ODE solver RK4</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;RK4&quot;</span>)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</a></code></pre></div>
+<pre><code>##     solver step_size   P        S    exact        error      rel_err steps
+##  1:    RK4      0.20 0.2 1.264200 1.264208 8.274481e-06 6.545188e-06     4
+##  2:    RK4      0.20 0.4 1.675454 1.675474 2.021292e-05 1.206400e-05     8
+##  3:    RK4      0.10 0.1 1.115512 1.115513 2.542269e-07 2.279014e-07     4
+##  4:    RK4      0.10 0.2 1.264208 1.264208 5.619284e-07 4.444904e-07     8
+##  5:    RK4      0.10 0.3 1.449575 1.449576 9.315404e-07 6.426294e-07    12
+##  6:    RK4      0.10 0.4 1.675473 1.675474 1.372682e-06 8.192796e-07    16
+##  7:    RK4      0.10 0.5 1.946162 1.946164 1.896310e-06 9.743835e-07    20
+##  8:    RK4      0.05 0.1 1.115513 1.115513 1.656398e-08 1.484876e-08     8
+##  9:    RK4      0.05 0.2 1.264208 1.264208 3.661206e-08 2.896046e-08    16
+## 10:    RK4      0.05 0.3 1.449576 1.449576 6.069387e-08 4.187007e-08    24
+## 11:    RK4      0.05 0.4 1.675474 1.675474 8.943613e-08 5.337960e-08    32
+## 12:    RK4      0.05 0.5 1.946164 1.946164 1.235528e-07 6.348528e-08    40</code></pre>
+</div>
+<div id="runge-kutta-45" class="section level3">
+<h3>Runge-Kutta 45</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Create summary table for ODE solver RK45</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co"># do not round because RK45 makes variable step sizes</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">dt_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(step_sizes, create_table, <span class="dt">solver =</span> <span class="st">&quot;RK45&quot;</span>)</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">data.table<span class="op">::</span><span class="kw">rbindlist</span>(dt_li)</a></code></pre></div>
+<pre><code>##     solver step_size         P        S    exact        error      rel_err
+##  1:   RK45      0.20 0.0000000 1.000000 1.000000 0.000000e+00 0.000000e+00
+##  2:   RK45      0.20 0.2000000 1.264208 1.264208 3.448051e-08 2.727439e-08
+##  3:   RK45      0.20 0.4000000 1.675474 1.675474 8.422918e-08 5.027185e-08
+##  4:   RK45      0.10 0.0000000 1.000000 1.000000 0.000000e+00 0.000000e+00
+##  5:   RK45      0.10 0.1000000 1.115513 1.115513 4.769420e-10 4.275541e-10
+##  6:   RK45      0.10 0.2961235 1.441662 1.441662 3.431222e-08 2.380047e-08
+##  7:   RK45      0.10 0.4922470 1.923470 1.923470 8.278777e-08 4.304083e-08
+##  8:   RK45      0.05 0.0000000 1.000000 1.000000 0.000000e+00 0.000000e+00
+##  9:   RK45      0.05 0.0500000 1.053813 1.053813 6.978196e-12 6.621852e-12
+## 10:   RK45      0.05 0.2445709 1.342078 1.342078 3.054565e-08 2.275997e-08
+## 11:   RK45      0.05 0.4391417 1.775842 1.775842 7.420278e-08 4.178456e-08
+##     steps
+##  1:     0
+##  2:     6
+##  3:    12
+##  4:     0
+##  5:     6
+##  6:    12
+##  7:    18
+##  8:     0
+##  9:     6
+## 10:    12
+## 11:    18</code></pre>
+<p>And so on. We could this better. We will show how to do this using nested <code>lapply</code> functions.</p>
+</div>
+</div>
+<div id="what-about-doing-all-in-one-step" class="section level2">
+<h2>What about doing all in one step</h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># vectors for the solvers and step sizes</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">step_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">solvers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Euler&quot;</span>, <span class="st">&quot;EulerRichardson&quot;</span>, <span class="st">&quot;Verlet&quot;</span>, <span class="st">&quot;RK4&quot;</span>, <span class="st">&quot;RK45&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># nested lapply to iterate through solvers and step sizes</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">df_li &lt;-<span class="st"> </span><span class="kw">lapply</span>(solvers, <span class="cf">function</span>(svr)</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">            <span class="kw">lapply</span>(step_sizes, <span class="cf">function</span>(stepsz) <span class="kw">create_table</span>(stepsz, svr)))</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co"># join the resulting dataframes</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">df_all &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">rbindlist</span>(<span class="kw">unlist</span>(df_li, <span class="dt">recursive =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">df_all</a></code></pre></div>
+<pre><code>##              solver step_size         P        S    exact        error
+##  1:           Euler      0.20 0.2000000 1.200000 1.264208 6.420827e-02
+##  2:           Euler      0.20 0.4000000 1.520000 1.675474 1.554741e-01
+##  3:           Euler      0.10 0.1000000 1.100000 1.115513 1.551275e-02
+##  4:           Euler      0.10 0.2000000 1.230000 1.264208 3.420827e-02
+##  5:           Euler      0.10 0.3000000 1.393000 1.449576 5.657642e-02
+##  6:           Euler      0.10 0.4000000 1.592300 1.675474 8.317409e-02
+##  7:           Euler      0.10 0.5000000 1.831530 1.946164 1.146338e-01
+##  8:           Euler      0.05 0.1000000 1.107500 1.115513 8.012754e-03
+##  9:           Euler      0.05 0.2000000 1.246519 1.264208 1.768952e-02
+## 10:           Euler      0.05 0.3000000 1.420287 1.449576 2.928950e-02
+## 11:           Euler      0.05 0.4000000 1.632366 1.675474 4.310776e-02
+## 12:           Euler      0.05 0.5000000 1.886684 1.946164 5.947993e-02
+## 13: EulerRichardson      0.20 0.2000000 1.260000 1.264208 4.208274e-03
+## 14: EulerRichardson      0.20 0.4000000 1.665200 1.675474 1.027409e-02
+## 15: EulerRichardson      0.10 0.1000000 1.115000 1.115513 5.127542e-04
+## 16: EulerRichardson      0.10 0.2000000 1.263075 1.264208 1.133274e-03
+## 17: EulerRichardson      0.10 0.3000000 1.447698 1.449576 1.878548e-03
+## 18: EulerRichardson      0.10 0.4000000 1.672706 1.675474 2.767941e-03
+## 19: EulerRichardson      0.10 0.5000000 1.942340 1.946164 3.823514e-03
+## 20: EulerRichardson      0.05 0.1000000 1.115380 1.115513 1.330667e-04
+## 21: EulerRichardson      0.05 0.2000000 1.263914 1.264208 2.941171e-04
+## 22: EulerRichardson      0.05 0.3000000 1.449089 1.449576 4.875646e-04
+## 23: EulerRichardson      0.05 0.4000000 1.674756 1.675474 7.184419e-04
+## 24: EulerRichardson      0.05 0.5000000 1.945171 1.946164 9.924815e-04
+## 25:          Verlet      0.20 0.2000000 1.220000 1.264208 4.420827e-02
+## 26:          Verlet      0.20 0.4000000 1.564000 1.675474 1.114741e-01
+## 27:          Verlet      0.10 0.1000000 1.105000 1.115513 1.051275e-02
+## 28:          Verlet      0.10 0.2000000 1.240500 1.264208 2.370827e-02
+## 29:          Verlet      0.10 0.3000000 1.409550 1.449576 4.002642e-02
+## 30:          Verlet      0.10 0.4000000 1.615505 1.675474 5.996909e-02
+## 31:          Verlet      0.10 0.5000000 1.862055 1.946164 8.410831e-02
+## 32:          Verlet      0.05 0.1000000 1.110062 1.115513 5.450254e-03
+## 33:          Verlet      0.05 0.2000000 1.251906 1.264208 1.230187e-02
+## 34:          Verlet      0.05 0.3000000 1.428789 1.449576 2.078711e-02
+## 35:          Verlet      0.05 0.4000000 1.644303 1.675474 3.117138e-02
+## 36:          Verlet      0.05 0.5000000 1.902406 1.946164 4.375757e-02
+## 37:             RK4      0.20 0.2000000 1.264200 1.264208 8.274481e-06
+## 38:             RK4      0.20 0.4000000 1.675454 1.675474 2.021292e-05
+## 39:             RK4      0.10 0.1000000 1.115512 1.115513 2.542269e-07
+## 40:             RK4      0.10 0.2000000 1.264208 1.264208 5.619284e-07
+## 41:             RK4      0.10 0.3000000 1.449575 1.449576 9.315404e-07
+## 42:             RK4      0.10 0.4000000 1.675473 1.675474 1.372682e-06
+## 43:             RK4      0.10 0.5000000 1.946162 1.946164 1.896310e-06
+## 44:             RK4      0.05 0.1000000 1.115513 1.115513 1.656398e-08
+## 45:             RK4      0.05 0.2000000 1.264208 1.264208 3.661206e-08
+## 46:             RK4      0.05 0.3000000 1.449576 1.449576 6.069387e-08
+## 47:             RK4      0.05 0.4000000 1.675474 1.675474 8.943613e-08
+## 48:             RK4      0.05 0.5000000 1.946164 1.946164 1.235528e-07
+## 49:            RK45      0.20 0.0000000 1.000000 1.000000 0.000000e+00
+## 50:            RK45      0.20 0.2000000 1.264208 1.264208 3.448051e-08
+## 51:            RK45      0.20 0.4000000 1.675474 1.675474 8.422918e-08
+## 52:            RK45      0.10 0.0000000 1.000000 1.000000 0.000000e+00
+## 53:            RK45      0.10 0.1000000 1.115513 1.115513 4.769420e-10
+## 54:            RK45      0.10 0.2961235 1.441662 1.441662 3.431222e-08
+## 55:            RK45      0.10 0.4922470 1.923470 1.923470 8.278777e-08
+## 56:            RK45      0.05 0.0000000 1.000000 1.000000 0.000000e+00
+## 57:            RK45      0.05 0.0500000 1.053813 1.053813 6.978196e-12
+## 58:            RK45      0.05 0.2445709 1.342078 1.342078 3.054565e-08
+## 59:            RK45      0.05 0.4391417 1.775842 1.775842 7.420278e-08
+##              solver step_size         P        S    exact        error
+##          rel_err steps
+##  1: 5.078932e-02     1
+##  2: 9.279409e-02     2
+##  3: 1.390639e-02     1
+##  4: 2.705905e-02     2
+##  5: 3.902962e-02     3
+##  6: 4.964212e-02     4
+##  7: 5.890245e-02     5
+##  8: 7.183023e-03     2
+##  9: 1.399257e-02     4
+## 10: 2.020556e-02     6
+## 11: 2.572869e-02     8
+## 12: 3.056265e-02    10
+## 13: 3.328783e-03     2
+## 14: 6.132051e-03     4
+## 15: 4.596579e-04     2
+## 16: 8.964302e-04     4
+## 17: 1.295929e-03     6
+## 18: 1.652035e-03     8
+## 19: 1.964642e-03    10
+## 20: 1.192875e-04     4
+## 21: 2.326492e-04     8
+## 22: 3.363497e-04    12
+## 23: 4.287992e-04    16
+## 24: 5.099681e-04    20
+## 25: 3.496914e-02     2
+## 26: 6.653287e-02     4
+## 27: 9.424145e-03     2
+## 28: 1.875346e-02     4
+## 29: 2.761250e-02     6
+## 30: 3.579231e-02     8
+## 31: 4.321749e-02    10
+## 32: 4.885874e-03     4
+## 33: 9.730887e-03     8
+## 34: 1.434013e-02    12
+## 35: 1.860451e-02    16
+## 36: 2.248401e-02    20
+## 37: 6.545188e-06     4
+## 38: 1.206400e-05     8
+## 39: 2.279014e-07     4
+## 40: 4.444904e-07     8
+## 41: 6.426294e-07    12
+## 42: 8.192796e-07    16
+## 43: 9.743835e-07    20
+## 44: 1.484876e-08     8
+## 45: 2.896046e-08    16
+## 46: 4.187007e-08    24
+## 47: 5.337960e-08    32
+## 48: 6.348528e-08    40
+## 49: 0.000000e+00     0
+## 50: 2.727439e-08     6
+## 51: 5.027185e-08    12
+## 52: 0.000000e+00     0
+## 53: 4.275541e-10     6
+## 54: 2.380047e-08    12
+## 55: 4.304083e-08    18
+## 56: 0.000000e+00     0
+## 57: 6.621852e-12     6
+## 58: 2.275997e-08    12
+## 59: 4.178456e-08    18
+##          rel_err steps</code></pre>
+<div id="plot-the-error-of-the-solvers" class="section level3">
+<h3>Plot the error of the solvers</h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">ggplot</span>(df_all, <span class="kw">aes</span>(<span class="dt">x =</span> P, <span class="dt">y =</span> rel_err, <span class="dt">group =</span> step_size, <span class="dt">fill =</span> solver )) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">    </span><span class="kw">facet_grid</span>(step_size <span class="op">~</span><span class="st"> </span>solver)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>In this last plot we want to compare the relative error of the ODE solvers that show the least error: RK4 and RK45. At the same time, we will exclude the step size of 0.2 since its error magnitude would hide those of the smaller steps.</p>
+</div>
+<div id="plot-rk4-vs-rk45" class="section level3">
+<h3>Plot RK4 vs RK45</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">subset</span>(df_all, solver <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;RK4&quot;</span>, <span class="st">&quot;RK45&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>step_size <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.05</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> P, <span class="dt">y =</span> rel_err, <span class="dt">group =</span> step_size, <span class="dt">fill =</span> solver )) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">    </span><span class="kw">facet_grid</span>(step_size <span class="op">~</span><span class="st"> </span>solver) </a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>It turns out that <code>RK45</code> is the more accurate of all the solvers tested here. The relative error at a step value of 0.05 is in the order of 1E-8 to 1 E-12, while RK4 for the same step size, the relative error ranges between 1E-8 to 9E-8; still good. In fact, we could choose with some peace of mind RK4, unless the response is unstable that merits the switch to an adaptive step solver such as RK45. RK4 is widely used by its balance of accuracy and computational speed.</p>
+</div>
+</div>
+<div id="exercise-using-the-ode-solver-rk4-find-the-saturation-value-at-pressure-of-3-with-a-time-step-0.05" class="section level2">
+<h2>Exercise: Using the ODE Solver RK4, find the saturation value at pressure of 3 with a time step 0.05</h2>
+<p>Since the conditions in the equation have not change, we will use the same ODE object above <code>MuskatODE</code>.</p>
+<p><span class="math display">\[ \dfrac{dS}{dP} = (2P +  S)\]</span></p>
+<p>We are given the pressure value of <span class="math inline">\(P = 3\)</span> and the step size of 0.05. We would need to give only minor touches to the ODE solver algorithm.</p>
+<p>This time, we will add an additional parameter to the Muskat application: the pressure of interest or <code>pmax</code>, so could solve similar problems.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">MuskatODEApp &lt;-<span class="st"> </span><span class="cf">function</span>(solver, stepSize, pmax) {</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">    ode &lt;-<span class="st"> </span><span class="kw">MuskatODE</span>(<span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">    solver_factory &lt;-<span class="st"> </span><span class="kw">ODESolverFactory</span>()</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">    ode_solver &lt;-<span class="st"> </span><span class="kw">createODESolver</span>(solver_factory, ode, solver)</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">    ode_solver &lt;-<span class="st"> </span><span class="kw">setStepSize</span>(ode_solver, stepSize)</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">    rowVector  &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>)</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">    pres &lt;-<span class="st">  </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">    i    &lt;-<span class="st">  </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">    <span class="cf">while</span> (pres <span class="op">&lt;</span><span class="st"> </span>pmax) {</a>
+<a class="sourceLine" id="cb21-10" data-line-number="10">        state &lt;-<span class="st"> </span><span class="kw">getState</span>(ode_solver<span class="op">@</span>ode)</a>
+<a class="sourceLine" id="cb21-11" data-line-number="11">        pres  &lt;-<span class="st"> </span>state[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb21-12" data-line-number="12">        error &lt;-<span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres) <span class="op">-</span><span class="st"> </span>state[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb21-13" data-line-number="13">        rowVector[[i]] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">solver =</span> solver,</a>
+<a class="sourceLine" id="cb21-14" data-line-number="14">                               <span class="dt">step_size =</span> stepSize, </a>
+<a class="sourceLine" id="cb21-15" data-line-number="15">                               <span class="dt">P =</span> pres, </a>
+<a class="sourceLine" id="cb21-16" data-line-number="16">                               <span class="dt">S =</span> state[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb21-17" data-line-number="17">                               <span class="dt">exact =</span> <span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb21-18" data-line-number="18">                               <span class="dt">error =</span> error, </a>
+<a class="sourceLine" id="cb21-19" data-line-number="19">                               <span class="dt">rel_err =</span> error <span class="op">/</span><span class="st"> </span><span class="kw">getExactSolution</span>(ode_solver<span class="op">@</span>ode, pres),</a>
+<a class="sourceLine" id="cb21-20" data-line-number="20">                               <span class="dt">steps =</span> ode_solver<span class="op">@</span>ode<span class="op">@</span>stack<span class="op">$</span>n</a>
+<a class="sourceLine" id="cb21-21" data-line-number="21">                               )</a>
+<a class="sourceLine" id="cb21-22" data-line-number="22">        ode_solver &lt;-<span class="st"> </span><span class="kw">step</span>(ode_solver)</a>
+<a class="sourceLine" id="cb21-23" data-line-number="23">        pres &lt;-<span class="st"> </span>pres <span class="op">+</span><span class="st"> </span><span class="kw">getStepSize</span>(ode_solver)    <span class="co"># step size retrievd from ODE solver</span></a>
+<a class="sourceLine" id="cb21-24" data-line-number="24">        i &lt;-<span class="st"> </span>i <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb21-25" data-line-number="25">    }</a>
+<a class="sourceLine" id="cb21-26" data-line-number="26">    data.table<span class="op">::</span><span class="kw">rbindlist</span>(rowVector)</a>
+<a class="sourceLine" id="cb21-27" data-line-number="27">}</a>
+<a class="sourceLine" id="cb21-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb21-29" data-line-number="29">solver   &lt;-<span class="st"> &quot;RK4&quot;</span></a>
+<a class="sourceLine" id="cb21-30" data-line-number="30">stepSize &lt;-<span class="st"> </span><span class="fl">0.05</span></a>
+<a class="sourceLine" id="cb21-31" data-line-number="31">pmax     &lt;-<span class="st"> </span><span class="fl">3.0</span></a>
+<a class="sourceLine" id="cb21-32" data-line-number="32">dt &lt;-<span class="st"> </span><span class="kw">MuskatODEApp</span>(solver, stepSize, pmax)</a>
+<a class="sourceLine" id="cb21-33" data-line-number="33">dt</a></code></pre></div>
+<pre><code>##     solver step_size    P         S     exact        error      rel_err
+##  1:    RK4      0.05 0.00  1.000000  1.000000 0.000000e+00 0.000000e+00
+##  2:    RK4      0.05 0.05  1.053813  1.053813 7.878072e-09 7.475776e-09
+##  3:    RK4      0.05 0.10  1.115513  1.115513 1.656398e-08 1.484876e-08
+##  4:    RK4      0.05 0.15  1.185503  1.185503 2.611985e-08 2.203272e-08
+##  5:    RK4      0.05 0.20  1.264208  1.264208 3.661206e-08 2.896046e-08
+##  6:    RK4      0.05 0.25  1.352076  1.352076 4.811150e-08 3.558342e-08
+##  7:    RK4      0.05 0.30  1.449576  1.449576 6.069387e-08 4.187007e-08
+##  8:    RK4      0.05 0.35  1.557203  1.557203 7.444000e-08 4.780367e-08
+##  9:    RK4      0.05 0.40  1.675474  1.675474 8.943613e-08 5.337960e-08
+## 10:    RK4      0.05 0.45  1.804936  1.804937 1.057743e-07 5.860279e-08
+## 11:    RK4      0.05 0.50  1.946164  1.946164 1.235528e-07 6.348528e-08
+## 12:    RK4      0.05 0.55  2.099759  2.099759 1.428762e-07 6.804409e-08
+## 13:    RK4      0.05 0.60  2.266356  2.266356 1.638563e-07 7.229944e-08
+## 14:    RK4      0.05 0.65  2.446622  2.446622 1.866122e-07 7.627339e-08
+## 15:    RK4      0.05 0.70  2.641258  2.641258 2.112708e-07 7.998868e-08
+## 16:    RK4      0.05 0.75  2.851000  2.851000 2.379673e-07 8.346802e-08
+## 17:    RK4      0.05 0.80  3.076623  3.076623 2.668461e-07 8.673343e-08
+## 18:    RK4      0.05 0.85  3.318940  3.318941 2.980605e-07 8.980592e-08
+## 19:    RK4      0.05 0.90  3.578809  3.578809 3.317743e-07 9.270522e-08
+## 20:    RK4      0.05 0.95  3.857129  3.857129 3.681617e-07 9.544967e-08
+## 21:    RK4      0.05 1.00  4.154845  4.154845 4.074081e-07 9.805615e-08
+## 22:    RK4      0.05 1.05  4.472953  4.472953 4.497112e-07 1.005401e-07
+## 23:    RK4      0.05 1.10  4.812498  4.812498 4.952812e-07 1.029156e-07
+## 24:    RK4      0.05 1.15  5.174578  5.174579 5.443418e-07 1.051954e-07
+## 25:    RK4      0.05 1.20  5.560350  5.560351 5.971313e-07 1.073909e-07
+## 26:    RK4      0.05 1.25  5.971028  5.971029 6.539030e-07 1.095126e-07
+## 27:    RK4      0.05 1.30  6.407889  6.407890 7.149265e-07 1.115697e-07
+## 28:    RK4      0.05 1.35  6.872276  6.872277 7.804885e-07 1.135706e-07
+## 29:    RK4      0.05 1.40  7.365599  7.365600 8.508941e-07 1.155227e-07
+## 30:    RK4      0.05 1.45  7.889343  7.889344 9.264676e-07 1.174328e-07
+## 31:    RK4      0.05 1.50  8.445066  8.445067 1.007554e-06 1.193068e-07
+## 32:    RK4      0.05 1.55  9.034409  9.034411 1.094519e-06 1.211500e-07
+## 33:    RK4      0.05 1.60  9.659096  9.659097 1.187754e-06 1.229674e-07
+## 34:    RK4      0.05 1.65 10.320938 10.320939 1.287671e-06 1.247630e-07
+## 35:    RK4      0.05 1.70 11.021841 11.021842 1.394713e-06 1.265408e-07
+## 36:    RK4      0.05 1.75 11.763807 11.763808 1.509345e-06 1.283041e-07
+## 37:    RK4      0.05 1.80 12.548941 12.548942 1.632066e-06 1.300561e-07
+## 38:    RK4      0.05 1.85 13.379457 13.379459 1.763404e-06 1.317993e-07
+## 39:    RK4      0.05 1.90 14.257681 14.257683 1.903918e-06 1.335363e-07
+## 40:    RK4      0.05 1.95 15.186061 15.186063 2.054206e-06 1.352692e-07
+## 41:    RK4      0.05 2.00 16.167166 16.167168 2.214900e-06 1.369999e-07
+## 42:    RK4      0.05 2.05 17.203701 17.203703 2.386672e-06 1.387301e-07
+## 43:    RK4      0.05 2.10 18.298507 18.298510 2.570235e-06 1.404615e-07
+## 44:    RK4      0.05 2.15 19.454572 19.454575 2.766348e-06 1.421952e-07
+## 45:    RK4      0.05 2.20 20.675038 20.675040 2.975814e-06 1.439327e-07
+## 46:    RK4      0.05 2.25 21.963204 21.963208 3.199487e-06 1.456748e-07
+## 47:    RK4      0.05 2.30 23.322544 23.322547 3.438273e-06 1.474227e-07
+## 48:    RK4      0.05 2.35 24.756705 24.756709 3.693134e-06 1.491771e-07
+## 49:    RK4      0.05 2.40 26.269525 26.269529 3.965091e-06 1.509388e-07
+## 50:    RK4      0.05 2.45 27.865036 27.865040 4.255227e-06 1.527085e-07
+## 51:    RK4      0.05 2.50 29.547477 29.547482 4.564691e-06 1.544866e-07
+## 52:    RK4      0.05 2.55 31.321306 31.321311 4.894703e-06 1.562739e-07
+## 53:    RK4      0.05 2.60 33.191209 33.191214 5.246555e-06 1.580706e-07
+## 54:    RK4      0.05 2.65 35.162110 35.162116 5.621619e-06 1.598772e-07
+## 55:    RK4      0.05 2.70 37.239189 37.239195 6.021353e-06 1.616939e-07
+## 56:    RK4      0.05 2.75 39.427889 39.427896 6.447297e-06 1.635212e-07
+## 57:    RK4      0.05 2.80 41.733933 41.733940 6.901091e-06 1.653592e-07
+## 58:    RK4      0.05 2.85 44.163338 44.163346 7.384470e-06 1.672081e-07
+## 59:    RK4      0.05 2.90 46.722428 46.722436 7.899274e-06 1.690681e-07
+## 60:    RK4      0.05 2.95 49.417853 49.417861 8.447456e-06 1.709393e-07
+## 61:    RK4      0.05 3.00 52.256602 52.256611 9.031084e-06 1.728218e-07
+##     solver step_size    P         S     exact        error      rel_err
+##     steps
+##  1:     0
+##  2:     4
+##  3:     8
+##  4:    12
+##  5:    16
+##  6:    20
+##  7:    24
+##  8:    28
+##  9:    32
+## 10:    36
+## 11:    40
+## 12:    44
+## 13:    48
+## 14:    52
+## 15:    56
+## 16:    60
+## 17:    64
+## 18:    68
+## 19:    72
+## 20:    76
+## 21:    80
+## 22:    84
+## 23:    88
+## 24:    92
+## 25:    96
+## 26:   100
+## 27:   104
+## 28:   108
+## 29:   112
+## 30:   116
+## 31:   120
+## 32:   124
+## 33:   128
+## 34:   132
+## 35:   136
+## 36:   140
+## 37:   144
+## 38:   148
+## 39:   152
+## 40:   156
+## 41:   160
+## 42:   164
+## 43:   168
+## 44:   172
+## 45:   176
+## 46:   180
+## 47:   184
+## 48:   188
+## 49:   192
+## 50:   196
+## 51:   200
+## 52:   204
+## 53:   208
+## 54:   212
+## 55:   216
+## 56:   220
+## 57:   224
+## 58:   228
+## 59:   232
+## 60:   236
+## 61:   240
+##     steps</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">last_row &lt;-<span class="st"> </span><span class="kw">tail</span>(dt, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">last_row</a></code></pre></div>
+<pre><code>##    solver step_size P       S    exact        error      rel_err steps
+## 1:    RK4      0.05 3 52.2566 52.25661 9.031084e-06 1.728218e-07   240</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">ggplot</span>(dt, <span class="kw">aes</span>(<span class="dt">x =</span> P, <span class="dt">y =</span> S)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
