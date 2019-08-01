@@ -47,8 +47,6 @@ AbstractODESolver(ode, ...)
 \description{
 Defines the basic methods for all the ODE solvers.
 
-AbstractODESolver generic
-
 AbstractODESolver constructor missing
 
 AbstractODESolver constructor ODE. Uses this constructor when ODE object is passed

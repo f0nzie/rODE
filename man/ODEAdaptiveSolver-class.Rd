@@ -35,8 +35,4 @@ ODEAdaptiveSolver(...)
 }
 \description{
 Base class to be inherited by adaptive solvers such as RK45
-
-ODEAdaptiveSolver generic
-
-ODEAdaptiveSolver constructor
 }

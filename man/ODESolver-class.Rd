@@ -33,13 +33,8 @@ ODESolver(object, stepSize, ...)
 }
 \description{
 A virtual class inherited by AbstractODESolver
-
-ODESolver constructor
-
-Set initial values and get ready to start the solver
-
-Set the size of the step
 }
 \seealso{
 Other ODESolver helpers: \code{\link{ODESolverFactory-class}}
 }
+\concept{ODESolver helpers}

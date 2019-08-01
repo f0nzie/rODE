@@ -15,7 +15,6 @@
 \alias{setTolerance,DormandPrince45-method}
 \alias{setTolerance,setTolerance-method}
 \alias{setTolerance<-,DormandPrince45-method}
-\alias{setTolerance,setTolerance-method}
 \alias{getTolerance,DormandPrince45-method}
 \alias{getTolerance,getTolerance-method}
 \alias{getErrorCode,DormandPrince45-method}
@@ -220,3 +219,4 @@ print(g)
 
 
 }
+\concept{adaptive solver methods}

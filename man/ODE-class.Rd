@@ -25,8 +25,6 @@ ODE()
 }
 \description{
 Defines an ODE object for any solver
-
-ODE constructor
 }
 \examples{
 # ++++++++++++++++++++++++++++++++++++++++++++++++++      example: PendulumApp.R

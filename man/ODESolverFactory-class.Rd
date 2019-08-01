@@ -30,11 +30,7 @@ createODESolver(object, ...)
 \description{
 ODESolverFactory helps to create a solver given only the name as string
 
-ODESolverFactory generic
-
 This is a factory method that creates an ODESolver using a name.
-
-ODESolverFactory constructor
 }
 \examples{
 # This example uses ODESolverFactory
@@ -119,3 +115,4 @@ Other ODESolver helpers: \code{\link{ODESolver-class}}
 
 Other ODESolver helpers: \code{\link{ODESolver-class}}
 }
+\concept{ODESolver helpers}
